@@ -10,7 +10,6 @@ If you went through the beginner level hands-on labs, you should now be familiar
 
 * **[Overview](#overview)**
 * **[Lab Preparation](#lab-preparation)** - overview of the lab
-* **[Lab Exercise 1G](#lab-exercise-1g-bonus---cleanup-on-aisle-5)** - (Bonus): Cleanup on Aisle
 * **[Lab Exercise 2A](#lab-exercise-2a---set-up-connectivity-into-meraki)** - Set Up Connectivity into Meraki
 * **[Lab Exercise 2B](#lab-exercise-2b---add-a-jsonpath-query-activity)** - Add a JSONPath Query Activity
 * **[Lab Exercise 2C](#lab-exercise-2c---logic-functions)** - Logic Functions
@@ -50,7 +49,7 @@ Follow the guidance provided in this Tech Elevate @ GSX session to gain access. 
 
 <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-2.png" alt="Workflow Properties" style="width:100%; height:auto; padding-left:40px;">
 
-<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-3.png" alt="Workflow Properties" style="width:100%; height:auto; padding-left:40px;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-3.png" alt="Workflow Properties" style="width:65%; height:auto; padding-left:40px;">
 
 ## Lab Exercise 2A - Set Up Connectivity into Meraki
   
