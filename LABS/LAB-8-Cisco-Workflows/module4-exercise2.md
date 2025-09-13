@@ -53,25 +53,19 @@ You will see a Meraki screen that looks like this.
 
 ## Lab Exercise 2A - Set Up Connectivity into Meraki
   
-1.  Access your Workflows environment and navigate to **Automation** and then **Account Keys**.
+1. Access your Workflows environment and navigate to **Automation** and then **Account Keys**.
 
 <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-1.png" alt="Workflow Properties" style="width:65%; height:auto; padding-left:40px;">
 
-<div style="padding-left:0px;">
 <table>
-<tr>
-<td valign="top" align="left" width="50%">
+<tr><td valign="top" align="left" width="50%">
 
-2.  Click New Account Key and enter details and your Meraki Self-Serve API key.
-
-<p style="padding-left:40px;">
+2. Click New Account Key and enter details and your Meraki Self-Serve API key.
 
 > [!NOTE]
 > In earlier versions, there was also a Cisco Meraki Token. For this lab you want to use Meraki Credentials.
 
-</p>
-
-3.  Click Save and navigate to Automation.
+3. Click Save and navigate to Automation.
 
 </td><td valign="top" align="center" width="50%">
 
@@ -79,10 +73,9 @@ You will see a Meraki screen that looks like this.
 
 </td></tr>
 </table>
-</div>
 
-4.  Select Targets, click New Target, and fill in the details as follows.
-5.  Click Save.
+4. Select Targets, click New Target, and fill in the details as follows.
+5. Click Save.
      
 You often have to worry about things like tokens for authentication when writing network automation against APIs. You do not have to write code with Cisco Workflows and it handles things like tokens for you. You’ve set up your key and target. Now, all you have to do is write whatever automation and orchestration against your target that you can dream up. SCORE!
 1.  Access your workspace and create a new Blank Custom Workflow. I’m going to call mine Meraki Inventory.
