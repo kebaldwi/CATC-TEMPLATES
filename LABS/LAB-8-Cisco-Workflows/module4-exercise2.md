@@ -36,7 +36,7 @@ If you’re not aware, Cisco has Meraki Self-Serve Labs. It’s a great environm
 >
 > When you have been added to a Self-Serve Meraki pod, look for an email stating you have been added as an organization administrator.
 
-<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-1.png" alt="Workflow Properties" style="width:100%; height:auto; padding-left:40px;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-1.png" alt="Workflow Properties" style="width:60%; height:auto; padding-left:40px;">
 
 ### API Key
 
@@ -44,8 +44,6 @@ You need the **API key** for this Meraki organization. It may arrive as this ses
 
 * If instructed, generate an API key by navigating to **Organization**, **Configure**, **API & Webhooks**
 * If instructed, click the **API Keys and Access** tab and generate your **API key**. Store the key for future reference.
-
-Follow the guidance provided in this Tech Elevate @ GSX session to gain access. You will see a Meraki screen that looks like this.
 
 <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/LabPrep-2.png" alt="Workflow Properties" style="width:100%; height:auto; padding-left:40px;">
 
