@@ -55,7 +55,7 @@ You will see a Meraki screen that looks like this.
   
 1. Access your Workflows environment and navigate to **Automation** and then **Account Keys**.
 
-<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-1.png" alt="Workflow Properties" style="width:65%; height:auto; padding-left:40px;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-1.png" alt="Workflow Properties" style="width:65%; height:auto;">
 
 <table>
 <tr><td valign="top" align="left" width="50%">
