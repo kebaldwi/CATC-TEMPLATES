@@ -11,12 +11,13 @@ If you went through the beginner level hands-on labs, you should now be familiar
 * **[Overview](#overview)**
 * **[Lab Preparation](#lab-preparation)** - overview of the lab
 * **[Lab Exercise 2A](#lab-exercise-2a---set-up-connectivity-into-meraki)** - Set Up Connectivity into Meraki
-* **[Lab Exercise 2B](#lab-exercise-2b---add-a-jsonpath-query-activity)** - Add a JSONPath Query Activity
-* **[Lab Exercise 2C](#lab-exercise-2c---logic-functions)** - Logic Functions
-* **[Lab Exercise 2D](#lab-exercise-2d---take-inventory)** - Take Inventory
-* **[Lab Exercise 2E](#lab-exercise-2e---share-the-table-with-webex)** - Share the Table with Webex
-* **[Lab Exercise 2F](#lab-exercise-2f---send-something-useful-this-time)** - Send Something Useful This Time
-* **[Lab Exercise 2G](#lab-exercise-2g---make-the-webex-an-atomic-workflow)** - Make the Webex an Atomic Workflow
+* **[Lab Exercise 2B](#lab-exercise-2b---build-an-meraki-inventory-workflow)** - Build a Meraki Inventory Workflow
+* **[Lab Exercise 2C](#lab-exercise-2c---add-a-jsonpath-query-activity)** - Add a JSONPath Query Activity
+* **[Lab Exercise 2D](#lab-exercise-2d---logic-functions)** - Logic Functions
+* **[Lab Exercise 2E](#lab-exercise-2e---take-inventory)** - Take Inventory
+* **[Lab Exercise 2F](#lab-exercise-2f---share-the-table-with-webex)** - Share the Table with Webex
+* **[Lab Exercise 2G](#lab-exercise-2g---send-something-useful-this-time)** - Send Something Useful This Time
+* **[Lab Exercise 2H](#lab-exercise-2h---make-the-webex-an-atomic-workflow)** - Make the Webex an Atomic Workflow
 * **[Appendix](./module6-advanced.md#advanced-information-and-resources)** - Useful Workflows Resources
 
 ## Lab Preparation 
@@ -74,10 +75,27 @@ You will see a Meraki screen that looks like this.
 </td></tr>
 </table>
 
+<table>
+<tr><td valign="top" align="left" width="50%">
+
 4. Select Targets, click New Target, and fill in the details as follows.
+
 5. Click Save.
-     
-You often have to worry about things like tokens for authentication when writing network automation against APIs. You do not have to write code with Cisco Workflows and it handles things like tokens for you. You’ve set up your key and target. Now, all you have to do is write whatever automation and orchestration against your target that you can dream up. SCORE!
+
+</td><td valign="top" align="center" width="50%">
+
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-3.png" alt="Workflow Properties" style="width:100%; height:auto;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-4.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+When writing orchestration you often have to worry about things like tokens for authentication when writing network automation against APIs. You do not have worry about that with Cisco Workflows as it handles things like tokens for you. 
+
+You’ve set up your key and target. Now, all you have to do is write whatever automation and orchestration against your target that you can dream up. **SCORE!**
+
+## Lab Exercise 2B - Build an Meraki Inventory Workflow
+
 1.  Access your workspace and create a new Blank Custom Workflow. I’m going to call mine Meraki Inventory.
  
 1.  Let’s set a default target for this workflow. Scroll down the properties panel to locate Target.
@@ -106,7 +124,7 @@ Pay attention to the structure of the result, because we’re going to pull the 
 TIP: If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: $[?(@.name =~ /^Org.*/)].id
 1.  Click Modify to return to the workflow editor.
  
-## Lab Exercise 2B - Add a JSONPath Query Activity
+## Lab Exercise 2C - Add a JSONPath Query Activity
 
 Just like we did in Lab1, we must give it a source JSON and tell it what to extract.
      
@@ -124,7 +142,7 @@ Let’s run it. Hopefully you remember the Validate step by now – this is the 
 
 Important: Using the mapping function allows use of the output of a step for the input of a later step.
      
-## Lab Exercise 2C - Logic Functions
+## Lab Exercise 2D - Logic Functions
 
 For most of this exploration of Workflows, we’re not going to validate every step like you would in the real world. This is intentional so we can cover more of the mechanics of Workflows in the time we have today. Still, let’s do one validation step so you can see why it is important.
 1.  Navigate to the Logic tab on the left-hand bar.
@@ -165,7 +183,7 @@ Don’t forget to change both blocks and run the workflow again.
      
 Nice. Graceful exit and a useful error message. You could add a Webex message, or email, or text yourself. Drop anything you like into the success or failure blocks. Pretty sweet aye? Don’t forget to change the conditional expressions back to your 200 code and then we’ll head to the next section of this lab.
 
-## Lab Exercise 2D - Take Inventory
+## Lab Exercise 2E - Take Inventory
 
 1.  Drag-and-drop the task titled Meraki – Get Organization Devices at the bottom of our workflow.
 Scroll down the configuration panel. Guess what’s required – the org. Good thing you already pulled that with the previous JSON query. This is an easy configuration with our friendly puzzle icon for mapping.
@@ -194,7 +212,7 @@ You’ve got a nice, neat table with exactly what you wanted.
 
 Congratulations. You’re doing useful productive workflows and haven’t written a single line of code (yet).
      
-## Lab Exercise 2E - Share the Table with Webex
+## Lab Exercise 2F - Share the Table with Webex
 
 At the time of this writing, Workflows is still in early preview and there are a couple of functions that still need a little more love.  Webex happens to be one of those, so this guide will do a few things. 
 We will create our own functions from scratch, proving that Workflows can truly automate and orchestrate anything. Customers can automate other vendors, which isn’t exactly what we want. However, would you rather Cisco be the control mechanism for a customer, or our competition?
@@ -253,7 +271,7 @@ Status Code 200!
      
 Score!  
 
-## Lab Exercise 2F - Send Something Useful This Time
+## Lab Exercise 2G - Send Something Useful This Time
 
 Let’s send ourselves the Meraki inventory table we created earlier.
 1.  Navigate to your workflow, select the HTTP request you just created, and navigate to the Request Body section.  
@@ -289,7 +307,7 @@ NICE!!! Look at that!  Building useful workflows and sending the output to your 
 Maybe take one more step and clean up the name of that HTTP Request.
 
      
-## Lab Exercise 2G - Make the Webex an Atomic Workflow
+## Lab Exercise 2H - Make the Webex an Atomic Workflow
 
 1.  Navigate to your workspace.
  
