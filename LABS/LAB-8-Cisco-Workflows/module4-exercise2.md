@@ -11,7 +11,7 @@ If you went through the beginner level hands-on labs, you should now be familiar
 * **[Overview](#overview)**
 * **[Lab Preparation](#lab-preparation)** - overview of the lab
 * **[Lab Exercise 2A](#lab-exercise-2a---set-up-connectivity-into-meraki)** - Set Up Connectivity into Meraki
-* **[Lab Exercise 2B](#lab-exercise-2b---build-an-meraki-inventory-workflow)** - Build a Meraki Inventory Workflow
+* **[Lab Exercise 2B](#lab-exercise-2b---build-a-meraki-inventory-workflow)** - Build a Meraki Inventory Workflow
 * **[Lab Exercise 2C](#lab-exercise-2c---add-a-jsonpath-query-activity)** - Add a JSONPath Query Activity
 * **[Lab Exercise 2D](#lab-exercise-2d---logic-functions)** - Logic Functions
 * **[Lab Exercise 2E](#lab-exercise-2e---take-inventory)** - Take Inventory
@@ -94,7 +94,7 @@ When writing orchestration you often have to worry about things like tokens for 
 
 You’ve set up your key and target. Now, all you have to do is write whatever automation and orchestration against your target that you can dream up. **SCORE!**
 
-## Lab Exercise 2B - Build an Meraki Inventory Workflow
+## Lab Exercise 2B - Build a Meraki Inventory Workflow
 
 1.  Access your workspace and create a new Blank Custom Workflow. I’m going to call mine Meraki Inventory.
  
