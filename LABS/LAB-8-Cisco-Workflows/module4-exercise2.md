@@ -148,6 +148,7 @@ We will cover **conditionals** later, but even if we run out of time, now you ha
 <tr><td valign="top" align="left" width="40%">
 
 7. Validate it and then click Run. Let’s see some <code style="color:green">GREEN!</code>
+<code style="color : green">GREEN!</code>
 
 8. Click Meraki - Get Organizations step and check out the result. SUCCESS!
 
