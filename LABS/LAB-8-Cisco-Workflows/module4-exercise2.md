@@ -118,11 +118,19 @@ Let’s pause and explore the concept of Atomic Workflows
 
 Note that the icon on the canvas above is a stack. This indicates that this is an **Atomic Workflow**. An **Atomic Workflow** is meant to be a smaller workflow that can be run within a larger workflow. Yes, **workflows running workflows**. Cisco has already provided 1000+ atomic workflows for you right out of the box, but you can also create your own custom atomics. If you’ve ever coded in python, you’ve probably written a Def or a function. Defs are common things that you write once and call over and over again. Same concept with atomics. If you do a task over and over, consider writing it as an atomic and simply drag it into your larger diverse workflows.
 
-4. Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click View Atomic Summary
+4. Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click **View Atomic Summary**
 
-5. Click See Atomic Details to view the Atomic Workflow itself and how it was built.  
+5. Click **See Atomic Details** to view the Atomic Workflow itself and how it was built.  
 You can see each step that Cisco (or anyone else) added to their atomics. You can also see some Workflows Best Practices, down to the specific configuration of every step.
-      
+
+<table>
+<tr><td valign="top" align="center" width="50%">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-4.png" alt="Workflow Properties" style="width:65%; height:auto;">
+</td><td valign="top" align="center" width="50%">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+</td></tr>
+</table>
+
 We will cover conditionals later, but even if we run out of time, now you have working examples of how to build them. Thank you, Cisco Workflows team!
 
 6. Click Back to parent Workflow.
