@@ -149,6 +149,7 @@ We will cover **conditionals** later, but even if we run out of time, now you ha
 
 7. Validate it and then click Run. Let’s see some <code style="color:green">GREEN!</code>
 <code style="color : green">GREEN!</code>
+$${\color{red}Welcome \space \color{lightblue}To \space \color{orange}Stackoverflow}$$
 
 8. Click Meraki - Get Organizations step and check out the result. SUCCESS!
 
