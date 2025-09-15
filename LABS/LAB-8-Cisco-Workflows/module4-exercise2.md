@@ -96,33 +96,48 @@ You’ve set up your key and target. Now, all you have to do is write whatever a
 
 ## Lab Exercise 2B - Build a Meraki Inventory Workflow
 
-1.  Access your workspace and create a new Blank Custom Workflow. I’m going to call mine Meraki Inventory.
+1. Access your workspace and create a new Blank Custom Workflow. I’m going to call mine Meraki Inventory.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-1.png" alt="Workflow Properties" style="width:100%; height:auto;"> 
  
-1.  Let’s set a default target for this workflow. Scroll down the properties panel to locate Target.
+2. Let’s set a default target for this workflow. Scroll down the properties panel to locate Target.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-2.png" alt="Workflow Properties" style="width:65%; height:auto;">
  
-Cisco Workflows allows you to define a default target for the entire workflow. Not being required to configure this for every step saves several clicks and your time. You can of course override the target for a particular step if you wish.
-Let’s start with something simple and list the Meraki organizations we belong to. 
-1.  In the top left, enter organizations to quickly and easily locate Meraki – Get Organizations. Drag it onto your canvas.  
- 
+   Cisco Workflows allows you to define a default target for the entire workflow. Not being required to configure this for every step saves several clicks and your time. You can of course override the target for a particular step if you wish.
+
+   Let’s start with something simple and list the Meraki organizations we belong to. 
+
+3. In the top left, enter **organizations** to quickly and easily locate Meraki – Get Organizations. Drag it onto your canvas.  
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-3.png" alt="Workflow Properties" style="width:65%; height:auto;">
+
+### Atomic Workflows
+
 Let’s pause and explore the concept of Atomic Workflows
-Note that the icon on the canvas is a stack. This indicates that this is an Atomic Workflow. An Atomic Workflow is meant to be a smaller workflow that can be run within a larger workflow. Yes, workflows running workflows. Cisco has already provided 1000+ atomic workflows for you right out of the box, but you can also create your own custom atomics. If you’ve ever coded in python, you’ve probably written a Def or a function. Defs are common things that you write once and call over and over again. Same concept with atomics. If you do a task over and over, consider writing it as an atomic and simply drag it into your larger diverse workflows.
-1.  Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click View Atomic Summary
-1.  Click See Atomic Details to view the Atomic Workflow itself and how it was built.  
+
+Note that the icon on the canvas above is a stack. This indicates that this is an **Atomic Workflow**. An **Atomic Workflow** is meant to be a smaller workflow that can be run within a larger workflow. Yes, **workflows running workflows**. Cisco has already provided 1000+ atomic workflows for you right out of the box, but you can also create your own custom atomics. If you’ve ever coded in python, you’ve probably written a Def or a function. Defs are common things that you write once and call over and over again. Same concept with atomics. If you do a task over and over, consider writing it as an atomic and simply drag it into your larger diverse workflows.
+
+4. Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click View Atomic Summary
+
+5. Click See Atomic Details to view the Atomic Workflow itself and how it was built.  
 You can see each step that Cisco (or anyone else) added to their atomics. You can also see some Workflows Best Practices, down to the specific configuration of every step.
-     
- 
+      
 We will cover conditionals later, but even if we run out of time, now you have working examples of how to build them. Thank you, Cisco Workflows team!
-1.  Click Back to parent Workflow.
-This function is usually ridiculously simple, so let’s run it.
+
+6. Click Back to parent Workflow.
+   This function is usually ridiculously simple, so let’s run it.
      
+7. Validate it and then click Run. Let’s see some green!
 
-1.  Validate it and then click Run. Let’s see some green!
-
-1.  Click Meraki - Get Organizations step and check out the result. SUCCESS!
+8. Click Meraki - Get Organizations step and check out the result. SUCCESS!
      
 Pay attention to the structure of the result, because we’re going to pull the Org ID for the next step. The JSON path for the result above is a list, and I want the first “0” entry in that list. Then I want the dictionary key ID. In JSON path queries, this would be [0][“id”]. Note that if you use an email with multiple orgs, your self-serve organization may not be first.
-TIP: If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: $[?(@.name =~ /^Org.*/)].id
-1.  Click Modify to return to the workflow editor.
+
+> [!TIP] 
+> If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: $[?(@.name =~ /^Org.*/)].id
+
+9. Click Modify to return to the workflow editor.
  
 ## Lab Exercise 2C - Add a JSONPath Query Activity
 
@@ -160,7 +175,9 @@ In this lab, a successful API call will have a return code of 200. Therefore, th
      
 Important: Note the Add Condition option. You can create complex conditionals where everything must be true, or one thing true and another false, or only one condition must be true. There are lots of options.
 1.  Configure the other conditional box.
-    TIP: Another option to easily configure additional conditional branches is to duplicate the first branch, switch the comparison operator, and update the name.
+    
+    > [!TIP]
+    > Another option to easily configure additional conditional branches is to duplicate the first branch, switch the comparison operator, and update the name.
  
 Now we need to tell the workflow what to do in each case (or branch) by dragging and dropping the appropriate actions. Let’s create an output variable that we will set in the event of an error. It’s best practice, that if anything fails, try to exit gracefully and provide a useful error message.
 1.  Click the canvas outside of the workflow and scroll down to Variables.
