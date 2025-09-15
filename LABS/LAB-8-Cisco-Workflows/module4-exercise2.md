@@ -125,28 +125,58 @@ You can see each step that Cisco (or anyone else) added to their atomics. You ca
 
 <table>
 <tr><td valign="top" align="center" width="50%">
+
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-4.png" alt="Workflow Properties" style="width:65%; height:auto;">
+
 </td><td valign="top" align="center" width="50%">
+
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
 </td></tr>
 </table>
 
-We will cover conditionals later, but even if we run out of time, now you have working examples of how to build them. Thank you, Cisco Workflows team!
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-6.png" alt="Workflow Properties" style="width:80%; height:auto; padding-left:40px;">
 
-6. Click Back to parent Workflow.
-   This function is usually ridiculously simple, so let’s run it.
-     
-7. Validate it and then click Run. Let’s see some green!
+We will cover **conditionals** later, but even if we run out of time, now you have working examples of how to build them. Thank you, Cisco Workflows team!
+
+6. Click **Back to parent Workflow**.
+   </br>This function is usually ridiculously simple, so let’s run it.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-7.png" alt="Workflow Properties" style="width:45%; height:auto;">
+
+<table>
+<tr><td valign="top" align="left" width="40%">
+
+7. Validate it and then click Run. Let’s see some <font style="color:green;">GREEN!</font>
 
 8. Click Meraki - Get Organizations step and check out the result. SUCCESS!
-     
-Pay attention to the structure of the result, because we’re going to pull the Org ID for the next step. The JSON path for the result above is a list, and I want the first “0” entry in that list. Then I want the dictionary key ID. In JSON path queries, this would be [0][“id”]. Note that if you use an email with multiple orgs, your self-serve organization may not be first.
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-8.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+Pay attention to the structure of the result, because we’re going to pull the Org ID for the next step. The JSON path for the result above is a list, and I want the first “0” entry in that list. Then I want the dictionary key ID. In JSON path queries, this would be **`[0][“id”]`**. Note that if you use an email with multiple orgs, your self-serve organization may not be first.
 
 > [!TIP] 
-> If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: $[?(@.name =~ /^Org.*/)].id
+> If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: **`$[?(@.name =~ /^Org.*/)].id`**
 
-9. Click Modify to return to the workflow editor.
- 
+9. Click **Modify** to return to the workflow editor.
+
+<table>
+<tr><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-9.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-10.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
 ## Lab Exercise 2C - Add a JSONPath Query Activity
 
 Just like we did in Lab1, we must give it a source JSON and tell it what to extract.
