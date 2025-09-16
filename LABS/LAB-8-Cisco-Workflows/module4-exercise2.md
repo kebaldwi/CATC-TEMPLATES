@@ -443,7 +443,7 @@ We will create our own functions from scratch, proving that Workflows can truly 
 The easiest way to get this communications channel up and running is by creating a Webex Bot. You could also send and receive direct IMs if you signed up for Webex OAUTH, but that involves a few extra steps. 
 
 <table>
-<tr><td valign="top" align="left" width="50%">
+<tr><td valign="top" align="left" width="40%">
 
 1. Open a web browser, go to **[developer.webex.com](https://developer.webex.com)**, and log in. 
 
@@ -451,24 +451,24 @@ The easiest way to get this communications channel up and running is by creating
 
 3. Click **Create New App**.	 
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="left" width="60%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-1.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-1.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
-</tr><tr><td valign="top" align="left" width="50%">
+</tr><tr><td valign="top" align="left" width="40%">
 
 4. Select **Create a Bot** and complete the fields shown here.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="left" width="60%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
-</tr><tr><td valign="top" align="left" width="50%">
+</tr><tr><td valign="top" align="left" width="40%">
 
 > [!NOTE]
 > Make sure to copy your token someplace easy to access and secure
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="left" width="60%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-3.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
