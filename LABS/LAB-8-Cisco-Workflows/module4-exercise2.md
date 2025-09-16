@@ -328,7 +328,7 @@ Now we need to tell the workflow what to do in each case (or branch) by dragging
 
     In this example, we have selected the error message from the previous Get Organizations activity. Try out the activity
 
-    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-13.png" alt="Workflow Properties" style="width:90%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-13.png" alt="Workflow Properties" style="width:45%; height:auto;">
 
 <table>
 <tr><td valign="top" align="left" width="40%">
@@ -346,7 +346,8 @@ Now we need to tell the workflow what to do in each case (or branch) by dragging
 <table>
 <tr><td valign="top" align="left" width="50%">
 
-12. Let’s test it to be sure the error kicks in like we expect.  Navigate back to the workflow and change the evaluation fields from 200 to something else. 
+12. Let’s test it to be sure the error kicks in like we expect.  Navigate back to the workflow and change the evaluation fields from 200 to something else.
+ 
     Don’t forget to change both blocks and run the workflow again.
 
 </td><td valign="top" align="left" width="50%">
@@ -358,37 +359,81 @@ Now we need to tell the workflow what to do in each case (or branch) by dragging
 
 **Nice!** Graceful exit and a useful error message. You could add a Webex message, or email, or text yourself. Drop anything you like into the success or failure blocks. Pretty sweet aye? Don’t forget to change the conditional expressions back to your 200 code and then we’ll head to the next section of this lab.
 
-<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-16.png" alt="Workflow Properties" style="width:80%; height:auto; padding-left:40px;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-16.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
 ## Lab Exercise 2E - Take Inventory
 
-1.  Drag-and-drop the task titled Meraki – Get Organization Devices at the bottom of our workflow.
-Scroll down the configuration panel. Guess what’s required – the org. Good thing you already pulled that with the previous JSON query. This is an easy configuration with our friendly puzzle icon for mapping.
- 
-This step returns a JSON table with some good info about each device in the org. Now let’s create a table that we can use in a later step.  
- 
-1.  Navigate back to the workflow editor, find the Read Table from JSON activity, and drag-and-drop it at the bottom of the workflow.
-We are going to create a table dynamically based on what was returned in that previous step. The first step is to specify the JSON Path to read
-1.  Enter $ in the JSON Path field.
+1. Drag-and-drop the task titled **Meraki – Get Organization** Devices at the bottom of our workflow.
+   
+   Scroll down the configuration panel. Guess what’s required – the org. Good thing you already pulled that with the previous JSON query. This is an easy configuration with our friendly puzzle icon for mapping.
 
-1.  Select Persist Table so we can use it later.
-     
-A nice feature is that you get to pick and choose what fields are interesting to you to add to your Table for your workflow. If you need to go back and reference the JSON result, you can leverage View Runs under the More Actions drop down menu.
-1.  Click Add five times and enter the key values from the JSON into the Name fields.
-You can leave the Type as String for all of these.
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+   This step returns a JSON table with some good info about each device in the org. Now let’s create a table that we can use in a later step.  
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+2. Navigate back to the workflow editor, find the Read Table from JSON activity, and drag-and-drop it at the bottom of the workflow.
+
+   We are going to create a table dynamically based on what was returned in that previous step. The first step is to specify the JSON Path to read
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+3. Enter **`$`** in the JSON Path field.
+
+4. Select **Persist Table** so we can use it later.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-3.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+</td></tr>
+</table>
+
+   A nice feature is that you get to pick and choose what fields are interesting to you to add to your Table for your workflow. If you need to go back and reference the JSON result, you can leverage **View Runs** under the More Actions drop down menu.
+
+5. Click **Add** five times and enter the key values from the JSON into the Name fields.
+
+   You can leave the Type as String for all of these.
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
 Let’s get the following fields:
-•	Serial
-•	Mac
-•	Product Type
-•	Model
-•	Firmware	 
+*	Serial
+*	Mac
+*	Product Type
+*	Model
+*	Firmware	 
 
-1.  Map the Source JSON to the previous output.	 
-1.  Run it and check the result.
-You’ve got a nice, neat table with exactly what you wanted.
+</td><td valign="top" align="left" width="50%">
 
-Congratulations. You’re doing useful productive workflows and haven’t written a single line of code (yet).
-     
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-4.png" alt="Workflow Properties" style="width:50%; height:auto;">
+
+</tr><td valign="top" align="left" width="50%">
+
+6. Map the Source JSON to the previous output.	
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><td valign="top" align="left" width="50%">
+
+7. Run it and check the result.
+
+   You’ve got a nice, neat table with exactly what you wanted.
+
+   **Congratulations!** You’re doing useful productive workflows and haven’t written a single line of code (yet).
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-6.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+</table>
+
 ## Lab Exercise 2F - Share the Table with Webex
 
 At the time of this writing, Workflows is still in early preview and there are a couple of functions that still need a little more love.  Webex happens to be one of those, so this guide will do a few things. 
