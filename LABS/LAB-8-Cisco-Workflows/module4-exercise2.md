@@ -165,6 +165,10 @@ Pay attention to the structure of the result, because we’re going to pull the 
 
 9. Click **Modify** to return to the workflow editor.
 
+## Lab Exercise 2C - Add a JSONPath Query Activity
+
+Just like we did in Lab1, we must give it a source JSON and tell it what to extract.
+
 <table>
 <tr><td valign="top" align="center" width="50%">
 
@@ -177,24 +181,57 @@ Pay attention to the structure of the result, because we’re going to pull the 
 </td></tr>
 </table>
 
-## Lab Exercise 2C - Add a JSONPath Query Activity
-
-Just like we did in Lab1, we must give it a source JSON and tell it what to extract.
-     
+<table>
+<tr><td valign="top" align="left" width="50%">
 
 You can test it to make sure you pulled the Org ID correctly.  Go ahead and test if you prefer. I’m feeling a bit reckless, so I’m going to add another step.	 
 
-1.  Search for Meraki – Get Organization Networks and drag the activity onto the canvas below the JSONPath Query.
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-11.png" alt="Workflow Properties" style="width:65%; height:auto;">
+
+</td></tr>
+</table> 
+
+1. Search for **Meraki** – **Get Organization Networks** and drag the activity onto the canvas below the JSONPath Query.
+   
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-12.png" alt="Workflow Properties" style="width:70%; height:auto;">
+
+   Guess what **Get Organization Networks** requires? Let’s find out.
+
+2.  Click View Atomic Summary
  
-Guess what Get Organization Networks requires? Let’s find out.
-1.  Click View Atomic Summary
- 
-Guess who we provide an org ID? Our friend the mapping icon.
-     
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-13.png" alt="Workflow Properties" style="width:45%; height:auto;">
+
+    Guess who we provide an org ID? Our friend the mapping icon.
+
+<table>
+<tr><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-14.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-15.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
 Let’s run it. Hopefully you remember the Validate step by now – this is the last reminder.
 
-Important: Using the mapping function allows use of the output of a step for the input of a later step.
-     
+> [!NOTE]
+> Using the mapping function allows use of the output of a step for the input of a later step.
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-16.png" alt="Workflow Properties" style="width:45%; height:auto;">
+
+</td></tr>
+</table>
+
 ## Lab Exercise 2D - Logic Functions
 
 For most of this exploration of Workflows, we’re not going to validate every step like you would in the real world. This is intentional so we can cover more of the mechanics of Workflows in the time we have today. Still, let’s do one validation step so you can see why it is important.
