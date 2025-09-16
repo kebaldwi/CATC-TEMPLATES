@@ -24,7 +24,7 @@ If you went through the beginner level hands-on labs, you should now be familiar
 
 ### Lab Environment
 
-Let’s take a moment to clearly describe the environment we’re going to be playing in because it might get a little confusing. If things went smoothly, your regular Meraki account has Workflows Automation enabled. We need consistency of environments across all participants, so everyone has the same experience. We will use your Cisco Workflows-enabled Meraki account to build automation against the Meraki Self-Serve Lab environment. Put another way, for the purposes of this lab, you’re going to be automating a Meraki organization that is separate from your own Meraki organization.  
+Let’s take a moment to clearly describe the environment we’re going to be playing in because it might get a little confusing. If things went smoothly, your regular Meraki account has Workflows Automation enabled. We need consistency of environments across all participants, so everyone has the same experience. We will use your Cisco Workflows-enabled Meraki account to build automation against the Meraki Self-Serve Lab environment. Put another way, for the purposes of this lab, you’re going to be automating a Meraki organization that is separate from your own Meraki organization. 
 
 Hopefully this doesn’t get too confusing. It highlights an important takeaway from today. You can automate pretty much anything from your own Meraki organization and that includes other Meraki organizations. How many Meraki organizations do your customers have? Some have more than one! If it has an API or an SSH interface, you can automate it without writing a single line of code with Cisco Workflows.
 
@@ -108,7 +108,7 @@ You’ve set up your key and target. Now, all you have to do is write whatever a
 
    Let’s start with something simple and list the Meraki organizations we belong to. 
 
-3. In the top left, enter **organizations** to quickly and easily locate Meraki – Get Organizations. Drag it onto your canvas.  
+3. In the top left, enter **organizations** to quickly and easily locate Meraki – Get Organizations. Drag it onto your canvas. 
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-3.png" alt="Workflow Properties" style="width:65%; height:auto;">
 
@@ -121,7 +121,7 @@ Let’s pause and explore the concept of Atomic Workflows
 
 4. Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click **View Atomic Summary**
 
-5. Click **See Atomic Details** to view the Atomic Workflow itself and how it was built.  
+5. Click **See Atomic Details** to view the Atomic Workflow itself and how it was built. 
 You can see each step that Cisco (or anyone else) added to their atomics. You can also see some Workflows Best Practices, down to the specific configuration of every step.
 
 <table>
@@ -188,7 +188,7 @@ Just like we did in Lab1, we must give it a source JSON and tell it what to extr
 <table>
 <tr><td valign="top" align="left" width="50%">
 
-You can test it to make sure you pulled the Org ID correctly.  Go ahead and test if you prefer. I’m feeling a bit reckless, so I’m going to add another step.	 
+You can test it to make sure you pulled the Org ID correctly. Go ahead and test if you prefer. I’m feeling a bit reckless, so I’m going to add another step.	 
 
 </td><td valign="top" align="center" width="50%">
 
@@ -203,7 +203,7 @@ You can test it to make sure you pulled the Org ID correctly.  Go ahead and test
 
    Guess what **Get Organization Networks** requires? Let’s find out.
 
-2.  Click View Atomic Summary
+2. Click View Atomic Summary
  
     <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Inventory-13.png" alt="Workflow Properties" style="width:45%; height:auto;">
 
@@ -248,7 +248,7 @@ For most of this exploration of Workflows, we’re not going to validate every s
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-2.png" alt="Workflow Properties" style="width:45%; height:auto;">
 
-   Let’s ensure the first step was successful.  
+   Let’s ensure the first step was successful. 
 
    > [!NOTE]
    > Imagine you had a complex workflow that hit 50 APIs or took a lot of time due to required approvals or inputs from others. Perhaps you were using workflows to automate a software upgrade on a switch or router. In those scenarios, you want to verify every step and be notified if something went wrong.
@@ -346,7 +346,7 @@ Now we need to tell the workflow what to do in each case (or branch) by dragging
 <table>
 <tr><td valign="top" align="left" width="50%">
 
-12. Let’s test it to be sure the error kicks in like we expect.  Navigate back to the workflow and change the evaluation fields from 200 to something else.
+12. Let’s test it to be sure the error kicks in like we expect. Navigate back to the workflow and change the evaluation fields from 200 to something else.
  
     Don’t forget to change both blocks and run the workflow again.
 
@@ -369,7 +369,7 @@ Now we need to tell the workflow what to do in each case (or branch) by dragging
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
-   This step returns a JSON table with some good info about each device in the org. Now let’s create a table that we can use in a later step.  
+   This step returns a JSON table with some good info about each device in the org. Now let’s create a table that we can use in a later step. 
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Take-Inventory-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -436,78 +436,179 @@ Let’s get the following fields:
 
 ## Lab Exercise 2F - Share the Table with Webex
 
-At the time of this writing, Workflows is still in early preview and there are a couple of functions that still need a little more love.  Webex happens to be one of those, so this guide will do a few things. 
+At the time of this writing, Workflows is still in early preview and there are a couple of functions that still need a little more love. Webex happens to be one of those, so this guide will do a few things.
+
 We will create our own functions from scratch, proving that Workflows can truly automate and orchestrate anything. Customers can automate other vendors, which isn’t exactly what we want. However, would you rather Cisco be the control mechanism for a customer, or our competition?
+
 The easiest way to get this communications channel up and running is by creating a Webex Bot. You could also send and receive direct IMs if you signed up for Webex OAUTH, but that involves a few extra steps. 
-1.  Open a web browser, go to developer.webex.com, and log in.  
 
-1.  Click your user icon in the top right corner and click My Webex Apps
+<table>
+<tr><td valign="top" align="left" width="50%">
 
-1.  Click Create New App.	 
+1. Open a web browser, go to **[developer.webex.com](https://developer.webex.com)**, and log in. 
 
-1.  Select Create a Bot and complete the fields shown here.
-     
+2. Click your user icon in the top right corner and click **My Webex Apps**
+
+3. Click **Create New App**.	 
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-1.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%">
+
+4. Select **Create a Bot** and complete the fields shown here.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%">
+
 > [!NOTE]
 > Make sure to copy your token someplace easy to access and secure
-     
 
-Knowledge Check: What do you need to interact with another API?  You need (potentially) an API Key and a Target. In this case, I want to highlight another approach, so we’ll create the Target but use our API key as a secure string within the workflow.
-1.  Navigate Targets and enter HTTP Endpoint in the Target Type field.  
-Name it whatever you want and use the following details for the remaining fields.
-     
+</td><td valign="top" align="left" width="50%">
 
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-3.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
-1.  Navigate to your workflow editor and add HTTP Request.  
+</td></tr>
+</table>
 
-This is an important function because you can do any REST function. Anything with an API is fair game in Cisco Workflows.
+> [!NOTE]     
+> **Knowledge Check:** What do you need to interact with another API?  
+>
+> **Answer:** You need (potentially) an **API Key** and a **Target**. In this case, I want to highlight another approach, so we’ll create the **Target** but use our **API key** as a secure string within the workflow.
 
-You’re going to need your bot’s ID and your token here.
+5. Navigate Targets and enter **HTTP Endpoint** in the Target Type field. 
+   
+   Name it whatever you want and use the following details for the remaining fields.
 
-1.  Select Override Workflow Target in the HTTP Request properties because this isn’t against the Meraki API.
-     
-1.  Add the API path, the method, and the request body.
+<table>
+<tr><td valign="top" align="center" width="50%">
 
-Here is the format so you can copy/paste, but use your own Bot ID.
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-4.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
+</td><td valign="top" align="left" width="50%">
 
-{
-    "toPersonEmail": "ENTER YOUR CISCO EMAIL HERE",
-    "markdown": "Hey there!"
-  }
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
-     
-1.  For headers, select Content Type “Application JSON”, and a custom header called “Authorization” and “Bearer”.
-We’re not done yet. You could add in your API key right there after Bearer, but we’re going to store it as a secure string so not everyone will see it.
-1.  Navigate to Automation and select Variables.
-     
-1.  Create a new variable. Enter Secure String in the Data Type field, name it in the Display Name field, and add your API key.
-     
-1.  Navigate to your workflow and map the secure string into the custom header.
-     
+</td></tr>
+</table>
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+6. Navigate to your workflow editor and add HTTP Request. 
+
+   This is an important function because you can do any REST function. Anything with an API is fair game in Cisco Workflows.
+
+   You’re going to need your bot’s ID and your token here.
+
+7. Select **Override Workflow Target** in the HTTP Request properties because this isn’t against the Meraki API.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-6.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%">
+
+8. Add the API path, the method, and the request body.
+
+   Here is the format so you can copy/paste, but use your own Bot ID.
+
+   ```json
+     {
+       "toPersonEmail": "ENTER YOUR CISCO EMAIL HERE",
+       "markdown": "Hey there!"
+     }
+   ```
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-7.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+</table>     
+
+9. For headers, select Content Type “Application JSON”, and a custom header called “Authorization” and “Bearer”.
+   We’re not done yet. You could add in your API key right there after Bearer, but we’re going to store it as a secure string so not everyone will see it.
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+10. Navigate to Automation and select **Variables**.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-8.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%">
+
+11. Create a new variable. Enter **Secure String** in the Data Type field, name it in the Display Name field, and add your API key.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-9.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%">
+
+12. Navigate to your workflow and map the secure string into the custom header.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-10.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%" style="text-indent:40px;">
+
 Your headers section should look similar to this.
-     
-Other people can use your API key in Workflows, but they will not be able to see it and take it elsewhere. This will become even more useful when Cisco Workflows adds more granular RBAC.
-1.  Open Webex and run the workflow.
 
-Status Code 200!  
-     
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-11.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+</table>
+
+Other people can use your API key in Workflows, but they will not be able to see it and take it elsewhere. This will become even more useful when Cisco Workflows adds more granular RBAC.
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+13. Open Webex and run the workflow.
+
+    Status Code 200!  
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-12.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="50%" style="text-indent:40px;">
+ 
 Score!  
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-13.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+</table>
 
 ## Lab Exercise 2G - Send Something Useful This Time
 
 Let’s send ourselves the Meraki inventory table we created earlier.
-1.  Navigate to your workflow, select the HTTP request you just created, and navigate to the Request Body section.  
+1. Navigate to your workflow, select the HTTP request you just created, and navigate to the Request Body section. 
 How can you map-in the inventory table? We could try editing the message we want our bot to send. For example, we could add two carriage returns (the code for a carriage return is \n) and then map in our table.
-WARNING: It’s not going to work. Try to figure out why it won’t work by trying to run it like this.  It will serve as a good example of troubleshooting workflows.
+WARNING: It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
  
-The JSON contained quotes.  So that ended up being a very malformed Request Body.  (That’s a bad thing).  
+The JSON contained quotes. So that ended up being a very malformed Request Body. (That’s a bad thing). 
 
 What can we do to be able to achieve what we want?  
 
 We want to replace the offensive JSON characters that are raining on our parade.
      
-1.  Navigate to the workflow and see if you can find an action that will replace the problematic characters. 
-The quotes are causing issues, so let’s get rid of them.  There are three examples of the problem in this screenshot.  There are two more examples, but they are not included in the screenshot.
+1. Navigate to the workflow and see if you can find an action that will replace the problematic characters. 
+The quotes are causing issues, so let’s get rid of them. There are three examples of the problem in this screenshot. There are two more examples, but they are not included in the screenshot.
  
 
 
@@ -520,9 +621,9 @@ Replaced String	Replacement String
 
 So – lets replace these with something that still gives us the table structure.
  
-1.  Navigate to the HTTP Call and use the new string.
+1. Navigate to the HTTP Call and use the new string.
      
-1.  Run it again and see if we achieve the desired result.	 
+1. Run it again and see if we achieve the desired result.	 
 NICE!!! Look at that!  Building useful workflows and sending the output to your Webex account. That’s some really cool stuff right there!
 
 
@@ -531,46 +632,46 @@ Maybe take one more step and clean up the name of that HTTP Request.
      
 ## Lab Exercise 2H - Make the Webex an Atomic Workflow
 
-1.  Navigate to your workspace.
+1. Navigate to your workspace.
  
-1.  Click the three dots to the right of your workflow and select Duplicate.
+1. Click the three dots to the right of your workflow and select Duplicate.
  
-1.  Rename the new copy “Send to my Meraki BOT.
-1.  Delete everything except the final send step based on the generic HTTP Request.  
+1. Rename the new copy “Send to my Meraki BOT.
+1. Delete everything except the final send step based on the generic HTTP Request. 
 It should look like this when you’re ready.
  
-Since this workflow started as a Meraki workflow, we set the workflow Target Type to Meraki and then overrode the workflow target in the HTTP Request.  We need to fix this.
+Since this workflow started as a Meraki workflow, we set the workflow Target Type to Meraki and then overrode the workflow target in the HTTP Request. We need to fix this.
 
-1.  Reconfigure the workflow Target Type to be HTTP Endpoint.
+1. Reconfigure the workflow Target Type to be HTTP Endpoint.
       
-1.  Reconfigure the HTTP Request Target to be Use Workflow Target.
-1.  Navigate to Variables and add input variables to the Atomic Workflow. 
-1.  Add an output variable for the response code.
+1. Reconfigure the HTTP Request Target to be Use Workflow Target.
+1. Navigate to Variables and add input variables to the Atomic Workflow. 
+1. Add an output variable for the response code.
          
-1.  Navigate to the HTTP Request and replace some of it with these new mapped input variables.
+1. Navigate to the HTTP Request and replace some of it with these new mapped input variables.
 
 > [!NOTE]
-> We touched on this a little bit, but let’s reinforce it.  One of the nice features of our friend the mapping icon (x) is you can highlight something, and it will automatically replace what’s highlighted with the mapped variable.
-1.  Access the Request Body and highlight the email address.
+> We touched on this a little bit, but let’s reinforce it. One of the nice features of our friend the mapping icon (x) is you can highlight something, and it will automatically replace what’s highlighted with the mapped variable.
+1. Access the Request Body and highlight the email address.
  
-1.  Click the mapping icon and navigate to the input variables.
+1. Click the mapping icon and navigate to the input variables.
  
-1.  Click Save and then do the same for the message payload.
+1. Click Save and then do the same for the message payload.
  
  
-1.  Map the result code to the output variable
+1. Map the result code to the output variable
  
-1.  Validate the workflow, click the canvas to access the general workflow properties, and set it as an Atomic Workflow.  
-1.  You can save it under an existing category or create a new custom category.  For this example, I’ll create a new one and save it there.
+1. Validate the workflow, click the canvas to access the general workflow properties, and set it as an Atomic Workflow. 
+1. You can save it under an existing category or create a new custom category. For this example, I’ll create a new one and save it there.
  
-Congratulations.  Now you have a “send to Meraki” atomic to use again and again whenever you need it.
+Congratulations. Now you have a “send to Meraki” atomic to use again and again whenever you need it.
 
-1.  Click the Atomics tab to view the new workflow.
+1. Click the Atomics tab to view the new workflow.
      
-1.  Return to your Meraki Inventory workflow. You should see your new adapter category.
+1. Return to your Meraki Inventory workflow. You should see your new adapter category.
      
 
-1.  Drag it over to the canvas, configure it to send Have a Nice Day, override the target, and run it.
+1. Drag it over to the canvas, configure it to send Have a Nice Day, override the target, and run it.
          
 How easy was that? How easy will it be next time?
 
@@ -581,7 +682,7 @@ How easy was that? How easy will it be next time?
 > * Exporting/importing may have issues. Workflows and custom Atomics each have a unique UUID for the platform. Currently the standard Workflows Export function does not include custom Atomics when exporting a workflow. 
 
 > [!NOTE]
->  that you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics.  
+>  that you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics. 
 
 ## Summary
 
