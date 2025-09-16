@@ -116,7 +116,8 @@ You’ve set up your key and target. Now, all you have to do is write whatever a
 
 Let’s pause and explore the concept of Atomic Workflows
 
-Note that the icon on the canvas above is a stack. This indicates that this is an **Atomic Workflow**. An **Atomic Workflow** is meant to be a smaller workflow that can be run within a larger workflow. Yes, **workflows running workflows**. Cisco has already provided 1000+ atomic workflows for you right out of the box, but you can also create your own custom atomics. If you’ve ever coded in python, you’ve probably written a Def or a function. Defs are common things that you write once and call over and over again. Same concept with atomics. If you do a task over and over, consider writing it as an atomic and simply drag it into your larger diverse workflows.
+> [!NOTE]
+> That the icon on the canvas above is a stack. This indicates that this is an **Atomic Workflow**. An **Atomic Workflow** is meant to be a smaller workflow that can be run within a larger workflow. Yes, **workflows running workflows**. Cisco has already provided 1000+ atomic workflows for you right out of the box, but you can also create your own custom atomics. If you’ve ever coded in python, you’ve probably written a Def or a function. Defs are common things that you write once and call over and over again. Same concept with atomics. If you do a task over and over, consider writing it as an atomic and simply drag it into your larger diverse workflows.
 
 4. Hover your mouse over the Atomic Workflow you just added to your canvas, and you’ll notice three dots. Click **View Atomic Summary**
 
@@ -158,7 +159,10 @@ We will cover **conditionals** later, but even if we run out of time, now you ha
 </td></tr>
 </table>
 
-Pay attention to the structure of the result, because we’re going to pull the Org ID for the next step. The JSON path for the result above is a list, and I want the first “0” entry in that list. Then I want the dictionary key ID. In JSON path queries, this would be **`[0][“id”]`**. Note that if you use an email with multiple orgs, your self-serve organization may not be first.
+Pay attention to the structure of the result, because we’re going to pull the Org ID for the next step. The JSON path for the result above is a list, and I want the first “0” entry in that list. Then I want the dictionary key ID. In JSON path queries, this would be **`[0][“id”]`**. 
+
+> [!NOTE]
+> That if you use an email with multiple orgs, your self-serve organization may not be first.
 
 > [!TIP] 
 > If you have multiple organizations in your response, one option would be to use a slightly more complex JSONPath Query that looks for the ID of the organization name that starts with “Org”, like this one: **`$[?(@.name =~ /^Org.*/)].id`**
@@ -235,45 +239,126 @@ Let’s run it. Hopefully you remember the Validate step by now – this is the 
 ## Lab Exercise 2D - Logic Functions
 
 For most of this exploration of Workflows, we’re not going to validate every step like you would in the real world. This is intentional so we can cover more of the mechanics of Workflows in the time we have today. Still, let’s do one validation step so you can see why it is important.
-1.  Navigate to the Logic tab on the left-hand bar.
- 
-1.  Drag the Condition Block onto the canvas and place it after your first Meraki – Get Organizations.
- 
-Let’s ensure the first step was successful.  
-Important: Imagine you had a complex workflow that hit 50 APIs or took a lot of time due to required approvals or inputs from others. Perhaps you were using workflows to automate a software upgrade on a switch or router. In those scenarios, you want to verify every step and be notified if something went wrong.
-In this lab, a successful API call will have a return code of 200. Therefore, the conditional will continue only if the return code is 200.
-1.  Rename the conditional to help others follow your logic.
- 
-1.  Click the block on the left and name it 200 Successful. Name the other block something like Not 200.
- 
-1.  Click 200 Successful and configure the logic in the panel on the right. Start with our best friend, the mapping function.
-     
-Important: Note the Add Condition option. You can create complex conditionals where everything must be true, or one thing true and another false, or only one condition must be true. There are lots of options.
-1.  Configure the other conditional box.
-    
-    > [!TIP]
-    > Another option to easily configure additional conditional branches is to duplicate the first branch, switch the comparison operator, and update the name.
- 
+
+1. Navigate to the **Logic** tab on the left-hand bar.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-1.png" alt="Workflow Properties" style="width:25%; height:auto;">
+
+1. Drag the Condition Block onto the canvas and place it after your first **Meraki – Get Organizations**.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-2.png" alt="Workflow Properties" style="width:45%; height:auto;">
+
+   Let’s ensure the first step was successful.  
+
+   > [!NOTE]
+   > Imagine you had a complex workflow that hit 50 APIs or took a lot of time due to required approvals or inputs from others. Perhaps you were using workflows to automate a software upgrade on a switch or router. In those scenarios, you want to verify every step and be notified if something went wrong.
+   >
+   > In this lab, a successful API call will have a return code of 200. Therefore, the conditional will continue only if the return code is 200.
+
+3. Rename the conditional to help others follow your logic.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-3.png" alt="Workflow Properties" style="width:100%; height:auto;"> 
+
+4. Click the block on the left and name it 200 Successful. Name the other block something like Not 200.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-4.png" alt="Workflow Properties" style="width:60%; height:auto;"> 
+
+5. Click **200 Successful** and configure the logic in the panel on the right. Start with our best friend, the mapping function.
+
+<table>
+<tr><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;"> 
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-6.png" alt="Workflow Properties" style="width:60%; height:auto;"> 
+
+</td></tr>
+</table>
+
+> [!NOTE]
+>  the Add Condition option. You can create complex conditionals where everything must be true, or one thing true and another false, or only one condition must be true. There are lots of options.
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+6. Configure the other conditional box.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-7.png" alt="Workflow Properties" style="width:90%; height:auto;"> 
+
+</td><td valign="top" align="left" width="50%">
+
+  > [!TIP]
+  > Another option to easily configure additional conditional branches is to duplicate the first branch, switch the comparison operator, and update the name.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-8.png" alt="Workflow Properties" style="width:90%; height:auto;"> 
+
+</td></tr>
+</table>
+
 Now we need to tell the workflow what to do in each case (or branch) by dragging and dropping the appropriate actions. Let’s create an output variable that we will set in the event of an error. It’s best practice, that if anything fails, try to exit gracefully and provide a useful error message.
-1.  Click the canvas outside of the workflow and scroll down to Variables.
-     
-1.  Add an output variable by selecting Output in the Scope field. It will be a potential error message, so select String in the Data Type field.
-     
-1.  Find the Set Variables activity and drag it into the Not 200 conditional block. 
-This will set the error message in the event of a failure.
- 
-1.  Add the Completed logic activity so we can exit the workflow if there is a problem.
- 
-1.  In the Completed Logic activity, you can select Success or Failed as the Completion Type and then map a useful message to the workflow result message.
-In this example, we have selected the error message from the previous Get Organizations activity. Try out the activity.
- 
-Note that the 200 Successful condition branch did not have to contain activities. The conditional logic could have tested only the Not 200 case because that was the only branch that required activities. However, including the 200 Successful branch makes the workflow more easily understood by others and helps to visually document the logic and flow.	 
 
+<table>
+<tr><td valign="top" align="left" width="50%">
 
-1.  Let’s test it to be sure the error kicks in like we expect.  Navigate back to the workflow and change the evaluation fields from 200 to something else. 
-Don’t forget to change both blocks and run the workflow again.
-     
-Nice. Graceful exit and a useful error message. You could add a Webex message, or email, or text yourself. Drop anything you like into the success or failure blocks. Pretty sweet aye? Don’t forget to change the conditional expressions back to your 200 code and then we’ll head to the next section of this lab.
+7. Click the canvas outside of the workflow and scroll down to Variables.</br></br>
+
+8. Add an output variable by selecting **Output** in the Scope field. It will be a potential error message, so select **String** in the Data Type field.
+
+</td><td valign="top" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-9.png" alt="Workflow Properties" style="width:90%; height:auto;"> 
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-10.png" alt="Workflow Properties" style="width:90%; height:auto;"> 
+
+</td></tr>
+</table>
+
+9. Find the Set Variables activity and drag it into the Not 200 conditional block. 
+   This will set the error message in the event of a failure.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-11.png" alt="Workflow Properties" style="width:70%; height:auto;">
+
+10. Add the Completed logic activity so we can exit the workflow if there is a problem.
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-12.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+11. In the Completed Logic activity, you can select **Success** or **Failed** as the Completion Type and then map a useful message to the workflow result message.
+
+    In this example, we have selected the error message from the previous Get Organizations activity. Try out the activity
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-13.png" alt="Workflow Properties" style="width:90%; height:auto;">
+
+<table>
+<tr><td valign="top" align="left" width="40%">
+
+> [!NOTE]
+> That the 200 Successful condition branch did not have to contain activities. The conditional logic could have tested only the Not 200 case because that was the only branch that required activities. However, including the 200 Successful branch makes the workflow more easily understood by others and helps to visually document the logic and flow.	 
+
+</td><td valign="top" align="left" width="60%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-14.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+12. Let’s test it to be sure the error kicks in like we expect.  Navigate back to the workflow and change the evaluation fields from 200 to something else. 
+    Don’t forget to change both blocks and run the workflow again.
+
+</td><td valign="top" align="left" width="50%">
+
+  <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-15.png" alt="Workflow Properties" style="width:70%; height:auto;">
+
+</td></tr>
+</table>
+
+**Nice!** Graceful exit and a useful error message. You could add a Webex message, or email, or text yourself. Drop anything you like into the success or failure blocks. Pretty sweet aye? Don’t forget to change the conditional expressions back to your 200 code and then we’ll head to the next section of this lab.
+
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Modify-Inventory-16.png" alt="Workflow Properties" style="width:80%; height:auto; padding-left:40px;">
 
 ## Lab Exercise 2E - Take Inventory
 
@@ -418,7 +503,9 @@ Since this workflow started as a Meraki workflow, we set the workflow Target Typ
 1.  Add an output variable for the response code.
          
 1.  Navigate to the HTTP Request and replace some of it with these new mapped input variables.
-Important: We touched on this a little bit, but let’s reinforce it.  One of the nice features of our friend the mapping icon (x) is you can highlight something, and it will automatically replace what’s highlighted with the mapped variable.
+
+> [!NOTE]
+> We touched on this a little bit, but let’s reinforce it.  One of the nice features of our friend the mapping icon (x) is you can highlight something, and it will automatically replace what’s highlighted with the mapped variable.
 1.  Access the Request Body and highlight the email address.
  
 1.  Click the mapping icon and navigate to the input variables.
@@ -446,7 +533,10 @@ How easy was that? How easy will it be next time?
 > While Atomics are awesome, there are some things you should be aware of.
 > 
 > * In the previous example, your API key is available to other workflow users (until RBAC enhancements roll out). Maybe this is OK, but be aware of potentially sensitive things you include in your workflows.
-> * Exporting/importing may have issues. Workflows and custom Atomics each have a unique UUID for the platform. Currently the standard Workflows Export function does not include custom Atomics when exporting a workflow. Note that you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics.  
+> * Exporting/importing may have issues. Workflows and custom Atomics each have a unique UUID for the platform. Currently the standard Workflows Export function does not include custom Atomics when exporting a workflow. 
+
+> [!NOTE]
+>  that you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics.  
 
 ## Summary
 
