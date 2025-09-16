@@ -451,7 +451,7 @@ The easiest way to get this communications channel up and running is by creating
 
 3. Click **Create New App**.	 
 
-</td><td valign="top" align="left" width="60%">
+</td><td valign="top" align="center" width="60%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-1.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
@@ -459,18 +459,18 @@ The easiest way to get this communications channel up and running is by creating
 
 4. Select **Create a Bot** and complete the fields shown here.
 
-</td><td valign="top" align="left" width="60%">
+</td><td valign="top" align="center" width="60%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-2.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </tr><tr><td valign="top" align="left" width="40%">
 
 > [!NOTE]
 > Make sure to copy your token someplace easy to access and secure
 
-</td><td valign="top" align="left" width="60%">
+</td><td valign="top" align="center" width="60%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-3.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-3.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>
@@ -507,7 +507,7 @@ The easiest way to get this communications channel up and running is by creating
 
 7. Select **Override Workflow Target** in the HTTP Request properties because this isn’t against the Meraki API.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-6.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -524,9 +524,9 @@ The easiest way to get this communications channel up and running is by creating
      }
    ```
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-7.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-7.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>     
@@ -539,7 +539,7 @@ The easiest way to get this communications channel up and running is by creating
 
 10. Navigate to Automation and select **Variables**.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-8.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -547,7 +547,7 @@ The easiest way to get this communications channel up and running is by creating
 
 11. Create a new variable. Enter **Secure String** in the Data Type field, name it in the Display Name field, and add your API key.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-9.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -555,7 +555,7 @@ The easiest way to get this communications channel up and running is by creating
 
 12. Navigate to your workflow and map the secure string into the custom header.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-10.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -563,7 +563,7 @@ The easiest way to get this communications channel up and running is by creating
 
 Your headers section should look similar to this.
 
-</td><td valign="top" align="left" width="50%">
+</td><td valign="top" align="center" width="50%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-11.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
@@ -581,7 +581,7 @@ Other people can use your API key in Workflows, but they will not be able to see
 
 </td><td valign="top" align="left" width="50%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-12.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-12.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </tr><tr><td valign="top" align="left" width="50%" style="text-indent:40px;">
  
@@ -589,7 +589,7 @@ Score!
 
 </td><td valign="top" align="left" width="50%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-13.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/share-webex-13.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>
