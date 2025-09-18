@@ -639,23 +639,23 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
    So – lets replace these with something that still gives us the table structure.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-4.png" alt="Workflow Properties" style="width:60%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-4.png" alt="Workflow Properties" style="width:50%; height:auto;">
 
 <table>
-<tr><td valign="top" align="left" width="50%">
+<tr><td valign="top" align="left" width="40%">
 
 3. Navigate to the HTTP Call and use the new string.
 
-</td><td valign="top" align="center" width="45%">
+</td><td valign="top" align="center" width="60%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-5.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
-<tr><td valign="top" align="left" width="50%">
+<tr><td valign="top" align="left" width="40%">
      
 4. Run it again and see if we achieve the desired result.	 
 
-</td><td valign="top" align="center" width="55%">
+</td><td valign="top" align="center" width="60%">
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-6.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
@@ -669,7 +669,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
 Maybe take one more step and clean up the name of that HTTP Request.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-7.png" alt="Workflow Properties" style="width:50%; height:auto; display:block;margin:50">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-7.png" alt="Workflow Properties" style="width:45%; height:auto;">
 
 </td><td valign="middle" align="left" width="50%">
 
