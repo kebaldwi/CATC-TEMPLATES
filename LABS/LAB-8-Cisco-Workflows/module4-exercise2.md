@@ -597,38 +597,86 @@ Score!
 ## Lab Exercise 2G - Send Something Useful This Time
 
 Let’s send ourselves the Meraki inventory table we created earlier.
-1. Navigate to your workflow, select the HTTP request you just created, and navigate to the Request Body section. 
-How can you map-in the inventory table? We could try editing the message we want our bot to send. For example, we could add two carriage returns (the code for a carriage return is \n) and then map in our table.
-WARNING: It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
- 
+
+1. Navigate to your workflow, select the HTTP request you just created, and navigate to the Request Body section.
+
+   How can you map-in the inventory table? We could try editing the message we want our bot to send. For example, we could add two carriage returns (the code for a carriage return is \n) and then map in our table.
+
+   > [!WARNING]
+   > It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+<table>
+<tr><td valign="top" align="left" width="40%">
+
 The JSON contained quotes. So that ended up being a very malformed Request Body. (That’s a bad thing). 
 
 What can we do to be able to achieve what we want?  
 
 We want to replace the offensive JSON characters that are raining on our parade.
-     
-1. Navigate to the workflow and see if you can find an action that will replace the problematic characters. 
-The quotes are causing issues, so let’s get rid of them. There are three examples of the problem in this screenshot. There are two more examples, but they are not included in the screenshot.
+
+</td><td valign="top" align="center" width="60%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-2.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+2. Navigate to the workflow and see if you can find an action that will replace the problematic characters. 
+   
+   The quotes are causing issues, so let’s get rid of them. There are three examples of the problem in this screenshot. There are two more examples, but they are not included in the screenshot.
  
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-3.png" alt="Workflow Properties" style="width:70%; height:auto;">
 
+   |Replaced String|Replacement String|
+   |---------------|------------------|
+   |[{"	          |                  |
+   |"}]	          |                  |
+   |":"	          |:                 |
+   |","	          |\n                |
+   |"},{"          |\n\n              |
 
-Replaced String	Replacement String
-[{"	
-"}]	
-":"	:
-","	\n
-"},{"	\n\n
+   So – lets replace these with something that still gives us the table structure.
 
-So – lets replace these with something that still gives us the table structure.
- 
-1. Navigate to the HTTP Call and use the new string.
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-4.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+3. Navigate to the HTTP Call and use the new string.
+
+</td><td valign="top" align="center" width="45%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+<tr><td valign="top" align="left" width="50%">
      
-1. Run it again and see if we achieve the desired result.	 
-NICE!!! Look at that!  Building useful workflows and sending the output to your Webex account. That’s some really cool stuff right there!
+4. Run it again and see if we achieve the desired result.	 
 
+</td><td valign="top" align="center" width="55%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-6.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+**NICE!!!** Look at that! Building useful workflows and sending the output to your Webex account. That’s some really cool stuff right there!
 
 Maybe take one more step and clean up the name of that HTTP Request.
 
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-7.png" alt="Workflow Properties" style="width:50%; height:auto; display:block;margin:50">
+
+</td><td valign="middle" align="left" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-8.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
      
 ## Lab Exercise 2H - Make the Webex an Atomic Workflow
 
