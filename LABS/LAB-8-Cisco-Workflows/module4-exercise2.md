@@ -605,7 +605,7 @@ Let’s send ourselves the Meraki inventory table we created earlier.
    > [!WARNING]
    > It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
 <table>
 <tr><td valign="top" align="left" width="40%">
@@ -618,7 +618,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
 </td><td valign="top" align="center" width="60%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-2.png" alt="Workflow Properties" style="width:100%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-2.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>
@@ -627,7 +627,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
    
    The quotes are causing issues, so let’s get rid of them. There are three examples of the problem in this screenshot. There are two more examples, but they are not included in the screenshot.
  
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-3.png" alt="Workflow Properties" style="width:70%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-3.png" alt="Workflow Properties" style="width:70%; height:auto;">
 
    |Replaced String|Replacement String|
    |---------------|------------------|
@@ -639,7 +639,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
    So – lets replace these with something that still gives us the table structure.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-4.png" alt="Workflow Properties" style="width:60%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-4.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
 <table>
 <tr><td valign="top" align="left" width="50%">
@@ -648,7 +648,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
 </td><td valign="top" align="center" width="45%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
 </td></tr>
 <tr><td valign="top" align="left" width="50%">
@@ -657,7 +657,7 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
 </td><td valign="top" align="center" width="55%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-6.png" alt="Workflow Properties" style="width:100%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-6.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>
@@ -669,11 +669,11 @@ We want to replace the offensive JSON characters that are raining on our parade.
 
 Maybe take one more step and clean up the name of that HTTP Request.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-7.png" alt="Workflow Properties" style="width:50%; height:auto; display:block;margin:50">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-7.png" alt="Workflow Properties" style="width:50%; height:auto; display:block;margin:50">
 
 </td><td valign="middle" align="left" width="50%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/send-inventory-8.png" alt="Workflow Properties" style="width:100%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-8.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 </td></tr>
 </table>
@@ -682,10 +682,10 @@ Maybe take one more step and clean up the name of that HTTP Request.
 
 1. Navigate to your workspace.
  
-1. Click the three dots to the right of your workflow and select Duplicate.
+2. Click the three dots to the right of your workflow and select Duplicate.
  
-1. Rename the new copy “Send to my Meraki BOT.
-1. Delete everything except the final send step based on the generic HTTP Request. 
+3. Rename the new copy “Send to my Meraki BOT.
+4. Delete everything except the final send step based on the generic HTTP Request. 
 It should look like this when you’re ready.
  
 Since this workflow started as a Meraki workflow, we set the workflow Target Type to Meraki and then overrode the workflow target in the HTTP Request. We need to fix this.
