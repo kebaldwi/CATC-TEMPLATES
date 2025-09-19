@@ -602,8 +602,8 @@ Let’s send ourselves the Meraki inventory table we created earlier.
 
    How can you map-in the inventory table? We could try editing the message we want our bot to send. For example, we could add two carriage returns (the code for a carriage return is \n) and then map in our table.
 
-   > [!WARNING]
-   > It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
+> [!WARNING]
+> It’s not going to work. Try to figure out why it won’t work by trying to run it like this. It will serve as a good example of troubleshooting workflows.
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Send-Inventory-1.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
@@ -681,46 +681,136 @@ Maybe take one more step and clean up the name of that HTTP Request.
 ## Lab Exercise 2H - Make the Webex an Atomic Workflow
 
 1. Navigate to your workspace.
- 
-2. Click the three dots to the right of your workflow and select Duplicate.
- 
-3. Rename the new copy “Send to my Meraki BOT.
-4. Delete everything except the final send step based on the generic HTTP Request. 
-It should look like this when you’re ready.
- 
-Since this workflow started as a Meraki workflow, we set the workflow Target Type to Meraki and then overrode the workflow target in the HTTP Request. We need to fix this.
 
-1. Reconfigure the workflow Target Type to be HTTP Endpoint.
-      
-1. Reconfigure the HTTP Request Target to be Use Workflow Target.
-1. Navigate to Variables and add input variables to the Atomic Workflow. 
-1. Add an output variable for the response code.
-         
-1. Navigate to the HTTP Request and replace some of it with these new mapped input variables.
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-1.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+2. Click the three dots to the right of your workflow and select Duplicate.
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-2.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+3. Rename the new copy “Send to my Meraki BOT.
+
+4. Delete everything except the final send step based on the generic HTTP Request. 
+
+   It should look like this when you’re ready.
+   
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-3.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+<table>
+<tr><td valign="top" align="left" width="50%">
+
+5. Since this workflow started as a Meraki workflow, we set the workflow Target Type to Meraki and then overrode the workflow target in the HTTP Request. We need to fix this.
+
+   Reconfigure the workflow Target Type to be HTTP Endpoint.
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-4.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td><tr><td valign="top" align="left" width="50%">
+
+6. Reconfigure the HTTP Request Target to be Use Workflow Target.
+
+</td><td valign="top" align="center" width="50%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-5.png" alt="Workflow Properties" style="width:80%; height:auto;">
+
+</td></tr>
+</table>
+
+7. Navigate to Variables and add input variables to the Atomic Workflow. 
+
+8. Add an output variable for the response code.
+
+<div style="padding-left:40px;">
+<table>
+<tr><td valign="top" align="center" width="33%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-6.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td><td valign="top" align="center" width="33%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-7.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td><td valign="top" align="center" width="33%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-8.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+</div>
+
+9. Navigate to the HTTP Request and replace some of it with these new mapped input variables.
 
 > [!NOTE]
 > We touched on this a little bit, but let’s reinforce it. One of the nice features of our friend the mapping icon (x) is you can highlight something, and it will automatically replace what’s highlighted with the mapped variable.
-1. Access the Request Body and highlight the email address.
+
+10. Access the Request Body and highlight the email address.
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-9.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+11. Click the mapping icon and navigate to the input variables.
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-10.png" alt="Workflow Properties" style="width:50%; height:auto;">
+
+12. Click Save and then do the same for the message payload.
  
-1. Click the mapping icon and navigate to the input variables.
- 
-1. Click Save and then do the same for the message payload.
- 
- 
-1. Map the result code to the output variable
- 
-1. Validate the workflow, click the canvas to access the general workflow properties, and set it as an Atomic Workflow. 
-1. You can save it under an existing category or create a new custom category. For this example, I’ll create a new one and save it there.
- 
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-11.png" alt="Workflow Properties" style="width:70%; height:auto;">
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-12.png" alt="Workflow Properties" style="width:70%; height:auto;">
+
+13. Map the result code to the output variable
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-13.png" alt="Workflow Properties" style="width:60%; height:auto;">
+
+14. Validate the workflow, click the canvas to access the general workflow properties, and set it as an Atomic Workflow.
+
+15. You can save it under an existing category or create a new custom category. For this example, I’ll create a new one and save it there.
+
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-14.png" alt="Workflow Properties" style="width:40%; height:auto;">
+
 Congratulations. Now you have a “send to Meraki” atomic to use again and again whenever you need it.
 
-1. Click the Atomics tab to view the new workflow.
-     
-1. Return to your Meraki Inventory workflow. You should see your new adapter category.
-     
+<table>
+<tr><td valign="top" align="left" width="45%">
 
-1. Drag it over to the canvas, configure it to send Have a Nice Day, override the target, and run it.
-         
+16. Click the Atomics tab to view the new workflow.
+
+</td><td valign="top" align="left" width="55%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-15.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</tr><tr><td valign="top" align="left" width="45%">
+
+17. Return to your Meraki Inventory workflow. You should see your new adapter category.
+
+</td><td valign="top" align="center" width="55%">
+     
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-16.png" alt="Workflow Properties" style="width:40%; height:auto;">
+
+</td></tr>
+</table>
+
+18. Drag it over to the canvas, configure it to send Have a Nice Day, override the target, and run it.
+
+<div style="padding-left:40px;">
+<table>
+<tr><td valign="top" align="center" width="25%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-17.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td><td valign="top" align="center" width="25%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-18.png" alt="Workflow Properties" style="width:86%; height:auto;">
+
+</td><td valign="top" align="center" width="36%">
+
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Webex-Atomic-19.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+</td></tr>
+</table>
+</div>
+
 How easy was that? How easy will it be next time?
 
 > [!IMPORTANT]
@@ -728,9 +818,8 @@ How easy was that? How easy will it be next time?
 > 
 > * In the previous example, your API key is available to other workflow users (until RBAC enhancements roll out). Maybe this is OK, but be aware of potentially sensitive things you include in your workflows.
 > * Exporting/importing may have issues. Workflows and custom Atomics each have a unique UUID for the platform. Currently the standard Workflows Export function does not include custom Atomics when exporting a workflow. 
-
-> [!NOTE]
->  that you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics. 
+> 
+> **Note:** That you can export your custom Atomic separately from your workflow. If another user imports your workflow, the platform looks for the Atomics to already be present with the identical UUID. In other words, if you plan to export your workflows so others can import them, it’s best practice to *not* leverage custom atomics. 
 
 ## Summary
 
