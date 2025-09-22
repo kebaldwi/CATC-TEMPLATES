@@ -246,13 +246,13 @@ You can also map workflow variables into your Python scripts in two different wa
 </table>
 
 > [!NOTE]
-> ## Best Practice: 
+> #### Best Practice: 
 > For activity output variables, like Python activity or JSON Path, the names of the variables should be written in camelCase, as they're considered code-related. And that helps distinguish them from the workflow names. For example, deviceID vs. Device ID, and sortByDate vs. sort_by_date.
 
 The python module is especially helpful when you need to have multiple levels of nested loops.
 
 > [!NOTE]
-> ## Best Practice: 
+> #### Best Practice: 
 > Because of the relatively small real estate on the screen – get your code running in your favorite IDE – then copy it in and replace variables with our friend *(x)*. There is also a training video on using Python in Workflows.
 
 **CONGRATULATIONS!** You’re now an expert on building automation and orchestration.
@@ -321,11 +321,13 @@ Let’s return to the Meraki Inventory workflow and duplicate it for this sectio
 </td></tr>
 </table>
 
-    When you click on the For Each Loop activity, the properties field shows that only one item is required, the Source Array
+<div style="padding-left:40px">
+When you click on the For Each Loop activity, the properties field shows that only one item is required, the Source Array
+</div></br>
 
 11. Click the **(x) icon** to access the Browse Variables window and select the **Local Variable Device Serial Number Array**.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture36.png" alt="Workflow Properties" style="width:50%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture36.png" alt="Workflow Properties" style="width:50%; height:auto;">
 
 12. In the activities search box, enter **Meraki – Get Device**, drag that into the **For Each Loop**, and drop it where you see “Drag activity here.”
 
@@ -398,22 +400,26 @@ Now, how do we get a different serial number for each iteration of the loop? Fro
 </td></tr>
 </table>
 
-    Just below the General area you can see the Input that was used.
+<div style="padding-left:40px">
+Just below the General area you can see the Input that was used.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture47.png" alt="Workflow Properties" style="width:45%; height:auto;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture47.png" alt="Workflow Properties" style="width:45%; height:auto;">
 
-   Notice that when you click the For Each Loop activity, the properties show the Source Array that was used as input for the loop.
+Notice that when you click the For Each Loop activity, the properties show the Source Array that was used as input for the loop.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture48.png" alt="Workflow Properties" style="width:45%; height:auto;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture48.png" alt="Workflow Properties" style="width:45%; height:auto;">
+</div></br>
 
-**Loop Limits** – There are some important limits to keep in mind when using loops in workflows. The first is that a single looping operation is limited to **500 iterations**. The workaround for this is to use nested loops. There is a [Nested Loop Example on the Workflows Community]() site that shows how to do this:
-
-   * Maximum total loop runs per workflow: 50,000 iterations (includes loop counts from all    logic actions in a workflow)
-   * Maximum number of iterations a For Each or While Loop can run: 500
-   * Maximum workflow run time: 30 minutes
-   * If a limit is reached, the workflow fails with the run status of workflow_timeout
-
-These limits are all documented in the [Workflows Important Notes and Limits]()
+> [!IMPORTANT]
+> #### Loop Limits
+> There are some important limits to keep in mind when using loops in workflows. The first is that a single looping operation is limited to **500 iterations**. The workaround for this is to use nested loops. There is a [Nested Loop Example on the Workflows Community]() site that shows how to do this:
+>
+>   * Maximum total loop runs per workflow: 50,000 iterations (includes loop counts from all    logic actions in a workflow)
+>   * Maximum number of iterations a For Each or While Loop can run: 500
+>   * Maximum workflow run time: 30 minutes
+>   * If a limit is reached, the workflow fails with the run status of workflow_timeout
+>
+> These limits are all documented in the [Workflows Important Notes and Limits]()
 
 ## Lab Exercise 3H: User Prompts
 
@@ -513,31 +519,32 @@ Next, we need to assign these values to our Local variables.
 
 10. In the Task section of the Activities menu click and drag the **Create Prompt** activity onto the canvas and place it directly after the Set Network Name and ID arrays activity.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture61.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture61.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
 11. Click the **Create Prompt** activity to access its properties window and set a descriptive name like Select Network Name.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture62.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture62.png" alt="Workflow Properties" style="width:40%; height:auto;">
+
 
     Next, we need to assign this activity to someone to complete. In the Properties panel, in the Add assignees section. Currently, the only option is Administrator, as that is the only role with access to Workflows. Additional roles will be added before Cisco Workflows is generally available. Note that you do have the option to add assignees by email address, but selecting Administrator is sufficient for this lab.
 
 12. Select **Administrator**.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture63.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture63.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
 13. Create the Prompt Title and provide body text with additional information for the user making the selection. This title will be shown in the list on the Prompts page (accessed via **Automation &rarr; Tasks &rarr; Prompts**).
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture64.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture64.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
     And finally, we’re ready to create what we started this lesson to do, and that is provide the user with a selection of Network Names.
 
 14. Click the **+Add another form element** in the Add form elements section of the Properties panel.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture65.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture65.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
 15. Select the **Dropdown select** option.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture66.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture66.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
 16. Enter **Network Name** in the **Dropdown select label** field and then map the Local variable called Network Names into the **Dropdown select options array**.
 
@@ -555,29 +562,29 @@ Next, we need to assign these values to our Local variables.
 
 17. Click **Run** to test our progress. You’ll now notice that the **Select Network Name** task is blue and remains blue. The workflow has now paused for the User Prompt activity to be completed.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture69.png" alt="Workflow Properties" style="width:40%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture69.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
     For the workflow to continue the User Prompt action must be completed.
 
 18. Navigate to **Automation &rarr; User Tasks**.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture70.png" alt="Workflow Properties" style="width:50%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture70.png" alt="Workflow Properties" style="width:50%; height:auto;">
 
 19. Select the **Prompts** tab.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture71.png" alt="Workflow Properties" style="width:60%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture71.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
     You will see the Prompt name previously configured.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture72.png" alt="Workflow Properties" style="width:60%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture72.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
 20. Click the **Prompt name** to access the Prompt form where the user can select the Network Name and click **Save**. The workflow can now resume running.  
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture73.png" alt="Workflow Properties" style="width:70%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture73.png" alt="Workflow Properties" style="width:70%; height:auto;">
 
 21. You can return to the View Run for the workflow by clicking the three dots and selecting **View Run**.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture74.png" alt="Workflow Properties" style="width:80%; height:auto;">
+    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture74.png" alt="Workflow Properties" style="width:80%; height:auto;">
 
 22. Back in the Run Monitoring view of the workflow, click the **Select Network Name** activity and the Properties panel will show the values that were presented in the **Dropdown select** as well as the Prompt Response that shows the Network Name selected by the user.
 
@@ -671,8 +678,13 @@ print(networkId)
 
 </td></tr>
 </table>
+<table>
+<tr><td valign="top" align="left" width="100%">
 
-    2. The other method is to place your cursor in your Python code, click the (x) icon to launch the Browse Variable window, and then select the variable to map in.
+2. The other method is to place your cursor in your Python code, click the (x) icon to launch the Browse Variable window, and then select the variable to map in.
+
+</td></tr>
+</table>
 
 > [!WARNING]
 > When mapping strings directly into Python code, Cisco Workflows will pass in the values un-quoted.
@@ -680,14 +692,14 @@ print(networkId)
 > [!NOTE]
 > The print function is not required, but when used, the output of that will be displayed in the Response Body of the activity.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture84.png" alt="Workflow Properties" style="width:50%; height:auto;">
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture84.png" alt="Workflow Properties" style="width:50%; height:auto; padding-left:40px;">
 
 25. The final step is to set the Script Output Variables.  
     
     * Enter **networkID** for the Script Variable, as this is the name used in the Python script.  
     * Enter **networkID** as the Property Name. This is the name that will appear in the Browse Variables window. We will use it for mapping later.
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture85.png" alt="Workflow Properties" style="width:40%; height:auto;">
+      <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE3/Picture85.png" alt="Workflow Properties" style="width:40%; height:auto;">
 
 26. Click **Meraki – Get Organization Devices Atomic** to open the Properties panel and scroll down to you see the Query – Network IDs field. Delete the square brackets **`[ ]`** that are present in the field.
 
