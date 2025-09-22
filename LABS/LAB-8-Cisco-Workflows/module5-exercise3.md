@@ -412,14 +412,14 @@ Notice that when you click the For Each Loop activity, the properties show the S
 
 > [!IMPORTANT]
 > #### Loop Limits
-> There are some important limits to keep in mind when using loops in workflows. The first is that a single looping operation is limited to **500 iterations**. The workaround for this is to use nested loops. There is a [Nested Loop Example on the Workflows Community]() site that shows how to do this:
+> There are some important limits to keep in mind when using loops in workflows. The first is that a single looping operation is limited to **500 iterations**. The workaround for this is to use nested loops. There is a **[Nested Loop Example on the Workflows Community](https://community.cisco.com/t5/cisco-workflows/example-workflows/m-p/5303172/highlight/true#M57)** site that shows how to do this:
 >
 >   * Maximum total loop runs per workflow: 50,000 iterations (includes loop counts from all    logic actions in a workflow)
 >   * Maximum number of iterations a For Each or While Loop can run: 500
 >   * Maximum workflow run time: 30 minutes
 >   * If a limit is reached, the workflow fails with the run status of workflow_timeout
 >
-> These limits are all documented in the [Workflows Important Notes and Limits]()
+> These limits are all documented in the **[Workflows Important Notes and Limits](https://documentation.meraki.com/Workflows/Workflows#Important_Notes_and_Limits)**
 
 ## Lab Exercise 3H: User Prompts
 
