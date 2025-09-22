@@ -16,8 +16,39 @@ It was determined that a cloud orchestration platform was still needed for cross
 
 **Cisco Workflows** was then attached to the dashboard which is the defacto cloud automation tool for the Enterprise Network.
 
+## Components
 
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Picture1.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
+### Workspace 
+
+This is the main panel displaying all the workflows, and atomics which is where 95% of the work will be done. These are the orchestrations which will be used to automate or orchestrate many automation engines from Cisco and 3rd Party.
+
+<img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/CreateWorkflow4.png" alt="Workflow Properties" style="width:100%; height:auto;">
+
+### Adapters
+
+This panel contains the building blocks and individual functions you can add to a workflow. They are grouped under adapters representing the different controllers with which Workflows integrates, and the individual actions called “activities” are based on API calls to the integrated products, logic components, and other workflows. Think of an activity as an API call or function. Feel free to explore some of them by expanding and examining the activities that are provided “out of the box”. 
+
+Notice how many non-Meraki activities are supported right now, and this list isn’t even the exhaustive collection of activities Cisco has (Catalyst Center, Catalyst SD-WAN, Cisco FMC, ISE). There are also non-networking activities, such as Ansible and Terraform and Python. Scroll all the way to the bottom and note the Web Service activity that provides a generic REST API activity. If you need to automate something with a REST API – that is your catch-all for all things REST. I won’t list them all here, however, the main takeaway is that Cisco Workflows is a very powerful multi-domain automation and orchestration tool that your customers will already have.
+
+### Properties
+
+This panel includes the properties of the workflow itself as well as those for each activity on the workflow canvas. With a blank palette, the properties panel is where all the details and specifics of your automation are entered. Right now, with a blank canvas, the Properties space is for the overall workflow general configuration.  You can define variables for the workflow, and various other details we will get to soon.
+
+### Canvas
+
+This panel is where you build the structure and set the actions, order, and logic for a workflow. Drag-and-drop items from the Activities panel, including other workflows, here to add them to a workflow. You can drag and drop items on the canvas to change their location and order in the workflow. This is your space to build anything you wish.  
+Validate and Run
+
+These are important concepts to pick up at the beginning of your Cisco Workflows journey.  Run executes your workflow, however, notice how it’s greyed out.  Cisco Workflows has a built in “gut check” that is required before a workflow is allowed to run.  For example, what if the workflow designer forgot to configure a required part of a function or the larger workflow itself – rather than attempt and fail, this screen requires the designer to validate the workflow.  When the gut check is complete the workflow is allowed to run.  
+
+### More Actions
+
+This drop-down menu in the upper left corner contains the following options:
+*	View runs option allows the workflow designer to see the previous runs of the workflow and examine the input and output details of every activity
+*	Duplicate option creates a copy and is useful when you have a working workflow that you would like to modify while also keeping the original workflow intact
+*	Share option will allow you to export your workflow as a JSON file
 
 ## Summary
 
