@@ -1,6 +1,4 @@
-# Cisco Workflows In Development
-
-![json](../../ASSETS/COMMON/BUILD/underconstruction.png?raw=true "Import JSON")
+# Cisco Workflows
 
 > [!WARNING]
 > For best results you will need to prepare your environment for testing. Please go through the preparation guide in the lab sequence below when performing this lab [**Preparation**](./module1-preparation.md) section.
@@ -37,7 +35,7 @@ This lab is intended for educational and introduction purposes only. Use outside
 This lab is intended to help drive the adoption of Rest-API and will be added to over time with various use cases. The Public Workspace will also mirror the changes and be kept up to date. We hope this set of labs helps explain how the Rest-API may be used and goes a little further in helping define and document them.
 
 > [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+> **Feedback:** If you found this set of **labs** or **content** helpful or have **suggestions**, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
 > [**Continue to PnP Preparation**](./module1-preparation.md)
