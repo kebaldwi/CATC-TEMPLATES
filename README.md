@@ -1,10 +1,20 @@
 # CATC-TEMPLATES (aka DNAC-TEMPLATES) [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
 
 > [!NOTE] 
-> Thank you for continuing your **support** of the **CATC-Template Repository** formerly known as the **DNAC-Template Repository** by your continued visits to the site. Over the past few months we have updated and redeveloped a lot of content and it is **reorganized** to be more consise, and to aide users in finding the relevant content easily. Over the next few months you will **notice more lab updates** to the repository, as we **add** additional content. The **folder structure** and **resources** have been **reorganized** for ease of use, and so that **[CODE](./CODE/README.md)** examples and **[TUTORIALS](TUTORIALS.md)** will be grouped together for ease of use. We hope this will help users to find the content they need in an easier manner.
+> :mega: Thank you for continuing your **support** of the **CATC-Template Repository** formerly known as the **DNAC-Template Repository** by your continued visits to the site.
+>
+> :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
+> 1. **Meraki Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
+> 2. **Cisco Workflows** which should be available at the end of this month.
+>
+> Over the past few months we have updated and redeveloped a lot of content and it is **reorganized** to be more concise, and to aide users in finding the relevant content easily. 
+>
+> Over the next few months you will **notice even more lab updates** to the repository, as we **add** additional content. 
+>
+> The **folder structure** and **resources** have been **reorganized** for ease of use, and so that **[CODE](./CODE/README.md)** examples and **[TUTORIALS](TUTORIALS.md)** will be grouped together for ease of use. We hope this will help users to find the content they need in an easier manner. 
 
-> [!IMPORTANT]
-> :mega: **[Discussions](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions):** is now now open, so please do use that for feedback suggestions on improvements or other ideas, please use this link: **[Discussions](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions)**</br></br>:mega: **[Issues](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new):** will now be used to track problems with documentation or the labs and code, please use this link: **[Issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new)**
+> [!WARNING]
+> Two folders will be **retired** **today** **Sept 23 2025** with content being located within the code folder for Jinja are located . **[DAYN](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/DAYN)** and **[ONBOARDING](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/ONBOARDING)** 
 
 ## Catalyst Center
 
@@ -103,7 +113,7 @@ This section built out in a lab format to guide you through the typical steps to
 > [!IMPORTANT] 
 > Please note that LAB content in this Repository is aligned with specific DCLOUD Demonstrations that have to be set up by either a **Cisco Employee** or a **Cisco Parter**. If you are having trouble accessing the DCLOUD content please get in touch with your **Local Cisco Account Team**.
 
-## New Catalyst Center Lab Content
+### Lab Content
 
 This newer and more modular lab approach is designed to deal with and includes concepts from the legacy labs in a newer more modular format.
 
@@ -116,7 +126,7 @@ This newer and more modular lab approach is designed to deal with and includes c
 7. [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
 8. [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
 
-## Specific Lab Content
+### Specific Lab Content
 
 In this legacy lab section you will continue to find all the existing labs which deal with specifics in separate easy to do labs. This set of labs is being depricated due to new content above.
 
@@ -200,6 +210,14 @@ In this section I have compiled a number of template examples built with Jinja2 
 &ensp;&ensp;&ensp;&ensp;Practical examples can be located here: [Practical Template Examples](https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/TUTORIALS/ExamplesAndConcepts.md)
 
 > [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
-**Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
+> ### Discussions
+> **[Discussions](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions):** is now now open, so please do use that for feedback suggestions on improvements or other ideas, please use this link: **[Discussions](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions)**
+>
+> ### Feedback
+> **[Feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas):** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).
+>
+> ### Content Problems and Issues
+> **[Issues](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new):** will now be used to track problems with documentation or the labs and code, please use this link: **[Issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new)**
+>
+
 
