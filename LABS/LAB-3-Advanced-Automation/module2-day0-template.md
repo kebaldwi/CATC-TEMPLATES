@@ -42,11 +42,94 @@ This is the lab we will be utilizing. Notice the **PnP Target Switch**. This is 
 
 * Automation Potential: DayN templates facilitate ongoing modifications and automate configurations using data from the inventory database, minimizing manual input.
 
+* Mandatory configuration is deployed by Catalyst Center during the PnP Onboarding process and it is impossible to disable currently. This facilitates the need to perhaps make modifications post PnP. Configuration seen below:
+
+<div style="padding-left:80px">
+   <details open>
+   <summary> Expand to review the complete configuration</summary></br>
+   
+   This is configuration that is automated by default from Catalyst Center claim process. This config that is **deployed automatically**.</br>
+
+   ```
+   archive
+    log config
+     logging enable
+     logging size 500
+     hidekeys
+     !
+    !
+   !
+   service timestamps debug datetime msec
+   service timestamps log datetime msec
+   service password-encryption
+   service sequence-numbers
+   !
+   ! Disable external HTTP(S) access
+   ! Disable external Telnet access
+   ! Enable external SSHv2 access
+   !
+   no ip http server
+   !
+   no ip http secure-server
+   !
+   crypto key generate rsa label dnac-sda modulus 2048
+   ip ssh version 2
+   !
+   ip scp server enable
+   !
+   line vty 0 15
+    ! maybe redundant
+   login xxxxxx
+    transport input ssh
+    ! maybe redundant
+    transport preferred none
+   !
+   ! Set VTP mode to transparent (no auto VLAN propagation)
+   ! Set STP mode to Rapid PVST+ (prefer for non-Fabric compatibility)
+   ! Enable extended STP system ID
+   ! Set Fabric Node to be STP Root for all local VLANs
+   ! Enable STP Root Guard to prevent non-Fabric nodes from becoming Root
+   ! Confirm whether vtp mode transparent below is needed
+   vtp mode transparent
+   !
+   spanning-tree mode rapid-pvst
+   !
+   spanning-tree extend system-id
+   ! spanning-tree bridge priority 0
+   ! spanning-tree rootguard
+   ! spanning-tree portfast bpduguard default
+   no udld enable
+   !
+   errdisable recovery cause all
+   !
+   errdisable recovery interval 300
+   !
+   ! Enable SNMP and RW access
+   !
+   snmp-server xxxxxxxx
+   !
+   username xxxxxx
+   !
+   enable algorithm-type scrypt secret xxxxxxxx
+   !
+   hostname Switch
+   ! DNS settings
+   !
+   ip domain name base2hq.com
+   !
+   ip name-server 10.10.0.250
+   !
+   ```
+   </details>
+</div>
+
+* Due to the nature of PnP onboarding, and as the device is not yet in the system database, **compliance** is not tracked for any template used in the PnP onboarding process. For this reason **ONLY** do enough to bring up the switch. All other configuration should be done in DayN
+
 * Configuration Best Practices: Typical configurations should automatically derive from the Network Settings in Catalyst Center. Avoid deploying CLI code in templates for tasks already defined by design components, promoting a more UI-centric and maintainable configuration approach.
 
 * Guidance: Utilize design settings for as much configuration as possible, keeping templates streamlined for configurations that may change frequently, enhancing maintainability and troubleshooting.
 
-* **Jinja** vs **Velocity**, choose wisely. My recommendation is to use Jinja simply because it is the defactor template rendering language used in multiple platforms. It is modular, and the logic consrtucts are based on **Python**. 
+* **Jinja** vs **Velocity**, choose wisely. My recommendation is to use Jinja simply because it is the defacto template rendering language used in multiple platforms. It is modular, and the logic constructs are based on **Python**. 
 
 ## Developing a PnP Template
 
