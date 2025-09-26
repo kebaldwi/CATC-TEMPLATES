@@ -10,7 +10,7 @@ When dealing with net **new** devices using the PnP process to onboard devices w
 
 **PnP** Onboarding allows for the **claiming** of a device and the ability to automate the deployment of configuration. It is important to note that Onboarding templates are transfered as a **flat file** via HTTP/HTTPS transfer. 
 
-This allows for the manipulation of uplinks and addressing without disconnectivity during reconfiguration from the upstream neighboring device. Additional source commands can be used to allow the device to automatically inform Catalyst Center of a change in address through the PnP profile applied and the source of the HTTP client information.
+This allows for the manipulation of uplinks and addressing without disconnection during reconfiguration from the upstream neighboring device. Additional source commands can be used to allow the device to automatically inform Catalyst Center of a change in address through the PnP profile applied and the source of the HTTP client information.
 
 ### Overview Summary
 
