@@ -44,7 +44,6 @@ This is the lab we will be utilizing. Notice the **PnP Target Switch**. This is 
 
 * Mandatory configuration is deployed by Catalyst Center during the PnP Onboarding process and it is impossible to disable currently. This facilitates the need to perhaps make modifications post PnP. Configuration seen below:
 
-<div style="padding-left:80px">
    <details open>
    <summary> Expand to review the complete configuration</summary></br>
    
@@ -121,7 +120,6 @@ This is the lab we will be utilizing. Notice the **PnP Target Switch**. This is 
    !
    ```
    </details>
-</div>
 
 * Due to the nature of PnP onboarding, and as the device is not yet in the system database, **compliance** is not tracked for any template used in the PnP onboarding process. For this reason **ONLY** do enough to bring up the switch. All other configuration should be done in DayN
 
