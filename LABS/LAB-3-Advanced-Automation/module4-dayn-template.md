@@ -18,7 +18,7 @@ The purpose of DayN templates is to allow for **ongoing configuration** of featu
 
 * Mandatory configuration is deployed by Catalyst Center during the PnP Onboarding process and it is impossible to disable currently. This facilitates the need to perhaps make modifications post PnP. Configuration seen below:
 
-   <details open>
+   <details closed>
    <summary> Expand to review the complete configuration</summary></br>
    
    This is configuration that is automated by default from Catalyst Center claim process. This config that is **deployed automatically**.</br>
