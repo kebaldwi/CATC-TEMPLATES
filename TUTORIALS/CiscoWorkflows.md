@@ -27,7 +27,7 @@ without complex integrations.*
 
 Meraki has added a well-established Cisco tool to the dashboard; Workflows. But let’s be very clear, it’s not just for Meraki. Customers can use this powerful automation and orchestration engine on pretty much anything. In addition to Meraki, it can be used for automating Cisco controllers like Catalyst Center, SD-WAN, ISE, ThousandEyes, ACI, Nexus Dashboard, Intersight, Webex, IOT, and anything Cisco or 3rd party that utilizes REST-API. If it has a REST API or an SSH adapter, Workflows can automate it.
 
-<img src="../ASSETS/TUTORIALS/WORKFLOWS/WORKFLOWs.png" alt="Workflow Properties" style="width:100%; height:auto;">
+<img src="../ASSETS/TUTORIALS/WORKFLOWS/WORKFLOWS.png" alt="Workflow Properties" style="width:100%; height:auto;">
 
 If you can use Microsoft Visio, you can use Workflows.
 
@@ -77,7 +77,7 @@ This drop-down menu in the upper left corner contains the following options:
 
 ## Lab Modules
 
-These labs allow you to try out Cisco Workflows, and are split into modules to concentrate on specific tasks. Each is designed to build your knowledge in specific areas and they will call out any dependencies on previous modules:
+Within the GitHub Repository are labs allow you to try out Cisco Workflows, and are split into modules to concentrate on specific tasks. Each is designed to build your knowledge in specific areas and they will call out any dependencies on previous modules:
 
 1. [**Preparation**](./module1-preparation.md)
 2. [**Orientation**](./module2-orientation.md)
