@@ -2,8 +2,6 @@
 
 ## Overview
 
-Meraki has added a well-established Cisco tool to the dashboard: Workflows. But let’s be very clear, it’s not just for Meraki. Customers can use this powerful automation and orchestration engine on pretty much anything. In addition to Meraki, it can be used for automating Cisco controllers like Catalyst Center, SDWAN, ISE, ThousandEyes, ACI, Nexus Dashboard, Intersight, Webex, IOT, and everything Cisco. Use it with third-party tools and other vendors. If it has a REST API or an SSH adapter, Workflows can automate it.
-
 If you went through the beginner level hands-on labs, you should now be familiar with the general feel and flow of Workflows for Cisco Networking. Build it, validate it, run it. We used the output of an early step as the input for a later step. You’ve now got the basics to go and build pretty much anything you can think of. In this intermediate level lab, let’s go through a few more concepts and build something useful in the real world. Perhaps something you could even give to a customer. We’re ultimately going to create an inventory of Meraki devices and their current firmware versions.
 
 ## General Information
@@ -54,7 +52,7 @@ You will see a Meraki screen that looks like this.
 
 ## Lab Exercise 2A - Set Up Connectivity into Meraki
   
-1. Access your Workflows environment and navigate to **Automation** and then **Account Keys**.
+1. Access your Workflows environment and navigate to **Automation** &rarr; **Targets** &rarr; **Account Keys**.
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE2/Connect-1.png" alt="Workflow Properties" style="width:65%; height:auto;">
 

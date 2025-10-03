@@ -3,9 +3,7 @@
 
 ## Overview
 
-Meraki has added a well-established Cisco tool to the dashboard; Workflows. But let’s be very clear, it’s not just for Meraki. Customers can use this powerful automation and orchestration engine on pretty much anything. In addition to Meraki, it can be used for automating Cisco controllers like Catalyst Center, SD-WAN, ISE, ThousandEyes, ACI, Nexus Dashboard, Intersight, Webex, IOT, and anything Cisco or 3rd party that utilizes REST-API. If it has a REST API or an SSH adapter, Workflows can automate it.
-
-Today, we’re going to walk you through the tool. No programming experience required. If you can use Microsoft Visio, you can use Workflows. We are going to start with the absolute basics and build layer upon layer until we get into some more complex concepts in the tooling.
+Today, we’re going to walk you through the tool. No programming experience required. If you can use Microsoft Visio, you can use Workflows. We are going to start with the absolute basics and build layer upon layer until we get into some more complex concepts in the tooling. In this lab we are going to play with a simple sequence of events to build your confidence with Cisco Workflows.
 
 > [!IMPORTANT] 
 > **Preparation:** To use this lab, you should enable your Meraki org with Workflows Automation. If you have not had automation enabled for your Meraki account, please utilize the preparation steps in [module 1](./module1-preparation.md).
@@ -86,9 +84,10 @@ I don’t know about you, but I’m allergic to “Hello World” (it makes my k
 >### Canvas
 >
 >This panel is where you build the structure and set the actions, order, and logic for a workflow. Drag-and-drop items from the Activities panel, including other workflows, here to add them to a workflow. You can drag and drop items on the canvas to change their location and order in the workflow. This is your space to build anything you wish.  
-Validate and Run
 >
->These are important concepts to pick up at the beginning of your Cisco Workflows journey.  Run executes your workflow, however, notice how it’s greyed out.  Cisco Workflows has a built in “gut check” that is required before a workflow is allowed to run.  For example, what if the workflow designer forgot to configure a required part of a function or the larger workflow itself – rather than attempt and fail, this screen requires the designer to validate the workflow.  When the gut check is complete the workflow is allowed to run.  
+>### Validate and Run
+>
+>These are important concepts to pick up at the beginning of your Cisco Workflows journey.  Run executes your workflow, however, notice how it’s greyed out.  Cisco Workflows has a built in “gut check” that is required before a workflow is allowed to run. For example, what if the workflow designer forgot to configure a required part of a function or the larger workflow itself – rather than attempt and fail, this screen requires the designer to validate the workflow.  When the gut check is complete the workflow is allowed to run.  
 >
 >### More Actions
 >
@@ -121,9 +120,9 @@ We have a few options to find the activity we are interested in:
 > You may have noticed that the Properties space on the right has changed. This is because the sleep activity is highlighted.
 > 
 >If the workflow designer:
-></br>*	Clicks an activity, the Properties space is for that activity.
-></br>*	Clicks outside of an activity (anywhere in the canvas grey space), it will be the configuration space for the whole workflow.
-></br>*	Clicks outside of an activity (anywhere in the canvas grey space), it will be the properties space for the whole workflow.
+></br>
+> * Clicks an activity, the Properties space is for that activity.
+> * Clicks outside of an activity (anywhere in the **canvas** grey space), it will be the **workflow properties** space for the whole workflow.
 >
 >Expand Sleep configuration and you will be able to see which activity field requires a setting. Cisco is feeling generous right now (after all – this is the sales meeting and let’s celebrate) and is going to give us all a 3-second nap. Thank you, Cisco. 
 
@@ -145,7 +144,7 @@ We have a few options to find the activity we are interested in:
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/CreateWorkflow8.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
 9. Click Run. 
-   </br>How refreshing.  Nothing like a Tech Elevate power nap!
+   </br>How refreshing.  Nothing like a power nap!
 
 <div style="padding-left:40px;">
 <table>
@@ -227,17 +226,17 @@ While that was restful and awesome, it wasn’t very flexible.  Let’s create a
 > [!NOTE] 
 > ### Key Concepts
 > 
-> Data Type contains a few options, such as Secure String. Secure refers to things like passwords that you don’t want    people looking over your shoulder to be able to see.
+> Data Type contains a few options, such as Secure String. Secure refers to things like passwords that you don’t want people looking over your shoulder to be able to see.
 >
-> Display Name is how you will reference this variable in the rest of your workflow. So, in this instance, we’ll call    this “length of nap”. Display names should be in human-readable and capitalized form (no snake or camel case).
+> Display Name is how you will reference this variable in the rest of your workflow. So, in this instance, we’ll call this “length of nap”. Display names should be in human-readable and capitalized form (no snake or camel case).
 >
 > Description is an optional field that can include information about the variable’s purpose.
 >
 > Scope is an important field. Click the drop-down menu to view various options. The options for Scope are:
 >*	Input: Ask the workflow runner for information at the start
 >*	Output: The desired outcome for the workflow
->*	Local: A variable used in the workflow and its value can change.  Example – You want to check how an IOS upgrade is    progressing, but if there’s an issue you don’t want it to run infinitely.  A local variable can bethe  number of times    you check on something before timing out of the workflow.
->*	Static: A value you want to hard code in your workflow but still have the freedom to change long term without    having to tear apart your workflow.	 
+>*	Local: A variable used in the workflow and its value can change.  Example – You want to check how an IOS upgrade is progressing, but if there’s an issue you don’t want it to run infinitely. A local variable can bethe  number of times    you check on something before timing out of the workflow.
+>*	Static: A value you want to hard code in your workflow but still have the freedom to change long term without having to tear apart your workflow.	 
 
 </td>
 <td valign="center" align="center" width="50%">
@@ -275,13 +274,13 @@ While that was restful and awesome, it wasn’t very flexible.  Let’s create a
 <tr><td valign="top" width="100%">
 
 > [!NOTE] 
-> Mapping variables is a very handy feature of Cisco Workflows. The basic concept is the use of the output of a step as    the input for a future step.
+> Mapping variables is a very handy feature of Cisco Workflows. The basic concept is the use of the output of a step as the input for a future step.
 >
 >For example: 
 >    1. Get a list of all your Meraki orgs and select the one you are interested in.
->    2.	Get a list of networks in that org.  Select the one you are interested in.
->    3.	Get a list of devices in that network.  Select the one you are interested in.
->    4.	Get a list of ports on that device.  Select the one you are interested in.
+>    2. Get a list of networks in that org. Select the one you are interested in.
+>    3. Get a list of devices in that network. Select the one you are interested in.
+>    4. Get a list of ports on that device. Select the one you are interested in.
 
 </td></tr>
 </table>
@@ -302,10 +301,10 @@ While that was restful and awesome, it wasn’t very flexible.  Let’s create a
 
       <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/ModifyWorkflow7.png" alt="Workflow Properties" style="width:60%; height:auto;">
 
-      How easy was that? A few clicks and you’ve replaced a hard coded value with a dynamic one.  **NICE!**
+      How easy was that? A few clicks and you’ve replaced a hard coded value with a dynamic one. **NICE!**
       Let’s test it out. What’s the process to run a new or changed workflow?
-      *	The gut check: Validate it
-      *	If everything appears good: Run it
+      * The gut check: Validate it
+      * If everything appears good: Run it
       
       I work hard for Cisco, so I’m going to abuse the system and sleep for a full six seconds. That’s how I roll. 
 
@@ -360,7 +359,7 @@ Now that we’ve had a few naps and are well rested, let’s do something more i
 
 ## Lab Exercise 1C - Need Some Sleep and I’m Bored
 
-There is a public and free API called bored-api. It simply returns JSON formatted suggestions of something to do if one is bored.  We’re going to query this API for some activity suggestions, and in the process review what you’ve already learned and add a few more pieces.
+There is a public and free API called bored-api. It simply returns JSON formatted suggestions of something to do if one is bored. We’re going to query this API for some activity suggestions, and in the process review what you’ve already learned and add a few more pieces.
 
 1. Navigate to your Lab1a – Sleep workflow.
 2. In the activities section, on the left of the screen, find the HTTP Request activity under the Web Service category. Drag it onto your workflow canvas ABOVE your sleep activity.
@@ -380,13 +379,13 @@ There is a public and free API called bored-api. It simply returns JSON formatte
 > 
 >   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Modify2Workflow2.png" alt="HTTP Request" style="width:70%; height:auto;">
 >
->Let’s discuss the flow of how we interact with any system from within Cisco Workflows. What is required to communicate with a REST API?
+> Let’s discuss the flow of how we interact with any system from within Cisco Workflows. What is required to communicate with a REST API?
 >
 >*	Access: Most APIs require an authentication mechanism. This could be a user / password, a token, or an API key.
 >*	Address: A REST API can be accessed via a URL or an IP address. You can also validate certification on the endpoint URL.
 >*	Base URL (optional): Using Workflows you can add the base URL to the address once instead of having to type it during every interaction with Meraki. In this example the base URL is bold: api.meraki.com/api/v1.
 >
->Even though we’re trying to find a solution to our boredom, we don’t have any of this set up yet the way Workflows is designed.  Bored-api doesn’t require authentication so we can skip that for now.  
+> Even though we’re trying to find a solution to our boredom, we don’t have any of this set up yet the way Workflows is designed.  Bored-api doesn’t require authentication so we can skip that for now.  
 
 </td>
 </tr>
@@ -412,7 +411,7 @@ There is a public and free API called bored-api. It simply returns JSON formatte
 </table>
 </div>
 
-4. Click + New target (note that your screen may look different from this screenshot)
+4. Click **+** New target (note that your screen may look different from this screenshot)
    </br></br>Let’s explore the Target types and how our friends in Meraki engineering have made it as easy as possible to onboard Cisco controllers (Catalyst Center, Catalyst SD-WAN, ISE, FMC, Meraki). However, they didn’t stop there. Service Now, Terraform, and Ansible are also accounted for.
 
    <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Modify2Workflow5.png" alt="HTTP Request" style="width:100%; height:auto;">
@@ -441,8 +440,8 @@ There is a public and free API called bored-api. It simply returns JSON formatte
 <td valign="top" width="55%">
 
 The No Account Keys field can be confusing. 
-*	If you want account keys select False.
-*	If you do NOT want account keys select True.
+* If you want account keys select False.
+* If you do NOT want account keys select True.
 
 > [!NOTE]
 > Ignore the Remote Keys field. That is for advanced use cases where you need to get behind a firewall with a TLS gateway.	 
@@ -464,11 +463,11 @@ The No Account Keys field can be confusing.
 
 7. Select HTTP in the Protocol field.
 
-8. Enter 18.188.19.30 in the Host/IP Address field.
+8. Enter **`18.188.19.30`** in the Host/IP Address field.
 
-9. Select 8502 in the Port field.
+9. Select **`8502`** in the Port field.
 
-10. Enter /api in the Path field.
+10. Enter **`/api`** in the Path field.
 
     This is the base path for all APIs.
 
@@ -513,7 +512,6 @@ The No Account Keys field can be confusing.
 
     <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Modify2Workflow10.png" alt="Workflow Properties" style="width:50%; height:auto;">
 
-
 14. Click the HTTP Request so we can configure that activity. 
 
 15. Select Use workflow target.
@@ -549,9 +547,9 @@ The No Account Keys field can be confusing.
 
     You know it’s a party when someone suggests that we: “activity”: “Learn about a distributed version control system such as Git”
 
-    Congratulations! You just added a drag-and-drop solution for automating boredom!  SCORE!
+    Congratulations! You just added a drag-and-drop solution for automating boredom! SCORE!
     
-    Before we move on, note that the suggestions also include the number of participants.  Quite often, these activity suggestions are for one person, but they can include many more.  In the next section of this lab, we’re going to parse through the JSON and pull out that specific field.
+    Before we move on, note that the suggestions also include the number of participants. Quite often, these activity suggestions are for one person, but they can include many more. In the next section of this lab, we’re going to parse through the JSON and pull out that specific field.
  
 ## Lab Exercise 1D - I Need Some Sleep, I’m Bored, and How Many People?
 
@@ -619,7 +617,7 @@ Review the output from the previous step.
 
 > [!NOTE]
 > ## IMPORTANT CONCEPT: 
->If you have not done a lot of coding, this may not be intuitive.  If you have done a little python coding and extracted entries from lists or dictionaries, this will become clear.
+>If you have not done a lot of coding, this may not be intuitive. If you have done a little python coding and extracted entries from lists or dictionaries, this will become clear.
 >
 >**Quick dictionary example:**
 >
@@ -643,7 +641,7 @@ Review the output from the previous step.
 
 > [!TIP]
 > ## SAFETY TIP 
-> This is simple JSON code. Things might be more complicated in the real world.  It might be worth looking into some JSON 101 material if you want to get into more advanced workflow design.
+> This is simple JSON code. Things might be more complicated in the real world. It might be worth looking into some JSON 101 material **[here](../../TUTORIALS/JsonYamlXml.md)** if you want to get into more advanced workflow design.
 >
 >## Workflows Best Practice 
 >For activity output variables, like Python activity or JSONPath, the names of the variables should be written in camel case, as they're considered code-related. That practice helps distinguish them from the workflow names. For example, deviceID vs. Device ID, and sortByDate vs. sort_by_date.
