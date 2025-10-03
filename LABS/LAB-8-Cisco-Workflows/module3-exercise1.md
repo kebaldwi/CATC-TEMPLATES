@@ -71,6 +71,8 @@ I don’t know about you, but I’m allergic to “Hello World” (it makes my k
 <tr><td valign="top" width="100%">
 
 > [!NOTE]
+> To Refresh your memory:
+>
 >### Adapters
 >
 >This panel contains the building blocks and individual functions you can add to a workflow. They are grouped under adapters representing the different controllers with which Workflows integrates, and the individual actions called “activities” are based on API calls to the integrated products, logic components, and other workflows. Think of an activity as an API call or function. Feel free to explore some of them by expanding and examining the activities that are provided “out of the box”. 
