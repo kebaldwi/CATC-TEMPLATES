@@ -5,7 +5,7 @@
 >
 > :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
 > 1. **Meraki Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
-> 2. **Cisco Workflows** which should be available at the end of this month.
+> 2. **Cisco Workflows** which is generally available at now.
 >
 > Over the past few months we have updated and redeveloped a lot of content and it is **reorganized** to be more concise, and to aide users in finding the relevant content easily. 
 >
@@ -13,8 +13,10 @@
 >
 > The **folder structure** and **resources** have been **reorganized** for ease of use, and so that **[CODE](./CODE/README.md)** examples and **[TUTORIALS](TUTORIALS.md)** will be grouped together for ease of use. We hope this will help users to find the content they need in an easier manner. 
 
+<!--
 > [!WARNING]
 > Two folders will be **retired** **today** **Sept 23 2025** with content being located within the code folder for Jinja are located . **[DAYN](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/DAYN)** and **[ONBOARDING](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/ONBOARDING)** 
+-->
 
 ## Catalyst Center
 
