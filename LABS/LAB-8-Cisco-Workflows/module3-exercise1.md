@@ -122,8 +122,7 @@ We have a few options to find the activity we are interested in:
 >If the workflow designer:
 ></br>
 > * Clicks an activity, the Properties space is for that activity.
-> * Clicks outside of an activity (anywhere in the canvas grey space), it will be the configuration space for the whole workflow.
-> * Clicks outside of an activity (anywhere in the canvas grey space), it will be the properties space for the whole workflow.
+> * Clicks outside of an activity (anywhere in the **canvas** grey space), it will be the **workflow properties** space for the whole workflow.
 >
 >Expand Sleep configuration and you will be able to see which activity field requires a setting. Cisco is feeling generous right now (after all – this is the sales meeting and let’s celebrate) and is going to give us all a 3-second nap. Thank you, Cisco. 
 

@@ -3,6 +3,7 @@
 ## Overview
 
 Welcome to the ‘Simple Network Automation – The Added Value of Cisco Workflows’ session.
+
 Don’t panic. This lab is not going to be nearly as long as the other two. This lab is more of a live tour of some really important features of Cisco Workflows.
 
 ## General Information
