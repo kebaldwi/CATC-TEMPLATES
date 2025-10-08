@@ -18,7 +18,9 @@
 > Two folders will be **retired** **today** **Sept 23 2025** with content being located within the code folder for Jinja are located . **[DAYN](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/DAYN)** and **[ONBOARDING](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/ONBOARDING)** 
 -->
 
-## Catalyst Center
+## Enterprise Networking Platforms 
+
+### Catalyst Center
 
 ![Catalyst Center Overview](./ASSETS/COMMON/ROOT/cisco_catc.png)
 
@@ -28,6 +30,17 @@ Catalyst Center is an intelligent Automation and Assurance platform for the camp
 * AIOps: AI/ML-enhanced monitoring and troubleshooting support. Predictive Insights, Network Baselines, Network Reasoner, Device/Client/Application 360, Intelligent Capture.
 * SecOps: AI Endpoint Analytics, Group-Based Policy and Analytics, Software-Defined Access
 * DevOps: ITSM Integrations, APIs, SDK & Ansible Module 
+
+### Meraki Dashboard
+
+![Dashboard Overview](./ASSETS/COMMON/ROOT/cisco_meraki.png)
+
+Meraki Dashboard is a cloud-managed networking platform that unifies configuration, monitoring, and security across distributed networks. It delivers streamlined Day-0 through Day-N operations for wireless, switching, security appliances, SD-WAN, cameras, and IoT, all from a single, intuitive web interface. Powered by cloud analytics and automation, Meraki Dashboard accelerates deployment, simplifies troubleshooting, and provides actionable insights into network health, user experience, and security posture. Here are some of the capabilities of Meraki Dashboard in their respective domains:
+
+* NetOps: Zero-touch provisioning with Meraki Cloud provisioning and templates, centralized configuration and change management, firmware management, network cloning, topology views, and automatic VPN.
+* AIOps: Cloud-powered analytics and anomaly detection, client and device health insights, application visibility and performance metrics, intelligent alerts, and recommended fixes.
+* SecOps: Integrated next-gen firewall, IPS/IDS, content filtering, malware protection, Zero Trust policies with Adaptive Policy (group-based policy), and secure SD-WAN with threat analytics.
+* DevOps: Comprehensive REST APIs and webhooks, dashboard and device APIs, ecosystem marketplace integrations, and automation via SDKs and templates.
 
 ## Overview
 
@@ -123,8 +136,8 @@ This newer and more modular lab approach is designed to deal with and includes c
 2. [Lab 2 Wireless Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-2-Wireless-Automation) - Covers traditional wireless automation  **(allow 4.0 hrs)**
 2. [Lab 3 Advanced Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-3-Advanced-Automation) - Covers how to build templates and logic  **(allow 4.0 hrs)**
 4. [Lab 4 Rest-API Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-4-Rest-API-Orchestration/) - Covers [Postman](https://www.postman.com) automation and orchestration of Catalyst Center **(allow 2.0 hrs)**
-5. Lab 5 Python Orchestration - In Devvelopment - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
-6. Lab 6 Ansible Orchestration - In Devvelopment - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
+5. Lab 5 Python Orchestration - In Development - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
+6. Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
 7. [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
 8. [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
 
