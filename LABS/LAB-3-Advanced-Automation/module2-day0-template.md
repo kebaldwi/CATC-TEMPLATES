@@ -428,9 +428,11 @@ These variables will be utilized with a form so that they can be mass entered vi
 6. **Save** the template and we can now start to Build the Form that will be filled in by our engineers during the claim process.
 7. If your template **does not look like** the one below **expand the section** below **copy** it and **paste** it into the editor to replace the text:
    
+   [//]: # ({% raw %})
+
    <details closed>
    <summary> Expand this section if required </summary></br>
-   [//]: # ({% raw %})
+
    ```
    {% if SystemMTU != 1500 %} 
       system mtu {{SystemMTU}}
@@ -490,8 +492,9 @@ These variables will be utilized with a form so that they can be mass entered vi
    !
    netconf-yang
    ```
-   [//]: # ({% endraw %})
    </details>
+
+   [//]: # ({% endraw %})
 
 ### Step 5 - Build Form
 
