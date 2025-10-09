@@ -30,6 +30,7 @@ Compare your template with the example in the section below. Did you miss anythi
 <summary> Expand to review the Jinja Example </summary></br>
 
 [//]: # ({% raw %})
+
 ```J2
 {# <------Onboarding-Template-------> #}
 {# To be used for onboarding when using Day N Templates #}
@@ -103,6 +104,7 @@ ntp source Vlan {{ MgmtVlan }}
 netconf-yang
 !
 ```
+
 [//]: # ({% endraw %})
 
 </details></br>
