@@ -100,17 +100,17 @@ You will find various examples within the various folders of this repository, wi
 
   * [Building Templates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Templates.md#building-templates) - This section will explain how to build a template on Catalyst Center from scratch
 
-  #### Velocity Language
+    #### Velocity Language
 
-  * [Velocity Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#velocity-variables) - This section explains Template Variables in depth, and how and where to use them
-  * [Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Velocity.md#velocity-scripting) - This section will dive into Velocity Language Template Scripting constructs and use cases
-  * [Advanced Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedVelocity.md#advanced-velocity) - This section will dive into Advanced Velocity Language Template examples
+    * [Velocity Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#velocity-variables) - This section explains Template Variables in depth, and how and where to use them
+    * [Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Velocity.md#velocity-scripting) - This section will dive into Velocity Language Template Scripting constructs and use cases
+    * [Advanced Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedVelocity.md#advanced-velocity) - This section will dive into Advanced Velocity Language Template examples
 
-  #### Jinja2 Language
+    #### Jinja2 Language
 
-  * [Jinja2 Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#jinja2-variables) - This section explains Template Variables in depth, and how and where to use them
-  * [Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Jinja2.md#jinja2-scripting) - This section will dive into Jinja2 Language Template Scripting constructs and use cases
-  * [Advanced Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedJinja2.md#advanced-jinja2) - This section will dive into Advanced Jinja2 Language Template examples
+    * [Jinja2 Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#jinja2-variables) - This section explains Template Variables in depth, and how and where to use them
+    * [Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Jinja2.md#jinja2-scripting) - This section will dive into Jinja2 Language Template Scripting constructs and use cases
+    * [Advanced Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedJinja2.md#advanced-jinja2) - This section will dive into Advanced Jinja2 Language Template examples
 
   ### Advanced Automation Use Cases
 
