@@ -26,10 +26,10 @@ We have previously built a PnP template within the **Template Hub** within **Cat
 
 Compare your template with the example in the section below. Did you miss anything important?
 
+[//]: # ({% raw %})
+
 <details closed>
 <summary> Expand to review the Jinja Example </summary></br>
-
-[//]: # ({% raw %})
 
 ```J2
 {# <------Onboarding-Template-------> #}
@@ -105,9 +105,9 @@ netconf-yang
 !
 ```
 
-[//]: # ({% endraw %})
-
 </details></br>
+
+[//]: # ({% endraw %})
 
 This Jinja2 PnP Template has the settings necessary to bring up a Layer2 access switch with enough configration to be supported by Catalyst Center for the rest of the provisioning process. 
 
