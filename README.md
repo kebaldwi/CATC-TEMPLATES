@@ -117,13 +117,19 @@ You will find various examples within the various folders of this repository, wi
   * [Embedded Event Manager](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/EEM.md#EEM) - This section will dive into EEM (Embedded Event Manager) Scripting and various use cases 
   * [System Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/SystemVariables.md#dna-center-system-variables) - This section explains Catalyst Centers System Variables
 
-### Orchestration of Catalyst Center
+### Platform Orchestration 
+
+#### Catalyst Center
 
 * [REST API Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/RestAPI.md) - This section is a high level discussion of utlilizing REST API with Catalyst Center
 * [Python Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Python.md) - This section is a high level discussion of utilizing Python with Catalyst Center
 * [Ansible Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Ansible.md) - This section is a high level discussion of Ansible orchestration of Catalyst Center
 * [CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/CICD.md) - This section is a high level discussion of CICD orchestration of Catalyst Center
 * [Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/CiscoWorkflows.md) - This section is a high level discussion of REST-API orchestration using Cisco Workflows
+
+#### Meraki Dashboard 
+
+:mega: Upcoming stay tuned!
 
 ### Fault-Finding
 
@@ -144,14 +150,36 @@ This section built out in a lab format to guide you through the typical steps to
 
 This newer and more modular lab approach is designed to deal with and includes concepts from the legacy labs in a newer more modular format.
 
-1. [Lab 1 Wired Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-1-Wired-Automation) - Covers green and brown field use cases **(allow 4.0 hrs)**
-2. [Lab 2 Wireless Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-2-Wireless-Automation) - Covers traditional wireless automation  **(allow 4.0 hrs)**
-2. [Lab 3 Advanced Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-3-Advanced-Automation) - Covers how to build templates and logic  **(allow 4.0 hrs)**
-4. [Lab 4 Rest-API Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-4-Rest-API-Orchestration/) - Covers [Postman](https://www.postman.com) automation and orchestration of Catalyst Center **(allow 2.0 hrs)**
-5. Lab 5 Python Orchestration - In Development - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
-6. Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
-7. [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
-8. [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
+#### Catalyst Center
+
+  1. [Lab 1 Wired Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-1-Wired-Automation) - Covers green and brown field use cases **(allow 4.0 hrs)**
+  2. [Lab 2 Wireless Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-2-Wireless-Automation) - Covers traditional wireless automation  **(allow 4.0 hrs)**
+  3. [Lab 3 Advanced Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-3-Advanced-Automation) - Covers how to build templates and logic  **(allow 4.0 hrs)**
+  
+#### Meraki Dashboar  d
+
+  :mega: Upcoming stay tuned!  
+
+#### ISE
+
+  :mega: Upcoming stay tuned!
+
+#### Platform Orchestration
+
+##### Catalyst Center
+
+  4. [Lab 4 Rest-API Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-4-Rest-API-Orchestration/) - Covers [Postman](https://www.postman.com) automation and orchestration of Catalyst Center **(allow 2.0 hrs)**
+  5. Lab 5 Python Orchestration - In Development - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
+  6. Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
+  7. [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
+
+##### Meraki Dashboard
+
+  :mega: Upcoming stay tuned!
+
+##### Cisco Workflows
+
+  8. [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
 
 ### Specific Lab Content
 
