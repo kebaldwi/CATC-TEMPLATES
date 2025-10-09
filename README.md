@@ -54,6 +54,18 @@ The repository will include scripts and examples with the following:
 4. System Variables
 5. Regular Templates
 6. Composite Templates
+7. Cisco Workflows
+8. REST-API automation utilizing:
+   - Postman, and Bruno
+   - Python and SDK's
+9. Orchestrations utilizing: 
+   - Cisco Workflows
+   - Ansible
+   - NSO
+   - CICD Pipelines using:
+     - Jenkins
+     - GitLab Pipeline
+     - GithHub Actions 
 
 The goal of this repository is a practical guide to allow engineers to rapidly begin using Catalyst Center automation and begin conversion of IOS CLI Templates. The Templates have been developed over the years and with various use cases in mind, and so the intent of sharing this collection is to reduce the lift to begin automating.
 
@@ -78,32 +90,32 @@ You will find various examples within the various folders of this repository, wi
 * [Management and Scale](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/ManagementScale.md#managing-complex-environments-with-cisco-catalyst-center-) - This section explains general design, management and scale of Catalyst Center
 * [Software Image Management (SWIM)](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/SWIM.md#software-image-management-swim-and-cisco-catalyst-center-) - This section explains how to use SWIM for staging and activating software
 
-### Automation Workflows
+### Configuration Automation
 
 * [PnP Workflow](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/PnP-Workflow.md#pnp-workflow) - This section explains the overall Plug and Play Methodology
 * [Onboarding Templates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Onboarding.md#onboarding-templates-and-flows) - This section will explain Onboarding Templates in Catalyst Center and their use in bringing various devices under Catalyst Center management
 * [DayN Templates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/DayN.md#day-n-templates-and-flows) - This section will explain how to use templates for ongoing (Day-N) changes to the network
 
-### Templating
+  #### Templating
 
-* [Building Templates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Templates.md#building-templates) - This section will explain how to build a template on Catalyst Center from scratch
+  * [Building Templates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Templates.md#building-templates) - This section will explain how to build a template on Catalyst Center from scratch
 
-#### Velocity Language
+  ##### Velocity Language
 
-* [Velocity Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#velocity-variables) - This section explains Template Variables in depth, and how and where to use them
-* [Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Velocity.md#velocity-scripting) - This section will dive into Velocity Language Template Scripting constructs and use cases
-* [Advanced Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedVelocity.md#advanced-velocity) - This section will dive into Advanced Velocity Language Template examples
+  * [Velocity Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#velocity-variables) - This section explains Template Variables in depth, and how and where to use them
+  * [Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Velocity.md#velocity-scripting) - This section will dive into Velocity Language Template Scripting constructs and use cases
+  * [Advanced Velocity Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedVelocity.md#advanced-velocity) - This section will dive into Advanced Velocity Language Template examples
 
-#### Jinja2 Language
+  ##### Jinja2 Language
 
-* [Jinja2 Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#jinja2-variables) - This section explains Template Variables in depth, and how and where to use them
-* [Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Jinja2.md#jinja2-scripting) - This section will dive into Jinja2 Language Template Scripting constructs and use cases
-* [Advanced Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedJinja2.md#advanced-jinja2) - This section will dive into Advanced Jinja2 Language Template examples
+  * [Jinja2 Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Variables.md#jinja2-variables) - This section explains Template Variables in depth, and how and where to use them
+  * [Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Jinja2.md#jinja2-scripting) - This section will dive into Jinja2 Language Template Scripting constructs and use cases
+  * [Advanced Jinja2 Scripting](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/AdvancedJinja2.md#advanced-jinja2) - This section will dive into Advanced Jinja2 Language Template examples
 
-### Advanced Automation Use Cases
+  #### Advanced Automation Use Cases
 
-* [Embedded Event Manager](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/EEM.md#EEM) - This section will dive into EEM (Embedded Event Manager) Scripting and various use cases 
-* [System Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/SystemVariables.md#dna-center-system-variables) - This section explains Catalyst Centers System Variables
+  * [Embedded Event Manager](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/EEM.md#EEM) - This section will dive into EEM (Embedded Event Manager) Scripting and various use cases 
+  * [System Variables](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/SystemVariables.md#dna-center-system-variables) - This section explains Catalyst Centers System Variables
 
 ### Orchestration of Catalyst Center
 
