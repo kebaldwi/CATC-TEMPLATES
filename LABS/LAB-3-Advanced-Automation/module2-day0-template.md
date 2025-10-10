@@ -428,73 +428,74 @@ These variables will be utilized with a form so that they can be mass entered vi
 6. **Save** the template and we can now start to Build the Form that will be filled in by our engineers during the claim process.
 7. If your template **does not look like** the one below **expand the section** below **copy** it and **paste** it into the editor to replace the text:
    
-   [//]: # ({% raw %})
+[//]: # ({% raw %})
 
-   <details closed>
-   <summary> Expand this section if required </summary></br>
+<details closed>
+<summary> Expand this section if required </summary></br>
 
-   ```
-   {% if SystemMTU != 1500 %} 
-      system mtu {{SystemMTU}}
-   {% endif %}
-   !
-   hostname (Hostname}}
-   !
-   {% set VtpDomain = Hostname %} 
-   vtp domain {{VtpDomain}}
-   vtp mode transparent
-   !
-   vlan {{MgmtVlan}}
-   !
-   {% if MgmtVlan > 1 %} 
-      name MgmtVlan
-      interface Vlan 1 
-        shutdown
-   {% endif %}
-   !
-   interface vlan {{MgmtVlan}}
-    ip address {{SwitchIP}} {{SubnetMask}}
-    no shutdown
-    no ip redirects
-    no ip proxy-arp exit
-    exit
-   !
-   ip default-gateway {{Gateway}}
-   !
-   !{{Portchannel)}
-   interface range {{Interfaces)}
-    shut
-    switchport mode trunk
-    switchport trunk allowed vlan {{MgmtVlan}}
-    {% if "," in Interfaces || "-" in Interfaces %}
-       channel-protocol lacp
-       channel-group {{Portchannel}} mode active
-    {% endif %}
-    no shut
-   !
-   {% if "," in Interfaces || in Interfaces %} 
-      interface Port-channel ((Portchannel}}
-       switchport trunk native vlan {{MgmtVlan}}   
-	switchport trunk allowed vlan {{MgmtVlan}}   
-	switchport mode trunk
-       no port-channel standalone-disable
-   {% endif %}
-   !
-   ip domain lookup source-interface Vlan {{MgmtVlan}}
-   ip http client source-interface Vlan {{MgmtVlan}}
-   ip ftp source-interface Vlan {{MgmtVlan}}
-   ip tftp source-interface Vlan {{MgmtVlan}}
-   ip ssh source-interface Vlan {{MgmtVlan}}
-   ip radius source-interface Vlan {{MgmtVlan}}
-   logging source-interface Vlan {{MgmtVlan}}
-   snmp-server trap-source Vlan {{MgmtVlan}}
-   ntp source Vlan {{MgmtVlan}}
-   !
-   netconf-yang
-   ```
-   </details>
+```
+{% if SystemMTU != 1500 %} 
+   system mtu {{SystemMTU}}
+{% endif %}
+!
+hostname (Hostname}}
+!
+{% set VtpDomain = Hostname %} 
+vtp domain {{VtpDomain}}
+vtp mode transparent
+!
+vlan {{MgmtVlan}}
+!
+{% if MgmtVlan > 1 %} 
+   name MgmtVlan
+   interface Vlan 1 
+     shutdown
+{% endif %}
+!
+interface vlan {{MgmtVlan}}
+ ip address {{SwitchIP}} {{SubnetMask}}
+ no shutdown
+ no ip redirects
+ no ip proxy-arp exit
+ exit
+!
+ip default-gateway {{Gateway}}
+!
+!{{Portchannel)}
+interface range {{Interfaces)}
+ shut
+ switchport mode trunk
+ switchport trunk allowed vlan {{MgmtVlan}}
+ {% if "," in Interfaces || "-" in Interfaces %}
+    channel-protocol lacp
+    channel-group {{Portchannel}} mode active
+ {% endif %}
+ no shut
+!
+{% if "," in Interfaces || in Interfaces %} 
+   interface Port-channel ((Portchannel}}
+    switchport trunk native vlan {{MgmtVlan}}   
+switchport trunk allowed vlan {{MgmtVlan}}   
+switchport mode trunk
+    no port-channel standalone-disable
+{% endif %}
+!
+ip domain lookup source-interface Vlan {{MgmtVlan}}
+ip http client source-interface Vlan {{MgmtVlan}}
+ip ftp source-interface Vlan {{MgmtVlan}}
+ip tftp source-interface Vlan {{MgmtVlan}}
+ip ssh source-interface Vlan {{MgmtVlan}}
+ip radius source-interface Vlan {{MgmtVlan}}
+logging source-interface Vlan {{MgmtVlan}}
+snmp-server trap-source Vlan {{MgmtVlan}}
+ntp source Vlan {{MgmtVlan}}
+!
+netconf-yang
+```
 
-   [//]: # ({% endraw %})
+</details>
+
+[//]: # ({% endraw %})
 
 ### Step 5 - Build Form
 
