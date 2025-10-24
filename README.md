@@ -13,10 +13,10 @@
 >
 > The **folder structure** and **resources** have been **reorganized** for ease of use, and so that **[CODE](./CODE/README.md)** examples and **[TUTORIALS](TUTORIALS.md)** will be grouped together for ease of use. We hope this will help users to find the content they need in an easier manner. 
 
-<!--
+
 > [!WARNING]
 > Two folders will be **retired** **today** **Sept 23 2025** with content being located within the code folder for Jinja are located . **[DAYN](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/DAYN)** and **[ONBOARDING](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/ONBOARDING)** 
--->
+
 
 # Enterprise Networking Platforms 
 
