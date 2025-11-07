@@ -81,6 +81,9 @@ Now ISE should be ready for API calls, but before we can get to that...lets get 
 
    You may see a prompt from the browser to ***Keep*** or ***Discard*** this download, choose ***Keep***.  By default, the file will save to the Downloads folder as `certnew.cer`
 
+   >[!TIP]
+   >We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
+
 ## Cleaning Up the Windows Root CA Certificate
 
 Because text editors tend to add either carriage returns or line feeds (or both) to certificate files, we need to modify the text of the Root CA file a bit so that we can use it within our Postman API call.  To do so, we will utilize Notepad++ for this example.  Similar ways of cleaning up certificate files exist either in PowerShell (for Windows) or the ***awk*** utility on MacOS/Linux - but these are outside the scope of this lab.
@@ -297,5 +300,8 @@ Congrats, your ISE instance is now ...CERTIFIED!
 > **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
+> [**Go Back to ISE Certificates Overview**](./03-ISE-Certificates.md)
+
+> [**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
 
 > [**Return to ISE Automation Lab Overview**](../README.md)

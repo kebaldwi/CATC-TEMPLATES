@@ -9,13 +9,13 @@
 			"enabled": true
 		},
 		{
-			"key": "username",
+			"key": "ise-username",
 			"value": "admin",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "password",
+			"key": "ise-password",
 			"value": "C1sco12345",
 			"type": "default",
 			"enabled": true
@@ -37,9 +37,69 @@
 			"value": "C1sco12345",
 			"type": "default",
 			"enabled": true
+		},
+		{
+			"key": "catc",
+			"value": "198.18.129.100",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "catc-username",
+			"value": "admin",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "catc-password",
+			"value": "C1sco12345",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "catc-token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ise-uuid-catc",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "join-point-id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "domain-computers-uuid",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "domain-users-uuid",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "LAB-PC-MAC-ADD",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "parent-policy-set-id",
+			"value": "",
+			"type": "default",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2025-08-22T18:38:21.216Z",
-	"_postman_exported_using": "Postman/11.59.4"
+	"_postman_exported_at": "2025-11-07T20:22:48.830Z",
+	"_postman_exported_using": "Postman/11.70.6"
 }

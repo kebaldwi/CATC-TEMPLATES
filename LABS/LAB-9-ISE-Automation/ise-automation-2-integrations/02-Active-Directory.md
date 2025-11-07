@@ -23,7 +23,7 @@ This lab module consists of the following tasks:
 2. [**Getting an Join Point ID**](#getting-an-ad-join-point-id)
 3. [**Joining the AD Join Point**](#joining-the-ad-join-point)
 4. [**Getting a List of Users**](#getting-a-list-of-users)
-5. [**Getting a List of User Groups**](#getting-a-list-of-user-groups)
+5. [**Getting a List of Domain Groups**](#getting-a-list-of-domain-groups)
 
 ## Creating an Active Directory Join Point
 
@@ -76,8 +76,6 @@ This lab module consists of the following tasks:
 
     ![json](../../../ASSETS/LABS/ISE/ISE-AD-API-7.png?raw=true "Import JSON")
 
-    > [!TIP]
-    > Feel free to open the ***lab-9-ise-automation Environment*** and create a variable called `{{join-point-id}}` and include the id value, as we're going to be using several APIs that require it!
 
 3. Next:
     
@@ -137,13 +135,13 @@ This lab module consists of the following tasks:
         ![json](../../../ASSETS/LABS/ISE/ISE-AD-API-12.png?raw=true "Import JSON")
 
 
-## Getting a List of User Groups
+## Getting a List of Domain Groups
 
 The API for getting a list of User Groups from ISE is almost identical to getting a list of Users - and is likely going to be even more helpful; as, in general, policies are going to be based on User Groups rather than individual Users.
 
 ***Complete the following tasks:***
 
-1. From the Postman app, open ***lab-9-ise-automation collection > ISE > Active Directory*** and select ***PUT - AD List of User Groups***
+1. From the Postman app, open ***lab-9-ise-automation collection > ISE > Active Directory*** and select ***PUT - AD List of Domain Groups***
 
     ![json](../../../ASSETS/LABS/ISE/ISE-AD-API-13.png?raw=true "Import JSON")
 
@@ -151,11 +149,11 @@ The API for getting a list of User Groups from ISE is almost identical to gettin
 
     1. We need to provide the Join Point ID as part of the URL
 
-    2. Note the basic info provided as part of the Body.  Again, note that the request is asking for the name of the <u>Domain</u> here, ***NOT*** the name of the <u>Join Point</u>.
+    2. Note the basic info provided as part of the Body.  AND that the request is asking for the name of the <u>Domain</u> here, ***NOT*** the name of the <u>Join Point</u>.
 
     3. Click ***Send***
 
-    4. Our response should be a JSON list of all of our Active Directory Users:
+    4. Our response should be a JSON list of all of our Active Directory Domain Groups:
 
         ![json](../../../ASSETS/LABS/ISE/ISE-AD-API-14.png?raw=true "Import JSON")
 

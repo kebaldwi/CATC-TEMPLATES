@@ -1,8 +1,5 @@
 # ISE Automation
 
-> [!NOTE]
-> This Lab (Lab 9 - ISE Automation) is currently under construction.
-
 > [!WARNING]
 > For best results and if you have not ensured that the lab is functioning correctly, please consider checking the readiness of the lab in this [DCLOUD LAB PREPARATION](./DCLOUD.md) section.
 
@@ -18,12 +15,12 @@ In this lab we will focus on configuring the integration between ISE and Catalys
 
 The lab will be split into modules to concentrate on specific tasks. Each is designed to build your knowledge in specific areas and they will call out any dependancies on previous modules. We will cover are the following which you can access via the links below:
 
-1. [**Module1**](./module1-catc-ise-integration.md)
-2. [**Module2**](./module2-.md)
-3. [**Module3**](./module3-dayn.md)
-4. [**Module4**](./module4-applicationqos.md)
-5. [**Module5**](./module5-telemetry.md)
-6. [**Module6**](./module6-advanced.md)
+1. [**Module 0 - Orientation**](./ise-automation-0-orientation/01-Intro.md)
+2. [**Module 1 - Certificates**](./ise-automation-1-certificates/01-PKI-Infrastructure.md)
+3. [**Module 2 - Integrations**](./ise-automation-2-integrations/01-ERS-API-Admin.md)
+4. [**Module 3 - Policy**](./ise-automation-3-policy/01-Lab-Client-Orientation.md)
+5. [**Module 4 - Testing**](./ise-automation-4-testing/01-iPSK-Testing.md)
+
 
 ## Preparation
 

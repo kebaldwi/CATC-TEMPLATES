@@ -21,15 +21,19 @@ This lab consists of the following tasks:
 
 ## PKI Infrastructure Build
 
-For lab purposes we will utilize a Microsoft Certificate authority to be built on the Active Directory (AD) server with in the lab. Normally this would be built separately with an offline root and then one (or more) online subordinate certificate authority servers; but within the confines of our lab we will make do with the single AD server provided.
+For lab purposes we will utilize a Microsoft Certificate authority to be built on the Active Directory (AD) server with in the lab. Normally this would be built separately with an offline root and then one (or more) online subordinate certificate authority servers; but within the confines of our lab we will make due with the single AD server provided.
 
-From the dCloud Session View, select the AD server and open a Web RDP console.  Within the AD server, we will first set up the Certificate Authority utilizing Powershell. Open a RDP session to the AD server and we will initiate our PowerShell scripts from there.
+From the dCloud Session View, select the AD server and open a Web RDP console.  Within the AD server, we will first set up the Certificate Authority utilizing Powershell. Within the WebRDP session will initiate our PowerShell scripts from there.
 
 >[!IMPORTANT]
 >While the code sections below are provided to give you an idea of what the PowerShell scripts are doing in the background, it is **not recommended** to copy and paste them into a PowerShell window.  Instead, download the full PowerShell script from the link below to the AD Server and right click the file and choose "Run with PowerShell".  The reason for this is that there are wait timers built into the full PowerShell script that ensure the various features are fully configured before other tasks start.  Note that the full PowerShell script will take some time to run, so please be patient!  You will be prompted with questions asking if you want to perform certain actions -- choose "A" for "Yes to All" for any prompts you encounter.
 
 
 <p>Download the full Powershell script here: <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/POWERSHELL/powershell-CA.ps1">⬇︎CA Setup Powershell⬇︎</a></p>
+
+Here are some snippets of what Powershell is doing in the background:
+
+First, we're setting up a Certificate Authority on the DC.
 
 ```ps
 # Add domain admin account to IIS_IUSRS group in the domain
@@ -53,7 +57,7 @@ $certConfig = @{
 Install-AdcsCertificationAuthority @certConfig
 ```
 
-These are the scripts to get Certification Enrollment Web Services turned on to get a certificate (these are also part of the above PowerShell file, no need to run them separately)
+Next, here are the scripts to get Certification Enrollment Web Services turned on to get a certificate (these are also part of the above PowerShell file, no need to run them separately)
 
 ```ps
 # Enable the Certificate Authority Web Enrollment service

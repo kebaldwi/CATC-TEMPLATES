@@ -1,0 +1,4 @@
+﻿name,rank,attributeValue,identitySourceName
+iPSK-AuthN,0,CAMPUS-iPSK,Internal Endpoints
+EAP-TLS-AuthN,1,CAMPUS-EAP,DCLOUD_Cert_Auth_Profile
+EAP-TTLS-or-PEAP-AuthN,2,CAMPUS-EAP,DCLOUD-Active-Directory

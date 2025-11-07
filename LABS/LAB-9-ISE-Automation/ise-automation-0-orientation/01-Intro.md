@@ -16,13 +16,14 @@ A Cisco ISE administrator can gather real-time contextual data for a network, in
 
 As a Cisco ISE administrator, you can use this information to make network governance decisions. You can also tie identity data to various network elements to create policies that govern network access and usage.
 
-## Lab Sections
+## Lab Sections/Modules
 
 These labs are organized in such a way that they will need to be completed ***in order*** to achieve an ISE deployment that can be used to test other use cases from earlier labs.
 
 1. PKI and Certificates Setup. (Note that if you have already completed Labs 1 or 2 as part of this lab time slot, many of these tasks may be redundant)
 2. ISE Integrations
 3. Policy Elements and Sets
+4. Testing with Lab PCs
 
 ## Prerequisites
 

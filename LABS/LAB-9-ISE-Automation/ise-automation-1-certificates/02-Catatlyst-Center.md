@@ -47,6 +47,9 @@ This lab module consists of the following tasks:
 
    You may see a prompt from the browser to ***Keep*** or ***Discard*** this download, choose ***Keep***.  By default, the file will save to the Downloads folder as `certnew.cer`
 
+   >[!TIP]
+   >We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
+
 >[!IMPORTANT]
 >For the next steps, please choose <u>either</u> to ***install the root CA via GUI*** or ***install the root CA via API***.  If you wish to do both for learning purposes, you will need to delete the certificate you installed from one method in order to complete the steps for the other method.
 
@@ -124,6 +127,9 @@ This lab module consists of the following tasks:
    SanIP = 100.64.0.101, 198.18.129.100
 ```
 7. Here is a screenshot of the completed form (below).  Click **Generate new CSR** blue button at the bottom right, this will generate the new CSR.
+
+   >[!IMPORTANT]
+   >Please ensure your screen matches this screenshot before generating the CSR.
 
    ![json](../../../ASSETS/LABS/AD/CERTS/CATC-GUI-CSR-3.png?raw=true "Import JSON")
 

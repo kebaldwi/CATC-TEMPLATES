@@ -1,0 +1,3 @@
+﻿name,rank,dictionaryName1,attributeName1,operator1,attributeValue1,dictionaryName2,attributeName2,operator2,attributeValue2
+EAP-TLS-AuthZ,1,Normalised Radius,SSID,contains,CAMPUS-EAP,DCLOUD-Active-Directory,ExternalGroups,equals,dcloud.cisco.com/Users/Domain Computers
+EAP-TTLS-or-PEAP-AuthZ,2,Normalised Radius,SSID,contains,CAMPUS-EAP,DCLOUD-Active-Directory,ExternalGroups,equals,dcloud.cisco.com/Users/Domain Users
