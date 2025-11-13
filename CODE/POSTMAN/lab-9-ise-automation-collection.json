@@ -1,0 +1,1593 @@
+{
+	"info": {
+		"_postman_id": "0a366f10-4f0e-4174-b5c8-b9d5ab5cb170",
+		"name": "lab-9-ise-automation-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14223011",
+		"_collection_link": "https://cisco6-8177.postman.co/workspace/Cisco-SE-Labs~a4b1269c-0645-4966-aeca-48565d4681d9/collection/14223011-0a366f10-4f0e-4174-b5c8-b9d5ab5cb170?action=share&source=collection_link&creator=14223011"
+	},
+	"item": [
+		{
+			"name": "ISE",
+			"item": [
+				{
+					"name": "ACTIVE DIRECTORY",
+					"item": [
+						{
+							"name": "AD Join Points",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AD Create Join Point",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ERSActiveDirectory\": {\r\n    \"adScopesNames\": \"Default_Scope\",\r\n    \"enableDomainAllowedList\": true,\r\n    \"domain\": \"dcloud.cisco.com\",\r\n    \"name\": \"DCLOUD-Active-Directory\",\r\n    \"description\": \"Active Directory of Cisco DCLOUD\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AD Join Point Details",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory/{{join-point-id}}",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AD Join a Join Point by ID",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OperationAdditionalData\" : {\r\n    \"additionalData\" : [ {\r\n      \"name\" : \"username\",\r\n      \"value\" : \"admin\"\r\n    }, {\r\n      \"name\" : \"password\",\r\n      \"value\" : \"C1sco12345\"\r\n    }, {\r\n      \"name\" : \"node\",\r\n      \"value\" : \"ise.dcloud.cisco.com\"\r\n    } ]\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory/{{join-point-id}}/join",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}",
+										"join"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AD List of Domain Users",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OperationAdditionalData\" : {\r\n    \"additionalData\" : [ {\r\n      \"name\" : \"domain\",\r\n      \"value\" : \"dcloud.cisco.com\"\r\n    } ]\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://198.18.133.27/ers/config/activedirectory/{{join-point-id}}/getDomainUsers",
+									"protocol": "https",
+									"host": [
+										"198",
+										"18",
+										"133",
+										"27"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}",
+										"getDomainUsers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AD List of Domain Groups",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OperationAdditionalData\" : {\r\n    \"additionalData\" : [ {\r\n      \"name\" : \"domain\",\r\n      \"value\" : \"dcloud.cisco.com\"\r\n    } ]\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://198.18.133.27/ers/config/activedirectory/{{join-point-id}}/getGroupsByDomain",
+									"protocol": "https",
+									"host": [
+										"198",
+										"18",
+										"133",
+										"27"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}",
+										"getGroupsByDomain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CATCENTER INTEGRATION",
+					"item": [
+						{
+							"name": "1. Set ISE pxGrid AutoApprove",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"PxgridSettings\": {\n    \"allowPasswordBasedAccounts\": true,\n    \"autoApproveCertBasedAccounts\": true\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/pxgridsettings/autoapprove",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"pxgridsettings",
+										"autoapprove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. Get CatC Auth Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.environment.set(\"catc-token\", data.Token);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{catc-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{catc-username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"disabled": true
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic YWRtaW46R3JhcGV2aW5lMQ=="
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://{{catc}}/api/system/v1/auth/token",
+									"protocol": "https",
+									"host": [
+										"{{catc}}"
+									],
+									"path": [
+										"api",
+										"system",
+										"v1",
+										"auth",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3. Add ISE Policy Server to CatC",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{catc-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{catc-username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{catc-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accountingPort\":\"1813\",\n    \"authenticationPort\":\"1812\",\n    \"ciscoISEUrl\":null,\n    \"ciscoIseDtos\":[\n            {\n                \"description\":\"DCLOUD ISE Server\",\n                \"fqdn\":\"ise.dcloud.cisco.com\",\n                \"password\":\"C1sco12345\",\n                \"sshkey\":\"\",\n                \"ipAddress\":\"198.18.133.27\",\n                \"subscriberName\":\"dcloud-cat-center\",\n                \"userName\":\"admin\"\n            }\n    ],\n    \"ipAddress\":\"198.18.133.27\",\n    \"pxgridEnabled\":true,\n    \"useDnacCertForPxgrid\":true,\n    \"isIseEnabled\":true,\n    \"port\":\"49\",\n    \"protocol\":\"RADIUS_TACACS\",\n    \"retries\":\"3\",\n    \"role\":\"primary\",\n    \"sharedSecret\":\"C1sco12345\",\n    \"timeoutSeconds\":\"4\",\n    \"encryptionScheme\":\"\",\n    \"externalCiscoIseIpAddrDtos\":\n        [\n            {\n                \"externalCiscoIseIpAddresses\":\n                    [\n                            {\n                                \"externalIpAddress\":\"198.18.133.27\"\n                            }\n                    ],\"type\":\"vip\"\n            }\n        ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{catc}}/api/v1/aaa",
+									"protocol": "https",
+									"host": [
+										"{{catc}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"aaa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4. Get ISE instanceUuid from CatC",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();",
+											"pm.environment.set(\"ise-uuid-catc\", data.response[0][\"instanceUuid\"]);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{catc-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{catc-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-auth-token",
+										"value": "{{catc-token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{catc}}/dna/intent/api/v1/authentication-policy-servers",
+									"protocol": "https",
+									"host": [
+										"{{catc}}"
+									],
+									"path": [
+										"dna",
+										"intent",
+										"api",
+										"v1",
+										"authentication-policy-servers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5. Accept ISE Cert on CatC",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{catc-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{catc-username}}",
+											"type": "string"
+										},
+										{
+											"key": "saveHelperData",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "showPassword",
+											"value": false,
+											"type": "boolean"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{catc-token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"isCertAcceptedByUser\": true }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{catc}}/api/v1/aaa/integrateIse/{{ise-uuid-catc}}",
+									"protocol": "https",
+									"host": [
+										"{{catc}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"aaa",
+										"integrateIse",
+										"{{ise-uuid-catc}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CERTIFICATES",
+					"item": [
+						{
+							"name": "Import Trusted Certificate",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"allowBasicConstraintCAFalse\": true,\n  \"allowOutOfDateCert\": true,\n  \"allowSHA1Certificates\": true,\n  \"data\": \"\",\n  \"description\": \"DCLOUD ROOT CA CERTIFICATE\",\n  \"name\": \"DCLOUD ROOT CA CERTIFICATE\",\n  \"trustForCertificateBasedAdminAuth\": true,\n  \"trustForCiscoServicesAuth\": false,\n  \"trustForClientAuth\": true,\n  \"trustForIseAuth\": true,\n  \"validateCertificateExtensions\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/certs/trusted-certificate/import",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"certs",
+										"trusted-certificate",
+										"import"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Generate CSR",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"allowWildCardCert\": false,\n  \"digestType\": \"SHA-512\",\n  \"hostnames\": [\n    \"ise\"\n  ],\n  \"keyLength\": \"4096\",\n  \"keyType\": \"RSA\",\n  \"sanDNS\": [\n    \"ise.dcloud.cisco.com\"\n  ],\n  \"sanIP\": [\n    \"198.18.133.27\"\n  ],\n  \"subjectCity\": \"SJC\",\n  \"subjectCommonName\": \"$FQDN$\",\n  \"subjectCountry\": \"US\",\n  \"subjectOrg\": \"CISCO\",\n  \"subjectOrgUnit\": \"DCLOUD\",\n  \"subjectState\": \"CA\",\n  \"usedFor\": \"MULTI-USE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/certs/certificate-signing-request",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"certs",
+										"certificate-signing-request"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CSR Listing",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/certs/certificate-signing-request",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"certs",
+										"certificate-signing-request"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bind CSR",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"admin\": true,\r\n  \"allowExtendedValidity\": true,\r\n  \"allowOutOfDateCert\": false,\r\n  \"allowReplacementOfCertificates\": true,\r\n  \"allowReplacementOfPortalGroupTag\": true,\r\n  \"data\": \"\",\r\n  \"eap\": true,\r\n  \"hostName\": \"ise\",\r\n  \"id\": \"\",\r\n  \"ims\": false,\r\n  \"name\": \"DCLOUD ISE SIGNED CERTIFICATE\",\r\n  \"portal\": false,\r\n  \"pxgrid\": true,\r\n  \"radius\": true,\r\n  \"saml\": false,\r\n  \"validateCertificateExtensions\": false\r\n}"
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/certs/signed-certificate/bind",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"certs",
+										"signed-certificate",
+										"bind"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POLICY",
+					"item": [
+						{
+							"name": "1. AD Join Point ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"pm.environment.set(\"join-point-id\", data.SearchResult.resources[0][\"id\"]);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. AD List of Domain Groups",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"\r",
+											"var groups = data.ERSActiveDirectoryGroups.groups\r",
+											"\r",
+											"for (var key in groups) {\r",
+											"    //console.log(groups[key].name);\r",
+											"    if (groups[key].name === \"dcloud.cisco.com/Users/Domain Computers\") {\r",
+											"        pm.environment.set(\"domain-computers-uuid\", groups[key].sid);\r",
+											"        console.log(\"Added Domain Computers to Environment Variable\");\r",
+											"    } else if (groups[key].name === \"dcloud.cisco.com/Users/Domain Users\") {\r",
+											"        pm.environment.set(\"domain-users-uuid\", groups[key].sid);\r",
+											"        console.log(\"Added Domain Users to Environment Variable\");\r",
+											"    } else {\r",
+											"    }\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OperationAdditionalData\" : {\r\n    \"additionalData\" : [ {\r\n      \"name\" : \"domain\",\r\n      \"value\" : \"dcloud.cisco.com\"\r\n    } ]\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory/{{join-point-id}}/getGroupsByDomain",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}",
+										"getGroupsByDomain"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3. AD Add Groups From Domain",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ERSActiveDirectory\" : {\r\n    \"name\" : \"DCLOUD-Active-Directory\",\r\n    \"domain\" : \"dcloud.cisco.com\",\r\n    \"enableDomainAllowedList\" : true,\r\n    \"adgroups\" : {\r\n      \"groups\" : [ {\r\n        \"name\": \"dcloud.cisco.com/Users/Domain Computers\",\r\n        \"sid\": \"{{domain-computers-uuid}}\",\r\n        \"type\": \"GLOBAL\"\r\n      }, {\r\n        \"name\": \"dcloud.cisco.com/Users/Domain Users\",\r\n        \"sid\": \"{{domain-users-uuid}}\",\r\n        \"type\": \"GLOBAL\"\r\n      } ]\r\n    },\r\n    \"adScopesNames\" : \"Default_Scope\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/activedirectory/{{join-point-id}}/addGroups",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"activedirectory",
+										"{{join-point-id}}",
+										"addGroups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4. Create iPSK Custom Endpoint",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"customAttributes\" : {\r\n        \"iPSK\": \"Cisco6789\"\r\n    },\r\n    \"mac\" : \"{{LAB-PC-MAC-ADD}}\",\r\n    \"name\" : \"{{LAB-PC-MAC-ADD}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/endpoint",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"endpoint"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5. Create iPSK Authorization Profile",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"AuthorizationProfile\": {\r\n        \"name\": \"iPSK-Auth-Profile\",\r\n        \"description\": \"\",\r\n        \"advancedAttributes\": [\r\n            {\r\n                \"leftHandSideDictionaryAttribue\": {\r\n                    \"AdvancedAttributeValueType\": \"AdvancedDictionaryAttribute\",\r\n                    \"dictionaryName\": \"Cisco\",\r\n                    \"attributeName\": \"cisco-av-pair\"\r\n                },\r\n                \"rightHandSideAttribueValue\": {\r\n                    \"AdvancedAttributeValueType\": \"AttributeValue\",\r\n                    \"value\": \"psk-mode=ascii\"\r\n                }\r\n            },\r\n            {\r\n                \"leftHandSideDictionaryAttribue\": {\r\n                    \"AdvancedAttributeValueType\": \"AdvancedDictionaryAttribute\",\r\n                    \"dictionaryName\": \"Cisco\",\r\n                    \"attributeName\": \"cisco-av-pair\"\r\n                },\r\n                \"rightHandSideAttribueValue\": {\r\n                    \"AdvancedAttributeValueType\": \"AdvancedDictionaryAttribute\",\r\n                    \"dictionaryName\": \"EndPoints\",\r\n                    \"attributeName\": \"iPSK\"\r\n                }\r\n            }\r\n        ],\r\n        \"accessType\": \"ACCESS_ACCEPT\",\r\n        \"authzProfileType\": \"SWITCH\",\r\n        \"trackMovement\": false,\r\n        \"agentlessPosture\": false,\r\n        \"serviceTemplate\": false,\r\n        \"easywiredSessionCandidate\": false,\r\n        \"profileName\": \"Cisco\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/authorizationprofile/",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"authorizationprofile",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6. Create Certificate Authentication Profile",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CertificateProfile\": {\r\n        \"name\": \"DCLOUD_Cert_Auth_Profile\",\r\n        \"description\": \"Certificate Profile for DCLOUD Active Directory\",\r\n        \"externalIdentityStoreName\": \"DCLOUD-Active-Directory\",\r\n        \"certificateAttributeName\": \"ALL_SUBJECT_AND_ALTERNATIVE_NAMES\",\r\n        \"allowedAsUserName\": false,\r\n        \"matchMode\": \"RESOLVE_IDENTITY_AMBIGUITY\",\r\n        \"usernameFrom\": \"UPN\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/ers/config/certificateprofile/",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"certificateprofile",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "7. Create Parent Policy Set",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json();\r",
+											"pm.environment.set(\"parent-policy-set-id\", data.response.id)\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"DCLOUD-LAB-POLICY\",\r\n\t\"description\": \"Policy for testing DCLOUD Lab Connectivity\",\r\n\t\"rank\": 0,\r\n\t\"state\": \"enabled\",\r\n\t\"condition\": {\r\n\t\t\"conditionType\": \"ConditionAttributes\",\r\n\t\t\"isNegate\": false,\r\n\t\t\"dictionaryName\": \"DEVICE\",\r\n\t\t\"attributeName\": \"Device Type\",\r\n\t\t\"operator\": \"equals\",\r\n\t\t\"dictionaryValue\": null,\r\n\t\t\"attributeValue\": \"All Device Types\"\r\n\t},\r\n\t\"serviceName\": \"Default Network Access\",\r\n\t\"isProxy\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/policy/network-access/policy-set",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"policy",
+										"network-access",
+										"policy-set"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "8. Create iPSK AuthZ Rule",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"rule\": {\r\n\t\t\"default\": false,\r\n\t\t\"name\": \"iPSK-AuthZ\",\r\n\t\t\"rank\": 0,\r\n\t\t\"state\": \"disabled\",\r\n\t\t\"condition\": {\r\n\t\t\t\"link\": null,\r\n\t\t\t\"conditionType\": \"ConditionAttributes\",\r\n\t\t\t\"isNegate\": false,\r\n\t\t\t\"dictionaryName\": \"Normalised Radius\",\r\n\t\t\t\"attributeName\": \"SSID\",\r\n\t\t\t\"operator\": \"contains\",\r\n\t\t\t\"dictionaryValue\": null,\r\n\t\t\t\"attributeValue\": \"CAMPUS-iPSK\"\r\n\t\t}\r\n\t},\r\n\t\"profile\": [\r\n\t\t\"iPSK-Auth-Profile\"\r\n\t],\r\n\t\"securityGroup\": null\r\n}"
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/policy/network-access/policy-set/{{parent-policy-set-id}}/authorization",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"policy",
+										"network-access",
+										"policy-set",
+										"{{parent-policy-set-id}}",
+										"authorization"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "9. Create AuthN Rules",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"rule\": {\r\n\t\t\"default\": false,\r\n\t\t\"name\": \"{{name}}\",\r\n\t\t\"rank\": {{rank}},\r\n\t\t\"state\": \"disabled\",\r\n\t\t\"condition\": {\r\n\t\t\t\"conditionType\": \"ConditionAttributes\",\r\n\t\t\t\"isNegate\": false,\r\n\t\t\t\"dictionaryName\": \"Normalised Radius\",\r\n\t\t\t\"attributeName\": \"SSID\",\r\n\t\t\t\"operator\": \"contains\",\r\n\t\t\t\"dictionaryValue\": null,\r\n\t\t\t\"attributeValue\": \"{{attributeValue}}\"\r\n\t\t}\r\n\t},\r\n\t\"identitySourceName\": \"{{identitySourceName}}\",\r\n\t\"ifAuthFail\": \"REJECT\",\r\n\t\"ifUserNotFound\": \"REJECT\",\r\n\t\"ifProcessFail\": \"DROP\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/policy/network-access/policy-set/{{parent-policy-set-id}}/authentication",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"policy",
+										"network-access",
+										"policy-set",
+										"{{parent-policy-set-id}}",
+										"authentication"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "10. Create EAP AuthZ Rules",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ise-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ise-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"rule\": {\r\n\t\t\"default\": false,\r\n\t\t\"name\": \"{{name}}\",\r\n\t\t\"rank\": {{rank}},\r\n\t\t\"state\": \"disabled\",\r\n\t\t\"condition\": {\r\n\t\t\t\"link\": null,\r\n\t\t\t\"conditionType\": \"ConditionAndBlock\",\r\n\t\t\t\"isNegate\": false,\r\n\t\t\t\"children\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"conditionType\": \"ConditionAttributes\",\r\n\t\t\t\t\t\"isNegate\": false,\r\n\t\t\t\t\t\"dictionaryName\": \"{{dictionaryName1}}\",\r\n\t\t\t\t\t\"attributeName\": \"{{attributeName1}}\",\r\n\t\t\t\t\t\"operator\": \"{{operator1}}\",\r\n\t\t\t\t\t\"dictionaryValue\": null,\r\n\t\t\t\t\t\"attributeValue\": \"{{attributeValue1}}\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"conditionType\": \"ConditionAttributes\",\r\n\t\t\t\t\t\"isNegate\": false,\r\n\t\t\t\t\t\"dictionaryName\": \"{{dictionaryName2}}\",\r\n\t\t\t\t\t\"attributeName\": \"{{attributeName2}}\",\r\n\t\t\t\t\t\"operator\": \"{{operator2}}\",\r\n\t\t\t\t\t\"dictionaryValue\": null,\r\n\t\t\t\t\t\"attributeValue\": \"{{attributeValue2}}\"\r\n\t\t\t\t}\r\n\t\t\t]\r\n\t\t}\r\n\t},\r\n\t\"profile\": [\r\n\t\t\"PermitAccess\"\r\n\t],\r\n\t\"securityGroup\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{ise}}/api/v1/policy/network-access/policy-set/{{parent-policy-set-id}}/authorization",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"policy",
+										"network-access",
+										"policy-set",
+										"{{parent-policy-set-id}}",
+										"authorization"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "USER MANAGEMENT",
+					"item": [
+						{
+							"name": "Admin Users List",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{ers-password}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{ers-username}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{ise}}/ers/config/adminuser",
+									"protocol": "https",
+									"host": [
+										"{{ise}}"
+									],
+									"path": [
+										"ers",
+										"config",
+										"adminuser"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
