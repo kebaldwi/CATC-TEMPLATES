@@ -12,7 +12,7 @@ In order for Catalyst Center and ISE to function securely within our lab environ
 
    ***URL for GitHub Repo***
 
-   https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS
+   **```https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS```**
 
 This lab consists of the following tasks:
 

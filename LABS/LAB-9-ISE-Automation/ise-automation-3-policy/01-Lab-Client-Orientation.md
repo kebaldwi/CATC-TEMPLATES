@@ -84,8 +84,7 @@ Within each lab pod, in addition to the four Client PCs, there are two USB contr
 >[!IMPORTANT]
 >As mentioned above, these USB adapters are <u>shared</u> across all 4 Client PCs via the SX Virtual Link software.  In reality, they are physical USB devices that are simply exposed to the SX Virtual Link software to simulate the ability to plug/unplug the devices from the PCs -- without having to physically be present in the lab to do so.  This means that if you "plug in" (ie: click the Connect button in the SX Virtual Link software) an adapter to one Client PC, such as the wireless Linksys USB in the example above, it will be <u><i><b>unavailable</b></i></u> for use on the other PCs unless it is first disconnected from PC it is connected to via the SX Virtual Link software.  Thankfully, the SX Virtual Link software makes it easy to see this as it will denote a device "in use" within the GUI.
 
-![json](../../../ASSETS/LABS/ISE/ISE-LABPC-ORIENTATION-08.png?raw=true "Import JSON")
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![json](../../../ASSETS/LABS/ISE/ISE-LABPC-ORIENTATION-08.png?raw=true "Import JSON")
 
 ## Capturing the MAC Address of the USB Wireless Adapter
 
