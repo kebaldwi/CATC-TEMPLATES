@@ -385,27 +385,33 @@ We will now **download** and **import** one of the following PnP Onboarding Temp
 
 #### Velocity:
 
+<!---
 > [!NOTE]
 > For older versions of Catalyst Center formerly known as Cisco DNA Center 2.2 and lower use the following for easy import:
-
+--->
 &emsp;&emsp;&emsp; <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/TEMPLATES/VELOCITY/ONBOARDING/JSON/Platinum_PnP_Velocity_Template.json">⬇︎Platinum_PnP_Velocity_template.json⬇︎</a></br>
 
+<!---
 <details closed>
 <summary> New Version for NON DCLOUD ONLY </summary></br>
 <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/TEMPLATES/VELOCITY/ONBOARDING/JSON/Titanium_PnP_Velocity_template.json">⬇︎Titanium_PnP_Velocity_template.json⬇︎</a> 
 </details>
+--->
 
 #### Jinja2:
 
+<!---
 > [!NOTE]
 > For older versions of Catalyst Center formerly known as Cisco DNA Center 2.2 and lower use the following for easy import:
-
+--->
 &emsp;&emsp;&emsp; <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/TEMPLATES/JINJA2/ONBOARDING/JSON/Platinum_PnP_Jinja2_Template.json">⬇︎Platinum_PnP_Jinja2_template.json⬇︎</a> 
 
+<!---
 <details closed>
 <summary> New Version for NON DCLOUD ONLY </summary></br>
 <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/TEMPLATES/JINJA2/ONBOARDING/JSON/Titanium_PnP_Jinja2_template.json">⬇︎Titanium_PnP_Jinja2_template.json⬇︎</a>
 </details></br>
+--->
 
 1. Navigate to the **Template Hub** formerly known as the **Template Editor** within Catalyst Center through the menu **`Tools > Template Hub`**.
 

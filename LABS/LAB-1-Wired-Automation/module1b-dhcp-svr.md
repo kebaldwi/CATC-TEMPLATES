@@ -4,7 +4,7 @@ As you may recall, for a device to discover Catalyst Center, the device uses a d
 
 The PnP components are as follows:
 
-![json](../../ASSETS/pnp-workflows.png?raw=true "Import JSON")
+![json](../../ASSETS/TUTORIALS/DAY0DAYN/pnp-workflows.png?raw=true "Import JSON")
 
 There are three automated methods to make that occur and in this section we will use DHCP Discovery. To aide in that we are goiing to utilize IOS DHCP services. The Target switch, commonly called Access switch will need to be offered option 43 with a string in order to find Catalyst Center.
 

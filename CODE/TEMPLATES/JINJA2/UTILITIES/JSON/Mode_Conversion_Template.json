@@ -1,0 +1,580 @@
+[
+  {
+    "name": "Conversion-EEM-Scripting",
+    "description": "",
+    "tags": [],
+    "author": "admin",
+    "deviceTypes": [
+      {
+        "productFamily": "Switches and Hubs",
+        "productSeries": "Cisco Catalyst 9300 Series Switches"
+      }
+    ],
+    "softwareType": "IOS",
+    "softwareVariant": "XE",
+    "templateContent": "{#- Automated IOS Conversion Script -#}\n{#- This script allows for the conversion of a Catalyst Switch between Bundle and Install modes   -#}\n{#- Choose mode to convert to and the date and time and the script when deployed will do the rest -#}\n{#- Set up the CRON job in the EEM Applet -#}\n\n{%- if Date != \"00/00\" -%}\n{%- set DateArray = Date.split(\"/\") -%}\n{%- set MM = DateArray[0] -%}\n{%- set DD = DateArray[1] -%}\n{%- set WK = \"*\" -%}\n{%- else -%}\n{%- set MM = \"*\" -%}\n{%- set DD = \"*\" -%}\n{%- set WK = \"*\" -%}\n{%- endif -%}\n{%- if Time != \"\" -%}\n{%- set TimeArray = Time.split(\":\") -%}\n{%- set HRS = TimeArray[0] -%}\n{%- set MIN = TimeArray[1] -%}\n{%- endif -%}\n\n{#- Build Conversion Applet for deployment -#}\nevent manager applet conversion-applet authorization bypass\n event timer cron cron-entry \"{{MIN}} {{HRS}} {{DD}} {{MM}} {{WK}}\" maxrun 300 \n action 100 cli command \"enable\"\n {% if Conversion == \"INSTALL\" %}\n action 200 cli command \"sh boot | include .bin\"\n action 201 regexp \"(bin)\" \"$_cli_result\" match bootVariable\n action 202 if $bootVariable eq \"bin\"\n {% else %}\n action 200  cli command \"sh boot | include packages.conf\"\n action 201  regexp \"(packages.conf)\" \"$_cli_result\" match bootVariable\n action 202  if packages.conf eq \"$bootVariable\"\n {% endif %}\n action 203  cli command \"dir flash:*.bin | include cat9k_iosxe\"\n action 204  regexp \"(cat9k.*[.]bin)\" \"$_cli_result\" match Exist\n action 205  if $Exist ne \"\"\n action 206   set _cli_output \"$_cli_result\"\n action 207   set high_version \"0.0.0\"\n action 208   foreach line \"$_cli_output\" \"\\n\"\n action 209    regexp \"(cat9k.*[.]bin)\" \"$line\" match filename\n action 210    regexp \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\" \"$filename\" match v1 v2 v3\n action 211    regexp \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\" \"$high_version\" match c1 c2 c3\n action 212    if $v1 ge \"$c1\"\n action 213     if $v2 ge \"$c2\"\n action 214      if $v3 ge \"$c3\"\n action 215       set high_version \"$v1.$v2.$v3\"\n action 216       set binFilename \"$filename\"\n action 217      end\n action 218     end\n action 219    end\n action 220   end\n action 221   puts \"Highest version found: $high_version in file $binFilename\"\n action 222   puts \"Boot System to INSTALL from flash file: $binFilename\"\n action 301   cli command \"sh switch detail | include Ready\"\n action 302   regexp \"(.*Ready)+\" \"$_cli_result\" match _cli_output\n action 303   set COUNT \"1\"\n action 304   cli command \"term len 0\"\n action 305   foreach line \"$_cli_output\" \"\\n\"\n {% if Conversion == \"INSTALL\" %}\n action 306    cli command \"dir flash-$COUNT:*.conf | include packages\"\n action 307    regexp \"(packages.conf)\" \"$_cli_result\" match confExist\n action 308    if $confExist ne \"\"\n action 309     cli command \"del /force flash-$COUNT:*.conf\"\n action 310    end\n action 311    cli command \"dir flash-$COUNT:*.pkg | include pkg\"\n action 312    regexp \"(cat9k.*[.]pkg)\" \"$_cli_result\" match pkgExist\n action 313    if $pkgExist ne \"\"\n action 314     cli command \"del /force /recursive flash-$COUNT:*.pkg\"\n action 315    end\n action 316    increment COUNT 1\n action 317   end\n action 318   cli command \"term len 25\"\n action 400   cli command \"enable\"\n action 401   cli command \"configure terminal\"\n action 402   cli command \"no boot system\"\n action 403   cli command \"boot system switch all flash:packages.conf\"\n action 404   cli command \"no event manager applet conversion-applet authorization bypass\"\n action 405   cli command \"end\"\n action 406   cli command \"write memory\"\n action 407   cli command \"request platform software package expand switch all file flash:$binFilename auto-copy force\"\n action 408   reload\n {% else %}\n action 306    if $COUNT ne \"1\"\n action 307     cli command \"dir flash-$COUNT:$binFilename | include cat9k_iosxe\"\n action 308     regexp \"(cat9k.*[.]bin)\" \"$_cli_result\" match memberExist\n action 309     if $memberExist ne \"\"\n action 310      cli command \"copy flash:$binFilename flash-$COUNT:$binFilename\"\n action 311     end\n action 312    end\n action 313    increment COUNT 1\n action 314   end\n action 314   cli command \"term len 25\"\n action 400   cli command \"enable\"\n action 401   cli command \"configure terminal\"\n action 402   cli command \"no boot system\"\n action 403   cli command \"boot system switch all flash:$binFilename\"\n action 404   cli command \"no event manager applet conversion-applet authorization bypass\"\n action 405   cli command \"end\"\n action 405   cli command \"write memory\"\n action 406   reload\n {% endif %}\n action 500  else\n action 501   puts \"No Bin File Present - Exiting\"\n action 502   if $Exist eq \"\" goto 990\n action 503  end\n action 600 else\n {% if Conversion == \"INSTALL\" %}\n action 601  puts \"Switch already in INSTALL mode - Exiting\"\n {% else %}\n action 601  puts \"Switch not in INSTALL mode - Exiting\"\n {% endif %}\n action 990 end\n action 991 cli command \"enable\"\n action 992 cli command \"configure terminal\"\n action 993 cli command \"no event manager applet bundleToInstall authorization bypass\"\n action 994 cli command \"end\"\n action 995 cli command \"write memory\" ",
+    "rollbackTemplateContent": "",
+    "templateParams": [
+      {
+        "parameterName": "MIN",
+        "dataType": "STRING",
+        "defaultValue": "0",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Minutes in Digits",
+        "group": null,
+        "order": 5,
+        "customOrder": 6,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Minutes"
+      },
+      {
+        "parameterName": "MM",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Calendar Month in Digits",
+        "group": null,
+        "order": 8,
+        "customOrder": 9,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Month"
+      },
+      {
+        "parameterName": "TimeArray",
+        "dataType": "STRING",
+        "defaultValue": null,
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": true,
+        "instructionText": null,
+        "group": null,
+        "order": 4,
+        "customOrder": 5,
+        "selection": {
+          "selectionType": "MULTI_SELECT",
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": null
+      },
+      {
+        "parameterName": "Date",
+        "dataType": "STRING",
+        "defaultValue": "00/00",
+        "description": "Enter Date in MM/DD format (ie 01/30 for Jan 30th)",
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": "MM/DD",
+        "group": null,
+        "order": 1,
+        "customOrder": 2,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 8,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Date"
+      },
+      {
+        "parameterName": "DD",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Calendar Day in Digits",
+        "group": null,
+        "order": 7,
+        "customOrder": 8,
+        "selection": {
+          "selectionType": null,
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Day"
+      },
+      {
+        "parameterName": "Conversion",
+        "dataType": "STRING",
+        "defaultValue": "",
+        "description": null,
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": null,
+        "group": null,
+        "order": 10,
+        "customOrder": 1,
+        "selection": {
+          "selectionType": "SINGLE_SELECT",
+          "selectionValues": {
+            "Bundle to Install": "INSTALL",
+            "Install to Bundle": "BUNDLE"
+          },
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Conversion"
+      },
+      {
+        "parameterName": "Time",
+        "dataType": "STRING",
+        "defaultValue": "00:00",
+        "description": "Enter Time in HH:MM format (13:30 for 1pm)",
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": "HH:MM",
+        "group": null,
+        "order": 3,
+        "customOrder": 3,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 5,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Time"
+      },
+      {
+        "parameterName": "WK",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": "0 = Sun\n1 = Mon\n2 = Tue\n3 = Wed\n4 = Thu\n5 = Fri\n6 = Sat",
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default of Enter Day of Week 0-6",
+        "group": null,
+        "order": 9,
+        "customOrder": 10,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 1,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": null
+      },
+      {
+        "parameterName": "HRS",
+        "dataType": "STRING",
+        "defaultValue": "0",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Hour in Digits",
+        "group": null,
+        "order": 6,
+        "customOrder": 7,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": "Hour"
+      },
+      {
+        "parameterName": "DateArray",
+        "dataType": "STRING",
+        "defaultValue": null,
+        "description": null,
+        "required": false,
+        "notParam": true,
+        "paramArray": true,
+        "instructionText": null,
+        "group": null,
+        "order": 2,
+        "customOrder": 4,
+        "selection": {
+          "selectionType": "MULTI_SELECT",
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "displayName": null
+      }
+    ],
+    "rollbackTemplateParams": [],
+    "composite": false,
+    "containingTemplates": [],
+    "language": "JINJA",
+    "promotedTemplateContent": "{#- Automated IOS Conversion Script -#}\n{#- This script allows for the conversion of a Catalyst Switch between Bundle and Install modes   -#}\n{#- Choose mode to convert to and the date and time and the script when deployed will do the rest -#}\n{#- Set up the CRON job in the EEM Applet -#}\n\n{%- if Date != \"00/00\" -%}\n{%- set DateArray = Date.split(\"/\") -%}\n{%- set MM = DateArray[0] -%}\n{%- set DD = DateArray[1] -%}\n{%- set WK = \"*\" -%}\n{%- else -%}\n{%- set MM = \"*\" -%}\n{%- set DD = \"*\" -%}\n{%- set WK = \"*\" -%}\n{%- endif -%}\n{%- if Time != \"\" -%}\n{%- set TimeArray = Time.split(\":\") -%}\n{%- set HRS = TimeArray[0] -%}\n{%- set MIN = TimeArray[1] -%}\n{%- endif -%}\n\n{#- Build Conversion Applet for deployment -#}\nevent manager applet conversion-applet authorization bypass\n event timer cron cron-entry \"{{MIN}} {{HRS}} {{DD}} {{MM}} {{WK}}\" maxrun 300 \n action 100 cli command \"enable\"\n {% if Conversion == \"INSTALL\" %}\n action 200 cli command \"sh boot | include .bin\"\n action 201 regexp \"(bin)\" \"$_cli_result\" match bootVariable\n action 202 if $bootVariable eq \"bin\"\n {% else %}\n action 200  cli command \"sh boot | include packages.conf\"\n action 201  regexp \"(packages.conf)\" \"$_cli_result\" match bootVariable\n action 202  if packages.conf eq \"$bootVariable\"\n {% endif %}\n action 203  cli command \"dir flash:*.bin | include cat9k_iosxe\"\n action 204  regexp \"(cat9k.*[.]bin)\" \"$_cli_result\" match Exist\n action 205  if $Exist ne \"\"\n action 206   set _cli_output \"$_cli_result\"\n action 207   set high_version \"0.0.0\"\n action 208   foreach line \"$_cli_output\" \"\\n\"\n action 209    regexp \"(cat9k.*[.]bin)\" \"$line\" match filename\n action 210    regexp \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\" \"$filename\" match v1 v2 v3\n action 211    regexp \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\" \"$high_version\" match c1 c2 c3\n action 212    if $v1 ge \"$c1\"\n action 213     if $v2 ge \"$c2\"\n action 214      if $v3 ge \"$c3\"\n action 215       set high_version \"$v1.$v2.$v3\"\n action 216       set binFilename \"$filename\"\n action 217      end\n action 218     end\n action 219    end\n action 220   end\n action 221   puts \"Highest version found: $high_version in file $binFilename\"\n action 222   puts \"Boot System to INSTALL from flash file: $binFilename\"\n action 301   cli command \"sh switch detail | include Ready\"\n action 302   regexp \"(.*Ready)+\" \"$_cli_result\" match _cli_output\n action 303   set COUNT \"1\"\n action 304   cli command \"term len 0\"\n action 305   foreach line \"$_cli_output\" \"\\n\"\n {% if Conversion == \"INSTALL\" %}\n action 306    cli command \"dir flash-$COUNT:*.conf | include packages\"\n action 307    regexp \"(packages.conf)\" \"$_cli_result\" match confExist\n action 308    if $confExist ne \"\"\n action 309     cli command \"del /force flash-$COUNT:*.conf\"\n action 310    end\n action 311    cli command \"dir flash-$COUNT:*.pkg | include pkg\"\n action 312    regexp \"(cat9k.*[.]pkg)\" \"$_cli_result\" match pkgExist\n action 313    if $pkgExist ne \"\"\n action 314     cli command \"del /force /recursive flash-$COUNT:*.pkg\"\n action 315    end\n action 316    increment COUNT 1\n action 317   end\n action 318   cli command \"term len 25\"\n action 400   cli command \"enable\"\n action 401   cli command \"configure terminal\"\n action 402   cli command \"no boot system\"\n action 403   cli command \"boot system switch all flash:packages.conf\"\n action 404   cli command \"no event manager applet conversion-applet authorization bypass\"\n action 405   cli command \"end\"\n action 406   cli command \"write memory\"\n action 407   cli command \"request platform software package expand switch all file flash:$binFilename auto-copy force\"\n action 408   reload\n {% else %}\n action 306    if $COUNT ne \"1\"\n action 307     cli command \"dir flash-$COUNT:$binFilename | include cat9k_iosxe\"\n action 308     regexp \"(cat9k.*[.]bin)\" \"$_cli_result\" match memberExist\n action 309     if $memberExist ne \"\"\n action 310      cli command \"copy flash:$binFilename flash-$COUNT:$binFilename\"\n action 311     end\n action 312    end\n action 313    increment COUNT 1\n action 314   end\n action 314   cli command \"term len 25\"\n action 400   cli command \"enable\"\n action 401   cli command \"configure terminal\"\n action 402   cli command \"no boot system\"\n action 403   cli command \"boot system switch all flash:$binFilename\"\n action 404   cli command \"no event manager applet conversion-applet authorization bypass\"\n action 405   cli command \"end\"\n action 405   cli command \"write memory\"\n action 406   reload\n {% endif %}\n action 500  else\n action 501   puts \"No Bin File Present - Exiting\"\n action 502   if $Exist eq \"\" goto 990\n action 503  end\n action 600 else\n {% if Conversion == \"INSTALL\" %}\n action 601  puts \"Switch already in INSTALL mode - Exiting\"\n {% else %}\n action 601  puts \"Switch not in INSTALL mode - Exiting\"\n {% endif %}\n action 990 end\n action 991 cli command \"enable\"\n action 992 cli command \"configure terminal\"\n action 993 cli command \"no event manager applet bundleToInstall authorization bypass\"\n action 994 cli command \"end\"\n action 995 cli command \"write memory\" ",
+    "promotedTemplateParams": [
+      {
+        "parameterName": "TimeArray",
+        "dataType": "STRING",
+        "defaultValue": null,
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": true,
+        "instructionText": null,
+        "group": null,
+        "order": 4,
+        "customOrder": 5,
+        "selection": {
+          "selectionType": "MULTI_SELECT",
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": null
+      },
+      {
+        "parameterName": "MIN",
+        "dataType": "STRING",
+        "defaultValue": "0",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Minutes in Digits",
+        "group": null,
+        "order": 5,
+        "customOrder": 6,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Minutes"
+      },
+      {
+        "parameterName": "DD",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Calendar Day in Digits",
+        "group": null,
+        "order": 7,
+        "customOrder": 8,
+        "selection": {
+          "selectionType": null,
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Day"
+      },
+      {
+        "parameterName": "Time",
+        "dataType": "STRING",
+        "defaultValue": "00:00",
+        "description": "Enter Time in HH:MM format (13:30 for 1pm)",
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": "HH:MM",
+        "group": null,
+        "order": 3,
+        "customOrder": 3,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 5,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Time"
+      },
+      {
+        "parameterName": "Date",
+        "dataType": "STRING",
+        "defaultValue": "00/00",
+        "description": "Enter Date in MM/DD format (ie 01/30 for Jan 30th)",
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": "MM/DD",
+        "group": null,
+        "order": 1,
+        "customOrder": 2,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 8,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Date"
+      },
+      {
+        "parameterName": "HRS",
+        "dataType": "STRING",
+        "defaultValue": "0",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Hour in Digits",
+        "group": null,
+        "order": 6,
+        "customOrder": 7,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Hour"
+      },
+      {
+        "parameterName": "MM",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": null,
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default or Enter Calendar Month in Digits",
+        "group": null,
+        "order": 8,
+        "customOrder": 9,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 2,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Month"
+      },
+      {
+        "parameterName": "DateArray",
+        "dataType": "STRING",
+        "defaultValue": null,
+        "description": null,
+        "required": false,
+        "notParam": true,
+        "paramArray": true,
+        "instructionText": null,
+        "group": null,
+        "order": 2,
+        "customOrder": 4,
+        "selection": {
+          "selectionType": "MULTI_SELECT",
+          "selectionValues": {},
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": null
+      },
+      {
+        "parameterName": "Conversion",
+        "dataType": "STRING",
+        "defaultValue": "",
+        "description": null,
+        "required": true,
+        "notParam": false,
+        "paramArray": false,
+        "instructionText": null,
+        "group": null,
+        "order": 10,
+        "customOrder": 1,
+        "selection": {
+          "selectionType": "SINGLE_SELECT",
+          "selectionValues": {
+            "Bundle to Install": "INSTALL",
+            "Install to Bundle": "BUNDLE"
+          },
+          "defaultSelectedValues": [],
+          "id": null
+        },
+        "range": [],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": "Conversion"
+      },
+      {
+        "parameterName": "WK",
+        "dataType": "STRING",
+        "defaultValue": "*",
+        "description": "0 = Sun\n1 = Mon\n2 = Tue\n3 = Wed\n4 = Thu\n5 = Fri\n6 = Sat",
+        "required": true,
+        "notParam": true,
+        "paramArray": false,
+        "instructionText": "Leave Default of Enter Day of Week 0-6",
+        "group": null,
+        "order": 9,
+        "customOrder": 10,
+        "selection": null,
+        "range": [
+          {
+            "minValue": 1,
+            "maxValue": 1,
+            "id": null
+          }
+        ],
+        "key": null,
+        "provider": null,
+        "binding": "",
+        "sensitiveField": false,
+        "id": null,
+        "displayName": null
+      }
+    ],
+    "customParamsOrder": true,
+    "createTime": 1756825654788,
+    "lastUpdateTime": 1756915246732,
+    "latestVersionTime": 1756915253603,
+    "validationErrors": {
+      "templateErrors": [],
+      "rollbackTemplateErrors": [],
+      "templateId": "612da67e-cad2-47b6-9b0c-0a9442d34981",
+      "templateVersion": null
+    },
+    "noOfConflicts": 0,
+    "documentDatabase": false,
+    "projectAssociated": true
+  }
+]

@@ -439,6 +439,142 @@ event manager applet pnp_checker authorization bypass
  action 090 end
  ```
 
+### Case 10 - ***Automatically converting a Catalyst 9300 between BUNDLE and INSTALL mode***
+
+Here we have two examples that will allow for the conversion between BUNDLE and INSTALL mode for catalyst 9300 switches. These two were put together and will be designed to be deployed in a template to follow shortly.
+
+```
+conf t
+no event manager applet bundleToInstall authorization bypass
+event manager applet bundleToInstall authorization bypass
+ event none maxrun 300
+ action 100 cli command "enable"
+ action 200 cli command "sh boot | include .bin"
+ action 201 regexp "(bin)" "$_cli_result" match bootVariable
+ action 202 if $bootVariable eq "bin"
+ action 203  cli command "dir flash:*.bin | include cat9k_iosxe"
+ action 204  regexp "(cat9k.*[.]bin)" "$_cli_result" match Exist
+ action 205  if $Exist ne ""
+ action 206   set _cli_output "$_cli_result"
+ action 207   set high_version "0.0.0"
+ action 208   foreach line "$_cli_output" "\n"
+ action 209    regexp "(cat9k.*[.]bin)" "$line" match filename
+ action 210    regexp "([0-9]+)\.([0-9]+)\.([0-9]+)" "$filename" match v1 v2 v3
+ action 211    regexp "([0-9]+)\.([0-9]+)\.([0-9]+)" "$high_version" match c1 c2 c3
+ action 212    if $v1 ge "$c1"
+ action 213     if $v2 ge "$c2"
+ action 214      if $v3 ge "$c3"
+ action 215       set high_version "$v1.$v2.$v3"
+ action 216       set binFilename "$filename"
+ action 217      end
+ action 218     end
+ action 219    end
+ action 220   end
+ action 221   puts "Highest version found: $high_version in file $binFilename"
+ action 222   puts "Boot System to INSTALL from flash file: $binFilename"
+ action 301   cli command "sh switch detail | include Ready"
+ action 302   regexp "(.*Ready)+" "$_cli_result" match _cli_output
+ action 303   set COUNT "1"
+ action 304   cli command "term len 0"
+ action 305   foreach line "$_cli_output" "\n"
+ action 306    cli command "dir flash-$COUNT:*.conf | include packages"
+ action 307    regexp "(packages.conf)" "$_cli_result" match confExist
+ action 308    if $confExist ne ""
+ action 309     cli command "del /force flash-$COUNT:*.conf"
+ action 310    end
+ action 311    cli command "dir flash-$COUNT:*.pkg | include pkg"
+ action 312    regexp "(cat9k.*[.]pkg)" "$_cli_result" match pkgExist
+ action 313    if $pkgExist ne ""
+ action 314     cli command "del /force /recursive flash-$COUNT:*.pkg"
+ action 315    end
+ action 316    increment COUNT 1
+ action 317   end
+ action 318   cli command "term len 25"
+ action 400   cli command "enable"
+ action 401   cli command "configure terminal"
+ action 402   cli command "no boot system"
+ action 403   cli command "boot system switch all flash:packages.conf"
+ action 404   cli command "end"
+ action 405   cli command "write memory"
+ action 406   cli command "request platform software package expand switch all file flash:$binFilename auto-copy force"
+ action 407   reload
+ action 500  else
+ action 501   puts "No Bin File Present - Exiting"
+ action 502   if $Exist eq "" goto 999
+ action 503  end
+ action 600 else
+ action 601  puts "Switch already in INSTALL mode - Exiting"
+ action 999 end
+
+end
+event man run bundleToInstall
+```
+
+```
+conf t
+no event manager applet installToBundle authorization bypass
+event manager applet installToBundle authorization bypass
+ event none
+ action 100  cli command "enable"
+ action 200  cli command "sh boot | include packages.conf"
+ action 201  regexp "(packages.conf)" "$_cli_result" match bootVariable
+ action 202  if packages.conf eq "$bootVariable"
+ action 203   cli command "dir flash:*.bin | include cat9k_iosxe"
+ action 204   regexp "(cat9k.*[.]bin)" "$_cli_result" match Exist
+ action 205   if $Exist ne ""
+ action 206    set _cli_output "$_cli_result"
+ action 207    set high_version "0.0.0"
+ action 208    foreach line "$_cli_output" "\n"
+ action 209     regexp "(cat9k.*[.]bin)" "$line" match filename
+ action 210     regexp "([0-9]+)\.([0-9]+)\.([0-9]+)" "$filename" match v1 v2 v3
+ action 211     regexp "([0-9]+)\.([0-9]+)\.([0-9]+)" "$high_version" match c1 c2 c3
+ action 212     if $v1 ge "$c1"
+ action 213      if $v2 ge "$c2"
+ action 214       if $v3 ge "$c3"
+ action 215        set high_version "$v1.$v2.$v3"
+ action 216        set binFilename "$filename"
+ action 217       end
+ action 218      end
+ action 219     end
+ action 220    end
+ action 221    puts "Highest version found: $high_version in file $binFilename"
+ action 222    puts "Boot System to set to flash file: $binFilename"
+ action 301    cli command "sh switch detail | include Ready"
+ action 302    regexp "(.*Ready)+" "$_cli_result" match _cli_output
+ action 303    set COUNT "1"
+ action 304    cli command "term len 0"
+ action 305    foreach line "$_cli_output" "\n"
+ action 306     if $COUNT ne "1"
+ action 307      cli command "dir flash-$COUNT:$binFilename | include cat9k_iosxe"
+ action 308      regexp "(cat9k.*[.]bin)" "$_cli_result" match memberExist
+ action 309      if $memberExist ne ""
+ action 310       cli command "copy flash:$binFilename flash-$COUNT:$binFilename"
+ action 311      end
+ action 312     end
+ action 313     increment COUNT 1
+ action 314    end
+ action 314    cli command "term len 25"
+ action 400    cli command "enable"
+ action 401    cli command "configure terminal"
+ action 402    cli command "no boot system"
+ action 403    cli command "boot system switch all flash:$binFilename"
+ action 404    cli command "end"
+ action 405    cli command "write memory"
+ action 406    reload
+ action 500   else
+ action 501    puts "No Bin File Present - Exiting"
+ action 502    if $Exist eq "" goto 999
+ action 503   end
+ action 600  else
+ action 601   puts "Switch not in INSTALL mode - Exiting"
+ action 999  end
+
+end
+event man run installToBundle
+```
+
+Catalyst Center template to follow with kron scheduling option and self deletion.
+
 The examples are designed to get you thinking about operations, and what is possible. They may need heavy modification for a production use-case and so these are provided for LAB purposes only. Any use in a production environment should not be done without testing and validation.
 
 > [!IMPORTANT]

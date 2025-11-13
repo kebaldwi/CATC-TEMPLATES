@@ -159,6 +159,31 @@ An **Image Distribution Server** plays a crucial role in the deployment of softw
 
 ---
 
+### Mode Conversion for INSTALL and BUNDLE
+
+We have two modes a Catalyst switch can operate in. The are the following:
+
+#### Bundle Mode
+
+Bundle mode is a fancy way to say that switch runs the traditional way of Cisco IOS®. You **boot** a **.bin file** that contains everything you need to run the Cisco IOS. As per traditional Cisco IOS, you have a boot statement that points to the .bin file you want to load and that gets loaded at the time of boot. This means the switch unpacks the OS every time it boots which takes longer.
+
+#### Install Mode
+
+Install mode is the newer and recommended mode to run. This **breaks** the **.bin file** up into smaller **.pkg files** that must be loaded into memory independently of each other, and allows you to boot faster and utilize memory better. The .bin file that you download from software.cisco.com has all the .pkg files you need inside.
+
+#### Mode Conversion
+
+To convert between modes there is a process which must be followed in order to ensure success. In order to alleviate the burden of conversion I have developed a template which allows the conversion process to be scheduled.
+
+In order to use this template you would do the following process:
+
+1. **Distribute** and **SKIP** **Activation** of the **new IOS-XE version** to the switch. (**caveat** the image distributed **must be newer** than the existing image)
+2. Provision the template converting the mode to the switch ensuring the date and time for the conversion are used. <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/TEMPLATES/JINJA2/UTILITIES/JSON/Mode_Conversion_Template.json">⬇︎Mode_Conversion_Template.json⬇︎</a></br>
+
+The template will take care of the rest.
+
+---
+
 ### Monitoring and Control via ServiceNow
 
 **SWIM** can be effectively monitored and controlled through **ServiceNow**, an IT service management platform. Integration with ServiceNow allows organizations to:

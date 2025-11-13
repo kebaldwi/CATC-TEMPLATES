@@ -10,7 +10,7 @@ When dealing with net **new** devices using the PnP process to onboard devices w
 
 **PnP** Onboarding allows for the **claiming** of a device and the ability to automate the deployment of configuration. It is important to note that Onboarding templates are transfered as a **flat file** via HTTP/HTTPS transfer. 
 
-This allows for the manipulation of uplinks and addressing without disconnectivity during reconfiguration from the upstream neighboring device. Additional source commands can be used to allow the device to automatically inform Catalyst Center of a change in address through the PnP profile applied and the source of the HTTP client information.
+This allows for the manipulation of uplinks and addressing without disconnection during reconfiguration from the upstream neighboring device. Additional source commands can be used to allow the device to automatically inform Catalyst Center of a change in address through the PnP profile applied and the source of the HTTP client information.
 
 ### Overview Summary
 
@@ -42,11 +42,92 @@ This is the lab we will be utilizing. Notice the **PnP Target Switch**. This is 
 
 * Automation Potential: DayN templates facilitate ongoing modifications and automate configurations using data from the inventory database, minimizing manual input.
 
+* Mandatory configuration is deployed by Catalyst Center during the PnP Onboarding process and it is impossible to disable currently. This facilitates the need to perhaps make modifications post PnP. Configuration seen below:
+
+   <details closed>
+   <summary> Expand to review the complete configuration</summary></br>
+   
+   This is configuration that is automated by default from Catalyst Center claim process. This config that is **deployed automatically**.</br>
+
+   ```
+   archive
+    log config
+     logging enable
+     logging size 500
+     hidekeys
+     !
+    !
+   !
+   service timestamps debug datetime msec
+   service timestamps log datetime msec
+   service password-encryption
+   service sequence-numbers
+   !
+   ! Disable external HTTP(S) access
+   ! Disable external Telnet access
+   ! Enable external SSHv2 access
+   !
+   no ip http server
+   !
+   no ip http secure-server
+   !
+   crypto key generate rsa label dnac-sda modulus 2048
+   ip ssh version 2
+   !
+   ip scp server enable
+   !
+   line vty 0 15
+    ! maybe redundant
+   login xxxxxx
+    transport input ssh
+    ! maybe redundant
+    transport preferred none
+   !
+   ! Set VTP mode to transparent (no auto VLAN propagation)
+   ! Set STP mode to Rapid PVST+ (prefer for non-Fabric compatibility)
+   ! Enable extended STP system ID
+   ! Set Fabric Node to be STP Root for all local VLANs
+   ! Enable STP Root Guard to prevent non-Fabric nodes from becoming Root
+   ! Confirm whether vtp mode transparent below is needed
+   vtp mode transparent
+   !
+   spanning-tree mode rapid-pvst
+   !
+   spanning-tree extend system-id
+   ! spanning-tree bridge priority 0
+   ! spanning-tree rootguard
+   ! spanning-tree portfast bpduguard default
+   no udld enable
+   !
+   errdisable recovery cause all
+   !
+   errdisable recovery interval 300
+   !
+   ! Enable SNMP and RW access
+   !
+   snmp-server xxxxxxxx
+   !
+   username xxxxxx
+   !
+   enable algorithm-type scrypt secret xxxxxxxx
+   !
+   hostname Switch
+   ! DNS settings
+   !
+   ip domain name base2hq.com
+   !
+   ip name-server 10.10.0.250
+   !
+   ```
+   </details>
+
+* Due to the nature of PnP onboarding, and as the device is not yet in the system database, **compliance** is not tracked for any template used in the PnP onboarding process. For this reason **ONLY** do enough to bring up the switch. All other configuration should be done in DayN
+
 * Configuration Best Practices: Typical configurations should automatically derive from the Network Settings in Catalyst Center. Avoid deploying CLI code in templates for tasks already defined by design components, promoting a more UI-centric and maintainable configuration approach.
 
 * Guidance: Utilize design settings for as much configuration as possible, keeping templates streamlined for configurations that may change frequently, enhancing maintainability and troubleshooting.
 
-* **Jinja** vs **Velocity**, choose wisely. My recommendation is to use Jinja simply because it is the defactor template rendering language used in multiple platforms. It is modular, and the logic consrtucts are based on **Python**. 
+* **Jinja** vs **Velocity**, choose wisely. My recommendation is to use Jinja simply because it is the defacto template rendering language used in multiple platforms. It is modular, and the logic constructs are based on **Python**. 
 
 ## Developing a PnP Template
 
@@ -347,9 +428,11 @@ These variables will be utilized with a form so that they can be mass entered vi
 6. **Save** the template and we can now start to Build the Form that will be filled in by our engineers during the claim process.
 7. If your template **does not look like** the one below **expand the section** below **copy** it and **paste** it into the editor to replace the text:
    
+   [//]: # ({% raw %})
+   
    <details closed>
    <summary> Expand this section if required </summary></br>
-   [//]: # ({% raw %})
+   
    ```
    {% if SystemMTU != 1500 %} 
       system mtu {{SystemMTU}}
@@ -392,8 +475,8 @@ These variables will be utilized with a form so that they can be mass entered vi
    {% if "," in Interfaces || in Interfaces %} 
       interface Port-channel ((Portchannel}}
        switchport trunk native vlan {{MgmtVlan}}   
-	switchport trunk allowed vlan {{MgmtVlan}}   
-	switchport mode trunk
+   switchport trunk allowed vlan {{MgmtVlan}}   
+   switchport mode trunk
        no port-channel standalone-disable
    {% endif %}
    !
@@ -409,8 +492,10 @@ These variables will be utilized with a form so that they can be mass entered vi
    !
    netconf-yang
    ```
-   [//]: # ({% endraw %})
+   
    </details>
+   
+   [//]: # ({% endraw %})
 
 ### Step 5 - Build Form
 

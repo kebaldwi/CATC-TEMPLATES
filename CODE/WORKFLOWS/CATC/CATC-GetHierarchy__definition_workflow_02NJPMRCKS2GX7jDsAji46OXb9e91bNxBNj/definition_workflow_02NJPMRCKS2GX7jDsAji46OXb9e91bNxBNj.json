@@ -1,0 +1,115 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02NJPMRCKS2GX7jDsAji46OXb9e91bNxBNj",
+    "name": "CATC-GetHierarchy",
+    "title": "CATC-GetHierarchy",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "SiteHierarchy",
+          "type": "datatype.string",
+          "description": "Site Hierarchy",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPMRDPCZEE0QV5giIodaSn6Ed4NHROlS",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Written to Get the Hierarchy in Catalyst Center",
+      "display_name": "CATC-GetHierarchy",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02NJPMRILP0JT19qRFBnekcICzCLCq1DNiC",
+        "name": "Generic Catalyst Center API Request",
+        "title": "Get Site",
+        "type": "catalystcenter.invoke_api",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/dna/intent/api/v1/site",
+          "_headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "This will retrieve the sites from Catalyst Center",
+          "display_name": "Get Site",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NJPMRL1LV7M4DXVDwlsfOSeSRzcnABjZL",
+        "name": "Set Variables",
+        "title": "Output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Return Output",
+          "display_name": "Output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPMRCKS2GX7jDsAji46OXb9e91bNxBNj.output.variable_workflow_02NJPMRDPCZEE0QV5giIodaSn6Ed4NHROlS$",
+              "variable_value_new": "$activity.definition_activity_02NJPMRILP0JT19qRFBnekcICzCLCq1DNiC.output.raw_body$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+    ]
+  },
+  "categories": {
+    "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6": {
+      "unique_name": "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6",
+      "name": "Catalyst Center",
+      "title": "Catalyst Center",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  }
+}

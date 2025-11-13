@@ -1,0 +1,612 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF",
+    "name": "CATC-CommandRunner",
+    "title": "CATC-CommandRunner",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "DeviceInventory",
+          "type": "datatype.string",
+          "description": "Full Device Inventory of Catalyst Center",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPN203Q5JV3Mo2hFmJtVsslQP8pdkRHc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Results",
+          "type": "datatype.string",
+          "description": "Show Command Results",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPN20442310quQMFSg331ZSxlFLmqicI",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "showCommand",
+          "type": "datatype.string",
+          "description": "Show Commands to be used on Catalyst Center",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPN202YQ421Ls0XpkNQXWMgdZyYA0C6V",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "DevicesList",
+          "type": "datatype.string",
+          "description": "Devices List",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPN2035LTZ1wQGRxfgoHT0wl6sOQGErk",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "DeviceUUID",
+          "type": "datatype.string",
+          "description": "Devices UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPN204BG240J76laH1MtSReD5TS8g2zQ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Device UUID Output",
+          "type": "datatype.string",
+          "description": "Device UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPN202RKM95fu48digQL4Pl70XUmoPhR",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Device List Output",
+          "type": "datatype.string",
+          "description": "Devices List",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPN204IWNF1O5y74rbTEp0tBS4q1yhzc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "targetDevice",
+          "type": "datatype.string",
+          "description": "Device to be Targeted",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPN203JBJ21YD4Bu2qBWCmHHPLGuM2VH",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "DeviceInventoryOutput",
+          "type": "datatype.string",
+          "description": "Device Inventory ",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPN203X4A865RuSKZRyRMCz09w5B5RXJ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "FileURL",
+          "type": "datatype.string",
+          "description": "FileURL for Results of show commands",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPN203CIHH1CEfcL40eN6RGfo4XwclwF",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Run Commands on Catalyst Center",
+      "display_name": "CATC-CommandRunner",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02NJPN27AQZQX69zED4clqOjjYLEU5qaC9x",
+        "name": "Generic Catalyst Center API Request",
+        "title": "Get Devices",
+        "type": "catalystcenter.invoke_api",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/api/v1/network-device",
+          "_headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get the Inventory of Catalyst Center",
+          "display_name": "Get Devices",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NJPN29NYHO82NvvReoy64LWaNW7EtkpPo",
+        "name": "JSONPath Query",
+        "title": "Find Device",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "Find if the Device Exists",
+          "display_name": "Find Device",
+          "input_json": "$activity.definition_activity_02NJPN27AQZQX69zED4clqOjjYLEU5qaC9x.output.raw_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.response..[?(@.managementIpAddress==\"$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.input.variable_workflow_02NJPN203JBJ21YD4Bu2qBWCmHHPLGuM2VH$\")]",
+              "jsonpath_query_name": "DeviceInformation",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NJPN2CF8C3V14CpZ3T1jk1pDHMV8I0fmj",
+        "name": "Condition Block",
+        "title": "Conditional ShowCommand Block",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "conditions": [],
+          "continue_on_failure": true,
+          "description": "Show commands done for existing devices",
+          "display_name": "Conditional ShowCommand Block",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_02NJPN2EJJ1BI13HRfJJKIeP8LUkkBp80bo",
+            "name": "Condition Branch",
+            "title": "Do Show Commands",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_02NJPN29NYHO82NvvReoy64LWaNW7EtkpPo.output.jsonpath_queries.DeviceInformation$",
+                "operator": "ne",
+                "right_operand": "null"
+              },
+              "continue_on_failure": true,
+              "description": "Get the Device UUID and perform show commands",
+              "display_name": "Do Show Commands",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NJPN2IHPH315C7ny66S59QHmlHhlQuDMO",
+                "name": "JSONPath Query",
+                "title": "Extract Device UUID",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Extract the Device UUID",
+                  "display_name": "Extract Device UUID",
+                  "input_json": "$activity.definition_activity_02NJPN29NYHO82NvvReoy64LWaNW7EtkpPo.output.jsonpath_queries.DeviceInformation$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..instanceUuid",
+                      "jsonpath_query_name": "DeviceUUID",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN2MDPP4967Bj5V17lYVBhjnQDEDgbT",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Set the Variables to be tested",
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.local.variable_workflow_02NJPN204BG240J76laH1MtSReD5TS8g2zQ$",
+                      "variable_value_new": "$activity.definition_activity_02NJPN2IHPH315C7ny66S59QHmlHhlQuDMO.output.jsonpath_queries.DeviceUUID$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.local.variable_workflow_02NJPN203Q5JV3Mo2hFmJtVsslQP8pdkRHc$",
+                      "variable_value_new": "$activity.definition_activity_02NJPN27AQZQX69zED4clqOjjYLEU5qaC9x.output.raw_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN2QJC2373lK82e2AhwGtMfqfTU4QBa",
+                "name": "Generic Catalyst Center API Request",
+                "title": "Get Device Poller",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_body": "{\n    \"commands\": [\n        \"$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.input.variable_workflow_02NJPN202YQ421Ls0XpkNQXWMgdZyYA0C6V$\"\n    ],\n    \"deviceUuids\": [\n        \"$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.local.variable_workflow_02NJPN204BG240J76laH1MtSReD5TS8g2zQ$\"\n    ]\n}",
+                  "_endpoint": "/dna/intent/api/v1/network-device-poller/cli/read-request",
+                  "_headers": [
+                    {
+                      "name": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "name": "Accept",
+                      "value": "application/json"
+                    }
+                  ],
+                  "_method": "POST",
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Polls Device for Show Commands",
+                  "display_name": "Get Device Poller",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN2TK3Q8A5plbl4IgalMPG563dBp3IT",
+                "name": "JSONPath Query",
+                "title": "Extract Task Id",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract Task Id",
+                  "display_name": "Extract Task Id",
+                  "input_json": "$activity.definition_activity_02NJPN2QJC2373lK82e2AhwGtMfqfTU4QBa.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..taskId",
+                      "jsonpath_query_name": "TaskId",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLHM2KI9MW7Z1ChfFXiYe8sNffPcI9la",
+                "name": "Wait For Catalyst Center Task",
+                "title": "Wait For Catalyst Center Task",
+                "type": "workflow.atomic_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+                  "display_name": "Wait For Catalyst Center Task",
+                  "input": {
+                    "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                    "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02NJPN2TK3Q8A5plbl4IgalMPG563dBp3IT.output.jsonpath_queries.TaskId$",
+                    "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "target_type": "catalystcenter.endpoint",
+                    "use_workflow_target": true
+                  },
+                  "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                  "workflow_name": "Wait For Catalyst Center Task"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN32N5TW65GvH8D0Q9LmBOoCVzwQiWD",
+                "name": "Generic Catalyst Center API Request",
+                "title": "Get Task Id ",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v1/task/$activity.definition_activity_02NJPN2TK3Q8A5plbl4IgalMPG563dBp3IT.output.jsonpath_queries.TaskId$",
+                  "_headers": [
+                    {
+                      "name": "Accept",
+                      "value": "application/json"
+                    },
+                    {
+                      "name": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Get Task ID for Device Poll Result File URL",
+                  "display_name": "Get Task Id ",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN3640DBP3vz8PFopWYXCc7mViEQsbs",
+                "name": "JSONPath Query",
+                "title": "Extract Progress",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Extract the progress to extract File URL for the Result",
+                  "display_name": "Extract Progress",
+                  "input_json": "$activity.definition_activity_02NJPN32N5TW65GvH8D0Q9LmBOoCVzwQiWD.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..progress",
+                      "jsonpath_query_name": "Progress",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN39GAAI445BWv8ZO2WKUrsOOjQMsla",
+                "name": "Match Regex",
+                "title": "Trim for File ID",
+                "type": "core.matchregex",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract the File URL for the Result",
+                  "display_name": "Trim for File ID",
+                  "input_regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+                  "input_string": "$activity.definition_activity_02NJPN3640DBP3vz8PFopWYXCc7mViEQsbs.output.jsonpath_queries.Progress$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN3CTT3IE67UxDYKDU9TTVJVOca3zpG",
+                "name": "Set Variables",
+                "title": "Set File URL",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Modify to string",
+                  "display_name": "Set File URL",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.local.variable_workflow_02NJPN203CIHH1CEfcL40eN6RGfo4XwclwF$",
+                      "variable_value_new": "$activity.definition_activity_02NJPN39GAAI445BWv8ZO2WKUrsOOjQMsla.output.matching_strings[0]$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN3GFRG4X0KmSGL4jegzEArP6OdCPYp",
+                "name": "Generic Catalyst Center API Request",
+                "title": "Get File URL Results",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v1/file/$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.local.variable_workflow_02NJPN203CIHH1CEfcL40eN6RGfo4XwclwF$",
+                  "_headers": [
+                    {
+                      "name": "Accept",
+                      "value": "application/octet-stream/json"
+                    },
+                    {
+                      "name": "Content-Type",
+                      "value": "application/octet-stream/json"
+                    }
+                  ],
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Get Show Command File URL Results",
+                  "display_name": "Get File URL Results",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN3JE8O6C3HWjraGXmG3osJKriq4ATE",
+                "name": "JSONPath Query",
+                "title": "Extract Responses",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract Command Responses",
+                  "display_name": "Extract Responses",
+                  "input_json": "$activity.definition_activity_02NJPN3GFRG4X0KmSGL4jegzEArP6OdCPYp.output.body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..commandResponses",
+                      "jsonpath_query_name": "commandResponses",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NJPN3MZ7SNS7TykMmzC9kOoCHliabFUJj",
+                "name": "Set Variables",
+                "title": "Output",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Set the Variables for Output",
+                  "display_name": "Output",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NJPN1YW6JOZ6YA6fZzjEh83q7jZFpfQiF.output.variable_workflow_02NJPN20442310quQMFSg331ZSxlFLmqicI$",
+                      "variable_value_new": "$activity.definition_activity_02NJPN3JE8O6C3HWjraGXmG3osJKriq4ATE.output.jsonpath_queries.commandResponses$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+    ]
+  },
+  "categories": {
+    "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6": {
+      "unique_name": "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6",
+      "name": "Catalyst Center",
+      "title": "Catalyst Center",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+  ]
+}

@@ -1,0 +1,1279 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC",
+    "name": "CATC-DeviceDiscovery",
+    "title": "CATC-DeviceDiscovery",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "In Progress",
+          "scope": "local",
+          "name": "inventoryCollectionStatus",
+          "type": "datatype.string",
+          "description": "Inventory Collection Status",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGF818F1FfJ2BchiDTLfgT4qtSUdR",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "uuidNETCONF",
+          "type": "datatype.string",
+          "description": "NETCONF UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGCSXMB1paYErXeENkzf9d6jGFUSc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "uuidCLI",
+          "type": "datatype.string",
+          "description": "CLI UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGB7C3G14vKbDFl7VMFHHC2G93OWQ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "BASE2HQ",
+          "scope": "input",
+          "name": "HierarchyBuilding",
+          "type": "datatype.string",
+          "description": "Hierarchy Building",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGBSNK84hgXDy0wgBKzH7S6lj9bZe",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10.1.1.10",
+          "scope": "input",
+          "name": "deviceList",
+          "type": "datatype.string",
+          "description": "device List",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGDZ4PK6FBL8M6mnNflNboKpmvkGh",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "discoveryId",
+          "type": "datatype.string",
+          "description": "Discovery ID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGAZYT22qrReBUbwHIGxnxgrZ8h2O",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "discoveredDeviceUuids",
+          "type": "datatype.string",
+          "description": "Discovered Device Uuids",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGDS9OK5aWHy5Ni9JyjOSfVtKrzy8",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "admin",
+          "scope": "input",
+          "name": "cliUsername",
+          "type": "datatype.string",
+          "description": "cli Username",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGD089Y7eADvnwxkkSCwLMZgGQmoc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "discoveryJson",
+          "type": "datatype.string",
+          "description": "Discovery JSON",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NKLLJGFN16A4UzxujhrA9euR6PRxWagOG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "Latitude",
+          "type": "datatype.string",
+          "description": "Latitude",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGDL6U75PEgDAwfeQ019pZygMpwZ9",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "uuidSNMPv2WRITE",
+          "type": "datatype.string",
+          "description": "SNMP v2 WRITE UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGALNOH6VmZYTmZtAuXhYih68Acqm",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "deviceRange",
+          "type": "datatype.string",
+          "description": "Device Range",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGCLON27e8z0s1TMP5t8lXTysuYNI",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMPv2-RO",
+          "scope": "input",
+          "name": "snmpV2ReadDescription",
+          "type": "datatype.string",
+          "description": "snmp V2 Read Description",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGD75750ozlIr6xtTBL7OeW20SoXE",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "Longitude",
+          "type": "datatype.string",
+          "description": "Longitude",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGFU5TR3kkyCNv6IMvWScNbVKhkRV",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "830",
+          "scope": "input",
+          "name": "netconfPort",
+          "type": "datatype.string",
+          "description": "netconf Port",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGBLO7N7H5IBXtHD7wXrS1U9bF4fR",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Global/INDIANA",
+          "scope": "input",
+          "name": "hierarchyParent",
+          "type": "datatype.string",
+          "description": "Parent Hierarchy",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGBEHAY2SUOEqxeItvxgSyoDrCb8a",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "discoveredDevices",
+          "type": "datatype.string",
+          "description": "Discovered Devices",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGASUJL66OdiA06xoIfW7uGDolokW",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "FISHERS",
+          "scope": "input",
+          "name": "hierarchyArea",
+          "type": "datatype.string",
+          "description": "Hierarchy Area",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGETWW51BZ4rjlkIH0e1Pcc7wj2Ni",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "DEMO",
+          "scope": "input",
+          "name": "HierarchyFloor",
+          "type": "datatype.string",
+          "description": "Hierarchy Floor",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGG17JK64M9Bre35VKxw3f8nDATQD",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "taskId",
+          "type": "datatype.string",
+          "description": "Task Id",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGC00Z66rUnPpPj5IRQInkEGEzxM6",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10054 Whitney Way, Fishers, IN 46037",
+          "scope": "input",
+          "name": "HierarchyBuildingAddress",
+          "type": "datatype.string",
+          "description": "Hierarchy Building Address",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGEMQNF7YKKEHiv1nnHXwAZBZP788",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "discoveryName",
+          "type": "datatype.string",
+          "description": "Discovery Name",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGF10HO6foxVL1O5L6wH8mBVAadgp",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "siteId",
+          "type": "datatype.string",
+          "description": "Site ID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGCECGZ31sS6am5MQ9A6PcHsgRoA5",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "discoveryType",
+          "type": "datatype.string",
+          "description": "Discovery Type",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGE7ZS07IG5rj3BBttRnFB9Dccvg0",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMPv2-RW",
+          "scope": "input",
+          "name": "snmpV2WriteDescription",
+          "type": "datatype.string",
+          "description": "snmp V2 Write Description",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NKLLJGC7EWU1JMb17mnBcEXj7MfIljpyw",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "uuidSNMPv2READ",
+          "type": "datatype.string",
+          "description": "SNMP v2 READ UUID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGFFOF71WVnupUzTBlltKdgN2xA2m",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "apiBody",
+          "type": "datatype.string",
+          "description": "API Body",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NKLLJGDDZ3B2PVKbbJcrG0FKRzO9zUH30",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "siteNameHierarchy",
+          "type": "datatype.string",
+          "description": "Device Assigned to Site",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "This will use Device Discovery to onboard a device in Catalyst Center",
+      "display_name": "CATC-DeviceDiscovery",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02NKLLJU7A27S2W6DCV5EpDmIn6dkm4qj2l",
+        "name": "Get Catalyst Center all global credentials v2",
+        "title": "Get Credentials",
+        "type": "catalystcenter.invoke_api.getAllGlobalCredentialsV2",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/dna/intent/api/v2/global-credential?",
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get Credentials",
+          "display_name": "Get Credentials",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLJWNJXJ84KP47n4LSjnvDxnCd9C840",
+        "name": "JSONPath Query",
+        "title": "Extract UUID",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Extract UUID from Request",
+          "display_name": "Extract UUID",
+          "input_json": "$activity.definition_activity_02NKLLJU7A27S2W6DCV5EpDmIn6dkm4qj2l.output.body.response$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$..cliCredential[?(@.username==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGD089Y7eADvnwxkkSCwLMZgGQmoc$\")].instanceUuid",
+              "jsonpath_query_name": "uuidli",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$..snmpV2cRead[?(@.description==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGD75750ozlIr6xtTBL7OeW20SoXE$\")].instanceUuid",
+              "jsonpath_query_name": "uuidSnmpV2Read",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$..snmpV2cWrite[?(@.description==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGC7EWU1JMb17mnBcEXj7MfIljpyw$\")].instanceUuid",
+              "jsonpath_query_name": "uuidSnmpV2Write",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "jsonpath_query": "$..netconfCredential[?(@.netconfPort==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGBLO7N7H5IBXtHD7wXrS1U9bF4fR$\")].instanceUuid",
+              "jsonpath_query_name": "uuidNetconf",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLK03WQ2B3GeCLtLT3ZVl9SQpLh44cI",
+        "name": "Execute Python Script",
+        "title": "Data Transformation",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Transformation Data based on known information",
+          "display_name": "Data Transformation",
+          "script": "#Set DiscoveryType for Discovery\nDeviceArray = ('$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGDZ4PK6FBL8M6mnNflNboKpmvkGh$').split(',')\nif len(DeviceArray) \u003e 1:\n    DiscoveryType = 'Multi Range'\nelse:\n    DiscoveryType = 'Range'\n\n#Set the DeviceRanges for the Discovery\nWorkingRange = []\nfor index, ip in enumerate(DeviceArray):\n    WorkingRange.append(f'{ip}-{ip}')\n\n# Join the elements in DeviceRange with a comma and space\nDeviceRange = ', '.join(WorkingRange)\n\n#output to AO\nprint(DiscoveryType)\nprint(DeviceRange)",
+          "script_arguments": [],
+          "script_queries": [
+            {
+              "script_query": "DiscoveryType",
+              "script_query_name": "discoveryType",
+              "script_query_type": "string"
+            },
+            {
+              "script_query": "DeviceRange",
+              "script_query_name": "deviceRange",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLK74PENE7KRAEA5Pgi8QA9qVQhP8tq",
+        "name": "Set Variables",
+        "title": "Discovery Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Set Discovery Variables",
+          "display_name": "Discovery Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGE7ZS07IG5rj3BBttRnFB9Dccvg0$",
+              "variable_value_new": "$activity.definition_activity_02NKLLK03WQ2B3GeCLtLT3ZVl9SQpLh44cI.output.script_queries.discoveryType$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCLON27e8z0s1TMP5t8lXTysuYNI$",
+              "variable_value_new": "$activity.definition_activity_02NKLLK03WQ2B3GeCLtLT3ZVl9SQpLh44cI.output.script_queries.deviceRange$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGF10HO6foxVL1O5L6wH8mBVAadgp$",
+              "variable_value_new": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGB7C3G14vKbDFl7VMFHHC2G93OWQ$",
+              "variable_value_new": "$activity.definition_activity_02NKLLJWNJXJ84KP47n4LSjnvDxnCd9C840.output.jsonpath_queries.uuidli$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGFFOF71WVnupUzTBlltKdgN2xA2m$",
+              "variable_value_new": "$activity.definition_activity_02NKLLJWNJXJ84KP47n4LSjnvDxnCd9C840.output.jsonpath_queries.uuidSnmpV2Read$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGALNOH6VmZYTmZtAuXhYih68Acqm$",
+              "variable_value_new": "$activity.definition_activity_02NKLLJWNJXJ84KP47n4LSjnvDxnCd9C840.output.jsonpath_queries.uuidSnmpV2Write$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCSXMB1paYErXeENkzf9d6jGFUSc$",
+              "variable_value_new": "$activity.definition_activity_02NKLLJWNJXJ84KP47n4LSjnvDxnCd9C840.output.jsonpath_queries.uuidNetconf$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f$",
+              "variable_value_new": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGBEHAY2SUOEqxeItvxgSyoDrCb8a$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGETWW51BZ4rjlkIH0e1Pcc7wj2Ni$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGBSNK84hgXDy0wgBKzH7S6lj9bZe$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGG17JK64M9Bre35VKxw3f8nDATQD$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGF10HO6foxVL1O5L6wH8mBVAadgp$",
+              "variable_value_new": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGBEHAY2SUOEqxeItvxgSyoDrCb8a$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGETWW51BZ4rjlkIH0e1Pcc7wj2Ni$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGBSNK84hgXDy0wgBKzH7S6lj9bZe$/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.input.variable_workflow_02NKLLJGG17JK64M9Bre35VKxw3f8nDATQD$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLKD2IN2V3gmhfIykzhpn6f5ASeYYkD",
+        "name": "Generic Catalyst Center API Request",
+        "title": "Get Discoveries",
+        "type": "catalystcenter.invoke_api",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/api/v1/discovery/1/100",
+          "_headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get Discoveries",
+          "display_name": "Get Discoveries",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLKFGZ2WX5Vq1j0XNwrF0J2eyv53RZc",
+        "name": "JSONPath Query",
+        "title": "Find Discovery",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Find Discovery if it exists",
+          "display_name": "Find Discovery",
+          "input_json": "$activity.definition_activity_02NKLLKD2IN2V3gmhfIykzhpn6f5ASeYYkD.output.raw_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$..[?(@.name==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f$\")]",
+              "jsonpath_query_name": "discoveryUuid",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLKIGEYPA2vR6D8iwA8upD5RufYM6iz",
+        "name": "Condition Block",
+        "title": "Discovery Process",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "conditions": [],
+          "continue_on_failure": true,
+          "description": "Discovery Process",
+          "display_name": "Discovery Process",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_02NKLLKKQNMYP7MYiiOb5n3ZsJwk48K9TEs",
+            "name": "Condition Branch",
+            "title": "Create Discovery ",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_02NKLLKFGZ2WX5Vq1j0XNwrF0J2eyv53RZc.output.error.code$",
+                "operator": "eq",
+                "right_operand": "400"
+              },
+              "continue_on_failure": true,
+              "description": "Discovery does not exist",
+              "display_name": "Create Discovery ",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NKLLKORSGAB1v5XITWs3LlR1DCDVHssRB",
+                "name": "Generic Catalyst Center API Request",
+                "title": "Create Discovery Job",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_body": "{\n    \"name\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGF10HO6foxVL1O5L6wH8mBVAadgp$\",\n    \"discoveryType\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGE7ZS07IG5rj3BBttRnFB9Dccvg0$\",\n    \"ipAddressList\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCLON27e8z0s1TMP5t8lXTysuYNI$\",\n    \"protocolOrder\": \"ssh\",\n    \"timeout\": 5,\n    \"retry\": 3,\n    \"globalCredentialIdList\": [\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGB7C3G14vKbDFl7VMFHHC2G93OWQ$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGFFOF71WVnupUzTBlltKdgN2xA2m$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGALNOH6VmZYTmZtAuXhYih68Acqm$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCSXMB1paYErXeENkzf9d6jGFUSc$\"\n    ]\n}",
+                  "_endpoint": "/dna/intent/api/v1/discovery",
+                  "_headers": [
+                    {
+                      "name": "Accept",
+                      "value": "application/json"
+                    },
+                    {
+                      "name": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "_method": "POST",
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Create a Discovery Job",
+                  "display_name": "Create Discovery Job",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLKS6S0GA4QMNspS1siLo58FkR7y0EB",
+                "name": "JSONPath Query",
+                "title": "Extract TaskId",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract TaskId from Discovery Response",
+                  "display_name": "Extract TaskId",
+                  "input_json": "$activity.definition_activity_02NKLLKORSGAB1v5XITWs3LlR1DCDVHssRB.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..taskId",
+                      "jsonpath_query_name": "taskId",
+                      "jsonpath_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLKVYIYEE7380RjLIyExmhkwYBccdWp",
+                "name": "Set Variables",
+                "title": "Set TaskId",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Set Discovery Task Id",
+                  "display_name": "Set TaskId",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGC00Z66rUnPpPj5IRQInkEGEzxM6$",
+                      "variable_value_new": "$activity.definition_activity_02NKLLKS6S0GA4QMNspS1siLo58FkR7y0EB.output.jsonpath_queries.taskId$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NKLLKZKK9HW2Az4rbO32W5NkfGiZqN3zD",
+            "name": "Condition Branch",
+            "title": "Repeat Discovery",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_02NKLLKFGZ2WX5Vq1j0XNwrF0J2eyv53RZc.output.error.code$",
+                "operator": "ne",
+                "right_operand": "400"
+              },
+              "continue_on_failure": true,
+              "description": "Remove then repeat Discovery",
+              "display_name": "Repeat Discovery",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NKLLL3E8B621lAQ5JhFiHayzw2b7ft8Dc",
+                "name": "JSONPath Query",
+                "title": "Extract Discovery Id",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract Discovery Id ",
+                  "display_name": "Extract Discovery Id",
+                  "input_json": "$activity.definition_activity_02NKLLKD2IN2V3gmhfIykzhpn6f5ASeYYkD.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..[?(@.name==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f$\")].id",
+                      "jsonpath_query_name": "discoveryId",
+                      "jsonpath_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLL7AVTNG5bjxeR85oERz8GUwKTW4F4",
+                "name": "Set Variables",
+                "title": "Set Discovery Id",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Set Discovery Id",
+                  "display_name": "Set Discovery Id",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGAZYT22qrReBUbwHIGxnxgrZ8h2O$",
+                      "variable_value_new": "$activity.definition_activity_02NKLLL3E8B621lAQ5JhFiHayzw2b7ft8Dc.output.jsonpath_queries.discoveryId$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLLCC3JFM5mhSZRG7WKjb1R1z2LEEXr",
+                "name": "Remove Catalyst Center discovery by id",
+                "title": "Remove Discovery",
+                "type": "catalystcenter.invoke_api.deleteDiscoveryById",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v1/discovery/${id}",
+                  "_method": "DELETE",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Remove previous discovery of site",
+                  "display_name": "Remove Discovery",
+                  "id": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGAZYT22qrReBUbwHIGxnxgrZ8h2O$",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLLF6N2BU5FtcC14GJZniXsMpVRMViY",
+                "name": "Sleep",
+                "title": "Pause",
+                "type": "core.sleep",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Pause here for 8 seconds",
+                  "display_name": "Pause",
+                  "skip_execution": false,
+                  "sleep_interval": 8
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLLI9FOKW1gpNktdM85QPznm6DnFRdJ",
+                "name": "Generic Catalyst Center API Request",
+                "title": "Create Discovery Job",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_body": "{\n    \"name\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGF10HO6foxVL1O5L6wH8mBVAadgp$\",\n    \"discoveryType\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGE7ZS07IG5rj3BBttRnFB9Dccvg0$\",\n    \"ipAddressList\": \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCLON27e8z0s1TMP5t8lXTysuYNI$\",\n    \"protocolOrder\": \"ssh\",\n    \"timeout\": 5,\n    \"retry\": 3,\n    \"globalCredentialIdList\": [\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGB7C3G14vKbDFl7VMFHHC2G93OWQ$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGFFOF71WVnupUzTBlltKdgN2xA2m$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGALNOH6VmZYTmZtAuXhYih68Acqm$\",\n        \"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCSXMB1paYErXeENkzf9d6jGFUSc$\"\n    ]\n}",
+                  "_endpoint": "/dna/intent/api/v1/discovery",
+                  "_headers": [
+                    {
+                      "name": "Accept",
+                      "value": "application/json"
+                    },
+                    {
+                      "name": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "_method": "POST",
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Create a Discovery Job",
+                  "display_name": "Create Discovery Job",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLLLSCV1V1NYwqExf0NO4fGk1Vk2wWi",
+                "name": "JSONPath Query",
+                "title": "Extract TaskId",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Extract TaskId from Discovery Response",
+                  "display_name": "Extract TaskId",
+                  "input_json": "$activity.definition_activity_02NKLLLI9FOKW1gpNktdM85QPznm6DnFRdJ.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..taskId",
+                      "jsonpath_query_name": "taskId",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NKLLLPJEMCG0J7foVUR2xRUiIt2OUvDqP",
+                "name": "Set Variables",
+                "title": "Set TaskId",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": true,
+                  "description": "Set Discovery Task Id",
+                  "display_name": "Set TaskId",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGC00Z66rUnPpPj5IRQInkEGEzxM6$",
+                      "variable_value_new": "$activity.definition_activity_02NKLLLLSCV1V1NYwqExf0NO4fGk1Vk2wWi.output.jsonpath_queries.taskId$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02NKLNAE3C4QO1mvlbIgFVd1vRnTcI0qG4h",
+        "name": "Wait For Catalyst Center Task",
+        "title": "Wait For Catalyst Center Task",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+          "display_name": "Wait For Catalyst Center Task",
+          "input": {
+            "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+            "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGC00Z66rUnPpPj5IRQInkEGEzxM6$",
+            "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+          "workflow_name": "Wait For Catalyst Center Task"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLLXGXQM02XorMxQedPReUVVH4ByuDb",
+        "name": "Generic Catalyst Center API Request",
+        "title": "Get Discovery Id",
+        "type": "catalystcenter.invoke_api",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/dna/intent/api/v1/task/$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGC00Z66rUnPpPj5IRQInkEGEzxM6$",
+          "_headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get Discoveries",
+          "display_name": "Get Discovery Id",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLM00L5CB62XLUA2GxoL0wrXyG5JUx0",
+        "name": "JSONPath Query",
+        "title": "Extract Discovery Id",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Extract the Discovery Id from the Task",
+          "display_name": "Extract Discovery Id",
+          "input_json": "$activity.definition_activity_02NKLLLXGXQM02XorMxQedPReUVVH4ByuDb.output.raw_body$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$[\"response\"][\"progress\"]",
+              "jsonpath_query_name": "discoveryId",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLM3575XB4XtpOahEcPB3spIqGVR8G0",
+        "name": "Set Variables",
+        "title": "Set Discovery Id",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Set Discovery Id",
+          "display_name": "Set Discovery Id",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGAZYT22qrReBUbwHIGxnxgrZ8h2O$",
+              "variable_value_new": "$activity.definition_activity_02NKLLM00L5CB62XLUA2GxoL0wrXyG5JUx0.output.jsonpath_queries.discoveryId$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLM5ZDBRZ15Urbq6AAw0S3o6EgJwkzb",
+        "name": "Sleep",
+        "title": "Sleep",
+        "type": "core.sleep",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Sleep",
+          "skip_execution": false,
+          "sleep_interval": 180
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLM9H4QYI06LJH8xQD9UvfSZi28sILn",
+        "name": "Get Catalyst Center discovered network devices by discovery id",
+        "title": "Get Discovered Devices",
+        "type": "catalystcenter.invoke_api.getDiscoveredNetworkDevicesByDiscoveryId",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/dna/intent/api/v1/discovery/${id}/network-device?taskId=${taskId}",
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get Discovered Devices",
+          "display_name": "Get Discovered Devices",
+          "id": "$activity.definition_activity_02NKLLM00L5CB62XLUA2GxoL0wrXyG5JUx0.output.jsonpath_queries.discoveryId$",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLMCIP14S5WhAOUhzzwu4FSbX2AqAkE",
+        "name": "Execute Python Script",
+        "title": "Data Transformation",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Create List of Discovered Devices",
+          "display_name": "Data Transformation",
+          "script": "import json\n\ndevices_list = []\ndeviceUuid_list = []\nfor index, item in enumerate($activity.definition_activity_02NKLLM9H4QYI06LJH8xQD9UvfSZi28sILn.output.body.response$):\n    devices_list.append(item['managementIpAddress'])\n    deviceUuid_list.append(item['id'])\nresult1 = ', '.join(devices_list)\nresult2 = ', '.join(deviceUuid_list)\nprint(result1)\nprint(result2)",
+          "script_queries": [
+            {
+              "script_query": "result1",
+              "script_query_name": "discoveredDevices",
+              "script_query_type": "string"
+            },
+            {
+              "script_query": "result2",
+              "script_query_name": "discoveredDeviceUuids",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLMH58W9308jKZcCanHqv7SecioYzFg",
+        "name": "Get Catalyst Center site v2",
+        "title": "Get Site Id",
+        "type": "catalystcenter.invoke_api.getSiteV2",
+        "base_type": "activity",
+        "properties": {
+          "_endpoint": "/dna/intent/api/v2/site?groupNameHierarchy=${groupNameHierarchy}\u0026id=${id}\u0026type=${type}\u0026offset=${offset}\u0026limit=${limit}",
+          "_method": "GET",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Get Site for Assignment",
+          "display_name": "Get Site Id",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLMJJ5KAN6hp7ituF8XVTS4hNaBTaNg",
+        "name": "JSONPath Query",
+        "title": "Extract Site Id",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Extract Site Id",
+          "display_name": "Extract Site Id",
+          "input_json": "$activity.definition_activity_02NKLLMH58W9308jKZcCanHqv7SecioYzFg.output.body.response$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$..[?(@.groupNameHierarchy==\"$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGEF8KZ33W55UnsrXdeZCrugHCg1f$\")].id",
+              "jsonpath_query_name": "siteId",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLMNDKN1N38gkcFvNzchFPFst8NlkiO",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Set Discovered Devices and SiteId to Variables",
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.output.variable_workflow_02NKLLJGASUJL66OdiA06xoIfW7uGDolokW$",
+              "variable_value_new": "$activity.definition_activity_02NKLLMCIP14S5WhAOUhzzwu4FSbX2AqAkE.output.script_queries.discoveredDevices$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGCECGZ31sS6am5MQ9A6PcHsgRoA5$",
+              "variable_value_new": "$activity.definition_activity_02NKLLMJJ5KAN6hp7ituF8XVTS4hNaBTaNg.output.jsonpath_queries.siteId$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NKLLJF0R2KQ2fcFFyFOSlBB4D0QGESlvC.local.variable_workflow_02NKLLJGDS9OK5aWHy5Ni9JyjOSfVtKrzy8$",
+              "variable_value_new": "$activity.definition_activity_02NKLLMCIP14S5WhAOUhzzwu4FSbX2AqAkE.output.script_queries.discoveredDeviceUuids$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NKLLMRBTRBG6hmsSLSeVkVjBjxDwszEX6",
+        "name": "Generic Catalyst Center API Request",
+        "title": "Assign Devices",
+        "type": "catalystcenter.invoke_api",
+        "base_type": "activity",
+        "properties": {
+          "_body": "{\n    \"deviceIds\": [\n        \"ff5570fe-dc7a-4a45-ab73-7551861a7959\"\n    ],\n    \"siteId\": \"$activity.definition_activity_02NKLLMJJ5KAN6hp7ituF8XVTS4hNaBTaNg.output.jsonpath_queries.siteId$\"\n}",
+          "_endpoint": "/dna/intent/api/v1/networkDevices/assignToSite/apply",
+          "_headers": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "_method": "POST",
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "description": "Assign Devices to Site",
+          "display_name": "Assign Devices",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "use_workflow_target": true
+          }
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+    ]
+  },
+  "categories": {
+    "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6": {
+      "unique_name": "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6",
+      "name": "Catalyst Center",
+      "title": "Catalyst Center",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+  ]
+}

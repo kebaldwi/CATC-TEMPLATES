@@ -1,0 +1,3888 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE",
+    "name": "CATC-AssignSettings",
+    "title": "CATC-AssignSettings",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "BUILDING 10",
+          "scope": "input",
+          "name": "Building",
+          "type": "datatype.string",
+          "description": "Building to assign settings for Hierarchy",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ667641YSlMxsXh2WLM0csptqlER",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Site UUID",
+          "type": "datatype.string",
+          "description": "Name\nSite Unique ID\n",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUYZNX3Q3AFfjESRNM6oAvXODGNW0B",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "FLOOR 1",
+          "scope": "input",
+          "name": "Floor",
+          "type": "datatype.string",
+          "description": "Floor to assign settings for Hierarchy",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ2ZM1S5soBROUpozXkrxZaUeHnrZ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Global/CALIFORNIA",
+          "scope": "input",
+          "name": "Parent",
+          "type": "datatype.string",
+          "description": "Parent to assign settings in Hierarchy",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ5QLEU3xEAFeMyf4PN0tPvsj8tt7",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [
+            "10.10.0.200"
+          ],
+          "scope": "input",
+          "name": "Syslog Servers",
+          "type": "datatype.array",
+          "description": "Syslog Server IP Addresses",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYYDIDY4hcD0mgbLAoE3RSxzBNhTd",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 2055,
+          "scope": "input",
+          "name": "Netflow Port for Server",
+          "type": "datatype.integer",
+          "description": "Netflow Port for Server",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUZ1BV090LvflKWGCSH3w9e9hKk59w",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMP-SJC-RW",
+          "scope": "input",
+          "name": "SNMP v2 Write Community",
+          "type": "datatype.string",
+          "description": "SNMP v2 Write Community",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ36NMW4PwNP4LX9jEy24sNYPQ279",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [
+            "10.10.0.200"
+          ],
+          "scope": "input",
+          "name": "SNMP Servers",
+          "type": "datatype.array",
+          "description": "SNMP Server IP Addresses",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYYTTK13ebMbfz3rcc6eRkFxxJRhE",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "RADIUS",
+          "scope": "input",
+          "name": "AAA Protocol",
+          "type": "datatype.string",
+          "description": "AAA protocol: RADIUS or TACACS",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ4W8OE17zlWNW3Rb9E9stPd7Lryz",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10.10.0.200",
+          "scope": "input",
+          "name": "Admin Node AAA Server IP Address",
+          "type": "datatype.string",
+          "description": "IP Address for Admin Node AAA Server",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ3DX1F4YOd2L2gkmW7DXHTglrBTj",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "*****",
+          "scope": "input",
+          "name": "CLI Password",
+          "type": "datatype.secure_string",
+          "description": "CLI Password",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUZ3LN820bXwotixunXbGQc16rnaIk",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMP-SJC-RW",
+          "scope": "input",
+          "name": "SNMP v2 Write Description",
+          "type": "datatype.string",
+          "description": "SNMP v2 Write Description",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ53I713yQILms6KobY5trgmN67Rg",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Site Name",
+          "type": "datatype.string",
+          "description": "Site Name in Hierachy",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUYZVTCO37iZiQm1qDrrGTbsK9Gf8E",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "C1sco12345",
+          "scope": "input",
+          "name": "AAA Secret",
+          "type": "datatype.string",
+          "description": "AAA Shared Secret",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ5J3R14hNaqReVI7SOgzvkedRdYA",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Configured by Workflows! Welcome to CISCO LIVE!",
+          "scope": "input",
+          "name": "Banner Message",
+          "type": "datatype.string",
+          "description": "Banner Message",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ1J3HA4WugDESt0RFpqkq8wLcMiu",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": true,
+          "scope": "input",
+          "name": "Syslog send to Catalyst Center",
+          "type": "datatype.boolean",
+          "description": "Syslog send to Catalyst Center",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYZGD032v07vMuStOtIKJJW3qZKjJ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "America/Los_Angeles",
+          "scope": "input",
+          "name": "NTP Time Zone",
+          "type": "datatype.string",
+          "description": "NTP Time Zone for Site Hierachy",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ2DICT1Uq2R4cUcjqJJK3iOpBIkH",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMP-SJC-RO",
+          "scope": "input",
+          "name": "SNMP v2 Read Community",
+          "type": "datatype.string",
+          "description": "SNMP v2 Read Community",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ0Q1602dpCgOY2AT4aTZtuj6MLWj",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Network Settings",
+          "type": "datatype.string",
+          "description": "Network Settings in Hierachy",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ497P307qhOvbNkRgCT53XvxjpFl",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "DNS Server Secondary",
+          "type": "datatype.string",
+          "description": "DNS Server Secondary IP Address",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ4GO093iCTIGMPoZXRBaiWaJg3It",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SAN JOSE",
+          "scope": "input",
+          "name": "Area",
+          "type": "datatype.string",
+          "description": "Area to assign settings in Hierarchy",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ2SNVF7KiQtxUV9bAXsUucArGCvz",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "Secondary AAA Server IP Address",
+          "type": "datatype.string",
+          "description": "Secondary IP Address or  VIP Address for  AAA Server IP Address",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ4OGDX5VCRmqPJ1nMvvVs3YnBwoQ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "SNMP-SJC-RO",
+          "scope": "input",
+          "name": "SNMP v2 Read Description",
+          "type": "datatype.string",
+          "description": "SNMP v2 Read Description",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ1Y9LT1SyYRFd1xXOQTA1JdyibjU",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "ISE",
+          "scope": "input",
+          "name": "AAA Server Type",
+          "type": "datatype.string",
+          "description": "Type of AAA Server:  ISE, AAA or None (Default)",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ5YG0R72RyzmDBSS1PSILX89yE1S",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [
+            "10.10.0.250"
+          ],
+          "scope": "input",
+          "name": "DHCP Servers",
+          "type": "datatype.array",
+          "description": "DHCP Server IP Addresses",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYZ17LB0TOhNGfArCSBTgNDoTtjYi",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": true,
+          "scope": "input",
+          "name": "Banner Protection",
+          "type": "datatype.boolean",
+          "description": "Do Not Overwrite MOTD Banner",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUZ0X93P4eUhKWktsVeaTPpBpycpPL",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.secure_string",
+        "properties": {
+          "value": "*****",
+          "scope": "input",
+          "name": "CLI Enable Password",
+          "type": "datatype.secure_string",
+          "description": "CLI Enable Password",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUZ425780SVvuMngZhP21QuDjx1A1d",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": true,
+          "scope": "input",
+          "name": "Netflow send to Catalyst Center",
+          "type": "datatype.boolean",
+          "description": "Netflow send to Catalyst Center",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYZ92SG6Ax4Chap6BZePmyDdkxlB2",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Hierarchy",
+          "type": "datatype.string",
+          "description": "Catalyst Center Site Hierarchy",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ14LK13yB4rEm4rgsVUQ1JYOAwf6",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "admin",
+          "scope": "input",
+          "name": "CLI Username",
+          "type": "datatype.string",
+          "description": "CLI Username",
+          "is_required": true,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ0IP8U402jwy9zBd4ldlBt1PIvfD",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "cisco.com",
+          "scope": "input",
+          "name": "Domain Name",
+          "type": "datatype.string",
+          "description": "Domain Name Suffix",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ3TRW04rk289ypIXXTfgX4ttugyS",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Admin",
+          "scope": "input",
+          "name": "CLI Description",
+          "type": "datatype.string",
+          "description": "CLI Description",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ1QIPS3I9gy7Ixs60s4dmIGYPg5y",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [
+            "10.10.0.250"
+          ],
+          "scope": "input",
+          "name": "NTP Servers",
+          "type": "datatype.array",
+          "description": "NTP Servers IP Address",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUYYKTJN7FiFe0HuwPJlxkR8p8eeB2",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10.10.0.251",
+          "scope": "input",
+          "name": "DNS Server Primary",
+          "type": "datatype.string",
+          "description": "DNS Server Primary IP Address",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ264YA4GSiszKFiVt0M1QVSezlDc",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.boolean",
+        "properties": {
+          "value": true,
+          "scope": "input",
+          "name": "SNMP send to Catalyst Center",
+          "type": "datatype.boolean",
+          "description": "SNMP send to Catalyst Center",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02NJPBUZ0B6W128DJ7rk2hht3r4RmsHgG2O",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10.10.0.200",
+          "scope": "input",
+          "name": "Netflow Server IP Address",
+          "type": "datatype.string",
+          "description": "Netflow Server IP Address",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ2KSGC3mYUugE7tt9U2yqFOlRlci",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Applied Network Settings",
+          "type": "datatype.string",
+          "description": "Applied Network Settings",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ03IBO0kU76EsP0YJcrPIXftRZ4J",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "10.10.0.200",
+          "scope": "input",
+          "name": "Primary AAA Server IP Address",
+          "type": "datatype.string",
+          "description": "Primary IP Address or VIP Address for  AAA Server",
+          "is_required": false,
+          "display_on_wizard": true,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02NJPBUZ5B8O307hMTb8Ea7okzLYHBDlHZ3",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Assign Settings and Credentials to Hierarchy",
+      "display_name": "CATC-AssignSettings",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf",
+        "name": "AssignSettings",
+        "title": "AssignSettings",
+        "type": "workflow.sub_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Assign the settings to the Hierarchy",
+          "display_name": "AssignSettings",
+          "input": {
+            "variable_workflow_02NG39Z7R1HLU0eXi47IzC3hVmHXPDYzBDD": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ667641YSlMxsXh2WLM0csptqlER$",
+            "variable_workflow_02NG39Z7R9XRE50aJzcOO4H2rmWOMejMym5": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ5YG0R72RyzmDBSS1PSILX89yE1S$",
+            "variable_workflow_02NG39Z7RHOEQ5leObEuyIFKypCuJjsbvBA": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2ZM1S5soBROUpozXkrxZaUeHnrZ$",
+            "variable_workflow_02NG39Z7S3FTM7UQqobD6mAqZpEG618aCIY": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ0B6W128DJ7rk2hht3r4RmsHgG2O$",
+            "variable_workflow_02NG39Z7SYUYF2y1ZXM5gyVIT4IrTwihgYN": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2DICT1Uq2R4cUcjqJJK3iOpBIkH$",
+            "variable_workflow_02NG39Z7T6J5R5Ry48TX3Xka4WQ67zfEohd": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYZ92SG6Ax4Chap6BZePmyDdkxlB2$",
+            "variable_workflow_02NG39Z7TE5SU0axSuECr4UAZab5sN13EWA": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ264YA4GSiszKFiVt0M1QVSezlDc$",
+            "variable_workflow_02NG39Z7TTU4I50DmRcWaIHQDtRgYOMjIrI": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2SNVF7KiQtxUV9bAXsUucArGCvz$",
+            "variable_workflow_02NG39Z7U1GOA35i5DFSQHFInt84Ell1Z0u": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ3TRW04rk289ypIXXTfgX4ttugyS$",
+            "variable_workflow_02NG39Z7UOYDW5JkRryRwQEkQ72SvmSHCtv": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2KSGC3mYUugE7tt9U2yqFOlRlci$",
+            "variable_workflow_02NG39Z7VC2QJ5vZF9DrrhjxL5Fp4Nrovce": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ1J3HA4WugDESt0RFpqkq8wLcMiu$",
+            "variable_workflow_02NG39Z7VJLYU1pYCO1tWaV14zTYmwHX56h": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ5QLEU3xEAFeMyf4PN0tPvsj8tt7$",
+            "variable_workflow_02NG39Z7VRC884o5yFbdc6zEKg3TpzTt8t9": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ4W8OE17zlWNW3Rb9E9stPd7Lryz$",
+            "variable_workflow_02NG39Z7WNIAH7M745zc4I3D4WI1FcMEzhs": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ5J3R14hNaqReVI7SOgzvkedRdYA$",
+            "variable_workflow_02NG39Z7X2S3F7DMlXVSkac2YyfutjJBcF4": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ4GO093iCTIGMPoZXRBaiWaJg3It$",
+            "variable_workflow_02NG39Z7XOS9P79NRNa1Ono8lA0ETuW3kiU": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYZGD032v07vMuStOtIKJJW3qZKjJ$",
+            "variable_workflow_02NGG8H9QCDBL5vlQPDdmgxdQ37gQL8cSUl": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ1BV090LvflKWGCSH3w9e9hKk59w$",
+            "variable_workflow_02NGGCSSTTSMD2L9oBZr4gDMgZ9DHp0V0oS": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ0X93P4eUhKWktsVeaTPpBpycpPL$",
+            "variable_workflow_02NGGFMQIS3WF59VSlAEtRVByuSRg4qQaX1": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYZ17LB0TOhNGfArCSBTgNDoTtjYi$",
+            "variable_workflow_02NGGG0AGBTHS4ZbPvtY5clIWMSk0dFUsIQ": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYYDIDY4hcD0mgbLAoE3RSxzBNhTd$",
+            "variable_workflow_02NGGGDIUL9XZ2E727B0vkosxCTCIUZ7k1e": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYYTTK13ebMbfz3rcc6eRkFxxJRhE$",
+            "variable_workflow_02NGGGSK1UV3Z0dADjLszvsA93xo9HUufBG": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUYYKTJN7FiFe0HuwPJlxkR8p8eeB2$",
+            "variable_workflow_02NGTFRMXEEJR1oGZAGYkKeummGX3elXxoK": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ3DX1F4YOd2L2gkmW7DXHTglrBTj$",
+            "variable_workflow_02NGTG7DCRDTJ3h9Gy4ejku6xQGHlenudzZ": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ5B8O307hMTb8Ea7okzLYHBDlHZ3$",
+            "variable_workflow_02NGTGM4ZTLBY2bdF7fTHUAtktbXO9P96zF": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ4OGDX5VCRmqPJ1nMvvVs3YnBwoQ$"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6",
+          "workflow_name": "AssignSettings"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NJPBVNTYTZI0CJGdcz0MUjgVqgk0GAvYy",
+        "name": "AssignCredentials",
+        "title": "AssignCredentials",
+        "type": "workflow.sub_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Assign the Credentials to the Hierarchy",
+          "display_name": "AssignCredentials",
+          "input": {
+            "variable_workflow_02NGXCSC48XN40qi7kwE8dS2Bd09JCR16dm": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2ZM1S5soBROUpozXkrxZaUeHnrZ$",
+            "variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ0Q1602dpCgOY2AT4aTZtuj6MLWj$",
+            "variable_workflow_02NGXCSC6C20L0hM6cNwo5HIraLC9a3dX3H": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ2SNVF7KiQtxUV9bAXsUucArGCvz$",
+            "variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ36NMW4PwNP4LX9jEy24sNYPQ279$",
+            "variable_workflow_02NGXCSC75ECL7RPsPcevfyVCoF1x9OLrhQ": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ1QIPS3I9gy7Ixs60s4dmIGYPg5y$",
+            "variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ0IP8U402jwy9zBd4ldlBt1PIvfD$",
+            "variable_workflow_02NGXCSC7YBCB3ZR5hXH6v2fhBgyI4KeIIS": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ5QLEU3xEAFeMyf4PN0tPvsj8tt7$",
+            "variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ1Y9LT1SyYRFd1xXOQTA1JdyibjU$",
+            "variable_workflow_02NGXCSC907S23mRQljjC6uQhAPRM7O3nWe": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ425780SVvuMngZhP21QuDjx1A1d$",
+            "variable_workflow_02NGXCSC9M1YN5SP4FT19nB48nP58pmY9nt": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ3LN820bXwotixunXbGQc16rnaIk$",
+            "variable_workflow_02NGXCSCA06C75oAfu45FOqmi1f9XdcTjgG": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ667641YSlMxsXh2WLM0csptqlER$",
+            "variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.input.variable_workflow_02NJPBUZ53I713yQILms6KobY5trgmN67Rg$"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe",
+          "workflow_name": "AssignCredentials"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02NJPBVUG2L8R5mZzH0KCZRwnR2ym55zBb4",
+        "name": "Set Variables",
+        "title": "Write Output",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Write Output",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.output.variable_workflow_02NJPBUZ14LK13yB4rEm4rgsVUQ1JYOAwf6$",
+              "variable_value_new": "$activity.definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf.output.variable_workflow_02NG39Z7UH16A5Gfx0ugFQ9MVlxSC5qebAv$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.output.variable_workflow_02NJPBUYZVTCO37iZiQm1qDrrGTbsK9Gf8E$",
+              "variable_value_new": "$activity.definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf.output.variable_workflow_02NG39Z7SIUF46fksqZeFwDRxBbs8Nhk3uF$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.output.variable_workflow_02NJPBUYZNX3Q3AFfjESRNM6oAvXODGNW0B$",
+              "variable_value_new": "$activity.definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf.output.variable_workflow_02NG39Z7QSE0P6Z0oF6ZWQ7iDw9nqZji8eT$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.output.variable_workflow_02NJPBUZ03IBO0kU76EsP0YJcrPIXftRZ4J$",
+              "variable_value_new": "$activity.definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf.output.variable_workflow_02NG39Z7RP2106GNON2KKtYhzUAb8j7hXrZ$"
+            },
+            {
+              "variable_to_update": "$workflow.definition_workflow_02NJPBUXPNFGL0ppUDjEi0937fgCXJQRHiE.output.variable_workflow_02NJPBUZ497P307qhOvbNkRgCT53XvxjpFl$",
+              "variable_value_new": "$activity.definition_activity_02NJPBVG2YN6V0Ufki6z56y9rq7NAxeI4Sf.output.variable_workflow_02NG39Z7TLXHL4Bv2YuUAEhVHHiPbchW8VA$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+    ]
+  },
+  "categories": {
+    "category_02L1BFWH5AHZW0SJvysSjFdTHaOqggMgWsE": {
+      "unique_name": "category_02L1BFWH5AHZW0SJvysSjFdTHaOqggMgWsE",
+      "name": "Cisco Catalyst Center - Network Settings",
+      "title": "Cisco Catalyst Center - Network Settings",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Actions to manage Network Settings",
+      "category_type": "system",
+      "object_type": "category"
+    },
+    "category_02MQITNRPLJZ07UHXpRVpsFeyvKjOJoRTTU": {
+      "unique_name": "category_02MQITNRPLJZ07UHXpRVpsFeyvKjOJoRTTU",
+      "name": "Cisco Catalyst Center - Network Site Hierarchy",
+      "title": "Cisco Catalyst Center - Network Site Hierarchy",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "system",
+      "object_type": "category"
+    },
+    "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6": {
+      "unique_name": "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6",
+      "name": "Catalyst Center",
+      "title": "Catalyst Center",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  },
+  "subworkflows": [
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6",
+        "name": "AssignSettings",
+        "title": "AssignSettings",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.boolean",
+            "properties": {
+              "value": false,
+              "scope": "input",
+              "name": "Netflow send to Catalyst Center",
+              "type": "datatype.boolean",
+              "description": "Netflow send to Catalyst Center",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NG39Z7T6J5R5Ry48TX3Xka4WQ67zfEohd",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "Global",
+              "scope": "input",
+              "name": "Parent",
+              "type": "datatype.string",
+              "description": "Parent to assign settings in Hierarchy",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7VJLYU1pYCO1tWaV14zTYmwHX56h",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Applied Network Settings",
+              "type": "datatype.string",
+              "description": "Applied Network Settings",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NG39Z7RP2106GNON2KKtYhzUAb8j7hXrZ",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.boolean",
+            "properties": {
+              "value": false,
+              "scope": "input",
+              "name": "Banner Protection",
+              "type": "datatype.boolean",
+              "description": "Do Not Overwrite MOTD Banner",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NGGCSSTTSMD2L9oBZr4gDMgZ9DHp0V0oS",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Hierarchy",
+              "type": "datatype.string",
+              "description": "Catalyst Center Site Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NG39Z7UH16A5Gfx0ugFQ9MVlxSC5qebAv",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "netflowCollectorPort",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGH2SWDM8TB2Xxjw0t76VEgaL0TgLy25m",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "snmpConfigureDnacIP",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGGQWR7WEUW6ovWZpdOxUfZD5wMTVjAKH",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "[]",
+              "scope": "input",
+              "name": "SNMP Servers",
+              "type": "datatype.string",
+              "description": "SNMP Server IP Addresses",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGGGDIUL9XZ2E727B0vkosxCTCIUZ7k1e",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Area",
+              "type": "datatype.string",
+              "description": "Area to assign settings in Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7TTU4I50DmRcWaIHQDtRgYOMjIrI",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.boolean",
+            "properties": {
+              "value": false,
+              "scope": "input",
+              "name": "SNMP send to Catalyst Center",
+              "type": "datatype.boolean",
+              "description": "SNMP send to Catalyst Center",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NG39Z7S3FTM7UQqobD6mAqZpEG618aCIY",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "[]",
+              "scope": "input",
+              "name": "Syslog Servers",
+              "type": "datatype.string",
+              "description": "Syslog Server IP Addresses",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGGG0AGBTHS4ZbPvtY5clIWMSk0dFUsIQ",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Site UUID",
+              "type": "datatype.string",
+              "description": "Name\nSite Unique ID\n",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7QSE0P6Z0oF6ZWQ7iDw9nqZji8eT",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "AAA Secret",
+              "type": "datatype.string",
+              "description": "AAA Shared Secret",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7WNIAH7M745zc4I3D4WI1FcMEzhs",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "retainExistingBanner",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGGRF2D5EQZ3JPCn90sxqns4qDMXCIXk9",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "aaaSettingsRequest",
+              "type": "datatype.string",
+              "description": "Used for 3rd Party AAA",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "None",
+              "scope": "input",
+              "name": "AAA Server Type",
+              "type": "datatype.string",
+              "description": "Type of AAA Server:  ISE, AAA or None (Default)",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7R9XRE50aJzcOO4H2rmWOMejMym5",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "syslogConfigureDnacIP",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGGQO9HLLBJ7P8QD7qiWX0oKWw0iC0pO2",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Netflow Server IP Address",
+              "type": "datatype.string",
+              "description": "Netflow Server IP Address",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7UOYDW5JkRryRwQEkQ72SvmSHCtv",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.boolean",
+            "properties": {
+              "value": false,
+              "scope": "input",
+              "name": "Syslog send to Catalyst Center",
+              "type": "datatype.boolean",
+              "description": "Syslog send to Catalyst Center",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NG39Z7XOS9P79NRNa1Ono8lA0ETuW3kiU",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Primary AAA Server IP Address",
+              "type": "datatype.string",
+              "description": "Primary IP address or Primary VIP address for AAA server",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGTG7DCRDTJ3h9Gy4ejku6xQGHlenudzZ",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "networkSettingsRequest",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGSPWDVRNMR3zfLlfe6FqhvMDycNYOdAM",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Floor",
+              "type": "datatype.string",
+              "description": "Floor to assign settings for Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7RHOEQ5leObEuyIFKypCuJjsbvBA",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "DNS Server Primary",
+              "type": "datatype.string",
+              "description": "DNS Server Primary IP Address",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7TE5SU0axSuECr4UAZab5sN13EWA",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.integer",
+            "properties": {
+              "value": 2055,
+              "scope": "input",
+              "name": "Netflow Port for Server",
+              "type": "datatype.integer",
+              "description": "Netflow Port for Server",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NGG8H9QCDBL5vlQPDdmgxdQ37gQL8cSUl",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Site Name",
+              "type": "datatype.string",
+              "description": "Site Name in Hierachy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7SIUF46fksqZeFwDRxBbs8Nhk3uF",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "[]",
+              "scope": "input",
+              "name": "DHCP Servers",
+              "type": "datatype.string",
+              "description": "DHCP Server IP Addresses",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGGFMQIS3WF59VSlAEtRVByuSRg4qQaX1",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "DNS Server Secondary",
+              "type": "datatype.string",
+              "description": "DNS Server Secondary IP Address",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7X2S3F7DMlXVSkac2YyfutjJBcF4",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Building",
+              "type": "datatype.string",
+              "description": "Building to assign settings for Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7R1HLU0eXi47IzC3hVmHXPDYzBDD",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Secondary AAA Server IP Address",
+              "type": "datatype.string",
+              "description": "Secondary IP address or Secondary VIP address for AAA server",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGTGM4ZTLBY2bdF7fTHUAtktbXO9P96zF",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "[]",
+              "scope": "input",
+              "name": "NTP Servers",
+              "type": "datatype.string",
+              "description": "NTP Servers IP Address",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGGGSK1UV3Z0dADjLszvsA93xo9HUufBG",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Admin Node AAA Server IP Address",
+              "type": "datatype.string",
+              "description": "IP address for Admin Node AAA Server",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGTFRMXEEJR1oGZAGYkKeummGX3elXxoK",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Network Settings",
+              "type": "datatype.string",
+              "description": "Network Settings in Hierachy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NG39Z7TLXHL4Bv2YuUAEhVHHiPbchW8VA",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "AAA Protocol",
+              "type": "datatype.string",
+              "description": "AAA protocol: RADIUS or TACACS",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7VRC884o5yFbdc6zEKg3TpzTt8t9",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Banner Message",
+              "type": "datatype.string",
+              "description": "Banner Message",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7VC2QJ5vZF9DrrhjxL5Fp4Nrovce",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Domain Name",
+              "type": "datatype.string",
+              "description": "Domain Name Suffix",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7U1GOA35i5DFSQHFInt84Ell1Z0u",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "America/New_York",
+              "scope": "input",
+              "name": "NTP Time Zone",
+              "type": "datatype.string",
+              "description": "NTP Time Zone for Site Hierachy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NG39Z7SYUYF2y1ZXM5gyVIT4IrTwihgYN",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Assign Network and AAA Settings to Site In Network Hierachy",
+          "display_name": "AssignSettings",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02NG8RD6T8FH94WcaT0mv1lcn1wEW2LdyzJ",
+            "name": "Group",
+            "title": "Site Hierachy",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Site Hierachy",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NG8J8RZZSN620rUuzP6Th5hEqZkD0Kx7X",
+                "name": "Compose Site Hierachy Name",
+                "title": "Compose Site Hierachy Name",
+                "type": "workflow.sub_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Compose Site Hierachy Name",
+                  "input": {
+                    "variable_workflow_02NG8EAUCEER80qcL11bUem9EszUKQHiyaL": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7VJLYU1pYCO1tWaV14zTYmwHX56h$",
+                    "variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7TTU4I50DmRcWaIHQDtRgYOMjIrI$",
+                    "variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7R1HLU0eXi47IzC3hVmHXPDYzBDD$",
+                    "variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7RHOEQ5leObEuyIFKypCuJjsbvBA$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "target_type": "catalystcenter.endpoint",
+                    "use_workflow_target": true
+                  },
+                  "workflow_id": "definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n",
+                  "workflow_name": "Compose Site Hierachy Name"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NG4QW08PYFN5XFtHNCf3Y58W5jMzc0CDj",
+                "name": "Get Catalyst Center site v2",
+                "title": "Get Catalyst Center site v2",
+                "type": "catalystcenter.invoke_api.getSiteV2",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v2/site?groupNameHierarchy=${groupNameHierarchy}\u0026id=${id}\u0026type=${type}\u0026offset=${offset}\u0026limit=${limit}",
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Get Catalyst Center site v2",
+                  "groupNameHierarchy": "$activity.definition_activity_02NG8J8RZZSN620rUuzP6Th5hEqZkD0Kx7X.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NG7D9C6TXXN0WodSGQreUYUldkwHbmlaI",
+                "name": "JSONPath Query",
+                "title": "Get Site Id",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Get Site Id",
+                  "input_json": "$activity.definition_activity_02NG4QW08PYFN5XFtHNCf3Y58W5jMzc0CDj.output.body.response$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..[?(@.groupNameHierarchy==\"$activity.definition_activity_02NG8J8RZZSN620rUuzP6Th5hEqZkD0Kx7X.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$\")].id",
+                      "jsonpath_query_name": "Site Id",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false,
+                  "skip_path": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NG8RNKWQK0O7916O4PylTVMrn5t07X6Or",
+            "name": "Group",
+            "title": "Adding Network Settings",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Adding Network Settings",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NGGRHYRO77017hHccTIpBJj3WvzymyXR1",
+                "name": "Set Variables",
+                "title": "Pre-Process Network Settings",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Pre-Process Network Settings",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGRF2D5EQZ3JPCn90sxqns4qDMXCIXk9$",
+                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGGCSSTTSMD2L9oBZr4gDMgZ9DHp0V0oS$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGQWR7WEUW6ovWZpdOxUfZD5wMTVjAKH$",
+                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7S3FTM7UQqobD6mAqZpEG618aCIY$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGQO9HLLBJ7P8QD7qiWX0oKWw0iC0pO2$",
+                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7XOS9P79NRNa1Ono8lA0ETuW3kiU$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGH2SWDM8TB2Xxjw0t76VEgaL0TgLy25m$",
+                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGG8H9QCDBL5vlQPDdmgxdQ37gQL8cSUl$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGSPWDVRNMR3zfLlfe6FqhvMDycNYOdAM$",
+                      "variable_value_new": "{\n    \"settings\": {\n        \"dhcpServer\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGGFMQIS3WF59VSlAEtRVByuSRg4qQaX1$,\n        \"dnsServer\": {\n            \"domainName\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7U1GOA35i5DFSQHFInt84Ell1Z0u$\",\n            \"primaryIpAddress\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7TE5SU0axSuECr4UAZab5sN13EWA$\",\n            \"secondaryIpAddress\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7X2S3F7DMlXVSkac2YyfutjJBcF4$\"\n        },\n        \"syslogServer\": {\n            \"ipAddresses\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGGG0AGBTHS4ZbPvtY5clIWMSk0dFUsIQ$,\n            \"configureDnacIP\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGQO9HLLBJ7P8QD7qiWX0oKWw0iC0pO2$\n        },\n        \"snmpServer\": {\n            \"ipAddresses\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGGGDIUL9XZ2E727B0vkosxCTCIUZ7k1e$,\n            \"configureDnacIP\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGQWR7WEUW6ovWZpdOxUfZD5wMTVjAKH$\n        },\n        \"netflowcollector\": {\n            \"ipAddress\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7UOYDW5JkRryRwQEkQ72SvmSHCtv$\",\n            \"port\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGH2SWDM8TB2Xxjw0t76VEgaL0TgLy25m$\n        },\n        \"ntpServer\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGGGSK1UV3Z0dADjLszvsA93xo9HUufBG$,\n        \"timezone\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7SYUYF2y1ZXM5gyVIT4IrTwihgYN$\",\n        \"messageOfTheday\": {\n            \"bannerMessage\": \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7VC2QJ5vZF9DrrhjxL5Fp4Nrovce$\",\n            \"retainExistingBanner\": $workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGGRF2D5EQZ3JPCn90sxqns4qDMXCIXk9$\n        }\n    }\n}"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NGGTJM9PZKF094VywtVgZDx1U8JaYNQNL",
+                "name": "Generic Catalyst Center API Request",
+                "title": "PutApiV2NetworkSiteId",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_body": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGSPWDVRNMR3zfLlfe6FqhvMDycNYOdAM$",
+                  "_endpoint": "/dna/intent/api/v2/network/$activity.definition_activity_02NG7D9C6TXXN0WodSGQreUYUldkwHbmlaI.output.jsonpath_queries.Site Id$",
+                  "_method": "PUT",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "PutApiV2NetworkSiteId",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NGHJRAGP1OH3YfZq5oXQ5S3oxJ7xfcdBl",
+                "name": "Get Task ID",
+                "title": "Get Task ID",
+                "type": "workflow.atomic_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Get Task ID",
+                  "input": {
+                    "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02NGGTJM9PZKF094VywtVgZDx1U8JaYNQNL.output.raw_body$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "no_target": true
+                  },
+                  "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+                  "workflow_name": "Get Task ID"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NGHJK3G4G6Y43rqsLkYP5r3RuhFQsey15",
+                "name": "Wait For Catalyst Center Task",
+                "title": "Wait For Catalyst Center Task",
+                "type": "workflow.atomic_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Wait For Catalyst Center Task",
+                  "input": {
+                    "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                    "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02NGHJRAGP1OH3YfZq5oXQ5S3oxJ7xfcdBl.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                    "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "target_type": "catalystcenter.endpoint",
+                    "use_workflow_target": true
+                  },
+                  "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                  "workflow_name": "Wait For Catalyst Center Task"
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NG9AFLS41ED0188SLsRXsFtZpyW0nmkam",
+            "name": "Group",
+            "title": "AAA Settings",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "AAA Settings",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NGW2U53BTN51kBcBjI91MeRSoZAGScVzd",
+                "name": "To Upper",
+                "title": "Normalize AAA Server Type",
+                "type": "core.string2upper",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Normalize AAA Server Type",
+                  "skip_execution": false,
+                  "source": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7R9XRE50aJzcOO4H2rmWOMejMym5$"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NG9AR7TT5CK2Zc01R8FlYvkqhY93FwAim",
+                "name": "Condition Block",
+                "title": "AAA Server Type ?",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "conditions": [],
+                  "continue_on_failure": false,
+                  "display_name": "AAA Server Type ?",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_02NG9AR801FUD3sOw9z4NpzwOpJ6K1OQXm2",
+                    "name": "Condition Branch",
+                    "title": "Type = \"AAA\" or  \"ISE\"",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": {
+                          "left_operand": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7R9XRE50aJzcOO4H2rmWOMejMym5$",
+                          "operator": "ne",
+                          "right_operand": "AAA"
+                        },
+                        "operator": "or",
+                        "right_operand": {
+                          "left_operand": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7R9XRE50aJzcOO4H2rmWOMejMym5$",
+                          "operator": "eq",
+                          "right_operand": "ISE"
+                        }
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Type = \"AAA\" or  \"ISE\"",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02NGT4DHJK0TA65fGBuvwuYI0ZGdlc34Oqe",
+                        "name": "Set Variables",
+                        "title": "Pre-Process AAA Settings",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Pre-Process AAA Settings",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$",
+                              "variable_value_new": "{\n    \"aaaClient\": {\n        \"serverType\" : \"$activity.definition_activity_02NGW2U53BTN51kBcBjI91MeRSoZAGScVzd.output.uppercase_text$\",\n        \"protocol\" : \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7VRC884o5yFbdc6zEKg3TpzTt8t9$\",\n        \"pan\" : \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGTFRMXEEJR1oGZAGYkKeummGX3elXxoK$\",\n        \"primaryServerIp\" : \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGTG7DCRDTJ3h9Gy4ejku6xQGHlenudzZ$\",\n        \"secondaryServerIp\" : \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NGTGM4ZTLBY2bdF7fTHUAtktbXO9P96zF$\""
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02NIMH7CC5ZW63KTQpyzG35TSCrGXGxdYhu",
+                        "name": "Condition Block",
+                        "title": "ISE vs AAA Servers",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "conditions": [],
+                          "continue_on_failure": true,
+                          "description": "Block for Secret Consistency for ISE",
+                          "display_name": "ISE vs AAA Servers",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_02NIMH7CITQ1D0BIPGypQmC4zCqkDR9srtf",
+                            "name": "Condition Branch",
+                            "title": "ISE Servers",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$activity.definition_activity_02NGW2U53BTN51kBcBjI91MeRSoZAGScVzd.output.uppercase_text$",
+                                "operator": "eq",
+                                "right_operand": "ISE"
+                              },
+                              "continue_on_failure": true,
+                              "description": "For ISE Servers - Secret removed\n",
+                              "display_name": "ISE Servers",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NIMI7XJQIUC7KmUnMWwfPPsfkDHwF4LlA",
+                                "name": "Set Variables",
+                                "title": "Set Variables",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": true,
+                                  "display_name": "Set Variables",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$\n  }\n}"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NIMH7CPYU673DiJkV7buyVy5UUYASPJ4X",
+                            "name": "Condition Branch",
+                            "title": "3rd Party AAA Server",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$activity.definition_activity_02NGW2U53BTN51kBcBjI91MeRSoZAGScVzd.output.uppercase_text$",
+                                "operator": "eq",
+                                "right_operand": "AAA"
+                              },
+                              "continue_on_failure": true,
+                              "description": "For 3rd Party AAA Servers",
+                              "display_name": "3rd Party AAA Server",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NIMJ6D2LW2U4WvpFIOsFvtXa6eJK8daQ5",
+                                "name": "Set Variables",
+                                "title": "Set AAA Secret ",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": true,
+                                  "description": "If AAA Server set secret",
+                                  "display_name": "Set AAA Secret ",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$,\n        \"sharedSecret\" : \"$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.input.variable_workflow_02NG39Z7WNIAH7M745zc4I3D4WI1FcMEzhs$\"\n  }\n}"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "unique_name": "definition_activity_02NGT689EN07C0dwOG0mqxytA8schNWEieV",
+                        "name": "Generic Catalyst Center API Request",
+                        "title": "PutApiV1SitesAAASettings",
+                        "type": "catalystcenter.invoke_api",
+                        "base_type": "activity",
+                        "properties": {
+                          "_body": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGT86S019WO6dsLIMCrVAJL6ixnr79xz6$",
+                          "_endpoint": "/dna/intent/api/v1/sites/$activity.definition_activity_02NG7D9C6TXXN0WodSGQreUYUldkwHbmlaI.output.jsonpath_queries.Site Id$/aaaSettings",
+                          "_method": "PUT",
+                          "action_timeout": 180,
+                          "continue_on_failure": false,
+                          "display_name": "PutApiV1SitesAAASettings",
+                          "runtime_user": {
+                            "target_default": true
+                          },
+                          "skip_execution": false,
+                          "target": {
+                            "use_workflow_target": true
+                          }
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02NGTII25U43E5JiwBTUxaUrq5QjQtGWoWR",
+                        "name": "Get Task ID",
+                        "title": "Get Task ID",
+                        "type": "workflow.atomic_workflow",
+                        "base_type": "subworkflow",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Get Task ID",
+                          "input": {
+                            "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02NGT689EN07C0dwOG0mqxytA8schNWEieV.output.raw_body$"
+                          },
+                          "runtime_user": {
+                            "target_default": true
+                          },
+                          "skip_execution": false,
+                          "target": {
+                            "no_target": true
+                          },
+                          "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+                          "workflow_name": "Get Task ID"
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02NGTJ5RDWZWG6PeBYfZ0T0ES1iJ4vUCG9j",
+                        "name": "Wait For Catalyst Center Task",
+                        "title": "Wait For Catalyst Center Task",
+                        "type": "workflow.atomic_workflow",
+                        "base_type": "subworkflow",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Wait For Catalyst Center Task",
+                          "input": {
+                            "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                            "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02NGTII25U43E5JiwBTUxaUrq5QjQtGWoWR.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                            "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                          },
+                          "runtime_user": {
+                            "target_default": true
+                          },
+                          "skip_execution": false,
+                          "target": {
+                            "target_type": "catalystcenter.endpoint",
+                            "use_workflow_target": true
+                          },
+                          "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                          "workflow_name": "Wait For Catalyst Center Task"
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NGSXVFN5UY54t170OAytP3iNK3IOOsoIK",
+            "name": "Group",
+            "title": "Get Updated Network Settings",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Get Updated Network Settings",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NGSXVFNC7HK5ZSSMdbMHUUe9anYUXhrns",
+                "name": "Generic Catalyst Center API Request",
+                "title": "GetApiV2NetworkSiteId",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v2/network?siteId=$activity.definition_activity_02NG7D9C6TXXN0WodSGQreUYUldkwHbmlaI.output.jsonpath_queries.Site Id$",
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "GetApiV2NetworkSiteId",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NG39ZM9LMCR1CObfox87tCAcLjbxkeloY",
+            "name": "Set Variables",
+            "title": "Write Output",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Write Output",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.output.variable_workflow_02NG39Z7UH16A5Gfx0ugFQ9MVlxSC5qebAv$",
+                  "variable_value_new": "$activity.definition_activity_02NG4QW08PYFN5XFtHNCf3Y58W5jMzc0CDj.output.body.response$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.output.variable_workflow_02NG39Z7SIUF46fksqZeFwDRxBbs8Nhk3uF$",
+                  "variable_value_new": "$activity.definition_activity_02NG8J8RZZSN620rUuzP6Th5hEqZkD0Kx7X.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.output.variable_workflow_02NG39Z7QSE0P6Z0oF6ZWQ7iDw9nqZji8eT$",
+                  "variable_value_new": "$activity.definition_activity_02NG7D9C6TXXN0WodSGQreUYUldkwHbmlaI.output.jsonpath_queries.Site Id$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.output.variable_workflow_02NG39Z7RP2106GNON2KKtYhzUAb8j7hXrZ$",
+                  "variable_value_new": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.local.variable_workflow_02NGSPWDVRNMR3zfLlfe6FqhvMDycNYOdAM$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6.output.variable_workflow_02NG39Z7TLXHL4Bv2YuUAEhVHHiPbchW8VA$",
+                  "variable_value_new": "$activity.definition_activity_02NGSXVFNC7HK5ZSSMdbMHUUe9anYUXhrns.output.raw_body$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02L1BFWH5AHZW0SJvysSjFdTHaOqggMgWsE"
+        ]
+      },
+      "subworkflows": [
+        {
+          "workflow": {
+            "unique_name": "definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n",
+            "name": "Compose Site Hierachy Name",
+            "title": "Compose Site Hierachy Name",
+            "type": "generic.workflow",
+            "base_type": "workflow",
+            "variables": [
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "input",
+                  "name": "Building",
+                  "type": "datatype.string",
+                  "description": "Building to assign settings for Hierarchy",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "input",
+                  "name": "Floor",
+                  "type": "datatype.string",
+                  "description": "Floor to assign settings for Hierarchy",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "input",
+                  "name": "Area",
+                  "type": "datatype.string",
+                  "description": "Area to assign settings in Hierarchy",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "Global",
+                  "scope": "input",
+                  "name": "Parent",
+                  "type": "datatype.string",
+                  "description": "Parent to assign settings in Hierarchy",
+                  "is_required": true,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02NG8EAUCEER80qcL11bUem9EszUKQHiyaL",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Site Hierarchy Name",
+                  "type": "datatype.string",
+                  "description": "Site Name in Hierachy",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x",
+                "object_type": "variable_workflow"
+              }
+            ],
+            "properties": {
+              "atomic": {
+                "is_atomic": false
+              },
+              "delete_workflow_instance": false,
+              "description": "Returns the Site Hierachy name by concatenating the Parent, Area, Building \u0026 Floor elments",
+              "display_name": "Compose Site Hierachy Name",
+              "runtime_user": {
+                "target_default": true
+              },
+              "target": {
+                "target_type": "catalystcenter.endpoint",
+                "specify_on_workflow_start": true
+              }
+            },
+            "object_type": "definition_workflow",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NG8EB8TBQH52D0aEs0EK5G5WHH9Ednlt8",
+                "name": "Set Variables",
+                "title": "Append Hierachy Parent",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Append Hierachy Parent",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                      "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUCEER80qcL11bUem9EszUKQHiyaL$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NG8EBAYU8D83FrpoGvc3kT8sesqi4gtnv",
+                "name": "Condition Block",
+                "title": "Compose Site Hierachy Name",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "conditions": [],
+                  "continue_on_failure": false,
+                  "display_name": "Compose Site Hierachy Name",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_02NG8EBCYFEH54rGtoqZThfOGwsJ24Vp5rR",
+                    "name": "Condition Branch",
+                    "title": "Area.not_empty()",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy$",
+                        "operator": "ne",
+                        "right_operand": ""
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Area.not_empty()",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02NG8EBGQVJ403Ei1TUAxlPd3hDYlhMfOw5",
+                        "name": "Set Variables",
+                        "title": "Append Hierachy Area",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "display_name": "Append Hierachy Area",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                              "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy$"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02NG8EBJDR8MM1IBMlnT1WiFqqdCx6KIBQu",
+                        "name": "Condition Block",
+                        "title": "Append Building \u0026 Floor",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "conditions": [],
+                          "continue_on_failure": false,
+                          "display_name": "Append Building \u0026 Floor",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_02NG8EBLU6XEG5uUX1K9RzqdW3WKJPNJXT5",
+                            "name": "Condition Branch",
+                            "title": "Building.not_empty() \u0026 Floor.not_empty()",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                },
+                                "operator": "and",
+                                "right_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                }
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Building.not_empty() \u0026 Floor.not_empty()",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NG8EBQSTSGR0IeUpzi3Lh4L8EVnI5GUDZ",
+                                "name": "Set Variables",
+                                "title": "Append Hierachy Building/Floor",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "display_name": "Append Hierachy Building/Floor",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NG8EBUJZTKM2Oe9WwuSij44m2MgoGldUn",
+                            "name": "Condition Branch",
+                            "title": "Building.not_empty() \u0026 Floor.empty()",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                },
+                                "operator": "and",
+                                "right_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$",
+                                  "operator": "eq",
+                                  "right_operand": ""
+                                }
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Building.not_empty() \u0026 Floor.empty()",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NG8EBZ42UPA1YA4oPvKRqQhW01BAdZgFg",
+                                "name": "Set Variables",
+                                "title": "Append Hierachy Building",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "display_name": "Append Hierachy Building",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02NG8EC27A4711duUiCGuM9105azSUpAmWo",
+                    "name": "Condition Branch",
+                    "title": "Area.empty()",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy$",
+                        "operator": "eq",
+                        "right_operand": ""
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Area.empty()",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02NG8EC57OTUL31oatdpNxGZANCA1pPGNvI",
+                        "name": "Condition Block",
+                        "title": "Append Building \u0026 Floor",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "conditions": [],
+                          "continue_on_failure": false,
+                          "display_name": "Append Building \u0026 Floor",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_02NG8EC7QVJSX2BxxYYYBLZaXFSp5kKn1uA",
+                            "name": "Condition Branch",
+                            "title": "Building.not_empty() \u0026 Floor.not_empty()",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                },
+                                "operator": "and",
+                                "right_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                }
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Building.not_empty() \u0026 Floor.not_empty()",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NG8ECCS74ZZ3rvkFLcS7LVZBOveuz3cJv",
+                                "name": "Set Variables",
+                                "title": "Append Hierachy Building/Floor",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "display_name": "Append Hierachy Building/Floor",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NG8ECG81P6X3lgTIzu0DsDJ7g5AGg0eP4",
+                            "name": "Condition Branch",
+                            "title": "Building.not_empty() \u0026 Floor.empty()",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$",
+                                  "operator": "ne",
+                                  "right_operand": ""
+                                },
+                                "operator": "and",
+                                "right_operand": {
+                                  "left_operand": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu$",
+                                  "operator": "eq",
+                                  "right_operand": ""
+                                }
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Building.not_empty() \u0026 Floor.empty()",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02NG8ECKX1I8Z494vjNWJnkoOvAewxMelJh",
+                                "name": "Set Variables",
+                                "title": "Append Hierachy Building",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "display_name": "Append Hierachy Building",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                                      "variable_value_new": "$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$/$workflow.definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n.input.variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua$"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "categories": [
+              "category_02MQITNRPLJZ07UHXpRVpsFeyvKjOJoRTTU"
+            ]
+          }
+        }
+      ],
+      "atomic_workflows": [
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ],
+      "dependent_workflows": [
+        "definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n",
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ]
+    },
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe",
+        "name": "AssignCredentials",
+        "title": "AssignCredentials",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "SNMP v2 Read Description",
+              "type": "datatype.string",
+              "description": "SNMP v2 Read Description",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "cliCredential",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NHS0WAM5R1V2m9g4TPAQ3Z6KsdPGzEl5H",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "snmpV2cWriteUUID",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NHWIT8ULBHL78SE5gXZkjym0Q1pIPUazT",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "SNMP v2 WRITE UUID",
+              "type": "datatype.string",
+              "description": "SNMP v2 WRITE UUID",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NH2UF6UAC7H09fbBa0pqNyAYxC8qkEbcD",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "SNMP v2 Write Community",
+              "type": "datatype.string",
+              "description": "SNMP v2 Write Community",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Hierarchy",
+              "type": "datatype.string",
+              "description": "Catalyst Center Site Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGXCSC5QP0Z0ZmiXR7V3L0HzreWzJA6yf",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "SNMP v2 READ UUID",
+              "type": "datatype.string",
+              "description": "SNMP v2 READ UUID",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NH2U4TBZ2532VXvXTVnJ4bJ3xuEkA54ix",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Floor",
+              "type": "datatype.string",
+              "description": "Floor to assign settings for Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC48XN40qi7kwE8dS2Bd09JCR16dm",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Final State Credentials",
+              "type": "datatype.string",
+              "description": "Credentials Applied to Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGXCSCAEIX66pzXN6DDkUnODFvWWbt7z7",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "netconfUUID",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NHWKT1Z8XKQ44xaeDZfmBoRZH1pBrgTab",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Building",
+              "type": "datatype.string",
+              "description": "Building to assign settings for Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSCA06C75oAfu45FOqmi1f9XdcTjgG",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "NETCONF UUID",
+              "type": "datatype.string",
+              "description": "NETCONF UUID",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NH2UQTUEV7A3JuZHlOIvrc5Y5GslRYjFd",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Site UUID",
+              "type": "datatype.string",
+              "description": "Name\nSite Unique ID\n",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC7CJHK1mAn9hYGwZYaYBOYyfx2Xz",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "finalSiteCredentials",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NHVV1PBFIC95sBAVaBWFSldzNGCyMusQr",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "SNMP v2 Read Community",
+              "type": "datatype.string",
+              "description": "SNMP v2 Read Community",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "cliCredentialUUID",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NHWIACT2YFG6ZLx90d4Ee9JV6N0C55fro",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "snmpV2cReadUUID",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NHWINC949CY0RCEQUXfFfGku0FKXAeucI",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "Global",
+              "scope": "input",
+              "name": "Parent",
+              "type": "datatype.string",
+              "description": "Parent to assign settings in Hierarchy",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC7YBCB3ZR5hXH6v2fhBgyI4KeIIS",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "snmpV2cRead",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NHS14AL79YX5nZeM2CHUhbmhGr02w3Wxp",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "CLI Credential UUID",
+              "type": "datatype.string",
+              "description": "UUID for CLI Credential",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NH2TRPS256P47jgoJuoADjhUSE9Pe8a4g",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Area",
+              "type": "datatype.string",
+              "description": "Area to assign settings in Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC6C20L0hM6cNwo5HIraLC9a3dX3H",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Applied Credentials",
+              "type": "datatype.string",
+              "description": "Credentials Applied to Hierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NGXCSC54CJT3P4u2VsTVFNHqV43BIal2y",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "createCredentialsRequest",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NHRA5SKBBNJ5rnfYex0DkwhCWDcKu8LjL",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "SNMP v2 Write Description",
+              "type": "datatype.string",
+              "description": "SNMP v2 Write Description",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "CLI Description",
+              "type": "datatype.string",
+              "description": "CLI Description",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC75ECL7RPsPcevfyVCoF1x9OLrhQ",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Site Name",
+              "type": "datatype.string",
+              "description": "Site Name in Hierachy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC5JJMY4cRYJZ3jLfYcy35bcZS8m9",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "CLI Username",
+              "type": "datatype.string",
+              "description": "CLI Username",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.secure_string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "CLI Enable Password",
+              "type": "datatype.secure_string",
+              "description": "CLI Enable Password",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NGXCSC907S23mRQljjC6uQhAPRM7O3nWe",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "snmpV2cWrite",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02NHS1AQJS4XB2j7MF0XUFobMgkIavtILoA",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.secure_string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "CLI Password",
+              "type": "datatype.secure_string",
+              "description": "CLI Password",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02NGXCSC9M1YN5SP4FT19nB48nP58pmY9nt",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Assign Credentials to Hierarchy",
+          "display_name": "AssignCredentials",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02NH29OH7O53P5KtoupWeWDGrhzuDrEVA3t",
+            "name": "Group",
+            "title": "Site Hierachy Name",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Site Hierachy Name",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02NH2923BJZWC4Y3btuQiPj02mtIhAYNFbX",
+                "name": "Compose Site Hierachy Name",
+                "title": "Compose Site Hierachy Name",
+                "type": "workflow.sub_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Compose Site Hierachy Name",
+                  "input": {
+                    "variable_workflow_02NG8EAUCEER80qcL11bUem9EszUKQHiyaL": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7YBCB3ZR5hXH6v2fhBgyI4KeIIS$",
+                    "variable_workflow_02NG8EAUDJ4FF2jcZpLkzwVg7G9HddKqPhy": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC6C20L0hM6cNwo5HIraLC9a3dX3H$",
+                    "variable_workflow_02NG8EAUES9AP2G5t6Xh7x162nxXnWeElua": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCA06C75oAfu45FOqmi1f9XdcTjgG$",
+                    "variable_workflow_02NG8EAUGRWL85kvqhYoupeOvmcVyxBkDAu": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC48XN40qi7kwE8dS2Bd09JCR16dm$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "target_type": "catalystcenter.endpoint",
+                    "use_workflow_target": true
+                  },
+                  "workflow_id": "definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n",
+                  "workflow_name": "Compose Site Hierachy Name"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NH2A407WRQG6rynmh7NJRVjZLwDvRC7In",
+                "name": "Get Catalyst Center site v2",
+                "title": "Get Catalyst Center site v2",
+                "type": "catalystcenter.invoke_api.getSiteV2",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v2/site?groupNameHierarchy=${groupNameHierarchy}\u0026id=${id}\u0026type=${type}\u0026offset=${offset}\u0026limit=${limit}",
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Get Catalyst Center site v2",
+                  "groupNameHierarchy": "$activity.definition_activity_02NH2923BJZWC4Y3btuQiPj02mtIhAYNFbX.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T",
+                "name": "JSONPath Query",
+                "title": "Get Site Id",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "display_name": "Get Site Id",
+                  "input_json": "$activity.definition_activity_02NH2A407WRQG6rynmh7NJRVjZLwDvRC7In.output.body.response$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$..[?(@.groupNameHierarchy==\"$activity.definition_activity_02NH2923BJZWC4Y3btuQiPj02mtIhAYNFbX.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$\")].id",
+                      "jsonpath_query_name": "Site Id",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    },
+                    {
+                      "jsonpath_query": "$",
+                      "jsonpath_query_name": "Hierachy",
+                      "jsonpath_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false,
+                  "skip_path": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NH1XWPPS8VE3xJ8hrKe2FBrtxun6vAUWf",
+            "name": "Condition Block",
+            "title": "Credentials Supplied ?",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "conditions": [],
+              "continue_on_failure": false,
+              "display_name": "Credentials Supplied ?",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02NH1XWSJX7X82HIFhlOHB6MuZlTzRTjebJ",
+                "name": "Condition Branch",
+                "title": "Yes",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": {
+                        "left_operand": {
+                          "left_operand": {
+                            "left_operand": {
+                              "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$",
+                              "operator": "ne",
+                              "right_operand": ""
+                            },
+                            "operator": "or",
+                            "right_operand": {
+                              "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC75ECL7RPsPcevfyVCoF1x9OLrhQ$",
+                              "operator": "ne",
+                              "right_operand": ""
+                            }
+                          },
+                          "operator": "or",
+                          "right_operand": {
+                            "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx$",
+                            "operator": "ne",
+                            "right_operand": ""
+                          }
+                        },
+                        "operator": "or",
+                        "right_operand": {
+                          "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g$",
+                          "operator": "ne",
+                          "right_operand": ""
+                        }
+                      },
+                      "operator": "or",
+                      "right_operand": {
+                        "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa$",
+                        "operator": "ne",
+                        "right_operand": ""
+                      }
+                    },
+                    "operator": "or",
+                    "right_operand": {
+                      "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO$",
+                      "operator": "ne",
+                      "right_operand": ""
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Yes",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02NHPH32ZGVA81n4LZtGtrDIB1mf497h7ve",
+                    "name": "Generic Catalyst Center API Request",
+                    "title": "Get Managed Credentials",
+                    "type": "catalystcenter.invoke_api",
+                    "base_type": "activity",
+                    "properties": {
+                      "_endpoint": "/dna/intent/api/v1/device-credential",
+                      "_method": "GET",
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "Get the Managed Credentials from Catalyst Center",
+                      "display_name": "Get Managed Credentials",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "use_workflow_target": true
+                      }
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02NHPKU2URU856FbegIzGsO4be5piXP8IcG",
+                    "name": "JSONPath Query",
+                    "title": "Parse Managed Response",
+                    "type": "corejava.jsonpathquery",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": true,
+                      "display_name": "Parse Managed Response",
+                      "input_json": "$activity.definition_activity_02NHPH32ZGVA81n4LZtGtrDIB1mf497h7ve.output.raw_body$",
+                      "jsonpath_queries": [
+                        {
+                          "jsonpath_query": "$..cli[?@.username==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$\"]",
+                          "jsonpath_query_name": "cliCredentials",
+                          "jsonpath_query_type": "string",
+                          "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                        },
+                        {
+                          "jsonpath_query": "$..snmp_v2_read[?@.description==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g$\"]",
+                          "jsonpath_query_name": "snmpv2Read",
+                          "jsonpath_query_type": "string",
+                          "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                        },
+                        {
+                          "jsonpath_query": "$..snmp_v2_write[?@.description==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO$\"]",
+                          "jsonpath_query_name": "snmpv2Write",
+                          "jsonpath_query_type": "string"
+                        }
+                      ],
+                      "skip_execution": false,
+                      "skip_path": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02NHPKD175XM12unfUorw2N19XEznQW9V0c",
+                    "name": "Condition Block",
+                    "title": "Credentials Exist ?",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "conditions": [],
+                      "continue_on_failure": false,
+                      "display_name": "Credentials Exist ?",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_02NHPKD1IATJD5luWOZAIAqUeSVW1dctHAW",
+                        "name": "Condition Branch",
+                        "title": "No",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$activity.definition_activity_02NHPKU2URU856FbegIzGsO4be5piXP8IcG.output.succeeded$",
+                            "operator": "eq",
+                            "right_operand": false
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "No",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02NHS1I4M8YWI3BEVKY04ZdNOJA6Gi7V8ZH",
+                            "name": "Condition Block",
+                            "title": "CLI Creds ?",
+                            "type": "logic.if_else",
+                            "base_type": "activity",
+                            "properties": {
+                              "conditions": [],
+                              "continue_on_failure": false,
+                              "display_name": "CLI Creds ?",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "blocks": [
+                              {
+                                "unique_name": "definition_activity_02NHS1I4S2G6K284CzcCSTYhBgxwWrITofm",
+                                "name": "Condition Branch",
+                                "title": "Yes",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$",
+                                    "operator": "ne",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Yes",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHRX8EPYLJB7YBkjrsnhgzmkUh4OWPcUk",
+                                    "name": "Execute Python Script",
+                                    "title": "Decode Cli Password",
+                                    "type": "python3.script",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "action_timeout": 180,
+                                      "continue_on_failure": false,
+                                      "display_name": "Decode Cli Password",
+                                      "script": "import sys\nprint (sys.argv[1])",
+                                      "script_arguments": [
+                                        "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC9M1YN5SP4FT19nB48nP58pmY9nt$"
+                                      ],
+                                      "skip_execution": false
+                                    },
+                                    "object_type": "definition_activity"
+                                  },
+                                  {
+                                    "unique_name": "definition_activity_02NHRXSW5DFWY09XG7lUykGt3no68CRhaHM",
+                                    "name": "Execute Python Script",
+                                    "title": "Decode Cli Enable Password",
+                                    "type": "python3.script",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "action_timeout": 180,
+                                      "continue_on_failure": false,
+                                      "display_name": "Decode Cli Enable Password",
+                                      "script": "import sys\nprint (sys.argv[1])",
+                                      "script_arguments": [
+                                        "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC907S23mRQljjC6uQhAPRM7O3nWe$"
+                                      ],
+                                      "skip_execution": false
+                                    },
+                                    "object_type": "definition_activity"
+                                  },
+                                  {
+                                    "unique_name": "definition_activity_02NHS2GJGO01U6vIXNARq4osvDxtVrrvjj3",
+                                    "name": "Set Variables",
+                                    "title": "Build CLI Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build CLI Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS0WAM5R1V2m9g4TPAQ3Z6KsdPGzEl5H$",
+                                          "variable_value_new": "  \"cliCredential\": [\n        {\n            \"description\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC75ECL7RPsPcevfyVCoF1x9OLrhQ$\",\n            \"username\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$\",\n            \"password\": \"$activity.definition_activity_02NHRX8EPYLJB7YBkjrsnhgzmkUh4OWPcUk.output.response_body$\",\n            \"enablePassword\": \"$activity.definition_activity_02NHRXSW5DFWY09XG7lUykGt3no68CRhaHM.output.response_body$\"\n        }\n    ]"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              },
+                              {
+                                "unique_name": "definition_activity_02NHS2VWF2VA25mFEJE14SpyAOpq6MJ2LUn",
+                                "name": "Condition Branch",
+                                "title": "No",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$",
+                                    "operator": "eq",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "No",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHS2VWF8QI452fX8d3hYJCUK9ZtDyGYNU",
+                                    "name": "Set Variables",
+                                    "title": "Build CLI Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build CLI Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS0WAM5R1V2m9g4TPAQ3Z6KsdPGzEl5H$",
+                                          "variable_value_new": "\"cliCredential\": []"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHU8LPJFTA45sD9iCd34xw7WduXgPtb6s",
+                            "name": "Condition Block",
+                            "title": "SNMPV2c Read ?",
+                            "type": "logic.if_else",
+                            "base_type": "activity",
+                            "properties": {
+                              "conditions": [],
+                              "continue_on_failure": false,
+                              "display_name": "SNMPV2c Read ?",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "blocks": [
+                              {
+                                "unique_name": "definition_activity_02NHU8LPJGXSX4MYFOnFOQWQN8EN3uI943n",
+                                "name": "Condition Branch",
+                                "title": "Yes",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx$",
+                                    "operator": "ne",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Yes",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHU8LPJN8YS0PGKX0LswsHAx9PotHlONT",
+                                    "name": "Set Variables",
+                                    "title": "Build SNMPV2c Read Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build SNMPV2c Read Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS14AL79YX5nZeM2CHUhbmhGr02w3Wxp$",
+                                          "variable_value_new": "\"snmpV2cRead\": [\n        {\n            \"description\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g$\",\n            \"readCommunity\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx$\"\n        }\n ]"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              },
+                              {
+                                "unique_name": "definition_activity_02NHU8LPJQHG25GfAgKfA4QvIfNkf5OJAs4",
+                                "name": "Condition Branch",
+                                "title": "No",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC4O9SF5Wg8FD0Bwe5DArrBCws3lx$",
+                                    "operator": "eq",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "No",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHU8LPJR7NU49h1y61CDj53uEYcL3p12c",
+                                    "name": "Set Variables",
+                                    "title": "Build SNMPV2c Read Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build SNMPV2c Read Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS14AL79YX5nZeM2CHUhbmhGr02w3Wxp$",
+                                          "variable_value_new": "\"snmpV2cRead\": []"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHUDBEJTGND7Caz3BLlrtMixfFwLNiyUq",
+                            "name": "Condition Block",
+                            "title": "SNMPV2c Write ?",
+                            "type": "logic.if_else",
+                            "base_type": "activity",
+                            "properties": {
+                              "conditions": [],
+                              "continue_on_failure": false,
+                              "display_name": "SNMPV2c Write ?",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "blocks": [
+                              {
+                                "unique_name": "definition_activity_02NHUDBEJU60G5Xrs3m8O3CrfDO9my3uGci",
+                                "name": "Condition Branch",
+                                "title": "Yes",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa$",
+                                    "operator": "ne",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Yes",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHUDBEJZAKY7OXsNUdt5IABdttOh71Ub1",
+                                    "name": "Set Variables",
+                                    "title": "Build SNMPV2c Write Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build SNMPV2c Write Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS1AQJS4XB2j7MF0XUFobMgkIavtILoA$",
+                                          "variable_value_new": "\"snmpV2cWrite\": [\n        {\n            \"description\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO$\",\n            \"writeCommunity\": \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa$\"\n        }\n ]"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              },
+                              {
+                                "unique_name": "definition_activity_02NHUDBEK0BRG08wPhNJmchZUwV6VRjd9i4",
+                                "name": "Condition Branch",
+                                "title": "No",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC6JT7D6A66UfgewxYUUwEJFypSOa$",
+                                    "operator": "eq",
+                                    "right_operand": ""
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "No",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02NHUDBEK2EQR7DIQHjdB1iqrgewPmB89qb",
+                                    "name": "Set Variables",
+                                    "title": "Build SNMPV2c Write Element",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "display_name": "Build SNMPV2c Write Element",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS1AQJS4XB2j7MF0XUFobMgkIavtILoA$",
+                                          "variable_value_new": "\"snmpV2cWrite\": []"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHR9I6THGOC7HvjtAmyw3n9k0fLEtXDQW",
+                            "name": "Set Variables",
+                            "title": "Build Request",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Build Request",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHRA5SKBBNJ5rnfYex0DkwhCWDcKu8LjL$",
+                                  "variable_value_new": "{\n    $workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS0WAM5R1V2m9g4TPAQ3Z6KsdPGzEl5H$,\n    $workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS14AL79YX5nZeM2CHUhbmhGr02w3Wxp$,\n    $workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHS1AQJS4XB2j7MF0XUFobMgkIavtILoA$\n}"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHUJAHJSERS15wyFRLsxw2UjLczt3UqZS",
+                            "name": "Generic Catalyst Center API Request",
+                            "title": "Create Credentials",
+                            "type": "catalystcenter.invoke_api",
+                            "base_type": "activity",
+                            "properties": {
+                              "_body": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHRA5SKBBNJ5rnfYex0DkwhCWDcKu8LjL$",
+                              "_endpoint": "/dna/intent/api/v2/global-credential",
+                              "_method": "POST",
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "description": "Create Credentials",
+                              "display_name": "Create Credentials",
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "use_workflow_target": true
+                              }
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHUM8YV6LVP1ax4UqsIAHDucI7ShDe2pv",
+                            "name": "JSONPath Query",
+                            "title": "Get Task Id",
+                            "type": "corejava.jsonpathquery",
+                            "base_type": "activity",
+                            "properties": {
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "display_name": "Get Task Id",
+                              "input_json": "$activity.definition_activity_02NHUJAHJSERS15wyFRLsxw2UjLczt3UqZS.output.raw_body$",
+                              "jsonpath_queries": [
+                                {
+                                  "jsonpath_query": "$.response.taskId",
+                                  "jsonpath_query_name": "Task Id",
+                                  "jsonpath_query_type": "string",
+                                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                                }
+                              ],
+                              "skip_execution": false,
+                              "skip_path": false
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHULZC1BK6R0tUQebp09qvOllL0VIFRIt",
+                            "name": "Wait For Catalyst Center Task",
+                            "title": "Wait For Catalyst Center Task",
+                            "type": "workflow.atomic_workflow",
+                            "base_type": "subworkflow",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Wait For Catalyst Center Task",
+                              "input": {
+                                "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                                "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02NHUM8YV6LVP1ax4UqsIAHDucI7ShDe2pv.output.jsonpath_queries.Task Id$",
+                                "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                              },
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "target_type": "catalystcenter.endpoint",
+                                "use_workflow_target": true
+                              },
+                              "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                              "workflow_name": "Wait For Catalyst Center Task"
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02NHUT8IBUJOH0Q8EhRDENuHC7McPA2JDkK",
+                    "name": "Generic Catalyst Center API Request",
+                    "title": "Get Assigned Credentials",
+                    "type": "catalystcenter.invoke_api",
+                    "base_type": "activity",
+                    "properties": {
+                      "_endpoint": "/dna/intent/api/v1/device-credential?siteId=$activity.definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T.output.jsonpath_queries.Site Id$",
+                      "_method": "GET",
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "Get the Result Credential Assignment",
+                      "display_name": "Get Assigned Credentials",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "use_workflow_target": true
+                      }
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02NHUT8IBXVI80u69lmJGtxouNGawPl8LTu",
+                    "name": "JSONPath Query",
+                    "title": "Parse Assigned Response",
+                    "type": "corejava.jsonpathquery",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": true,
+                      "display_name": "Parse Assigned Response",
+                      "input_json": "$activity.definition_activity_02NHUT8IBUJOH0Q8EhRDENuHC7McPA2JDkK.output.raw_body$",
+                      "jsonpath_queries": [
+                        {
+                          "jsonpath_query": "$..cli[?@.username==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$\"]",
+                          "jsonpath_query_name": "cliCredentials",
+                          "jsonpath_query_type": "string",
+                          "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                        },
+                        {
+                          "jsonpath_query": "$..snmp_v2_read[?@.description==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g$\"]",
+                          "jsonpath_query_name": "snmpv2Read",
+                          "jsonpath_query_type": "string",
+                          "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                        },
+                        {
+                          "jsonpath_query": "$..snmp_v2_write[?@.description==\"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO$\"]",
+                          "jsonpath_query_name": "snmpv2Write",
+                          "jsonpath_query_type": "string",
+                          "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                        }
+                      ],
+                      "skip_execution": false,
+                      "skip_path": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02NHUU9AWMQAZ4JRDR5tLOC7rVtNweTA6CP",
+                    "name": "Condition Block",
+                    "title": "Credentials Assigned ?",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "conditions": [],
+                      "continue_on_failure": false,
+                      "display_name": "Credentials Assigned ?",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_02NHUU9BB2VIB2F0777aKAFkZeXT41de5cn",
+                        "name": "Condition Branch",
+                        "title": "No",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$activity.definition_activity_02NHUT8IBXVI80u69lmJGtxouNGawPl8LTu.output.succeeded$",
+                            "operator": "eq",
+                            "right_operand": false
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "No",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02NHV15ZLRL2U4fWEtJiGukGmc1IOnrCa2M",
+                            "name": "Generic Catalyst Center API Request",
+                            "title": "Get Credentials IDs",
+                            "type": "catalystcenter.invoke_api",
+                            "base_type": "activity",
+                            "properties": {
+                              "_endpoint": "/dna/intent/api/v2/global-credential",
+                              "_method": "GET",
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "description": "Get the Result Credential Assignment",
+                              "display_name": "Get Credentials IDs",
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "use_workflow_target": true
+                              }
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw",
+                            "name": "JSONPath Query",
+                            "title": "Get Credential UUIDs",
+                            "type": "corejava.jsonpathquery",
+                            "base_type": "activity",
+                            "properties": {
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "display_name": "Get Credential UUIDs",
+                              "input_json": "$activity.definition_activity_02NHV15ZLRL2U4fWEtJiGukGmc1IOnrCa2M.output.raw_body$",
+                              "jsonpath_queries": [
+                                {
+                                  "jsonpath_query": "$.response.cliCredential[?(@.username == \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC7QV260WGZTfosct88eyMFjcOD8u$\")].instanceUuid",
+                                  "jsonpath_query_name": "uuidCLI",
+                                  "jsonpath_query_type": "string",
+                                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                                },
+                                {
+                                  "jsonpath_query": "$.response.snmpV2cRead[?(@.description == \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSC8S4VK5j7bMknsGhwDiRiJXq6k1g$\")].instanceUuid",
+                                  "jsonpath_query_name": "uuidSNMPv2READ",
+                                  "jsonpath_query_type": "string",
+                                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                                },
+                                {
+                                  "jsonpath_query": "$.response.snmpV2cWrite[?(@.description == \"$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.input.variable_workflow_02NGXCSCBTN7A6pRhHSxvJF7FEuWDjmE7FO$\")].instanceUuid",
+                                  "jsonpath_query_name": "uuidSNMPv2WRITE",
+                                  "jsonpath_query_type": "string",
+                                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                                },
+                                {
+                                  "jsonpath_query": "$.response.netconfCredential[?(@.netconfPort == \"830\")].instanceUuid",
+                                  "jsonpath_query_name": "uuidNETCONF",
+                                  "jsonpath_query_type": "string"
+                                }
+                              ],
+                              "skip_execution": false,
+                              "skip_path": false
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHWJ17KB9QA1IsQneJjBhH8KLjeNRfGN2",
+                            "name": "Set Variables",
+                            "title": "Save UUIDs",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Save UUIDs",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWIACT2YFG6ZLx90d4Ee9JV6N0C55fro$",
+                                  "variable_value_new": "$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidCLI$"
+                                },
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWINC949CY0RCEQUXfFfGku0FKXAeucI$",
+                                  "variable_value_new": "$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidSNMPv2READ$"
+                                },
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWIT8ULBHL78SE5gXZkjym0Q1pIPUazT$",
+                                  "variable_value_new": "$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidSNMPv2WRITE$"
+                                },
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWKT1Z8XKQ44xaeDZfmBoRZH1pBrgTab$",
+                                  "variable_value_new": "$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidNETCONF$"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHVOA2GZVTV4wGWiNiDKLU20aPbhcPXIx",
+                            "name": "Generic Catalyst Center API Request",
+                            "title": "Assign Credentials to Site",
+                            "type": "catalystcenter.invoke_api",
+                            "base_type": "activity",
+                            "properties": {
+                              "_body": "{\n  \"cliId\": \"$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidCLI$\",\n  \"snmpV2ReadId\": \"$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidSNMPv2READ$\",\n  \"snmpV2WriteId\": \"$activity.definition_activity_02NHVJRYG8P5611sjYrTTLrhh5xn5acc7Dw.output.jsonpath_queries.uuidSNMPv2WRITE$\"\n}",
+                              "_endpoint": "/dna/intent/api/v1/credential-to-site/$activity.definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T.output.jsonpath_queries.Site Id$",
+                              "_method": "POST",
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "description": "Get the Result Credential Assignment",
+                              "display_name": "Assign Credentials to Site",
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "use_workflow_target": true
+                              }
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02NHXQW4867GT1DnYtzJ8dHxM2YaqisLxHU",
+                            "name": "Sleep",
+                            "title": "Wait for Execution to complete",
+                            "type": "core.sleep",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "display_name": "Wait for Execution to complete",
+                              "skip_execution": false,
+                              "sleep_interval": 10
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02NH27OBQQ0CL1pOePRghDxwbOPB9t7CpTX",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Get Assigned Credentials",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_endpoint": "/dna/intent/api/v1/device-credential?siteId=$activity.definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T.output.jsonpath_queries.Site Id$",
+              "_method": "GET",
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Get the Result Credential Assignment",
+              "display_name": "Get Assigned Credentials",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02NGXCT29SBH30yrA99MQWVO6qiN7y1V6dL",
+            "name": "Set Variables",
+            "title": "Write Output",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "Write Output",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NGXCSC5QP0Z0ZmiXR7V3L0HzreWzJA6yf$",
+                  "variable_value_new": "$activity.definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T.output.jsonpath_queries.Hierachy$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NGXCSC5JJMY4cRYJZ3jLfYcy35bcZS8m9$",
+                  "variable_value_new": "$activity.definition_activity_02NH2923BJZWC4Y3btuQiPj02mtIhAYNFbX.output.variable_workflow_02NG8EAUG43RO12AGG4mp8S7psYcdOzPC6x$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NGXCSC7CJHK1mAn9hYGwZYaYBOYyfx2Xz$",
+                  "variable_value_new": "$activity.definition_activity_02NH2AGO7T4X32lBNoQzCn8ZSkqSD61Lg6T.output.jsonpath_queries.Site Id$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NGXCSC54CJT3P4u2VsTVFNHqV43BIal2y$",
+                  "variable_value_new": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHRA5SKBBNJ5rnfYex0DkwhCWDcKu8LjL$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NGXCSCAEIX66pzXN6DDkUnODFvWWbt7z7$",
+                  "variable_value_new": "$activity.definition_activity_02NH27OBQQ0CL1pOePRghDxwbOPB9t7CpTX.output.raw_body$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NH2TRPS256P47jgoJuoADjhUSE9Pe8a4g$",
+                  "variable_value_new": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWIACT2YFG6ZLx90d4Ee9JV6N0C55fro$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NH2U4TBZ2532VXvXTVnJ4bJ3xuEkA54ix$",
+                  "variable_value_new": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWINC949CY0RCEQUXfFfGku0FKXAeucI$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NH2UF6UAC7H09fbBa0pqNyAYxC8qkEbcD$",
+                  "variable_value_new": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWIT8ULBHL78SE5gXZkjym0Q1pIPUazT$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.output.variable_workflow_02NH2UQTUEV7A3JuZHlOIvrc5Y5GslRYjFd$",
+                  "variable_value_new": "$workflow.definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe.local.variable_workflow_02NHWKT1Z8XKQ44xaeDZfmBoRZH1pBrgTab$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02L1BFWH5AHZW0SJvysSjFdTHaOqggMgWsE"
+        ]
+      },
+      "atomic_workflows": [
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ],
+      "dependent_workflows": [
+        "definition_workflow_02NG8EASZBL4E3bes3yy0amgTb0RQCG1v2n",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ]
+    }
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02NG39Z6F63K749IbHoph8nGVpEhHaIUHt6",
+    "definition_workflow_02NGXCSAT5Q6T33Z4pykwejT9wziPP6KTwe"
+  ]
+}
