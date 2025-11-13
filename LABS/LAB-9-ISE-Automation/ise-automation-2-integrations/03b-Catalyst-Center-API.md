@@ -77,11 +77,23 @@ So what is <i>actually</i> happening here?  Well, we could just let you apprecia
 
 ### 1. PUT - Set ISE pxGrid AutoApprove
 
-This step directly coordinates to the "Prepare ISE for Catalyst Center Integration" step from the [**03a-Catalyst-Center-GUI**](./03a-Catalyst-Center-GUI.md) module.  Essentially, it configures the ISE pxGrid settings to automatically approve/accept pxGrid integration requests based on a password.
+This step directly correlates to the "Prepare ISE for Catalyst Center Integration" step from the [**03a-Catalyst-Center-GUI**](./03a-Catalyst-Center-GUI.md) module.  Essentially, it configures the ISE pxGrid settings to automatically approve/accept pxGrid integration requests based on a password.
 
 ### 2. POST - Get CatC Auth Token
 
-As you go through your automation journey, you'll quickly realize that different systems authenticate their API requests in different ways.  ISE, for example, will authenticate all calls based solely on the username/password information sent to it in the header of the API call itself.  Cisco SD-WAN, meanwhile, requires both username/password <b>AND</b> a session ID (essentially a Cookie).  Catalyst Center requires username/password, a session ID, <b><u><i>AND</i></u></b> a "token" before making any other API calls.  This step is essentially us using an API to get the token we need to submit further API calls to Catalyst Center.  Its an empty Body API "POST" request against https://{{catalyst center IP address}}/api/system/v1/auth/token endpoint.  If we run this POST request by itself, you see we get a JSON response with a key of "Token" and a big long line of jibberish that is the Token value itself: 
+As you go through your automation journey, you'll quickly realize that different systems authenticate their API requests in different ways.  For some examples:
+
+- ISE will authenticate all calls based solely on the username/password information sent to it in the header of the API call itself.  
+
+- Cisco SD-WAN, meanwhile, requires both username/password <b>AND</b> a session ID (essentially a Cookie).  
+
+- Catalyst Center requires username/password, a session ID, <b><u><i>AND</i></u></b> a "token" before making any other API calls.  This step is essentially us using an API to get the token we need to submit further API calls to Catalyst Center.  Its an empty Body API "POST" request against the following endpoint:
+
+```
+ https://{{catalyst center IP address}}/api/system/v1/auth/token
+```  
+
+If we run this POST request by itself, you see we get a JSON response with a key of "Token" and a big long line of jibberish that is the Token value itself: 
 
 ![json](../../../ASSETS/LABS/ISE/ISE-CATC-INT-05.png?raw=true "Import JSON")
 
