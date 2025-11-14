@@ -65,8 +65,8 @@ Within each lab pod, in addition to the four Client PCs, there are two USB contr
 
 1. Click on the Linksys WUSB6300
 
->> [!NOTE]
->> The name of your USB Wireless Adapter may vary depending on what POD you get.  If you have trouble figuring out which one is the Wireless adapter, get with your lab proctor for assistance.
+> [!NOTE]
+> The name of your USB Wireless Adapter may vary depending on what POD you get.  If you have trouble figuring out which one is the Wireless adapter, get with your lab proctor for assistance.
 
 2. There are two large circular buttons at the bottom.  The left button is to **Connect** the selected device, and the right button is to **Disconnect**.  Select the **Connect** button
 
