@@ -61,18 +61,18 @@ Within each lab pod, in addition to the four Client PCs, there are two USB contr
 
 3. Double click on the icon to launch.  Once open, you can see the two USB Controllers, each with 2 adapters in "Available" state.
 
-    1. Click on the Linksys WUSB6300
-
 <div style="padding-left:40px;"><table><tr><td valign="top" width="100%">
+
+1. Click on the Linksys WUSB6300
 
 > [!NOTE]
 > The name of your USB Wireless Adapter may vary depending on what POD you get.  If you have trouble figuring out which one is the Wireless adapter, get with your lab proctor for assistance.
 
+2. There are two large circular buttons at the bottom.  The left button is to **Connect** the selected device, and the right button is to **Disconnect**.  Select the **Connect** button
+
+    ![json](../../../ASSETS/LABS/ISE/ISE-LABPC-ORIENTATION-05.png?raw=true "Import JSON")
+
 </td></tr></table></div>
-
-    2. There are two large circular buttons at the bottom.  The left button is to **Connect** the selected device, and the right button is to **Disconnect**.  Select the **Connect** button
-
-        ![json](../../../ASSETS/LABS/ISE/ISE-LABPC-ORIENTATION-05.png?raw=true "Import JSON")
 
 4. Open the "Control Panel" and navigate to **Network and Internet > Network and Sharing Center** and select ***Change adapter settings***
 
