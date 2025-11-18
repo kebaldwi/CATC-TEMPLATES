@@ -21,7 +21,7 @@ Don’t panic. This lab is not going to be nearly as long as the other two. This
 
 ## Lab Exercise 3A: Integration with GitHub
 
-1. Navigate to **Automation &rarr; Advanced** and select the **Git Repositories tab**.
+1. Navigate to **Automation &rarr; Workflows** and under **Actions** select the **Manage Git Repositories**.
 
 2. Click **New git repository** and complete the form with the following details:
 
