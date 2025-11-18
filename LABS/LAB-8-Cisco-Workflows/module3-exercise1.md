@@ -465,11 +465,14 @@ The No Account Keys field can be confusing.
 
 7. Select HTTP in the Protocol field.
 
-8. Enter **`18.188.19.30`** in the Host/IP Address field.
+<!---8. Enter **`18.188.19.30`** in the Host/IP Address field.
 
 9. Select **`8502`** in the Port field.
 
 10. Enter **`/api`** in the Path field.
+--->
+
+8. Enter **`bored-api.appbrewery.com`** in the Host/IP Address field.
 
     This is the base path for all APIs.
 
@@ -478,7 +481,7 @@ The No Account Keys field can be confusing.
 </td>
 <td valign="top" align="center" width="43%">
 
-   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Modify2Workflow8.png" alt="HTTP Request" style="width:100%; height:auto;">
+   <img src="../../ASSETS/LABS/WORKFLOWS/EXERCISE1/Modify2Workflow8-v2.png" alt="HTTP Request" style="width:100%; height:auto;">
 
 </td>
 </tr>
@@ -693,6 +696,7 @@ This is intended to illustrate the nature of workflows.
 </table>
 </div>
 
+<!---
 ## Lab Exercise 1F -  HTTP POST Example
 
 Let’s do one more REST example before we move on.  HTTP Gets are great, but let’s submit some information.  In the presentation portion of this session, we talked about “The Prime Directive”, and we’re here to help you with customer engagements if you need it.  So, let’s do an HTTP POST and pull it all together.
@@ -750,6 +754,8 @@ Request Body:
 **EXCELLENT!**  We worked hard on these labs and appreciate any feedback you have that will make them even better.
  
 ## Lab Exercise 1G (Bonus) - Cleanup on Aisle 5
+--->
+## Lab Exercise 1F (Bonus) - Cleanup on Aisle 5
 
 There are times when it helps other users of your workflows to more easily understand what the “flow” of the workflow is.  Do all your users understand what a JSONPath Query is?  Let’s do a few cleanup tasks just to make sure everything is nice and clean.
 
