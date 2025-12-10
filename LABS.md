@@ -32,10 +32,6 @@ This section built out in a lab format to guide you through the typical steps to
 
   :mega: Upcoming stay tuned!  
 
-  ### ISE
-
-  :mega: Upcoming stay tuned!
-
   ### Platform Orchestration
 
   - Labs and resources aimed at Orchestration that may be used xArchitecturally.
@@ -54,6 +50,10 @@ This section built out in a lab format to guide you through the typical steps to
     #### Cisco Workflows
 
     * [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
+
+    #### ISE
+
+    * [Lab 9 ISE Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-9-ISE-Automation) - Covers how to automate ISE **(allow 4.0 hrs)**
 
 ## Specific Lab Content
 

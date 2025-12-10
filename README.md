@@ -6,7 +6,7 @@
 > :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
 > 1. **Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
 > 2. **Cisco Workflows** which is generally available at now.
-> 3. **ISE Automation** which is coming soon.
+> 3. **ISE Automation** which is coming soon 24 Dec 2025.
 >
 > Over the next few months you will **notice even more lab updates** to the repository, as we **add** additional content. 
 
@@ -157,10 +157,6 @@ This section built out in a lab format to guide you through the typical steps to
 
   :mega: Upcoming stay tuned!  
 
-  ### ISE
-
-  :mega: Upcoming stay tuned!
-
   ### Platform Orchestration
 
   - Labs and resources aimed at Orchestration that may be used xArchitecturally.
@@ -179,6 +175,10 @@ This section built out in a lab format to guide you through the typical steps to
     #### Cisco Workflows
 
     * [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
+    
+    #### ISE
+
+    * [Lab 9 ISE Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-9-ISE-Automation) - Covers how to automate ISE **(allow 4.0 hrs)**
 
 ## Specific Lab Content
 
