@@ -1,22 +1,14 @@
-# CATC-TEMPLATES (aka DNAC-TEMPLATES) [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
+# CATC-TEMPLATES [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
 
 > [!NOTE] 
-> :mega: Thank you for continuing your **support** of the **CATC-Template Repository** formerly known as the **DNAC-Template Repository** by your continued visits to the site.
+> :mega: Thank you for continuing your **support** of the **CATC-Template Repository** by your continued visits to the site. The site originally was intended to share template automation and orchestration information for Catalyst Center. While we will continue to have that as a focus, we have recently been adding support for the Dashboard environment for Cisco Workflows. We will be augmenting our labs and tutorials with labs for Dashboard as well.
 >
 > :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
-> 1. **Meraki Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
+> 1. **Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
 > 2. **Cisco Workflows** which is generally available at now.
->
-> Over the past few months we have updated and redeveloped a lot of content and it is **reorganized** to be more concise, and to aide users in finding the relevant content easily. 
+> 3. **ISE Automation** which is coming soon.
 >
 > Over the next few months you will **notice even more lab updates** to the repository, as we **add** additional content. 
->
-> The **folder structure** and **resources** have been **reorganized** for ease of use, and so that **[CODE](./CODE/README.md)** examples and **[TUTORIALS](TUTORIALS.md)** will be grouped together for ease of use. We hope this will help users to find the content they need in an easier manner. 
-
-<!--
-> [!WARNING]
-> Two folders will be **retired** **today** **Sept 23 2025** with content being located within the code folder for Jinja are located . **[DAYN](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/DAYN)** and **[ONBOARDING](https://github.com/kebaldwi/CATC-TEMPLATES/tree/master/CODE/TEMPLATES/JINJA2/ONBOARDING)** 
--->
 
 # Enterprise Networking Platforms 
 
@@ -31,13 +23,13 @@ Catalyst Center is an intelligent Automation and Assurance platform for the camp
 * SecOps: AI Endpoint Analytics, Group-Based Policy and Analytics, Software-Defined Access
 * DevOps: ITSM Integrations, APIs, SDK & Ansible Module 
 
-## Meraki Dashboard
+## Dashboard
 
 ![Dashboard Overview](./ASSETS/COMMON/ROOT/cisco_meraki.png)
 
-Meraki Dashboard is a cloud-managed networking platform that unifies configuration, monitoring, and security across distributed networks. It delivers streamlined Day-0 through Day-N operations for wireless, switching, security appliances, SD-WAN, cameras, and IoT, all from a single, intuitive web interface. Powered by cloud analytics and automation, Meraki Dashboard accelerates deployment, simplifies troubleshooting, and provides actionable insights into network health, user experience, and security posture. Here are some of the capabilities of Meraki Dashboard in their respective domains:
+Dashboard is a cloud-managed networking platform that unifies configuration, monitoring, and security across distributed networks. It delivers streamlined Day-0 through Day-N operations for wireless, switching, security appliances, SD-WAN, cameras, and IoT, all from a single, intuitive web interface. Powered by cloud analytics and automation, Dashboard accelerates deployment, simplifies troubleshooting, and provides actionable insights into network health, user experience, and security posture. Here are some of the capabilities of Dashboard in their respective domains:
 
-* NetOps: Zero-touch provisioning with Meraki Cloud provisioning and templates, centralized configuration and change management, firmware management, network cloning, topology views, and automatic VPN.
+* NetOps: Zero-touch provisioning with Cloud provisioning and templates, centralized configuration and change management, firmware management, network cloning, topology views, and automatic VPN.
 * AIOps: Cloud-powered analytics and anomaly detection, client and device health insights, application visibility and performance metrics, intelligent alerts, and recommended fixes.
 * SecOps: Integrated next-gen firewall, IPS/IDS, content filtering, malware protection, Zero Trust policies with Adaptive Policy (group-based policy), and secure SD-WAN with threat analytics.
 * DevOps: Comprehensive REST APIs and webhooks, dashboard and device APIs, ecosystem marketplace integrations, and automation via SDKs and templates.
@@ -128,7 +120,7 @@ You will find various examples within the various folders of this repository, wi
     * [Ansible Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Ansible.md) - This section is a high level discussion of Ansible orchestration of Catalyst Center
     * [CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/CICD.md) - This section is a high level discussion of CICD orchestration of Catalyst Center
 
-    ### Meraki Dashboard 
+    ### Dashboard 
 
     :mega: Upcoming stay tuned!
 
@@ -161,7 +153,7 @@ This section built out in a lab format to guide you through the typical steps to
   * [Lab 2 Wireless Automation](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-2-Wireless-Automation) - Covers traditional wireless automation  **(allow 4.0 hrs)**
   * [Lab 3 Advanced Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-3-Advanced-Automation) - Covers how to build templates and logic  **(allow 4.0 hrs)**
   
-  ### Meraki Dashboard
+  ### Dashboard
 
   :mega: Upcoming stay tuned!  
 
@@ -180,7 +172,7 @@ This section built out in a lab format to guide you through the typical steps to
     * Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
     * [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
 
-    #### Meraki Dashboard
+    #### Dashboard
 
     :mega: Upcoming stay tuned!
 
