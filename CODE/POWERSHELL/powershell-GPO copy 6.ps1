@@ -1,33 +1,38 @@
 Import-Module GroupPolicy -ErrorAction Stop
-Import-Module ActiveDirectory -ErrorAction Stop
 
-$domain = (Get-ADDomain).DNSRoot
-$defaultGpoName = "Default Domain Policy"
+$DomainName = (Get-ADDomain).DNSRoot
+$GpoName    = "Default Domain Policy"
 
-$gpo = Get-GPO -Name $defaultGpoName -ErrorAction Stop
-Write-Host "Editing GPO: $($gpo.DisplayName) ($($gpo.Id)) in domain $domain"
+$TemplatesToAdd = @(
+    "Enrollment Agent (Computer)",
+    "Computer"
+)
 
-$autoEnrollRegPath = "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment"
-Set-GPRegistryValue -Name $defaultGpoName -Key $autoEnrollRegPath -ValueName "AEPolicy" -Type DWord -Value 3
-Set-GPRegistryValue -Name $defaultGpoName -Key $autoEnrollRegPath -ValueName "AutoEnrollEnabled" -Type DWord -Value 1
+$gpo = Get-GPO -Name $GpoName -ErrorAction Stop
 
-Write-Host "Auto-Enrollment policy configured in '$defaultGpoName'."
+function Add-AutoCertRequestForTemplate {
+    param(
+        [Parameter(Mandatory)]
+        [string]$TemplateDisplayName,
+        [Parameter(Mandatory)]
+        [Microsoft.GroupPolicy.Gpo]$Gpo
+    )
 
-$policyBase = "HKLM\Software\Policies\Microsoft\Cryptography\PolicyServers"
-Set-GPRegistryValue -Name $defaultGpoName -Key $policyBase -ValueName "Enabled" -Type DWord -Value 1
-Set-GPRegistryValue -Name $defaultGpoName -Key $policyBase -ValueName "ADPolicyEnabled" -Type DWord -Value 1
+    $PolicyKeyPath = "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests"
+    $ValueName = ([System.Guid]::NewGuid()).ToString()
 
-$adUri = "ldap:///CN=Configuration," + (Get-ADRootDSE).configurationNamingContext
-$entryGuid = [guid]::NewGuid().ToString("B")
-$entryKey = "$policyBase\$entryGuid"
-Set-GPRegistryValue -Name $defaultGpoName -Key $entryKey -ValueName "Url" -Type String -Value $adUri
-Set-GPRegistryValue -Name $defaultGpoName -Key $entryKey -ValueName "FriendlyName" -Type String -Value "Active Directory Enrollment Policy"
-Set-GPRegistryValue -Name $defaultGpoName -Key $entryKey -ValueName "AuthType" -Type DWord -Value 0
-Set-GPRegistryValue -Name $defaultGpoName -Key $entryKey -ValueName "ValidateServer" -Type DWord -Value 1
-Set-GPRegistryValue -Name $defaultGpoName -Key $entryKey -ValueName "Priority" -Type DWord -Value 10
-Set-GPRegistryValue -Name $defaultGpoName -Key $policyBase -ValueName "Default" -Type String -Value $entryGuid
+    Set-GPRegistryValue -Name $Gpo.DisplayName `
+        -Key $PolicyKeyPath `
+        -Type String `
+        -ValueName $ValueName `
+        -Value $TemplateDisplayName
+}
 
-Write-Host "Certificate Services Client - Certificate Enrollment Policy set to Enabled (Active Directory policy, list updated)."
+foreach ($tpl in $TemplatesToAdd) {
+    Add-AutoCertRequestForTemplate -TemplateDisplayName $tpl -Gpo $gpo
+}
+
+Write-Host "Automatic Certificate Request Settings updated in '$GpoName'."
 
 $DCs = (Get-ADDomainController -Filter * | Select-Object -ExpandProperty HostName)
 foreach ($dc in $DCs) {
