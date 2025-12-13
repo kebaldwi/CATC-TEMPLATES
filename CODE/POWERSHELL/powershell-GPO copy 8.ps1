@@ -1,75 +1,67 @@
-$GpoName              = "PKI - Automatic Certificate Requests"
-$LinkToTarget         = "DC=yourdomain,DC=com"
-$LinkEnforced         = $false
-$ComputerGuid         = "{11111111-1111-1111-1111-111111111111}"
-$DCGuid               = "{22222222-2222-2222-2222-222222222222}"
-$EAComputerGuid       = "{33333333-3333-3333-3333-333333333333}"
+Import-Module ActiveDirectory -ErrorAction Stop
+Import-Module GroupPolicy -ErrorAction Stop
 
-$RegBasePath = "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests"
+function Get-TemplateGuidByNames {
+    param(
+        [Parameter(Mandatory)]
+        [string[]] $NamesOrCNs
+    )
+    $configNC = (Get-ADRootDSE).configurationNamingContext
+    $baseDN   = "CN=Certificate Templates,CN=Public Key Services,CN=Services,$configNC"
+    $all = Get-ADObject -SearchBase $baseDN -LDAPFilter "(objectClass=pKICertificateTemplate)" -Properties displayName, cn, objectGUID
+    foreach ($name in $NamesOrCNs) {
+        $match = $all | Where-Object { ($_.displayName -eq $name) -or ($_.cn -eq $name) } | Select-Object -First 1
+        if ($match) {
+            $guid = [System.Guid]$match.ObjectGUID
+            return ("{" + $guid.ToString() + "}")
+        }
+    }
+    return $null
+}
 
-if (-not (Get-Module -ListAvailable -Name GroupPolicy)) {
-    Write-Error "GroupPolicy module not found. Install RSAT Group Policy Management Tools."
+$DesiredTemplates = @{
+    "Computer"                       = @("Computer")
+    "Domain Controller"              = @("Domain Controller","DomainController")
+    "Enrollment Agent (Computer)"    = @("Enrollment Agent (Computer)","EnrollmentAgentComputer")
+}
+
+$resolved = @{}
+foreach ($k in $DesiredTemplates.Keys) {
+    $guid = Get-TemplateGuidByNames -NamesOrCNs $DesiredTemplates[$k]
+    if ($guid) { $resolved[$k] = $guid } else { Write-Warning "Could not find template for '$k' using names: $($DesiredTemplates[$k] -join ', ')" }
+}
+
+$missing = $DesiredTemplates.Keys | Where-Object { -not $resolved.ContainsKey($_) }
+if ($missing.Count -gt 0) {
+    Write-Error ("Missing required template(s): " + ($missing -join ', '))
     return
 }
 
-Import-Module GroupPolicy -ErrorAction Stop
+$domain = (Get-ADDomain).DNSRoot
+$defaultGpoName = "Default Domain Policy"
+$gpo = Get-GPO -Name $defaultGpoName -ErrorAction Stop
+Write-Host "Editing GPO: $($gpo.DisplayName) ($($gpo.Id)) in domain $domain"
 
-$gpo = Get-GPO -Name $GpoName -ErrorAction SilentlyContinue
-if (-not $gpo) {
-    $gpo = New-GPO -Name $GpoName
+$regBase    = "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment"
+$regAutoReq = "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests"
+
+Set-GPRegistryValue -Name $defaultGpoName -Key $regBase -ValueName "AEPolicy" -Type DWord -Value 3
+Set-GPRegistryValue -Name $defaultGpoName -Key $regBase -ValueName "AutoEnrollEnabled" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $defaultGpoName -Key $regAutoReq -ValueName "Computer" -Type String -Value $resolved["Computer"]
+Set-GPRegistryValue -Name $defaultGpoName -Key $regAutoReq -ValueName "Domain Controller" -Type String -Value $resolved["Domain Controller"]
+Set-GPRegistryValue -Name $defaultGpoName -Key $regAutoReq -ValueName "Enrollment Agent (Computer)" -Type String -Value $resolved["Enrollment Agent (Computer)"]
+
+Write-Host "Configured Automatic Certificate Request Settings in '$defaultGpoName'."
+Write-Host ("Resolved GUIDs: " + ($resolved.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" } -join '; '))
+
+$DCs = (Get-ADDomainController -Filter * | Select-Object -ExpandProperty HostName)
+foreach ($dc in $DCs) {
+    Write-Host "Triggering gpupdate /force on $dc ..."
+    try {
+        Invoke-Command -ComputerName $dc -ScriptBlock { gpupdate /force } -ErrorAction Stop
+    } catch {
+        Write-Warning "Failed to run gpupdate on $dc. Error: $($_.Exception.Message)"
+    }
 }
-
-$existingLinks = (Get-GPOLink -Target $LinkToTarget -ErrorAction SilentlyContinue) | Where-Object { $_.DisplayName -eq $GpoName }
-if (-not $existingLinks) {
-    New-GPLink -Name $GpoName -Target $LinkToTarget -Enforced:$LinkEnforced | Out-Null
-}
-
-function Set-GPPRegistryValue {
-    param(
-        [Parameter(Mandatory)]
-        [string] $GpoName,
-        [Parameter(Mandatory)]
-        [ValidateSet("HKLM","HKCU")]
-        [string] $Hive,
-        [Parameter(Mandatory)]
-        [string] $KeyPath,
-        [Parameter(Mandatory)]
-        [string] $ValueName,
-        [Parameter(Mandatory)]
-        [string] $ValueData,
-        [ValidateSet("String","ExpandString","DWord","QWord","Binary","MultiString")]
-        [string] $ValueType = "String",
-        [ValidateSet("Update","Create","Replace")]
-        [string] $Action = "Update"
-    )
-    Set-GPRegistryValue -Name $GpoName `
-        -Key ("{0}\{1}" -f $Hive, $KeyPath) `
-        -ValueName $ValueName `
-        -Type String `
-        -Value $ValueData | Out-Null
-}
-
-$valuesToSet = @(
-    @{ Name = "Computer";                       Guid = $ComputerGuid },
-    @{ Name = "Domain Controller";              Guid = $DCGuid },
-    @{ Name = "Enrollment Agent (Computer)";    Guid = $EAComputerGuid }
-)
-
-foreach ($v in $valuesToSet) {
-    Set-GPRegistryValue -Name $GpoName `
-        -Key "HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests" `
-        -ValueName $v.Name `
-        -Type String `
-        -Value $v.Guid | Out-Null
-}
-
-try {
-    New-Item -Path "Registry::HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment" -ErrorAction SilentlyContinue | Out-Null
-    New-Item -Path "Registry::HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests" -ErrorAction SilentlyContinue | Out-Null
-
-    New-ItemProperty -Path "Registry::HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests" -Name "Computer" -Value $ComputerGuid -PropertyType String -Force | Out-Null
-    New-ItemProperty -Path "Registry::HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests" -Name "Domain Controller" -Value $DCGuid -PropertyType String -Force | Out-Null
-    New-ItemProperty -Path "Registry::HKLM\Software\Policies\Microsoft\Cryptography\AutoEnrollment\AutomaticRequests" -Name "Enrollment Agent (Computer)" -Value $EAComputerGuid -PropertyType String -Force | Out-Null
-} catch {
-    Write-Warning "Could not write local registry test entries: $($_.Exception.Message)"
-}
+Write-Host "Domain controllers refreshed. For clients, run: gpupdate /force"
