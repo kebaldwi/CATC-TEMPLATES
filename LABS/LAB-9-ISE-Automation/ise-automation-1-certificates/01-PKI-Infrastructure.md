@@ -153,8 +153,8 @@ Once the certificate authority service is operational, we will then add a templa
 
 Now that we've setup our PKI infrastructure, we can use these templates to provision certificates for Catalyst Center and ISE.
 
-[**Catalyst Center Certificate Setup**](./02-Catatlyst-Center.md)
+[**Catalyst Center Certificate Setup**](./02-Catalyst-Center.md)
 
-[**ISE Certificate Setup**](./03-ISE-Certificates)
+[**ISE Certificate Setup**](./03-ISE-Certificates.md)
 
-[**Return to ISE Automation Lab Menu**](./../README.md)
+[**Return to ISE Automation Lab Menu**](../README.md)
