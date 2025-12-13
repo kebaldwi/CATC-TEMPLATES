@@ -41,6 +41,6 @@ Use AnyConnect VPN to connect to DCLOUD. When connecting, look at the session de
 
 ![DCLOUD VPN CONNECTION](../../../ASSETS/COMMON/DCLOUD/VPN-to-DCLOUD.png)
 
-> [**Next Section**](./02-collections.md)
+> [**Next Section**](./02-Collections.md)
 
 > [**Return to LAB Menu**](../README.md)
