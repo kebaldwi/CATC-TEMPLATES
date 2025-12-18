@@ -15,11 +15,11 @@ In this lab we will focus on configuring the integration between ISE and Catalys
 
 The lab will be split into modules to concentrate on specific tasks. Each is designed to build your knowledge in specific areas and they will call out any dependancies on previous modules. We will cover are the following which you can access via the links below:
 
-1. [**Module 0 - Orientation**](./ise-automation-0-orientation/01-Intro.md)
-2. [**Module 1 - Certificates**](./ise-automation-1-certificates/01-PKI-Infrastructure.md)
-3. [**Module 2 - Integrations**](./ise-automation-2-integrations/01-ERS-API-Admin.md)
-4. [**Module 3 - Policy**](./ise-automation-3-policy/01-Lab-Client-Orientation.md)
-5. [**Module 4 - Testing**](./ise-automation-4-testing/01-iPSK-Testing.md)
+1. [**Lab Orientation**](./ise-automation-0-orientation/01-Intro.md)
+2. [**PKI & System Certificates**](./ise-automation-1-certificates/01-PKI-Infrastructure.md)
+3. [**ISE Integrations**](./ise-automation-2-integrations/01-ERS-API-Admin.md)
+4. [**ISE Policies**](./ise-automation-3-policy/01-Lab-Client-Orientation.md)
+5. [**Lab Testing**](./ise-automation-4-testing/01-iPSK-Testing.md)
 
 
 ## Preparation

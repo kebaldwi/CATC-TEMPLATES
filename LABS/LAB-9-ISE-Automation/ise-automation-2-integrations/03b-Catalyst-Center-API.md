@@ -40,8 +40,8 @@ This module consists of the following tasks:
 
    Here, you'll notice that we've prefaced each API call with a number (1, 2, 3, etc.) corresponding to the order in which we want these APIs to be run.
 
-   >[!TIP]
-   >Postman does not, by default, automatically arrange the order of APIs in a collection based on numerical order (or alphabetical, for that matter).  You can arrange them any way you want just by dragging and dropping them.  But the numbers do serve as a good way to highlight the order in a collection and is considered best practice when working on a collection with a larger team.
+>[!TIP]
+>Postman does not, by default, automatically arrange the order of APIs in a collection based on numerical order (or alphabetical, for that matter).  You can arrange them any way you want just by dragging and dropping them.  But the numbers do serve as a good way to highlight the order in a collection and is considered best practice when working on a collection with a larger team.
 
 2. Hover your mouse over the **CATCENTER INTEGRATION** folder name and
 
@@ -49,8 +49,8 @@ This module consists of the following tasks:
 
    2. Choose "Run Folder"
 
-   >[!NOTE]
-   >Depending on what version of Postman you are running, this may just say "Run"
+>[!NOTE]
+>Depending on what version of Postman you are running, this may just say "Run"
 
    ![json](../../../ASSETS/LABS/ISE/ISE-CATC-INT-02.png?raw=true "Import JSON")
 
@@ -60,8 +60,8 @@ This module consists of the following tasks:
 
    2. Set the **Delay** to 10000 ms (ie: 10 seconds)
 
-      >[!TIP]
-      >In a production environment you probably wouldn't need to set a delay of this magnitude.  But as this is a lab environment, the hardware resources we've allocated to these devices wouldn't normally be considered production-ready - so, much like your aging relatives at a family reunion, giving them a bit of time to process a task before moving on to the next makes things go more smoothly. 
+>[!TIP]
+>In a production environment you probably wouldn't need to set a delay of this magnitude.  But as this is a lab environment, the hardware resources we've allocated to these devices wouldn't normally be considered production-ready - so, much like your aging relatives at a family reunion, giving them a bit of time to process a task before moving on to the next makes things go more smoothly. 
 
    3. Click the orange **Run lab-9-ise etc...etc..** button
 
@@ -101,8 +101,8 @@ Where things get interesting is if you click on:
 
    1. ***Scripts*** section
 
-      >[!NOTE]
-      >Depending on what version of Postman you're running, this section might be called "Tests" for some reason
+>[!NOTE]
+>Depending on what version of Postman you're running, this section might be called "Tests" for some reason
 
    2. ***Post Response***
 
@@ -142,8 +142,8 @@ From your Postman app:
 
    ![json](../../../ASSETS/LABS/ISE/ISE-CATC-INT-09.png?raw=true "Import JSON")
 
-   >[!IMPORTANT]
-   >While "catc-token" is a variable name that we just came up with for the purposes of using within this Postman lab (<i>and we challenge you to come up with a better name, we'll wait</i> :sunglasses:), the Header name of "x-auth-token" is very much something that is set in stone from the developers and standards bodies that set the rules for API header formatting.  This applies to all Header key names.  Naming these something else other than what the developer intended will <u>not</u> work.  Always consult the documentation for your application to determine what headers are needed, and how to name them.
+>[!IMPORTANT]
+>While "catc-token" is a variable name that we just came up with for the purposes of using within this Postman lab (<i>and we challenge you to come up with a better name, we'll wait</i> :sunglasses:), the Header name of "x-auth-token" is very much something that is set in stone from the developers and standards bodies that set the rules for API header formatting.  This applies to all Header key names.  Naming these something else other than what the developer intended will <u>not</u> work.  Always consult the documentation for your application to determine what headers are needed, and how to name them.
 
 Alright so now that we know how we took the "catc-token" from Step 2. and put it as a variable into the "x-auth-token" in our Step 3 API call, what does this API actually DO?  If you reference the [**03a-Catalyst-Center-GUI**](./03a-Catalyst-Center-GUI.md) module, this step directly correlates to **Integrate ISE and Catalyst Center** Section, Steps 1 through 4. While you're there, note Step 5 - which is to accept the certificate that ISE presents to Catalyst Center.  Our next two API calls tackle this.
 
@@ -179,8 +179,8 @@ For this API call, the variable from the last step is actually inserted as part 
 
 Congrats!  Our ISE node is integrated with Catalyst Center, and ready to apply policy!
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
 Continue to:

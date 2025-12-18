@@ -7,8 +7,11 @@ In order for Catalyst Center and ISE to function securely within our lab environ
 
 ## General Information
 
- >[!NOTE]
-   >While many of these tasks can be completed with your own device, the screenshots taken (and many of the steps reference) using the Windows Jump Host or the AD Server Web RDP.  Within the AD Server Web RDP - you may have issues copy/pasting things into the session, viewing the Lab GitHub page, etc.; so we recommend opening a web browser *within* the Web RDP session itself and navigating to this GitHub repo that you're currently at (URL below for convenience).  Note that you may download and install Chrome (recommended) or if using Firefox it is often best to start it in safe mode with Extensions disabled.
+>[!WARNING]
+If you have already completed the Certificates build as part of Labs 1 or 2 (Wired/Wireless Automation), the first 2 sections of this module will be redundant.  You will only need to complete the 3rd Section [**Certificate Auto-Enrollment Setup**](#certificate-auto-enrollment-setup) from this lab module.
+
+>[!NOTE]
+>While many of these tasks can be completed with your own device, the screenshots taken (and many of the steps reference) using the Windows Jump Host or the AD Server Web RDP.  Within the AD Server Web RDP - you may have issues copy/pasting things into the session, viewing the Lab GitHub page, etc.; so we recommend opening a web browser *within* the Web RDP session itself and navigating to this GitHub repo that you're currently at (URL below for convenience).  Note that you may download and install Chrome (recommended) or if using Firefox it is often best to start it in safe mode with Extensions disabled.
 
    ***URL for GitHub Repo***
 
@@ -18,6 +21,7 @@ This lab consists of the following tasks:
 
 1. [**PKI Infrastructure Build**](#pki-infrastructure-build)
 2. [**PKI Certificate Template Build**](#pki-certificate-template-build)
+3. [**Certificate Auto Enrollment Setup**](#certificate-auto-enrollment-setup)
 
 ## PKI Infrastructure Build
 
@@ -122,11 +126,11 @@ Once the certificate authority service is operational, we will then add a templa
 
       ![json](../../../ASSETS/LABS/AD/CERTS/AD-Cert-Template-6.png?raw=true "Import JSON")
 
-   8. Click `OK` to close the `Properties of New Template` window
+   9. Click `OK` to close the `Properties of New Template` window
       
       ![json](../../../ASSETS/LABS/AD/CERTS/AD-Cert-Template-7.png?raw=true "Import JSON")
    
-   9. The new `Cisco Server Template` will appear in the list
+   10. The new `Cisco Server Template` will appear in the list
 
       ![json](../../../ASSETS/LABS/AD/CERTS/AD-Cert-Template-8.png?raw=true "Import JSON")
 
@@ -150,6 +154,90 @@ Once the certificate authority service is operational, we will then add a templa
    6. Navigate to an advanced certificate request and ensure the new `Cisco Server Template` appears in the Web UI.
 
       ![json](../../../ASSETS/LABS/AD/CERTS/AD-Cert-Template-12.png?raw=true "Import JSON")
+
+## Certificate Auto-Enrollment Setup
+
+The last piece we need to complete for our PKI Infrastructure build is to configure the domain for Certificate Auto-Enrollment.  This feature allows our Client Lab PCs to request their domain Trusted Root Certificate and to generate a Computer Certificate for the domain, which will be required for EAP-TLS testing later in this module.  To do this:
+
+1. On the AD Server, click on the Start menu and search for "Group Policy Management" and open it
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-01.png)
+
+2. From within the Group Policy Management screen:
+
+   1. Expand ***Forest: dcloud.cisco.com > Domains > dcloud.cisco.com***
+
+   2. Right click on ***Default Domain Policy***
+
+   3. Choose ***Edit***
+
+      ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-02.png)
+
+3. Within the Group Policy Management Editor screen, expand ***Computer Configuration > Policies > Windows Settings > Security Settings*** and select ***Public Key Policies***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-03.png)
+
+4. In the right window pane:
+
+   1. Right click ***Certificate Services Client - Auto-Enrollment***
+
+   2. Click ***Properties***
+
+      ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-04.png)
+
+5. From the dropdown list for "Configuration Model":
+
+   1. Select ***Enabled***
+
+   2. This will present the options for "Renew expired certificates (etc.)" and "Update certificates that use certificate templates".  Ensure these are checked (they should be by default)
+
+   3. Click ***OK***
+
+      ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-06.png)
+
+6. Back at the Group Policy Management Editor screen, in the right hand pane, double click ***Automatic Certificate Request Settings***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-07.png)
+
+7. In the right hand pane, right click anywhere in the empty space:
+
+   1. Select ***New***
+
+   2. ***Automatic Certificate Request***
+
+      ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-08.png)
+
+8. At the Automatic Certificate Request Setup Wizard window, select ***Next***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-09.png)
+
+>[!IMPORTANT] 
+> Note in this window below that we have 4 Certificate Templates:  ***Computer***, ***Domain Controller***, ***Enrollment Agent (Computer)***, and ***IPSec***.  The IPSec template is irrelevant for our needs in this lab, so we will only be repeating steps 7 through 10 for the first 3 items.
+
+![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-05.png)
+
+9. On the Automatic Certificate Request Setup Wizard, with ***Computer*** selected click ***Next***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-10.png)
+
+10. On the next screen, select ***Finish***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-11.png)
+
+11. Back at the right Group Policy Management Editor screen in the right hand pane, note that now there is a "Computer" template.  Repeat steps 7 through 10 to create templates for ***Domain Controller*** and ***Enrollment Agent (Computer)***
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-12.png)
+
+12. Once completed, our Automatic Certificate Request Settings right hand pane should have a template for the three types as below:
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-20.png)
+
+13. Lastly, we need to force the Domain Controller to update its group policy.  Open a Command Prompt Window and run `gpupdate /force`:
+
+   ![json](../../../ASSETS/LABS/AD/GPO/GPO-DefaultDomainPolicy-21.png)
+
+>[!NOTE]
+>The 4 Client Lab PCs should, after some time, go ahead and enroll in the necessary certificates for our lab use, and by the time you proceed through the next few sections of the lab the Client Lab PCs should be ready.  However, you are welcome to expedite this process by running the same `gpupdate /force` command on the lab PCs.  See Section 3 [**Lab Client Orientation**](../ise-automation-3-policy/01-Lab-Client-Orientation.md) for more information.
 
 Now that we've setup our PKI infrastructure, we can use these templates to provision certificates for Catalyst Center and ISE.
 
