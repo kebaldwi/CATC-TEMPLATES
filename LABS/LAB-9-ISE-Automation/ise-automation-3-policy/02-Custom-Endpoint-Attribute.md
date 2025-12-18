@@ -15,7 +15,7 @@ Cisco ISE uses Custom Endpoint Attributes to enable iPSK (Individual Pre-Shared 
 
 ## General Information
 
-Unfortunately, on the version of ISE we're running in this lab, the creation of Custom Endpoint Attributes via API is not supported, so we need to do this part via the GUI.
+Unfortunately, on the version of ISE we're running in this lab, the creation of Custom Endpoint Attributes via API is not supported, so we need to do this part via the GUI.  Newer versions of ISE have introduced the option to create this attribute via API.
 
 >[!NOTE]
 >:mega: While many of these tasks can be completed with your own device, the screenshots taken (and many of the steps reference) using the Windows Jump Host. <br><br>

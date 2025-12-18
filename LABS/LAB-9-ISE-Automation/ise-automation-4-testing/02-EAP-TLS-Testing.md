@@ -188,10 +188,10 @@ ISE maintains a "session" for any endpoints for a certain amount of time, even i
 
     2. Select whichever SSID you're currently testing, and choose ***Disconnect***
 
-        >[!NOTE]
-        >The image below shows as connected to the "EAP" SSID, but choose whichever is accurate for whatever test you're currently on.
-
         ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-26.png?raw=true "Import JSON")
+
+>[!NOTE]
+>The image above shows as connected to the "EAP" SSID, but choose whichever is accurate for whatever test you're currently on.
 
 Then, from your Windows Jumphost:
 
@@ -220,10 +220,10 @@ Then, from your Windows Jumphost:
 :mega::mega::mega:
 
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into.
 
-> [**Next Section**](../ise-automation-4-testing/03-EAP-Credentials-Based-Testing.md)
+[**Next Section**](../ise-automation-4-testing/03-EAP-Credentials-Based-Testing.md)
 
-> [**Return to ISE Automation Lab Overview**](../README.md)
+[**Return to ISE Automation Lab Overview**](../README.md)

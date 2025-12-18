@@ -45,8 +45,8 @@ This lab module consists of the following tasks:
 
    You may see a prompt from the browser to ***Keep*** or ***Discard*** this download, choose ***Keep***.  By default, the file will save to the Downloads folder as `certnew.cer`
 
-   >[!TIP]
-   >We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
+>[!TIP]
+>We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
 
 ## Installing the Root CA Certificate in ISE
 
@@ -115,8 +115,7 @@ Now that our Root CA Certificate is part of the Trusted Certificates store, lets
       Digest to Sign With = SHA-512
    ```
 
-      >[!NOTE]
-      >While this form has the common name as `$FQDN$`, we also want to include the Fully Qualified Domain Name as a Subject Alternative Name as well, so the SAN fields should be filled out as follows:
+While this form has the common name as `$FQDN$`, we also want to include the Fully Qualified Domain Name as a Subject Alternative Name as well, so the SAN fields should be filled out as follows:
 
    ```
    First Field Drop Down = select DNS and in the text field enter "ise.dcloud.cisco.com"
@@ -131,9 +130,6 @@ Now that our Root CA Certificate is part of the Trusted Certificates store, lets
 4.  At this screen choose ***Export***.  This will save an `iseMultiUse.pem` file to the Downloads folder on the Windows Jump Host
 
       ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-8.png?raw=true "Import JSON")
-
-
-
 
 ## Signing the ISE CSR with Certificate Authority
 
@@ -218,12 +214,12 @@ Now that our Root CA Certificate is part of the Trusted Certificates store, lets
 Congrats, your ISE instance is now ...CERTIFIED!
 
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-> [**Go back to ISE Certificates Overview**](../ise-automation-1-certificates/03-ISE-Certificates.md)
+[**Go back to ISE Certificates Overview**](../ise-automation-1-certificates/03-ISE-Certificates.md)
 
-> [**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
+[**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
 
-> [**Return to ISE Automation Lab Overview**](../README.md)
+[**Return to ISE Automation Lab Overview**](../README.md)

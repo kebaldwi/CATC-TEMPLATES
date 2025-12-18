@@ -29,11 +29,10 @@ These labs are organized in such a way that they will need to be completed ***in
 
 To effectively run the Labs, install the following tools on your computer:
 
-> **NOTE**:  Cisco AnyConnect VPN Client: Required to connect your workstation to Cisco DCLOUD. You can download it from the [AnyConnect Download Site](https://dcloud-rtp-anyconnect.cisco.com). For more information, refer to the [DCLOUD AnyConnect Documentation](https://dcloud-cms.cisco.com/help/android_anyconnect).
-
-> **NOTE**: Postman: An API platform for building and using APIs. Download it from [the Postman website](https://www.postman.com/downloads/).
-
-> **NOTE**: Google Chrome: Recommended for working in the Catalyst Center UI in these Labs. Download it from the [Chrome website](https://www.google.com/chrome/downloads/).
+>[!NOTE]  
+>Cisco AnyConnect VPN Client: Required to connect your workstation to Cisco DCLOUD. You can download it from the [AnyConnect Download Site](https://dcloud-rtp-anyconnect.cisco.com). For more information, refer to the [DCLOUD AnyConnect Documentation](https://dcloud-cms.cisco.com/help/android_anyconnect).<br><br>
+>Postman: An API platform for building and using APIs. Download it from [the Postman website](https://www.postman.com/downloads/).<br><br>
+>Google Chrome: Recommended for working in the Catalyst Center UI in these Labs. Download it from the [Chrome website](https://www.google.com/chrome/downloads/).<br><br>
 
 ### DCLOUD VPN Connection
 
@@ -41,6 +40,6 @@ Use AnyConnect VPN to connect to DCLOUD. When connecting, look at the session de
 
 ![DCLOUD VPN CONNECTION](../../../ASSETS/COMMON/DCLOUD/VPN-to-DCLOUD.png)
 
-> [**Next Section**](./02-Collections.md)
+[**Next Section**](./02-Collections.md)
 
-> [**Return to LAB Menu**](../README.md)
+[**Return to LAB Menu**](../README.md)

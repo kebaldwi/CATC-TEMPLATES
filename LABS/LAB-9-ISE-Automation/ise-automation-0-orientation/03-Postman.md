@@ -57,7 +57,8 @@ To ensure uniformity across all calls made from the client when we use different
 
    ![Active environment](../../../ASSETS/LABS/POSTMAN/LAB9/Postman-Environment-Active.png)
 
-> **Note**: This environment is pre-populated with the information to build ISE. At specific points in the lab, we will **customize** it for **your use**.
+>[!NOTE] 
+>This environment is pre-populated with the information to build ISE. At specific points in the lab, we will **customize** it for **your use**.
 
 ## SSL Settings and Disabling Validation
 
@@ -73,6 +74,6 @@ For Lab purposes, ISE uses a self-signed certificate. This certificate may fail 
 
 3. Close the settings window.
 
-> [**Next Section**](../ise-automation-1-certificates/01-PKI-Infrastructure.md)
+[**Next Section**](../ise-automation-1-certificates/01-PKI-Infrastructure.md)
 
-> [**Return to LAB Menu**](../README.md)
+[**Return to LAB Menu**](../README.md)

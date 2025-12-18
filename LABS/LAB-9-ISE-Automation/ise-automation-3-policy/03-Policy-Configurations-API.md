@@ -140,8 +140,8 @@ First, download the following file:
 
 7. Back on the Runner screen, as before, set Delay to 20000 and click the orange "Run" button
 
-    >[!NOTE]
-    >Because we already created our iPSK Authorization rule as part of the Collection Run #1 task above, the iteration count here will be 2, not 3.
+>[!NOTE]
+>Because we already created our iPSK Authorization rule as part of the Collection Run #1 task above, the iteration count here will be 2, not 3.
 
 8. As before, once the run completes all items should have a Green response.  If you note anything different, please consult your lab proctor.
 
@@ -175,8 +175,8 @@ Assuming all of your API Collection Runs returned Green statuses, (and/or you wo
 
     ![json](../../../ASSETS/LABS/ISE/ISE-POLICY-15.png?raw=true "Import JSON")
 
-    >[!NOTE]
-    >Our custom policies were created in a "disabled" state by default so that you can selectively enable which policies you want during your testing, since we can really only test with 1 Lab PC at a time due to having a single USB Wireless Adapter.
+>[!NOTE]
+>Our custom policies were created in a "disabled" state by default so that you can selectively enable which policies you want during your testing, since we can really only test with 1 Lab PC at a time due to having a single USB Wireless Adapter.
 
     Please ensure your policies match the above image.
 

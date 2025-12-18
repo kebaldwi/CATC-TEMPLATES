@@ -52,7 +52,7 @@ This lab module consists of the following tasks:
     
     3. Click ***Save*** in the top right hand corner
     
-        ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-28.png?raw=true "Import JSON") ************************
+    ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-28.png?raw=true "Import JSON") 
 
 6. Scroll down and click on ***Authorization Policy*** to expand it
 
@@ -66,7 +66,7 @@ This lab module consists of the following tasks:
 
     3. Click ***Save*** in the bottom right hand corner
 
-        ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-29.png?raw=true "Import JSON") ***********************
+        ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-29.png?raw=true "Import JSON") 
 
 >[!TIP]
 >Because our parent policy uses the "Default Network Access" profile -- which has both EAP-TTLS and EAP-PEAP enabled -- we can actually utilize the same AuthN and AuthZ rule to accomodate BOTH mechanisms.  In production, you may see these mechanisms broken out into two separate policies, but for the purposes of this lab we'll keep things simple and leave them as one.  This means that we only need to modify the configuration of the Wireless Profile on the Client Lab PC to test each mechanism.
@@ -148,9 +148,6 @@ The configuration of our Windows-based Client Lab PC for either EAP-TTLS or EAP-
 
     2. In the "Connect to these servers" enter `ise.dcloud.cisco.com`
 
-        >[!TIP]
-        >Unlike EAP-PEAP, EAP-TTLS does require server validation.  Whether you define the server here (as you would if pushing this out via something like a GPO), or not - the server validation requirement remains.  If its not defined here, Windows will ask you to validate the ISE certificate the first time you connect to this SSID anyway.
-
     3. Check the box next to our Certificate Authority "CA"
 
     4. Change the inner EAP method to MS-CHAPv2
@@ -158,6 +155,9 @@ The configuration of our Windows-based Client Lab PC for either EAP-TTLS or EAP-
     5. Choose ***OK***
 
         ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-36.png?raw=true "Import JSON")
+
+>[!TIP]
+>Unlike EAP-PEAP, EAP-TTLS <u>does</u> require server validation.  Whether you define the server here (as you would if pushing this out via something like a GPO), or not - the server validation requirement remains.  If its not defined here, Windows will ask you to validate the ISE certificate the first time you connect to this SSID anyway.
 
 ### Steps 7 thru 11 (Shared again for both EAP-PEAP and EAP-TTLS)
 
@@ -220,10 +220,10 @@ ISE maintains a "session" for any endpoints for a certain amount of time, even i
 
     2. Select whichever SSID you're currently testing, and choose ***Disconnect***
 
-        >[!NOTE]
-        >The image below shows as connected to the "EAP" SSID, but choose whichever is accurate for whatever test you're currently on.
-
         ![json](../../../ASSETS/LABS/ISE/ISE-TESTING-26.png?raw=true "Import JSON")
+
+>[!NOTE]
+>The image above shows as connected to the "EAP" SSID, but choose whichever is accurate for whatever test you're currently on.
 
 Then, from your Windows Jumphost:
 

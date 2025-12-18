@@ -81,8 +81,8 @@ Now ISE should be ready for API calls, but before we can get to that...lets get 
 
    You may see a prompt from the browser to ***Keep*** or ***Discard*** this download, choose ***Keep***.  By default, the file will save to the Downloads folder as `certnew.cer`
 
-   >[!TIP]
-   >We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
+>[!TIP]
+>We recommend changing the name of this .cer file to something like `RootCA.cer` as we will use this file multiple times over the course of these labs, and changing the name from the generic `certnew` will make it easier to find again.
 
 ## Cleaning Up the Windows Root CA Certificate
 
@@ -111,19 +111,16 @@ Because text editors tend to add either carriage returns or line feeds (or both)
          ![json](../../../ASSETS/LABS/AD/CERTS/ISE-API-CSR-3.png?raw=true "Import JSON")
 
    4. Next, in the ***Find what:*** field, enter "\r" (without quotes), and in the ***Replace with:*** field enter "\\\n" (without quotes).  
-   
-         >[!IMPORTANT] 
-         >Pay close attention that this is a DOUBLE back slash before the n!
          
          Again click ***Replace All***
 
          ![json](../../../ASSETS/LABS/AD/CERTS/ISE-API-CSR-4.png?raw=true "Import JSON")
 
-   6. What we should now be left with is a very long string with several "\n" where line breaks used to be.
+   5. What we should now be left with is a very long string with several "\n" where line breaks used to be.
 
          ![json](../../../ASSETS/LABS/AD/CERTS/ISE-API-CSR-5.png?raw=true "Import JSON")
 
-   7. Close out of the Replace window and copy the entirety of the line of text to the clipboard.
+   6. Close out of the Replace window and copy the entirety of the line of text to the clipboard.
 
 ## Installing the Root CA in ISE
 
@@ -296,12 +293,12 @@ Congrats, your ISE instance is now ...CERTIFIED!
 
 
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-> [**Go Back to ISE Certificates Overview**](./03-ISE-Certificates.md)
+[**Go Back to ISE Certificates Overview**](./03-ISE-Certificates.md)
 
-> [**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
+[**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
 
-> [**Return to ISE Automation Lab Overview**](../README.md)
+[**Return to ISE Automation Lab Overview**](../README.md)

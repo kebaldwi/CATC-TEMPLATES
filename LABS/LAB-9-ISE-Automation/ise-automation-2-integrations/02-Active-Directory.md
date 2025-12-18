@@ -79,10 +79,7 @@ This lab module consists of the following tasks:
 
 3. Next:
     
-    1. Paste the ID value that you copied from the "Getting an AD Join Point ID" section above, replacing the entirety of the `{{join-point-id}}` field.  The rest of the Body has already been filled in with the required values.
-
-        > [!IMPORTANT]
-        > Make sure you leave the `/join` on the end!
+    1. Paste the ID value that you copied from the "Getting an AD Join Point ID" section above, replacing the entirety of the `{{join-point-id}}` field (leaving the "/join" on the end).  The rest of the Body has already been filled in with the required values.
 
     2. Click ***Send***
 
@@ -125,9 +122,6 @@ This lab module consists of the following tasks:
 
     2. Note the basic info provided as part of the Body.  In particular, note that the request is asking for the name of the <u>Domain</u> here, ***NOT*** the name of the <u>Join Point</u>.
 
-        > [!TIP]
-        > As in many of these examples, this is the most basic of requests.  There are many different filtering options available!  As always, consult the API Documentation!
-
     3. Click ***Send***
 
     4. Our response should be a JSON list of all of our Active Directory Users:
@@ -160,8 +154,8 @@ The API for getting a list of User Groups from ISE is almost identical to gettin
 
 Congrats!  Our ISE node is integrated with our DCLOUD Active Directory, and ready for use creating access policies based on our users!
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
 

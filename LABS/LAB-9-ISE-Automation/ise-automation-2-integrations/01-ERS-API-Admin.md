@@ -91,10 +91,10 @@ Let's validate that this user is properly configured by attempting a basic ERS-b
 
 Congratulations, we are now able to utilize ERS-based API's in our ISE environment!
 
-> [!IMPORTANT]
-> **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
+>[!IMPORTANT]
+>**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-> [**ISE Active Directory Integration**](./02-Active-Directory.md)
+[**ISE Active Directory Integration**](./02-Active-Directory.md)
 
-> [**Return to ISE Automation Lab Overview**](../README.md)
+[**Return to ISE Automation Lab Overview**](../README.md)
