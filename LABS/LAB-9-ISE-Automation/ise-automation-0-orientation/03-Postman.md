@@ -74,6 +74,6 @@ For Lab purposes, ISE uses a self-signed certificate. This certificate may fail 
 
 3. Close the settings window.
 
-[**Next Section**](../ise-automation-1-certificates/01-PKI-Infrastructure.md)
+> [**Next Section**](../ise-automation-1-certificates/01-PKI-Infrastructure.md)
 
-[**Return to LAB Menu**](../README.md)
+> [**Return to LAB Menu**](../README.md)
