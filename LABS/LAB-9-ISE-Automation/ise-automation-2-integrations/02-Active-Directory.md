@@ -159,6 +159,6 @@ Congrats!  Our ISE node is integrated with our DCLOUD Active Directory, and read
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
 
-[**Catalyst Center/ISE Integration**](./03-Catalyst-Center.md)
+> [**Catalyst Center/ISE Integration**](./03-Catalyst-Center.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

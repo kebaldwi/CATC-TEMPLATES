@@ -199,6 +199,7 @@ Now that we have exported the signed certificate chain, we must convert it to a 
          You may be prompted to verify the key fingerprint of the host - type "yes" and hit Enter
 
          ![json](../../../ASSETS/LABS/AD/CERTS/CATC-GUI-CSR-6.png?raw=true "Import JSON")
+         
       4. When prompted the **password: `C1sco12345`** and hit Enter, the file will transfer
 
    2. From the dCloud Session View, select the Script Server and open the ***VM Console*** and login with ***username = `root`*** and ***password = `C1sco12345`***. 
@@ -277,6 +278,6 @@ Congratulations you have changed the certificate and are now ready to use DNS fo
 > **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-[**Continue to ISE Certificate Setup**](./03-ISE-Certificates.md)
+> [**Continue to ISE Certificate Setup**](./03-ISE-Certificates.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

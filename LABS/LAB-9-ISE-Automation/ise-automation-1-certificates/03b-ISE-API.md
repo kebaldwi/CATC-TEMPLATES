@@ -297,8 +297,8 @@ Congrats, your ISE instance is now ...CERTIFIED!
 >**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-[**Go Back to ISE Certificates Overview**](./03-ISE-Certificates.md)
+> [**Go Back to ISE Certificates Overview**](./03-ISE-Certificates.md)
 
-[**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
+> [**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)
