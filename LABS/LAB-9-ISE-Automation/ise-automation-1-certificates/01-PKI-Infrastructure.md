@@ -241,8 +241,8 @@ The last piece we need to complete for our PKI Infrastructure build is to config
 
 Now that we've setup our PKI infrastructure, we can use these templates to provision certificates for Catalyst Center and ISE.
 
-[**Catalyst Center Certificate Setup**](./02-Catalyst-Center.md)
+> [**Catalyst Center Certificate Setup**](./02-Catalyst-Center.md)
 
-[**ISE Certificate Setup**](./03-ISE-Certificates.md)
+> [**ISE Certificate Setup**](./03-ISE-Certificates.md)
 
-[**Return to ISE Automation Lab Menu**](../README.md)
+> [**Return to ISE Automation Lab Menu**](../README.md)
