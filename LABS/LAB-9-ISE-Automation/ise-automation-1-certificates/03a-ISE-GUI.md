@@ -74,13 +74,13 @@ This lab module consists of the following tasks:
 
    3. Check the boxes as detailed below:
 
-         ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-4.png?raw=true "Import JSON")
+      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-4.png?raw=true "Import JSON")
    
    4. Click the ***Submit*** button.  After the certificate uploads, you will be taken back to the ***Trusted Certificates*** screen
 
    5. Scroll through the list to locate and validate that your certificate file uploaded.  Here we see that ours was successfull:
 
-         ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-5.png?raw=true "Import JSON")
+      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-5.png?raw=true "Import JSON")
 
 Now that our Root CA Certificate is part of the Trusted Certificates store, lets generate a Certificate Signing Request.
 
@@ -123,13 +123,13 @@ While this form has the common name as `$FQDN$`, we also want to include the Ful
    ```
    Completed form should look like below:
 
-      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-9.png?raw=true "Import JSON")
+   ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-9.png?raw=true "Import JSON")
 
 3.  At the bottom right, click ***Generate***
 
 4.  At this screen choose ***Export***.  This will save an `iseMultiUse.pem` file to the Downloads folder on the Windows Jump Host
 
-      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-8.png?raw=true "Import JSON")
+    ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-8.png?raw=true "Import JSON")
 
 ## Signing the ISE CSR with Certificate Authority
 
@@ -185,7 +185,7 @@ While this form has the common name as `$FQDN$`, we also want to include the Ful
    
    2. Under ***System*** select ***Certificates***
 
-   ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-2.png?raw=true "Import JSON")
+      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-2.png?raw=true "Import JSON")
 
 3. On the left choose:
 
@@ -195,7 +195,7 @@ While this form has the common name as `$FQDN$`, we also want to include the Ful
    
    3. Choose **Bind Certificate**
 
-   ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-12.png?raw=true "Import JSON")
+      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-12.png?raw=true "Import JSON")
 
 4. For the next step:
 
@@ -207,7 +207,7 @@ While this form has the common name as `$FQDN$`, we also want to include the Ful
 
    4. Your screen should look like below, choose **Submit**
 
-   ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-13.png?raw=true "Import JSON")
+      ![json](../../../ASSETS/LABS/AD/CERTS/ISE-GUI-CSR-13.png?raw=true "Import JSON")
 
 6. You will get a couple of [!Warning] messages.  One about Enabling Admin role, and another about certificate validity being longer than 398 days.  Choose **YES** to both of these.  At this point the ISE application will reboot.  Wait approximately 5 minutes and log back into ISE.
 
@@ -218,8 +218,8 @@ Congrats, your ISE instance is now ...CERTIFIED!
 >**Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-[**Go back to ISE Certificates Overview**](../ise-automation-1-certificates/03-ISE-Certificates.md)
+> [**Go back to ISE Certificates Overview**](../ise-automation-1-certificates/03-ISE-Certificates.md)
 
-[**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
+> [**Next Section**](../ise-automation-2-integrations/01-ERS-API-Admin.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

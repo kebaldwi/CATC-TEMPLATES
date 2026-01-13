@@ -21,9 +21,9 @@ With ISE, we can do this via either the GUI or the API.  For the purposes of thi
 
 Go to:
 
-[**ISE Certificate Setup via GUI**](./03a-ISE-GUI.md)
+> [**ISE Certificate Setup via GUI**](./03a-ISE-GUI.md)
 
-[**ISE Certificate Setup via API**](./03b-ISE-API.md)
+> [**ISE Certificate Setup via API**](./03b-ISE-API.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)
 

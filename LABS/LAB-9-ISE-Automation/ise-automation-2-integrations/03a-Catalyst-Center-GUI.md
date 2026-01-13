@@ -77,6 +77,6 @@ If you want to see how to do all of the above via API, continue to:
 
 Otherwise, lets move on to developing our Policies!
 
-[**Next Section**](../ise-automation-3-policy/01-Lab-Client-Orientation.md)
+> [**Next Section**](../ise-automation-3-policy/01-Lab-Client-Orientation.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

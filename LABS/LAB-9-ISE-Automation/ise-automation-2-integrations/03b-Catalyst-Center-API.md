@@ -185,6 +185,6 @@ Congrats!  Our ISE node is integrated with Catalyst Center, and ready to apply p
 
 Continue to:
 
-[**Next Section**](../ise-automation-3-policy/01-Lab-Client-Orientation.md)
+> [**Next Section**](../ise-automation-3-policy/01-Lab-Client-Orientation.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

@@ -145,6 +145,6 @@ In your testing, you may want to play around with several different wireless con
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
 
-[**Custom Endpoint Attribute Creation**](./02-Custom-Endpoint-Attribute.md)
+> [**Custom Endpoint Attribute Creation**](./02-Custom-Endpoint-Attribute.md)
 
-[**Return to ISE Automation Lab Overview**](../README.md)
+> [**Return to ISE Automation Lab Overview**](../README.md)

@@ -103,7 +103,7 @@ Once you have that saved to your PC running Postman, complete the following task
 
     4. Click the orange Run button
 
-    ![json](../../../ASSETS/LABS/ISE/ISE-POLICY-10.png?raw=true "Import JSON")
+        ![json](../../../ASSETS/LABS/ISE/ISE-POLICY-10.png?raw=true "Import JSON")
 
 8.  As before, once the run completes all items should have a Green response.  If you note anything different, please consult your lab proctor.
 
