@@ -182,6 +182,67 @@ event manager applet update-port-lldp authorization bypass
   action 200 cli command "write mem" 
 ```
 
+After working with Meraki equipment a bit more I have tested and updated ths version to allow for MX appliances which did not show up due to a issue with their system names
+
+```vtl
+event manager applet update-port-lldp authorization bypass
+ event neighbor-discovery interface regexp GigabitEthernet.* lldp add
+ action 101 regexp "(B|R|W|T)" "$_nd_lldp_system_capabilities_string"
+ action 110 if $_regexp_result eq "1"
+ action 111  regexp "(B,R)" "$_nd_lldp_system_capabilities_string"
+ action 112  set lldp_switch $_regexp_result
+ action 113  regexp "(R)" "$_nd_lldp_enabled_capabilities_string"
+ action 114  set lldp_router $_regexp_result
+ action 115  regexp "(W)" "$_nd_lldp_system_capabilities_string"
+ action 116  set lldp_wireless $_regexp_result
+ action 117  regexp "(T)" "$_nd_lldp_system_capabilities_string"
+ action 118  set lldp_phone $_regexp_result
+ action 120  cli command "enable"
+ action 121  cli command "config t"
+ action 130  if $lldp_wireless eq "1"
+ action 131   set DeviceType "AP" 
+ action 132   regexp "^([^\.]+)" "$_nd_lldp_system_name" match host
+ action 133   regexp "^([^\.]+)" "$_nd_lldp_port_description" match connectedport
+ action 140  elseif $lldp_phone eq "1"
+ action 141   set DeviceType "Phone" 
+ action 142   regexp "^([^\.]+)" "$_nd_lldp_system_name" match host
+ action 143   regexp ":\s*P([0-9]+)" "$_nd_port_id" match connectedport
+ action 150  elseif $lldp_switch eq "1"
+ action 151   set DeviceType "Link" 
+ action 152   regexp "^([^\.]+)\." "$_nd_lldp_system_name" match host
+ action 153   regexp "^([^\.]+)" "$_nd_port_id" match connectedport
+ action 154   cli command "do show running-config interface $_nd_local_intf_name | include channel-group"
+ action 155   regexp "channel-group ([0-9]+)" "$_cli_result" match portchannel
+ action 156   if $_regexp_result eq "1"
+ action 157    cli command "interface port-channel $portchannel"
+ action 158    cli command "no description"
+ action 159    cli command "description Link - $host"
+ action 160   end
+ action 170  elseif $lldp_router eq "1"
+ action 171   set DeviceType "Link"
+ action 172   regexp "Cisco" "$_nd_lldp_system_description"
+ action 173   if $_regexp_result eq "1"
+ action 174    regexp "^([^\.]+)\." "$_nd_lldp_system_name" match host
+ action 175    regexp "^([^\.]+)" "$_nd_port_id" match connectedport
+ action 176   else
+ action 177    cli command "do show lldp neigh $_nd_local_intf_name detail | include System Name:"
+ action 178    regexp "System Name: ([^\.]+)" "$_cli_result" match host
+ action 179    regexp "^([^\.]+)" "$_nd_lldp_port_description" match connectedport
+ action 180   end
+ action 190  else
+ action 191   set DeviceType "Link"
+ action 192   cli command "do show cdp neigh $_nd_local_intf_name detail | include Platform:"
+ action 193   regexp "Platform: ([^\.]+),\." "$_cli_result" match host
+ action 194   regexp "^([^\.]+)" "$_nd_port_id" match connectedport
+ action 195  end
+ action 200  cli command "interface $_nd_local_intf_name"
+ action 201  cli command "no description"
+ action 202  cli command "description $DeviceType - $host - Port $connectedport"
+ action 203  cli command "end"
+ action 204 end
+ action 205 cli command "write mem" 
+```
+
 ## Case 2 - ***Sending a IOS-XE command to clear a table - Use Case***
 
 The second part of the problem within this use case is solving the issue presented by a lack of functionality when the code is configured on the switch. While we can get the configuration in place, it will only run when the port is cycled or when the CDP information for the port is cleared. Therefore, to solve the problem, we employ a *Self-Destructing EEM script*.
