@@ -160,7 +160,7 @@ event manager applet update-port-lldp authorization bypass
   action 145   regexp "^([^\.]+)" "$_nd_port_id" match connectedport
   action 146   cli command "no description"
   action 147   cli command "description Link - $host - $connectedport"
-  action 148   cli command "do show running-config interface $_nd_lldp_system_name | include channel-group"
+  action 148   cli command "do show running-config interface $_nd_local_intf_name | include channel-group"
   action 149   regexp "channel-group ([0-9]+)" "$_cli_result" match portchannel
   action 150   if $_regexp_result eq "1"
   action 151    cli command "interface port-channel $portchannel"
