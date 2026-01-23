@@ -73,6 +73,7 @@ You will find various examples within the various folders of this repository, wi
 ## Miscellaneous
 
 * [Certificates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Certificates.md) - This section will dive into creating a Certificate for Catalyst Center using OPENSSL.
+* [Utilities](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Utilities.md) - This section has Python Coded tools to get past specific issues in Catalyst Center.
 
 > [!IMPORTANT]
 > ### Discussions

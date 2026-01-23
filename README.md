@@ -1,14 +1,16 @@
 # CATC-TEMPLATES [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
 
+<!--
 > [!NOTE] 
-> :mega: Thank you for continuing your **support** of the **CATC-Template Repository** by your continued visits to the site. The site originally was intended to share template automation and orchestration information for Catalyst Center. While we will continue to have that as a focus, we have recently been adding support for the Dashboard environment for Cisco Workflows. We will be augmenting our labs and tutorials with labs for Dashboard as well.
+> :mega: Thank you for continuing your **support** of the **CATC-Template Repository** by your continued visits to the site. The site originally was intended to share template automation and orchestration information for Catalyst Center. While we will continue to have that as a focus, we have recently been adding support for the Dashboard environment for Cisco Workflows. We are augmenting labs and tutorials for Dashboard as well.
 >
-> :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
+> :mega: As with all things there is change. The name will be changing again to stay relevant with Cisco Enterprise Networking Automation. We are considering **CAT-AUTOMATION** Everything changes to stay relevant. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
 > 1. **Dashboard** to automate it. Labs and tutorials will again all be added to be as concise as possible.
 > 2. **Cisco Workflows** which is generally available at now.
-> 3. **ISE Automation** which is coming soon 24 Dec 2025.
+> 3. **ISE Automation** which is generally available at now.
 >
 > Over the next few months you will **notice even more lab updates** to the repository, as we **add** additional content. 
+-->
 
 # Enterprise Networking Platforms 
 
@@ -135,6 +137,7 @@ You will find various examples within the various folders of this repository, wi
 ## Miscellaneous
 
 * [Certificates](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Certificates.md) - This section will dive into creating a Certificate for Catalyst Center using OPENSSL.
+* [Utilities](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/Utilities.md) - This section has Python Coded tools to get past specific issues in Catalyst Center.
 
 # [LABS](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS#dnac-template-labs-)
 
