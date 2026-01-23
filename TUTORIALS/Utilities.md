@@ -15,7 +15,8 @@ Catalyst Center 2.3.7.X does not have a patch for synchronizing large inventorie
 This python program utilizes the Catalyst Center Python SDK 3.1.3 to update the licensing and synchronize it with Cisco. Credentials need to be entered into the program, but it pulls the smart account information from catalyst center at run time. for scheduling purposes you could put this behind a cron job.
 
 The python lives in this location:</br> 
-<a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/CATC-TEMPLATES/raw/master/CODE/PYTHON/CATCLicenseSync.zip">**⬇︎Catalyst Center Licensing Synchronization⬇︎**</a></br>
+<a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/PYTHON/CATCLicenseSync.zip">**⬇︎Catalyst Center Licensing Synchronization⬇︎**</a></br>
+
 
 There is a requirements file which they should use prior to trying this. It is working with python 3.9.2 and python sdk 3.1.3 with cat center 2.3.7.10       
     </td>
@@ -33,7 +34,7 @@ After a Catalyst Center upgrade telemetry sometimes breaks or does not get updat
 This python program utilizes the Catalyst Center Python SDK 3.1.3 to update the licensing and synchronize it with Cisco. Credentials need to be entered into the program. For scheduling purposes you could put this behind a cron job.
 
 The python lives in this location:</br>
-<a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/CATC-TEMPLATES/raw/master/CODE/PYTHON/CATCTelemetrySync.zip">**⬇︎Catalyst Center Telemetry Synchronization⬇︎**</a></br></br>
+<a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/PYTHON/CATCTelemetrySync.zip">**⬇︎Catalyst Center Telemetry Synchronization⬇︎**</a></br></br>
 
 There is a requirements file which they should use prior to trying this. It is working with python 3.9.2 and python sdk 3.1.3 with cat center 2.3.7.10
     </td>
