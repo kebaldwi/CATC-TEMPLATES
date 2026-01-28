@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "2fde5c1a-0986-47a7-9a08-830eb32e7ce7",
+		"name": "Catalyst Center API LAB 501 - Deployed SSID Reporter",
+		"description": "This audits Catalyst Center and reports on deployed or existing WLAN on Controllers within the inventory. It writes the report in JSON format within the Environment Variables.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13375428",
+		"_collection_link": "https://www.postman.com/dark-capsule-39992/workspace/catalyst-center-use-case-api-collections/collection/13375428-2fde5c1a-0986-47a7-9a08-830eb32e7ce7?action=share&source=collection_link&creator=13375428"
+	},
+	"item": [
+		{
+			"name": "CC Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"if (jsonData.Token) {\r",
+							"    pm.test(\"Token acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.environment.set(\"TOKEN\", jsonData[\"Token\"]); \r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Token not acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.execution.setNextRequest(\"null\");\r",
+							"}\r",
+							"pm.execution.setNextRequest(\"Query WLC for SSIDs\");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{CCpwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{CCuser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/system/api/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"system",
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query WLC for SSIDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response",
+							"const jsonData = pm.response.json();",
+							"const TOKEN = pm.environment.get(\"TOKEN\");",
+							"",
+							"// Function to get WLC data",
+							"function getWLCData(data) {",
+							"    return data.response.filter(device => device.family === \"Wireless Controller\");",
+							"}",
+							"",
+							"// Get WLC data",
+							"const wlcData = getWLCData(jsonData);",
+							"",
+							"// Create an array to hold the device details",
+							"const deviceDetails = [];",
+							"",
+							"// Function to fetch SSID details for a specific device",
+							"function fetchSSIDDetails(device, callback) {",
+							"    pm.sendRequest({",
+							"        url: `https://${pm.environment.get(\"CCip\")}/api/v1/network-device/${device.instanceUuid}/ssidDetails`, // Replace with your actual endpoint",
+							"        method: 'GET',",
+							"        header: {",
+							"            'X-Auth-Token': `${TOKEN}` ",
+							"        }",
+							"    }, (err, res) => {",
+							"        if (err) {",
+							"            console.error(err);",
+							"            callback(null); // Return null on error",
+							"            return;",
+							"        }",
+							"",
+							"        // Assuming the response contains an array of SSID details",
+							"        const ssidData = res.json().response;",
+							"",
+							"        // Add SSID details to the device object",
+							"        const ssidDetails = ssidData.map(ssid => ({",
+							"            ssidName: ssid.ssidName,",
+							"            securityPolicyL2: ssid.securityPolicyL2,",
+							"            securityPolicyL3: ssid.securityPolicyL3,",
+							"            adminStatus: ssid.adminStatus,",
+							"            sites: ssid.sites",
+							"        }));",
+							"",
+							"        // Combine device details with SSID details",
+							"        const details = {",
+							"            hostname: device.hostname,",
+							"            managementIp: device.managementIpAddress,",
+							"            platformId: device.platformId,",
+							"            serialNumber: device.serialNumber,",
+							"            softwareVersion: device.softwareVersion,",
+							"            uptime: device.upTime,",
+							"            uuid: device.instanceUuid, // Adding UUID",
+							"            ssidDetails: ssidDetails // Add SSID details",
+							"        };",
+							"",
+							"        callback(details); // Return the combined details",
+							"    });",
+							"}",
+							"",
+							"// Use a counter to track completed requests",
+							"let completedRequests = 0;",
+							"",
+							"// Loop through each WLC device and gather the required fields",
+							"wlcData.forEach(device => {",
+							"    fetchSSIDDetails(device, (details) => {",
+							"        if (details) {",
+							"            deviceDetails.push(details);",
+							"        }",
+							"        completedRequests++;",
+							"",
+							"        // Check if all requests are completed",
+							"        if (completedRequests === wlcData.length) {",
+							"            // Log the device details to the Postman console",
+							"            console.log(deviceDetails);",
+							"",
+							"            // Optionally, set it as an environment variable",
+							"            pm.environment.set(\"wlcDeviceDetails\", JSON.stringify(deviceDetails));",
+							"        }",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/api/v1/network-device",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"network-device"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,978 @@
+{
+	"info": {
+		"_postman_id": "87bfe7f9-e303-46a9-8451-7dee2688fe89",
+		"name": "Catalyst Center API LAB 201 - Device Discovery",
+		"description": "This collection will set up the dCLOUD environment for the dCLOUD. This collection will discover all the various devices, and assign them to the Building 3 within the North Carolina area.\n\nAdditionally, an API has been modified in 2.3.5.5 as the Assign Devices API changed in this version. Included in this version of the collection is a test for the Version of Catalyst Center which selects the correct API to be used.\n\nFormerly it was: https://{{CCip}}/dna/system/api/v1/site/${TargetSiteId}/device\n\nIt now is: https://{{CCip}}/dna/intent/api/v1/assign-device-to-site/${TargetSiteId}/device\n\nPlease use the csv provided...\n\n[⬇︎Cisco Catalyst Center Design Settings CSV⬇︎](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-I-Rest-API-Orchestration/csv/DNAC-Design-Settings.csv)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13375428",
+		"_collection_link": "https://www.postman.com/dark-capsule-39992/workspace/catalyst-center-use-case-api-collections/collection/13375428-87bfe7f9-e303-46a9-8451-7dee2688fe89?action=share&source=collection_link&creator=13375428"
+	},
+	"item": [
+		{
+			"name": "CC Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.unset(\"DiscoveryTaskId\");\r",
+							"pm.environment.unset(\"GlobalSiteId\");\r",
+							"pm.environment.unset(\"AreaSiteId\");\r",
+							"pm.environment.unset(\"BuildingSiteId\");\r",
+							"pm.environment.unset(\"FloorSiteId\");\r",
+							"pm.environment.unset(\"TargetSiteId\");\r",
+							"pm.environment.unset(\"DeviceIP\");\r",
+							"pm.environment.unset(\"GeneralTestString\");\r",
+							"pm.environment.unset(\"DcloudSnmpRO-Desc\");\r",
+							"pm.environment.unset(\"DcloudSnmpRO\");\r",
+							"pm.environment.unset(\"DcloudSnmpRW-Desc\");\r",
+							"pm.environment.unset(\"DcloudSnmpRW\");\r",
+							"pm.environment.unset(\"DcloudUser\");\r",
+							"pm.environment.unset(\"DcloudPwd\");\r",
+							"pm.environment.unset(\"DeviceRange\");\r",
+							"pm.environment.unset(\"DiscoveryType\");\r",
+							"pm.environment.unset(\"DiscoveryName\");\r",
+							"\r",
+							"pm.environment.set(\"HierarchyParent\", pm.iterationData.get(\"HierarchyParent\"));\r",
+							"pm.environment.set(\"HierarchyArea\", pm.iterationData.get(\"HierarchyArea\"));\r",
+							"pm.environment.set(\"HierarchyBldg\", pm.iterationData.get(\"HierarchyBldg\"));\r",
+							"pm.environment.set(\"HierarchyFloor\", pm.iterationData.get(\"HierarchyFloor\"));\r",
+							"pm.environment.set(\"HierarchyBldgAddress\", pm.iterationData.get(\"HierarchyBldgAddress\"));\r",
+							"\r",
+							"if (pm.iterationData.get(\"HierarchyParent\") === \"Global\"){\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudSnmpRO-Desc\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"GlobalDcloudSnmpRO-Desc\", (pm.iterationData.get(\"DcloudSnmpRO-Desc\")));\r",
+							"        pm.environment.set(\"GlobalDcloudSnmpRO\", (pm.iterationData.get(\"DcloudSnmpRO\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudSnmpRW-Desc\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"GlobalDcloudSnmpRW-Desc\", (pm.iterationData.get(\"DcloudSnmpRW-Desc\")));\r",
+							"        pm.environment.set(\"GlobalDcloudSnmpRW\", (pm.iterationData.get(\"DcloudSnmpRW\")));\r",
+							"    }\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudUser\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"GlobalDcloudUser\", (pm.iterationData.get(\"DcloudUser\")));\r",
+							"        pm.environment.set(\"GlobalDcloudPwd\", (pm.iterationData.get(\"DcloudPwd\")));\r",
+							"    }\r",
+							"}\r",
+							"else {\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudSnmpRO-Desc\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"DcloudSnmpRO-Desc\", (pm.iterationData.get(\"DcloudSnmpRO-Desc\")));\r",
+							"        pm.environment.set(\"DcloudSnmpRO\", (pm.iterationData.get(\"DcloudSnmpRO\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    else{\r",
+							"        pm.environment.set(\"DcloudSnmpRO-Desc\", (pm.environment.get(\"GlobalDcloudSnmpRO-Desc\")));\r",
+							"        pm.environment.set(\"DcloudSnmpRO\", (pm.environment.get(\"GlobalDcloudSnmpRO\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudSnmpRW-Desc\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"DcloudSnmpRW-Desc\", (pm.iterationData.get(\"DcloudSnmpRW-Desc\")));\r",
+							"        pm.environment.set(\"DcloudSnmpRW\", (pm.iterationData.get(\"DcloudSnmpRW\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    else{\r",
+							"        pm.environment.set(\"DcloudSnmpRW-Desc\", (pm.environment.get(\"GlobalDcloudSnmpRW-Desc\")));\r",
+							"        pm.environment.set(\"DcloudSnmpRW\", (pm.environment.get(\"GlobalDcloudSnmpRW\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    pm.environment.set(\"GeneralTestString\", (pm.iterationData.get(\"DcloudUser\")));\r",
+							"    if ((pm.environment.get(\"GeneralTestString\"))){\r",
+							"        pm.environment.set(\"DcloudUser\", (pm.iterationData.get(\"DcloudUser\")));\r",
+							"        pm.environment.set(\"DcloudPwd\", (pm.iterationData.get(\"DcloudPwd\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							"    else{\r",
+							"    \tpm.environment.set(\"DcloudUser\", (pm.environment.get(\"GlobalDcloudUser\")));\r",
+							"        pm.environment.set(\"DcloudPwd\", (pm.environment.get(\"GlobalDcloudPwd\")));\r",
+							"        pm.environment.unset(\"GeneralTestString\");\r",
+							"    }\r",
+							" }\r",
+							"\r",
+							"if (jsonData.Token) {\r",
+							"  pm.test(\"Token acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"  pm.environment.set(\"TOKEN\", jsonData[\"Token\"]); \r",
+							"}\r",
+							"else {\r",
+							"  pm.test(\"Token not acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"  postman.setNextRequest(\"null\");\r",
+							"}\r",
+							"\r",
+							"pm.environment.unset(\"GeneralTestString\");\r",
+							"pm.environment.set(\"GeneralTestString\", pm.iterationData.get(\"DeviceList\"));\r",
+							"\r",
+							"if (pm.environment.get(\"GeneralTestString\") != \"\"){\r",
+							"    postman.setNextRequest(\"Get Global Credentials CLI\");\r",
+							"}\r",
+							"else{\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{CCpwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{CCuser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/system/api/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"system",
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Global Credentials CLI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"for (var i = 0;i<jsonData.response.length;i++) {\r",
+							"    if (jsonData.response[i].username == pm.environment.get(\"DcloudUser\")) {\r",
+							"        pm.environment.set(\"GlobalCredentialCli\", jsonData[\"response\"][i][\"id\"]);\r",
+							"        pm.test(\"Credential acquired\",() => {pm.expect(pm.response.text()).to.include(\"id\");});\r",
+							"        }\r",
+							"}\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Get Global Credentials SNMP RO\")\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/global-credential?credentialSubType=CLI",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"global-credential"
+					],
+					"query": [
+						{
+							"key": "credentialSubType",
+							"value": "CLI",
+							"description": "CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Global Credentials SNMP RO",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"for (var i = 0;i<jsonData.response.length;i++) {\r",
+							"    if (jsonData.response[i].description == pm.environment.get(\"DcloudSnmpRO-Desc\")) {\r",
+							"        pm.environment.set(\"GlobalCredentialSnmpRO\", jsonData[\"response\"][i][\"id\"]);\r",
+							"        pm.test(\"Credential acquired\",() => {pm.expect(pm.response.text()).to.include(\"id\");});\r",
+							"        }\r",
+							"}\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Get Global Credentials SNMP RW\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/global-credential?credentialSubType=SNMPV2_READ_COMMUNITY",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"global-credential"
+					],
+					"query": [
+						{
+							"key": "credentialSubType",
+							"value": "SNMPV2_READ_COMMUNITY",
+							"description": "CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Global Credentials SNMP RW",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"for (var i = 0;i<jsonData.response.length;i++) {\r",
+							"    if (jsonData.response[i].description == pm.environment.get(\"DcloudSnmpRW-Desc\")) {\r",
+							"        pm.environment.set(\"GlobalCredentialSnmpRW\", jsonData[\"response\"][i][\"id\"]);\r",
+							"        pm.test(\"Credential acquired\",() => {pm.expect(pm.response.text()).to.include(\"id\");});\r",
+							"        }\r",
+							"}\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Get Global Credentials NETCONF\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/global-credential?credentialSubType=SNMPV2_WRITE_COMMUNITY",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"global-credential"
+					],
+					"query": [
+						{
+							"key": "credentialSubType",
+							"value": "SNMPV2_WRITE_COMMUNITY",
+							"description": "CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Global Credentials NETCONF",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"FLAG\", \"0\");\r",
+							"for (var i = 0;i<jsonData.response.length;i++) {\r",
+							"    if (jsonData.response[i].netconfPort == pm.environment.get(\"DcloudNetconf\")) {\r",
+							"        pm.environment.set(\"GlobalCredentialNetconf\", jsonData[\"response\"][i][\"id\"]);\r",
+							"        pm.test(\"Credential acquired\",() => {pm.expect(pm.response.text()).to.include(\"id\");});\r",
+							"        }\r",
+							"}\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Create Discovery\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/global-credential?credentialSubType=NETCONF",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"global-credential"
+					],
+					"query": [
+						{
+							"key": "credentialSubType",
+							"value": "NETCONF",
+							"description": "CLI / SNMPV2_READ_COMMUNITY / SNMPV2_WRITE_COMMUNITY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Discovery",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"GlobalCredentialCli\");\r",
+							"pm.environment.get(\"GlobalCredentialSnmpRO\");\r",
+							"pm.environment.get(\"GlobalCredentialSnmpRW\");\r",
+							"pm.environment.get(\"GlobalCredentialNetconf\");\r",
+							"var d = pm.iterationData.get(\"DeviceList\");\r",
+							"var a = pm.iterationData.get(\"HierarchyArea\");\r",
+							"var b = pm.iterationData.get(\"HierarchyBldg\");\r",
+							"var f = pm.iterationData.get(\"HierarchyFloor\");\r",
+							"var s = \"/\";\r",
+							"var ds = d.split(\",\");\r",
+							"var DeviceString = \"\";\r",
+							"var name = a + s + b + s + f;\r",
+							"var name = name.replace(/\\s/g, '');\r",
+							"var dt1 = \"Range\";\r",
+							"var dt2 = \"Multi Range\";\r",
+							"pm.environment.set(\"DiscoveryName\", name)\r",
+							"if (ds.length > 1){\r",
+							"    pm.environment.set(\"DiscoveryType\", dt2);\r",
+							"    for (var i = 0;i<ds.length;i++) {\r",
+							"        if (i === 0){\r",
+							"            DeviceString = DeviceString + ds[i] + \"-\" + ds[i];\r",
+							"        }\r",
+							"        else{\r",
+							"            DeviceString = DeviceString + \",\" + ds[i] + \"-\" + ds[i];\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"else{\r",
+							"    pm.environment.set(\"DiscoveryType\", dt1);\r",
+							"    DeviceString = DeviceString + d + \"-\" + d;\r",
+							"}\r",
+							"pm.environment.set(\"DeviceRange\", (DeviceString));\r",
+							"pm.environment.get(\"DeviceRange\");\r",
+							"pm.environment.get(\"DiscoveryType\");\r",
+							"pm.environment.get(\"DiscoveryName\");\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if (jsonData.response.taskId) {\r",
+							"    pm.test(\"Discovery created\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});\r",
+							"    pm.environment.set(\"DiscoveryTaskId\", jsonData[\"response\"][\"taskId\"]);\r",
+							"    setTimeout(function(){}, [240000]);\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Discovery created\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							"postman.setNextRequest(\"Get Discovery From Task\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{DiscoveryName}}\",\r\n    \"discoveryType\": \"{{DiscoveryType}}\",\r\n    \"ipAddressList\": \"{{DeviceRange}}\",\r\n    \"protocolOrder\": \"ssh\",\r\n    \"timeout\": 5,\r\n    \"retry\": 3,\r\n    \"globalCredentialIdList\": [\r\n        \"{{GlobalCredentialCli}}\",\r\n        \"{{GlobalCredentialSnmpRO}}\",\r\n        \"{{GlobalCredentialSnmpRW}}\",\r\n        \"{{GlobalCredentialNetconf}}\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/discovery",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"discovery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Discovery From Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if (jsonData.response.progress) {\r",
+							"    pm.test(\"Discovery Id acquired\",() => {pm.expect(pm.response.text()).to.include(\"progress\");});\r",
+							"    pm.environment.set(\"DiscoveryId\", jsonData[\"response\"][\"progress\"]); \r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Discovery Id not acquired\",() => {pm.expect(pm.response.text()).to.include(\"progress\");});\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Get Discovery Devices\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/task/{{DiscoveryTaskId}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"task",
+						"{{DiscoveryTaskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Discovery Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"var DeviceIP = \"\";\r",
+							"pm.environment.unset(\"DeviceIP\");\r",
+							"for (var i = 0;i<jsonData.response.length;i++) {\r",
+							"    if (i === 0){\r",
+							"        if (jsonData.response[i].managementIpAddress) {\r",
+							"            pm.test(\"Device IP acquired\",() => {pm.expect(pm.response.text()).to.include(\"managementIpAddress\");});\r",
+							"            DeviceIP = DeviceIP + (jsonData.response[i].managementIpAddress);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.test(\"Device IP not acquired\",() => {pm.expect(pm.response.text()).to.include(\"managementIpAddress\");});\r",
+							"            postman.setNextRequest(\"null\");\r",
+							"            break;\r",
+							"        }\r",
+							"    }\r",
+							"    else {\r",
+							"        if (jsonData.response[i].managementIpAddress) {\r",
+							"            pm.test(\"Device IP acquired\",() => {pm.expect(pm.response.text()).to.include(\"managementIpAddress\");});\r",
+							"            DeviceIP = DeviceIP + \",\" + (jsonData.response[i].managementIpAddress);\r",
+							"        }\r",
+							"        else {\r",
+							"            pm.test(\"Device IP not acquired\",() => {pm.expect(pm.response.text()).to.include(\"managementIpAddress\");});\r",
+							"            postman.setNextRequest(\"null\");\r",
+							"            break;\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"pm.environment.set(\"DeviceIP\", DeviceIP);\r",
+							"setTimeout(function(){}, [1000]);\r",
+							"postman.setNextRequest(\"Get SiteIDs\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/discovery/{{DiscoveryId}}/network-device",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"discovery",
+						"{{DiscoveryId}}",
+						"network-device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SiteIDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var s = \"/\";",
+							"var p = pm.iterationData.get(\"HierarchyParent\");",
+							"var a = pm.iterationData.get(\"HierarchyArea\");",
+							"var b = pm.iterationData.get(\"HierarchyBldg\");",
+							"var f = pm.iterationData.get(\"HierarchyFloor\");",
+							"var parent = p;",
+							"var area = p + s + a;",
+							"var bldg = p + s + a + s + b;",
+							"var floor = p + s + a + s + b + s + f;",
+							"for (var i = 0;i<jsonData.response.length;i++) {",
+							"  if (jsonData.response[i].siteNameHierarchy === floor) {",
+							"    pm.environment.set(\"FloorSiteId\", jsonData[\"response\"][i][\"id\"]);",
+							"    pm.environment.set(\"TargetSiteId\", jsonData[\"response\"][i][\"id\"]);",
+							"    pm.test(\"Floor Site Id acquired\",() => {pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"HierarchyFloor\"));});",
+							"  }",
+							"  else if (jsonData.response[i].siteNameHierarchy === bldg) {",
+							"    pm.environment.set(\"BuildingSiteId\", jsonData[\"response\"][i][\"id\"]); ",
+							"    pm.test(\"Bldg Site Id acquired\",() => {pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"HierarchyBldg\"));});",
+							"  } ",
+							"  else if (jsonData.response[i].siteNameHierarchy === area) {",
+							"    pm.environment.set(\"AreaSiteId\", jsonData[\"response\"][i][\"id\"]); ",
+							"    pm.test(\"Area Site Id acquired\",() => {pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"HierarchyArea\"));});",
+							"  }",
+							"  else if (jsonData.response[i].siteNameHierarchy === parent) {",
+							"    pm.environment.set(\"GlobalSiteId\", jsonData[\"response\"][i][\"id\"]);",
+							"    pm.test(\"Global Site Id acquired\",() => {pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"HierarchyParent\"));});",
+							"  }",
+							"}",
+							"setTimeout(function(){}, [25000]);",
+							"postman.setNextRequest(\"Get CC Version\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/site",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"site"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CC Version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var displayVersion = jsonData.response.displayVersion;",
+							"var installedVersion = displayVersion.split('-');",
+							"var version_array = installedVersion[0].split(\".\");",
+							"if ((parseInt(version_array[0]) >= 2) && (parseInt(version_array[1]) >= 3) && (parseInt(version_array[2]) >= 5)) {",
+							"    pm.environment.set(\"ASSIGN-API\", \"intent/api/v1/assign-device-to-site/\");",
+							"}",
+							"else {",
+							"    pm.environment.set(\"ASSIGN-API\", \"system/api/v1/site/\");",
+							"} ",
+							"var selectedAPI = pm.environment.get(\"ASSIGN-API\");",
+							"console.log(\"Installed Version: \" + installedVersion[0]);",
+							"console.log(\"Selected API: \" + selectedAPI);",
+							"pm.test(\"Installed Version: \" + displayVersion, function () {",
+							"    pm.expect(displayVersion).to.exist;",
+							"});",
+							"setTimeout(function(){}, [1000]);",
+							"postman.setNextRequest(\"Add Discovered Devices to Site\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/dnac-release",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"dnac-release"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Discovered Devices to Site",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var ip = pm.environment.get(\"DeviceIP\");\r",
+							"var ip = ip.split(\",\");\r",
+							"for (var i = 0;i<ip.length;i++) {\r",
+							"    if ( i===0 ) {\r",
+							"        Devices = '{ \"ip\": \"' + ip[i] + '\" }';\r",
+							"    }\r",
+							"    else {\r",
+							"        Devices = Devices + ',' + '{ \"ip\": \"' + ip[i] + '\" }';\r",
+							"    }\r",
+							"}\r",
+							"pm.environment.set(\"Devices\", Devices);\r",
+							"pm.environment.get(\"Devices\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if ((jsonData.executionId) && (jsonData.message == \"The request has been accepted for execution\")) {\r",
+							"    pm.test(\"Device assigned\",() => {pm.expect(pm.response.text()).to.include(\"The request has been accepted for execution\");});\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Device not assigned\",() => {pm.expect(pm.response.text()).to.include(\"The request has been accepted for execution\");});\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "default"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"device\": [ {{Devices}} ] }"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/{{ASSIGN-API}}{{TargetSiteId}}/device",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"{{ASSIGN-API}}{{TargetSiteId}}",
+						"device"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
