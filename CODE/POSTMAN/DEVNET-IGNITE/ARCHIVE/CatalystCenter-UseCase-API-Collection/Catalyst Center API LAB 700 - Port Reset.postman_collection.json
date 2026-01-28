@@ -1,0 +1,998 @@
+{
+	"info": {
+		"_postman_id": "33a0bfdd-5287-4846-9a08-6a5536e99a03",
+		"name": "Catalyst Center API LAB 700 - Port Reset",
+		"description": "This Collection is designed to modify a port with a client attached. Put a mac of a client into the Client Detail section and it will find the switch with the port and cycle the ports modify the vlans and add a description.  \n  \nVlan 20 and 30 need to be previously deployed or modify the Update Client Interface - VLANs request.  \n  \nAdditionally a client MAC is required to trace the connected device to identify the port.  \n  \nThis could be modified to enter a port if so desired.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13375428",
+		"_collection_link": "https://www.postman.com/dark-capsule-39992/workspace/catalyst-center-use-case-api-collections/collection/13375428-33a0bfdd-5287-4846-9a08-6a5536e99a03?action=share&source=collection_link&creator=13375428"
+	},
+	"item": [
+		{
+			"name": "DNAC Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());\r",
+							"if (jsonData.Token) {\r",
+							"    pm.test(\"Token acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.environment.set(\"TOKEN\", jsonData[\"Token\"]); \r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Token not acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.execution.setNextRequest(\"null\");\r",
+							"}\r",
+							"pm.execution.setNextRequest(\"Get Client Detail\");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{CCpwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{CCuser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/system/api/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"system",
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Client Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"if (jsonData.detail.port) {",
+							"    pm.test(\"Port acquired\",() => {pm.expect(pm.response.text()).to.include(\"port\");});",
+							"    pm.environment.set(\"clientPort\", jsonData[\"detail\"][\"port\"]); ",
+							"    pm.environment.set(\"mgmtIp\", jsonData[\"detail\"][\"connectedDevice\"][0][\"mgmtIp\"]); ",
+							"    pm.environment.set(\"switchUuid\", jsonData[\"detail\"][\"connectedDevice\"][0][\"id\"]); ",
+							"    pm.environment.set(\"accessSwitch\", jsonData[\"detail\"][\"connectedDevice\"][0][\"name\"]); ",
+							"}",
+							"else {",
+							"    pm.test(\"Port not acquired\",() => {pm.expect(pm.response.text()).to.include(\"port\");});",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							"pm.execution.setNextRequest(\"Get Interface Detail\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://dnac.base2hq.com",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "https://dnac.base2hq.com/dna/assurance/dashboards/health/client?isLeaf=false&siteHierarchy=Global&siteId=%2F59c7b0f4-f5cb-4104-956d-037e19f511ec%2F&siteType=area",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/client-detail?macAddress={{macAddress}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"client-detail"
+					],
+					"query": [
+						{
+							"key": "macAddress",
+							"value": "{{macAddress}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interface Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"var interfaceUuid = null;",
+							"",
+							"// Get the clientPort from the environment variable",
+							"var targetPortName = pm.environment.get(\"clientPort\");",
+							"",
+							"// Iterate through the response to find the specified port",
+							"jsonData.response.forEach(function(interface) {",
+							"    if (interface.portName === targetPortName) {",
+							"        interfaceUuid = interface.instanceUuid; // Get the interface UUID",
+							"    }",
+							"});",
+							"",
+							"// Check if the interface UUID was found",
+							"if (interfaceUuid) {",
+							"    pm.test(\"Interface UUID found\", () => {",
+							"        pm.expect(interfaceUuid).to.not.be.null;",
+							"    });",
+							"    pm.environment.set(\"interfaceUuid\", interfaceUuid); // Set the environment variable",
+							"} else {",
+							"    pm.test(\"Interface UUID not found\", () => {",
+							"        pm.expect(interfaceUuid).to.be.null;",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							"",
+							"pm.execution.setNextRequest(\"Get Device Interface VLANs\");",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://dnac.base2hq.com",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "https://dnac.base2hq.com/dna/assurance/dashboards/health/client?isLeaf=false&siteHierarchy=Global&siteId=%2F59c7b0f4-f5cb-4104-956d-037e19f511ec%2F&siteType=area",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/interface/network-device/{{switchUuid}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"interface",
+						"network-device",
+						"{{switchUuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Device Interface VLANs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"var interfaceUuid = null;",
+							"",
+							"jsonData.response.forEach(function(interface) {",
+							"    if (interface.portName === pm.environment.get(\"clientPort\")) {",
+							"        interfaceUuid = interface.id; // Get the interface ID",
+							"    }",
+							"});",
+							"",
+							"// Check if the interface ID was found",
+							"if (interfaceUuid) {",
+							"    pm.test(\"Interface ID found\", () => {",
+							"        pm.expect(interfaceUuid).to.not.be.null;",
+							"    });",
+							"    pm.environment.set(\"interfaceUuid\", interfaceUuid); // Set the environment variable",
+							"} else {",
+							"    pm.test(\"Interface ID not found\", () => {",
+							"        pm.expect(interfaceUuid).to.be.null;",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							"pm.execution.setNextRequest(\"Update Client Interface - DOWN\");",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Origin",
+						"value": "https://dnac.base2hq.com",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Referer",
+						"value": "https://dnac.base2hq.com/dna/assurance/dashboards/health/client?isLeaf=false&siteHierarchy=Global&siteId=%2F59c7b0f4-f5cb-4104-956d-037e19f511ec%2F&siteType=area",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/api/v2/network-device/{{switchUuid}}/vlan",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"network-device",
+						"{{switchUuid}}",
+						"vlan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Client Interface - DOWN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"",
+							"// Check if the response contains a taskId",
+							"if (jsonData.response && jsonData.response.taskId) {",
+							"    pm.test(\"Command initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.environment.set(\"CommandRunnerTaskId\", jsonData.response.taskId);",
+							"",
+							"    // Construct the URL for the GET request using DNACip",
+							"    var taskId = jsonData.response.taskId;",
+							"    var taskUrl = `https://${pm.environment.get(\"CCip\")}${jsonData.response.url}`; // Use CCip for base URL",
+							"",
+							"    // Function to check task status",
+							"    function checkTaskStatus() {",
+							"        pm.sendRequest({",
+							"            url: taskUrl,",
+							"            method: 'GET',",
+							"            header: {",
+							"                'X-Auth-Token': `${pm.environment.get(\"TOKEN\")}` // Use auth token from environment",
+							"            }",
+							"        }, function (err, res) {",
+							"            if (err) {",
+							"                console.error(err);",
+							"                pm.test(\"Error fetching task status\", () => {",
+							"                    pm.expect.fail(\"Request failed\");",
+							"                });",
+							"                return;",
+							"            }",
+							"",
+							"            var taskStatusData = JSON.parse(res.text());",
+							"",
+							"            // Check if there is no error in the taskStatusData",
+							"            if (taskStatusData.response && taskStatusData.response.isError === false) {",
+							"                // Check if the progress indicates a successful task",
+							"                if (taskStatusData.response.progress) {",
+							"                    pm.test(\"Task is in progress\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.be.a('string'); // Ensure progress is a string",
+							"                    });",
+							"",
+							"                    // If progress is not complete, set a timeout to check again in 1 minute",
+							"                    if (!taskStatusData.response.progress.includes(\"SUCCESS\")) {",
+							"                        setTimeout(checkTaskStatus, 60000); // 1 minute",
+							"                    } else {",
+							"                        pm.test(\"Task completed successfully\", () => {",
+							"                            pm.expect(taskStatusData.response.progress).to.include(\"SUCCESS\");",
+							"                        });",
+							"                        // Proceed to next request",
+							"                        pm.execution.setNextRequest(\"Update Client Interface - UP\");",
+							"                    }",
+							"                } else {",
+							"                    pm.test(\"Progress is not available\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.not.be.undefined;",
+							"                    });",
+							"                    pm.execution.setNextRequest(\"null\"); // Stop execution if progress is not available",
+							"                }",
+							"            } else {",
+							"                pm.test(\"Task encountered an error\", () => {",
+							"                    pm.expect(taskStatusData.response.isError).to.be.false;",
+							"                });",
+							"                pm.execution.setNextRequest(\"null\"); // Stop execution if there's an error",
+							"            }",
+							"        });",
+							"    }",
+							"",
+							"    // Initial call to check task status",
+							"    checkTaskStatus();",
+							"",
+							"} else {",
+							"    pm.test(\"Command not initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"TargetDeviceId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"adminStatus\": \"DOWN\"\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/interface/{{interfaceUuid}}?deploymentMode=Deploy",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"interface",
+						"{{interfaceUuid}}"
+					],
+					"query": [
+						{
+							"key": "deploymentMode",
+							"value": "Deploy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Client Interface - UP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"",
+							"// Check if the response contains a taskId",
+							"if (jsonData.response && jsonData.response.taskId) {",
+							"    pm.test(\"Command initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.environment.set(\"CommandRunnerTaskId\", jsonData.response.taskId);",
+							"",
+							"    // Construct the URL for the GET request using DNACip",
+							"    var taskId = jsonData.response.taskId;",
+							"    var taskUrl = `https://${pm.environment.get(\"CCip\")}${jsonData.response.url}`; // Use CCip for base URL",
+							"",
+							"    // Function to check task status",
+							"    function checkTaskStatus() {",
+							"        pm.sendRequest({",
+							"            url: taskUrl,",
+							"            method: 'GET',",
+							"            header: {",
+							"                'X-Auth-Token': `${pm.environment.get(\"TOKEN\")}` // Use auth token from environment",
+							"            }",
+							"        }, function (err, res) {",
+							"            if (err) {",
+							"                console.error(err);",
+							"                pm.test(\"Error fetching task status\", () => {",
+							"                    pm.expect.fail(\"Request failed\");",
+							"                });",
+							"                return;",
+							"            }",
+							"",
+							"            var taskStatusData = JSON.parse(res.text());",
+							"",
+							"            // Check if there is no error in the taskStatusData",
+							"            if (taskStatusData.response && taskStatusData.response.isError === false) {",
+							"                // Check if the progress indicates a successful task",
+							"                if (taskStatusData.response.progress) {",
+							"                    pm.test(\"Task is in progress\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.be.a('string'); // Ensure progress is a string",
+							"                    });",
+							"",
+							"                    // If progress is not complete, set a timeout to check again in 1 minute",
+							"                    if (!taskStatusData.response.progress.includes(\"SUCCESS\")) {",
+							"                        setTimeout(checkTaskStatus, 60000); // 1 minute",
+							"                    } else {",
+							"                        pm.test(\"Task completed successfully\", () => {",
+							"                            pm.expect(taskStatusData.response.progress).to.include(\"SUCCESS\");",
+							"                        });",
+							"                        // Proceed to next request",
+							"                        pm.execution.setNextRequest(\"Update Client Interface - VLANs\");",
+							"                    }",
+							"                } else {",
+							"                    pm.test(\"Progress is not available\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.not.be.undefined;",
+							"                    });",
+							"                    pm.execution.setNextRequest(\"null\"); // Stop execution if progress is not available",
+							"                }",
+							"            } else {",
+							"                pm.test(\"Task encountered an error\", () => {",
+							"                    pm.expect(taskStatusData.response.isError).to.be.false;",
+							"                });",
+							"                pm.execution.setNextRequest(\"null\"); // Stop execution if there's an error",
+							"            }",
+							"        });",
+							"    }",
+							"",
+							"    // Initial call to check task status",
+							"    checkTaskStatus();",
+							"",
+							"} else {",
+							"    pm.test(\"Command not initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"TargetDeviceId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"adminStatus\": \"UP\"\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/interface/{{interfaceUuid}}?deploymentMode=Deploy",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"interface",
+						"{{interfaceUuid}}"
+					],
+					"query": [
+						{
+							"key": "deploymentMode",
+							"value": "Deploy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Client Interface - VLANs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"",
+							"// Check if the response contains a taskId",
+							"if (jsonData.response && jsonData.response.taskId) {",
+							"    pm.test(\"Command initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.environment.set(\"CommandRunnerTaskId\", jsonData.response.taskId);",
+							"",
+							"    // Construct the URL for the GET request using DNACip",
+							"    var taskId = jsonData.response.taskId;",
+							"    var taskUrl = `https://${pm.environment.get(\"CCip\")}${jsonData.response.url}`; // Use CCip for base URL",
+							"",
+							"    // Function to check task status",
+							"    function checkTaskStatus() {",
+							"        pm.sendRequest({",
+							"            url: taskUrl,",
+							"            method: 'GET',",
+							"            header: {",
+							"                'X-Auth-Token': `${pm.environment.get(\"TOKEN\")}` // Use auth token from environment",
+							"            }",
+							"        }, function (err, res) {",
+							"            if (err) {",
+							"                console.error(err);",
+							"                pm.test(\"Error fetching task status\", () => {",
+							"                    pm.expect.fail(\"Request failed\");",
+							"                });",
+							"                return;",
+							"            }",
+							"",
+							"            var taskStatusData = JSON.parse(res.text());",
+							"",
+							"            // Check if there is no error in the taskStatusData",
+							"            if (taskStatusData.response && taskStatusData.response.isError === false) {",
+							"                // Check if the progress indicates a successful task",
+							"                if (taskStatusData.response.progress) {",
+							"                    pm.test(\"Task is in progress\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.be.a('string'); // Ensure progress is a string",
+							"                    });",
+							"",
+							"                    // If progress is not complete, set a timeout to check again in 1 minute",
+							"                    if (!taskStatusData.response.progress.includes(\"SUCCESS\")) {",
+							"                        setTimeout(checkTaskStatus, 60000); // 1 minute",
+							"                    } else {",
+							"                        pm.test(\"Task completed successfully\", () => {",
+							"                            pm.expect(taskStatusData.response.progress).to.include(\"SUCCESS\");",
+							"                        });",
+							"                        // Proceed to next request",
+							"                        pm.execution.setNextRequest(\"Update Client Interface - Description\");",
+							"                    }",
+							"                } else {",
+							"                    pm.test(\"Progress is not available\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.not.be.undefined;",
+							"                    });",
+							"                    pm.execution.setNextRequest(\"null\"); // Stop execution if progress is not available",
+							"                }",
+							"            } else {",
+							"                pm.test(\"Task encountered an error\", () => {",
+							"                    pm.expect(taskStatusData.response.isError).to.be.false;",
+							"                });",
+							"                pm.execution.setNextRequest(\"null\"); // Stop execution if there's an error",
+							"            }",
+							"        });",
+							"    }",
+							"",
+							"    // Initial call to check task status",
+							"    checkTaskStatus();",
+							"",
+							"} else {",
+							"    pm.test(\"Command not initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"TargetDeviceId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vlanId\": \"20\",\n    \"voiceVlanId\": \"30\"\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/interface/{{interfaceUuid}}?deploymentMode=Deploy",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"interface",
+						"{{interfaceUuid}}"
+					],
+					"query": [
+						{
+							"key": "deploymentMode",
+							"value": "Deploy"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Client Interface - Description",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.response.text());",
+							"",
+							"// Check if the response contains a taskId",
+							"if (jsonData.response && jsonData.response.taskId) {",
+							"    pm.test(\"Command initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.environment.set(\"CommandRunnerTaskId\", jsonData.response.taskId);",
+							"",
+							"    // Construct the URL for the GET request using DNACip",
+							"    var taskId = jsonData.response.taskId;",
+							"    var taskUrl = `https://${pm.environment.get(\"CCip\")}${jsonData.response.url}`; // Use CCip for base URL",
+							"",
+							"    // Function to check task status",
+							"    function checkTaskStatus() {",
+							"        pm.sendRequest({",
+							"            url: taskUrl,",
+							"            method: 'GET',",
+							"            header: {",
+							"                'X-Auth-Token': `${pm.environment.get(\"TOKEN\")}` // Use auth token from environment",
+							"            }",
+							"        }, function (err, res) {",
+							"            if (err) {",
+							"                console.error(err);",
+							"                pm.test(\"Error fetching task status\", () => {",
+							"                    pm.expect.fail(\"Request failed\");",
+							"                });",
+							"                return;",
+							"            }",
+							"",
+							"            var taskStatusData = JSON.parse(res.text());",
+							"",
+							"            // Check if there is no error in the taskStatusData",
+							"            if (taskStatusData.response && taskStatusData.response.isError === false) {",
+							"                // Check if the progress indicates a successful task",
+							"                if (taskStatusData.response.progress) {",
+							"                    pm.test(\"Task is in progress\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.be.a('string'); // Ensure progress is a string",
+							"                    });",
+							"",
+							"                    // If progress is not complete, set a timeout to check again in 1 minute",
+							"                    if (!taskStatusData.response.progress.includes(\"SUCCESS\")) {",
+							"                        setTimeout(checkTaskStatus, 60000); // 1 minute",
+							"                    } else {",
+							"                        pm.test(\"Task completed successfully\", () => {",
+							"                            pm.expect(taskStatusData.response.progress).to.include(\"SUCCESS\");",
+							"                        });",
+							"                        // Proceed to next request",
+							"                        pm.execution.setNextRequest(\"null\");",
+							"                    }",
+							"                } else {",
+							"                    pm.test(\"Progress is not available\", () => {",
+							"                        pm.expect(taskStatusData.response.progress).to.not.be.undefined;",
+							"                    });",
+							"                    pm.execution.setNextRequest(\"null\"); // Stop execution if progress is not available",
+							"                }",
+							"            } else {",
+							"                pm.test(\"Task encountered an error\", () => {",
+							"                    pm.expect(taskStatusData.response.isError).to.be.false;",
+							"                });",
+							"                pm.execution.setNextRequest(\"null\"); // Stop execution if there's an error",
+							"            }",
+							"        });",
+							"    }",
+							"",
+							"    // Initial call to check task status",
+							"    checkTaskStatus();",
+							"",
+							"} else {",
+							"    pm.test(\"Command not initiated\", () => {",
+							"        pm.expect(pm.response.text()).to.include(\"taskId\");",
+							"    });",
+							"    pm.execution.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"TargetDeviceId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Postman wuz here!\"\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/interface/{{interfaceUuid}}?deploymentMode=Deploy",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"interface",
+						"{{interfaceUuid}}"
+					],
+					"query": [
+						{
+							"key": "deploymentMode",
+							"value": "Deploy"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

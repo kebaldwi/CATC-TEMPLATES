@@ -1,0 +1,373 @@
+{
+	"info": {
+		"_postman_id": "4e66217c-8736-4a63-92eb-449ee5bed8ea",
+		"name": "Catalyst Center API LAB 402 - Command Runner",
+		"description": "This Collection is designed to test running a show command against a piece of equipment and display that within Postman. This collection will be run one task at a time.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13375428",
+		"_collection_link": "https://www.postman.com/dark-capsule-39992/workspace/catalyst-center-use-case-api-collections/collection/13375428-4e66217c-8736-4a63-92eb-449ee5bed8ea?action=share&source=collection_link&creator=13375428"
+	},
+	"item": [
+		{
+			"name": "CC Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if (jsonData.Token) {\r",
+							"    pm.test(\"Token acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.environment.set(\"TOKEN\", jsonData[\"Token\"]); \r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Token not acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							"postman.setNextRequest(\"Get Devices\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{CCpwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{CCuser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/system/api/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"system",
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var DeviceList = pm.iterationData.get(\"DeviceList\");",
+							"var DeviceList = DeviceList.split(\",\");",
+							"var DeviceId = \"\";",
+							"var DeviceIp = \"\";",
+							"var FLAG = DeviceList.length;",
+							"pm.environment.set(\"FLAG\", FLAG);",
+							"for (var i = 0; i < jsonData.response.length; i++) {",
+							"    for (var dl = 0; dl < DeviceList.length; dl++) {",
+							"        if (jsonData[\"response\"][i][\"managementIpAddress\"] === DeviceList[dl]){",
+							"            if (i === 0){",
+							"                DeviceId = jsonData[\"response\"][i][\"id\"];",
+							"                DeviceIp = jsonData[\"response\"][i][\"managementIpAddress\"];",
+							"            }",
+							"            else {",
+							"                DeviceId = DeviceId + \",\" + jsonData[\"response\"][i][\"id\"];",
+							"                DeviceIp = DeviceIp + \",\" + jsonData[\"response\"][i][\"managementIpAddress\"];",
+							"            }",
+							"        }",
+							"    }",
+							"}",
+							"pm.environment.set(\"DeviceId\", DeviceId);",
+							"pm.environment.set(\"DeviceIp\", DeviceIp);",
+							"console.log(\"Selected Devices: \" + DeviceId);",
+							"pm.test(\"Devices acquired\",() => {pm.expect(pm.response.text()).to.include(\"response\");});",
+							"if (DeviceId != \"\") {",
+							"    setTimeout(function(){}, [1000]);",
+							"    postman.setNextRequest(\"Command Runner\")",
+							"}",
+							"else {",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/network-device",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"network-device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Command Runner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.response.taskId) {",
+							"    pm.test(\"Command initiated\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});",
+							"    pm.environment.set(\"CommandRunnerTaskId\", jsonData.response.taskId);",
+							"    console.log(\"CommandRunnerTaskId: \" + jsonData.response.taskId);",
+							"}",
+							"else {",
+							"    pm.test(\"Command not initiated\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							"setTimeout(function(){}, [1000]);",
+							"postman.setNextRequest(\"Get Task Id\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Get the DeviceID variable from the environment",
+							"var DeviceIds = pm.environment.get(\"DeviceId\");",
+							"",
+							"// Split the device IDs by comma and remove any leading/trailing spaces",
+							"var DeviceIdArray = DeviceIds.split(\",\").map(function(id) {",
+							"    return id.trim();",
+							"});",
+							"",
+							"// Format the device IDs with double quotes and join them with commas",
+							"var FormattedDeviceIds = '\"' + DeviceIdArray.join('\",\"') + '\"';",
+							"",
+							"// Set the formatted device IDs back to the environment",
+							"pm.environment.set(\"FormattedDeviceIds\", FormattedDeviceIds);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"commands\": [\"show cdp neighbor\"],\n    \"deviceUuids\": [{{FormattedDeviceIds}}]\n}"
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/network-device-poller/cli/read-request",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"network-device-poller",
+						"cli",
+						"read-request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.response) {",
+							"    pm.test(\"Results acquired\",() => {pm.expect(pm.response.text()).to.include(\"progress\");});",
+							"    var progress = JSON.parse(jsonData.response.progress)",
+							"    console.log(\"CommandRunnerFileId: \" + progress.fileId);",
+							"    pm.environment.set(\"CommandRunnerFileId\", progress.fileId);",
+							"}",
+							"else {",
+							"    pm.test(\"Results acquired\",() => {pm.expect(pm.response.text()).to.include(\"progress\");});",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							"setTimeout(function(){}, [1000]);",
+							"postman.setNextRequest(\"Get Results\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"CommandRunnerTaskId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/task/{{CommandRunnerTaskId}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"task",
+						"{{CommandRunnerTaskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var body = JSON.stringify(responseBody);",
+							"pm.environment.set(\"CommandRunnerResults\", body);",
+							"pm.test(\"Show Command: /n\" + body,() => {pm.expect(pm.response.text());});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/file/{{CommandRunnerFileId}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"file",
+						"{{CommandRunnerFileId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

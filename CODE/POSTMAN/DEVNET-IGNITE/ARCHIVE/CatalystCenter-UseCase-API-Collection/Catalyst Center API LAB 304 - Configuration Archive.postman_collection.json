@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "97611cec-1f1a-4064-9b43-240086524ab8",
+		"name": "Catalyst Center API LAB 304 - Configuration Archive",
+		"description": "This Collection is designed to download and extract the running and startup configurations of a switch within the network.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13375428",
+		"_collection_link": "https://www.postman.com/dark-capsule-39992/workspace/catalyst-center-use-case-api-collections/collection/13375428-97611cec-1f1a-4064-9b43-240086524ab8?action=share&source=collection_link&creator=13375428"
+	},
+	"item": [
+		{
+			"name": "CC Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"if (jsonData.Token) {\r",
+							"    pm.test(\"Token acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    pm.environment.set(\"TOKEN\", jsonData[\"Token\"]); \r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Token not acquired\",() => {pm.expect(pm.response.text()).to.include(\"Token\");});\r",
+							"    postman.setNextRequest(\"null\");\r",
+							"}\r",
+							"pm.environment.set(\"FLAG\", 0);\r",
+							"postman.setNextRequest(\"Get Devices\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{CCpwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{CCuser}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/system/api/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"system",
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"for (var i = 0;i<jsonData.response.length;i++) {",
+							"    if (jsonData.response[i].managementIpAddress) {",
+							"        if (i === 0){",
+							"            TargetDeviceIp = jsonData[\"response\"][i][\"managementIpAddress\"]; ",
+							"            TargetDeviceId = jsonData[\"response\"][i][\"id\"]; ",
+							"        }",
+							"        else {",
+							"            TargetDeviceIp = TargetDeviceIp + \",\" + jsonData[\"response\"][i][\"managementIpAddress\"]; ",
+							"            TargetDeviceId = TargetDeviceId + \",\" + jsonData[\"response\"][i][\"id\"]; ",
+							"        }",
+							"        pm.environment.set(\"TargetDeviceId\", TargetDeviceId);",
+							"        pm.environment.set(\"TargetDeviceIp\", TargetDeviceIp);",
+							"    }",
+							"}",
+							"pm.environment.set(\"FLAG\", jsonData.response.length);",
+							"if (pm.environment.get(\"FLAG\") > 0) {",
+							"    pm.test(\"Targets acquired\",() => {pm.expect(pm.response.text()).to.include(\"response\")});",
+							"    postman.setNextRequest(\"Get Configuration\");",
+							"}",
+							"else {",
+							"    pm.test(\"Targets not acquired\",() => {pm.expect(pm.response.text()).to.include(\"response\")});",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}/api/v1/network-device",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"network-device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Configuration",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let d = pm.environment.get(\"TargetDeviceId\");",
+							"let DeviceId = d.split(\",\");",
+							"let arrayid = pm.environment.get(\"FLAG\") - 1",
+							"pm.environment.set(\"TargetId\", DeviceId[arrayid]);",
+							"pm.environment.get(\"ConfigZipFilePwd\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.response.taskId) {",
+							"    pm.test(\"Configuration acquired\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});",
+							"    postman.setEnvironmentVariable(\"ConfigurationTaskId\", jsonData.response.taskId);",
+							"}",
+							"else {",
+							"    pm.test(\"Configuration not acquired\",() => {pm.expect(pm.response.text()).to.include(\"taskId\");});",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							"setTimeout(function(){}, [5000]);",
+							"postman.setNextRequest(\"Get Task Id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deviceId\": [ \"{{TargetId}}\" ],\n    \"password\": \"{{ConfigZipFilePwd}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/network-device-archive/cleartext",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"network-device-archive",
+						"cleartext"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.response.additionalStatusURL) {",
+							"    pm.test(\"Configuration ready\",() => {pm.expect(pm.response.text()).to.include(\"additionalStatusURL\");});",
+							"    postman.setEnvironmentVariable(\"ConfigurationFileId\", jsonData[\"response\"][\"additionalStatusURL\"]); ",
+							"}",
+							"else {",
+							"    pm.test(\"Configuration not ready\",() => {pm.expect(pm.response.text()).to.include(\"additionalStatusURL\");});",
+							"    postman.setNextRequest(\"null\");",
+							"}",
+							"setTimeout(function(){}, [25000]);",
+							"postman.setNextRequest(\"Get Results\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"ConfigurationTaskId\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{CCip}}/dna/intent/api/v1/task/{{ConfigurationTaskId}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}"
+					],
+					"path": [
+						"dna",
+						"intent",
+						"api",
+						"v1",
+						"task",
+						"{{ConfigurationTaskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Results",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = responseBody;",
+							"let pwd = pm.environment.get(\"ConfigZipFilePwd\");",
+							"pm.test(\"Please use \"+ pwd + \" to open file\",() => {pm.expect(pm.response.text()).to.include(\"STARTUP\");});",
+							"let FLAG = pm.environment.get(\"FLAG\");",
+							"if (FLAG > 1) {",
+							"    FLAG = FLAG - 1;",
+							"    pm.environment.set(\"FLAG\", FLAG);",
+							"    postman.setNextRequest(\"Get Configuration\");",
+							"}",
+							"else {",
+							"    FLAG = 0;",
+							"    pm.environment.set(\"FLAG\", FLAG);",
+							"    postman.setNextRequest(\"null\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{CCip}}{{ConfigurationFileId}}",
+					"protocol": "https",
+					"host": [
+						"{{CCip}}{{ConfigurationFileId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
