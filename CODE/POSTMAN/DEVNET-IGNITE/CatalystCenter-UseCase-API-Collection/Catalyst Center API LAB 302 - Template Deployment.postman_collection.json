@@ -1,11 +1,11 @@
 {
   "info": {
-    "_postman_id": "fcc5bf7a-51fc-41ff-bc4a-7068ab461158",
+    "_postman_id": "7e2d31dc-cbdc-45fe-b9f3-e79851f02e7f",
     "name": "Catalyst Center API LAB 302 - Template Deployment",
-    "description": "This Collection is designed to build a project in the template editor, and upload and commit a template ready for deployment.\n\nChanges made to Deploy Template due to API modifications. New Req'd field of versionedTemplateID. Additionally, issues found with v1 template on 2.3.5.5.\n\nChanges made to Get the Template Id from the Task Id response due to changes in response Body  \nAdditional changes to the Commit Template API URI due to modifications to published API with respect to the \"Conflict\" issues.\n\nPlease use the csv provided...\n\n[⬇︎Cisco Catalyst Center Design Settings CSV⬇︎](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-I-Rest-API-Orchestration/csv/DNAC-Design-Settings.csv)",
+    "description": "This Collection is designed to build a project in the template editor, and upload and commit a template ready for deployment.\n\nChanges made to Deploy Template due to API modifications. New Req'd field of versionedTemplateID. Additionally, issues found with v1 template on 2.3.5.5.\n\nPlease use the csv provided...\n\n[⬇︎ Catalyst Center Design Settings CSV ⬇︎](https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/POSTMAN/DEVNET-IGNITE/CCC-Design-Settings-v3.csv)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "13375428",
-    "_collection_link": "https://go.postman.co/collection/13375428-fcc5bf7a-51fc-41ff-bc4a-7068ab461158?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/13375428-7e2d31dc-cbdc-45fe-b9f3-e79851f02e7f?source=collection_link"
   },
   "item": [
     {
@@ -427,12 +427,14 @@
               "    pm.test(\"Template acquired\",() => {pm.expect(pm.response.text()).to.include(\"data\");});",
               "    pm.environment.set(\"TemplateId\", Data.templateId); ",
               "}",
+              "else {",
+              "    pm.test(\"Template acquired\",() => {pm.expect(pm.response.text()).to.include(\"templateId\");});",
+              "    pm.environment.set(\"TemplateId\", jsonData[\"response\"][\"data\"][\"templateId\"]);   ",
+              "}",
               "setTimeout(function(){}, [5000]);",
               "postman.setNextRequest(\"Commit Template\")"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         },
         {
@@ -441,9 +443,7 @@
             "exec": [
               ""
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
@@ -495,9 +495,7 @@
             "exec": [
               "pm.environment.get(\"TemplateId\");"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         },
         {
@@ -521,9 +519,7 @@
               "    postman.setNextRequest(\"null\");\r",
               "}"
             ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "type": "text/javascript"
           }
         }
       ],
