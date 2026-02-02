@@ -22,11 +22,20 @@ Navigate and open the desired collection runner through the following:
 
 To run the collection, do the following:
 
-   1. Locate the sub-components of the `Runner`
-   2. Optionally select the `Save Responses` option
-   3. Click  the `Run Catalyst Center API LAB 304 - Configuration Archive` button
+To run the collection, do the following:
+
+   1. Locate the sub components of the `Runner`
+   2. On the right under data, click *select* 
+   3. Browse and select the CSV using explorer
+   4. Click Open to select the file to be used
+   5. Optionally select the `Save Responses` option
+
+      ![Select File](./assets/Postman-Collection-ConfigArchive-Run-CSV.png?raw=true)
+
+   6. Click  the `Run Catalyst Center API LAB 201 - Device Discovery` button
 
       ![Run Collection](./assets/Postman-Collection-ConfigArchive-Runner.png?raw=true)
+
 
 ## Retrieve the Archive
 

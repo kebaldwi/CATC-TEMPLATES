@@ -22,21 +22,25 @@ PxGrid integration allows configuration automation by Catalyst Center within ISE
 3. On the PxGrid Settings page, verify both options have been selected and saved to allow for Catalyst Center to integration.
 
    ![ISE PxGrid](./assets/ise-pxgrid-settings.png?raw=true)
+   
    ![ISE PxGrid](./assets/ise-pxgrid-setup.png?raw=true)
 
 ## Step 2: Verify Catalyst Center and ISE Integration
 
-1. Open a web browser connection to Catalyst Center, select the hamburger menu, and navigate to the System > Settings menu item.
+1. Open a web browser connection to [**Catalyst Center**](https://198.18.129.100), select the hamburger menu, and navigate to the System > Settings menu item.
 
-   ![Catalyst Center Settings](./assets/dnac-system-settings.png?raw=true)
+   * username: `admin`
+   * password: `C1sco12345`
+
+   ![Catalyst Center Settings](./assets/catc-system-settings.png?raw=true)
 
 2. Within the System Settings page, navigate down the list on the left and select the Authentication and Policy Server section.
 
-   ![Catalyst Center AAA Settings](./assets/dnac-system-settings-aaa.png?raw=true)
+   ![Catalyst Center AAA Settings](./assets/catc-system-settings-aaa.png?raw=true)
 
 3. On the page, you will see the ISE node integrated with Catalyst Center as shown below.
 
-   ![Catalyst Center ISE Integrated](./assets/dnac-system-settings-aaa-ise-complete.png?raw=true)
+   ![Catalyst Center ISE Integrated](./assets/catc-system-settings-aaa-ise-complete.png?raw=true)
 
 > [**Next Section**](./03-postman.md)
 

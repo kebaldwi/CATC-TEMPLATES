@@ -41,35 +41,36 @@ To verify that the settings were assigned successfully, we will inspect the site
 
 Follow these steps:
 
-1. If Catalyst Center is not already open, use a browser and navigate to `https://198.18.129.100`, where you may see an SSL Error displayed as depicted. Click the `Proceed to https://192.18.129.100 (unsafe)` link to continue if presented
+1. Open a browser and navigate to [**Catalyst Center**](https://198.18.129.100), where an SSL Error is displayed as depicted. Click the **Proceed to `https://192.18.129.100` (unsafe)** link to continue
 
-   ![SSL Error](./assets/DNAC-SSLERROR.png?raw=true)
+   ![SSL Error](./assets/catc-SSLERROR.png?raw=true)
 
-2. If required, log into Catalyst Center with the following credentials:
-   * User name: `admin`
-   * Password: `C1sco12345`.
+2. Log into Catalyst Center using 
 
-   ![Login](./assets/DNAC-Login.png?raw=true)
+   * username: `admin`
+   * password: `C1sco12345`
 
-3. When the Catalyst Center Dashboard is displayed, Click the  icon to display the menu'
+   ![Login](./assets/catc-Login.png?raw=true)
 
-   ![Menu](./assets/DNAC-Menu.png?raw=true)
+3. When the Catalyst Center Dashboard is displayed, Click the **&#8801;** icon to display the menu'
+
+   ![Hamburger](./assets/catc-Menu.png?raw=true)
 
 4. Select `Design>Network Settings` from the menu to continue.
    
-   ![Network Settings](./assets/DNAC-Menu-Settings.png?raw=true)
+   ![Network Settings](./assets/catc-Menu-Settings.png?raw=true)
 
 5. Expand the Hierarchy on the left to show all specific `Area` select it and scroll through the settings.
 
-   ![Verify Settings](./assets/DNAC-Settings-Verify1.gif?raw=true)
+   ![Verify Settings](./assets/catc-Settings-Verify1.gif?raw=true)
 
 5. Expand the Hierarchy on the left to show all specific `Area` select it and scroll through the credentials.
 
-   ![Verify Credentials](./assets/DNAC-Settings-Verify2.png?raw=true)
+   ![Verify Credentials](./assets/catc-Settings-Verify2.png?raw=true)
 
 5. Expand the Hierarchy on the left to show all specific `Area` select it and scroll through the telemetry settings.
 
-   ![Verify Telemetry](./assets/DNAC-Settings-Verify3.gif?raw=true)
+   ![Verify Telemetry](./assets/catc-Settings-Verify3.gif?raw=true)
 
 ## Summary
 

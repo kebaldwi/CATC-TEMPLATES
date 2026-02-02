@@ -1,12 +1,14 @@
 # Introduction to REST API and Postman
 
-This set of Cisco Learning Labs is developed around a set of simple use cases to show both the power of Catalyst Center, the APIs, and easy methodologies for execution through Postman.
+This set of lab modules is developed around a set of simple use cases to show both the power of Catalyst Center, the APIs, and easy methodologies for execution through Postman.
 
-These Labs are designed for the Cisco DCLOUD - Catalyst Center pods for DevNet Test Drives Lab. It was developed for a Lab, which includes Catalyst Center 2.3.5.4 and equipment running at least 17.x versions of code.
+This module provides an overview of how we will use **Postman** with **Catalyst Center** and how we will set up the environment.
+
+The Labs are designed for the Cisco DCLOUD Demo Environment - "Catalyst Center pods for DevNet Test Drives v4". This Demo Environment includes Catalyst Center 2.3.7.10 and ISE 3.4 and equipment running at least 17.x versions of code built in 10 Cisco Modeling Lab (CML) pods.
 
 ## Catalyst Center
 
-![Cisco Catalyst Overview](./assets/cisco_dnac.png)
+![Cisco Catalyst Overview](./assets/cisco_catc.png)
 
 Catalyst Center is an intelligent Automation and Assurance platform for the campus. Catalyst Center enables, simplified Day-0 through Day-N management of switching, routing, and wireless infrastructure. It also improves operations with AI/ML-enhanced analytics to streamline troubleshooting and provide actionable insights into the health of the network and the quality of experience for users and applications. Here are some of the capabilities of Catalyst Center in their respective domains:
 

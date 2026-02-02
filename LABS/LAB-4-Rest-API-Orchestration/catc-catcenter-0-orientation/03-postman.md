@@ -8,7 +8,7 @@ To prepare Postman for the lab, please download the following collection and env
 
 > **Download**: <a href="https://git-link.vercel.app/api/download?url=https://github.com/kebaldwi/DNAC-TEMPLATES/blob/master/CODE/POSTMAN/DEVNET-IGNITE/CatalystCenter-UseCase-API-Collection.zip" target="_blank">⬇︎ Catalyst Center Use-Case API Collection ⬇︎</a>
 
-After you download the file, uncompress the compressed files and import all the files into Postman.
+After you download the file, decompress the compressed files and import all the files into Postman.
 
 Follow these steps:
 
@@ -32,7 +32,7 @@ Follow these steps:
 
    ![Postman Import Upload](./assets/Postman-Import-Upload.png)
 
-6. Confirm all the Collections are present.
+6. Confirm all the Collections in the image are present. 
 
    ![Postman Collections](./assets/Postman-Collection-Confirm.png)
 
@@ -60,7 +60,7 @@ To ensure uniformity across all calls made from the client when we use different
 
 ## SSL Settings and Disabling Validation
 
-For Lab purposes, Catalyst Center uses a self-signed certificate. This certificate may fail a validation precheck. Disable this setting to proceed with the Lab.
+For Lab purposes, Catalyst Center uses a self-signed certificate. This certificate may fail a validation pre-check. Disable this setting to proceed with the Lab.
 
 1. Click the Settings gear icon on the top right of Postman.
 
