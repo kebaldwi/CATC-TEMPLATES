@@ -8,16 +8,16 @@ This Lab is designed as a standalone lab to help customers with varying challeng
 
 Until this point, we have used REST API for some basic setup tasks, but there are so many situations that can be solved or at least eased using REST API in conjunction with Catalyst Center. In this lab, we will use a complete set of REST API collections which will build upon the foundational knowledge acquired in the previous labs. For this lab, we will concentrate on Catalyst Center configuration and how Catalyst Center can be automated to perform various functions which we have already covered. 
 
-This set of Labs is developed around a set of simple use cases to show both the power of Catalyst Center, the REST APIs, and easy methodologies for execution through Postman. This page will serve as the landing page for this lab section due to the amount of content it will cover and the need to expand on it over time. 
+This set of Labs is developed around a set of simple use cases to show both the power of Catalyst Center, the REST APIs, and easy methodologies for execution through Postman.
 
-The lab will utilize a set of collections publically shared on postman workspaces and those collections will also be expanded to keep in line with this lab.
+The lab will utilize a set of collections publicly shared on postman workspaces and those collections will also be expanded to keep in line with this lab.
 
 > [!IMPORTANT] 
-> Please note that LAB content in this Repository is aligned with specific DCLOUD Demonstrations that have to be set up by either a **Cisco Employee** or a **Cisco Parter**. If you are having trouble accessing the DCLOUD content please get in touch with your **Local Cisco Account Team**.
+> Please note that LAB content in this Repository is aligned with specific DCLOUD Demonstrations that have to be set up by either a **Cisco Employee** or a **Cisco Partner**. If you are having trouble accessing the DCLOUD content please get in touch with your **Local Cisco Account Team**.
 
 ## Lab Modules
 
-The Story we will use will be the following, after orientation, we will first integrate ISE with Catalyst Center, and then construct our design. The design comprises of a hierarchy, settings and credentials. With the hierarchy set, we sill discover our pod devices assigned by the instructor and then deploy templates to the pod. After some time we will archive the configurations of the pod, amd then collect the updated inventory. Finally we will send a show CDP neighbor command to the equipment we have been assigned. 
+The Story we will use will be the following, after orientation, we will first integrate ISE with Catalyst Center, and then construct our design. The design consists of a hierarchy, settings and credentials. With the hierarchy set, we still discover our pod devices assigned by the instructor and then deploy templates to the pod. After some time we will archive the configurations of the pod, and then collect the updated inventory. Finally, we will send a show CDP neighbor command to the equipment we have been assigned. 
 
 The use cases we will cover are the following which you can access via the links below:
 
@@ -36,13 +36,13 @@ The following section of the README contains information for DevNet Test Drive i
 
 ### The DCLOUD Environment
 
-For DevNet Test Drive events, use this environment: [DNAC pods for DevNet Test Drives](https://tbv3-ui.ciscodcloud.com/edit/9uxy98sb1wresh3vrw60lfsa7)
+For DevNet Test Drive events, use this environment: [**Catalyst Center pods for DevNet Test Drives v4**]()
 
 The DCLOUD session includes the following equipment.
 
 * Virtual Machines:
-  * Catalyst Center 2.3.5.6 or better
-  * Identity Services Engine (ISE) 3.0 Patch 4 or better (deployed)
+  * Catalyst Center 2.3.7.10 or better
+  * Identity Services Engine (ISE) 3.4 Patch 3 or better (deployed)
   * Script Server - Ubuntu 20.04  or better
   * Windows 10 Jump Host 
   * Windows Server 2019 - Can be configured to provide identity, DHCP, DNS, etc.
@@ -132,7 +132,7 @@ For an understanding of postman, please visit this site:
 
 #### Google Chrome
 
-Google Chrome is the optimal browser of choice when working in the DNA Center UI. 
+Google Chrome is the optimal browser of choice when working in the Catalyst Center UI. 
 
 To download Google Chrome, please visit. 
 

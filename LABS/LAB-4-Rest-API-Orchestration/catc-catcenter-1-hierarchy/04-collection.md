@@ -13,7 +13,7 @@ To investigate this collection, follow these steps:
 Navigate and open the Collection through the following steps:
 
    1. Within Postman, click on the Collection shortcut in the sidebar
-   2. Expand the collection `Catalyst Center API LAP 100 - Build Hierarchy` by clicking the arrow.
+   2. Expand the collection `Catalyst Center API LAB 100 - Build Hierarchy` by clicking the arrow.
    3. The tab with the API within the collection will appear to the right
    4. You can view the configuration of the API through these tabs. As a quick reference, a green dot appears wherever configuration is applied.
    
@@ -40,8 +40,8 @@ There are three types of variables within Postman.
 
 Click the `Authorization` tab to display the Authorization parameters
 
-   1. Here, we see that this API is using Basic Auth to get a TOKEN
-   2. Two environmental variables **{{CCuser}}** and **{{CCpwd}}** are used and can be viewed by hovering over the variables presented. The values are pulled from the environment variables.
+   1. Here, we see that this API is using **Basic Auth** to get a TOKEN
+   2. Two environmental variables **{{CCuser}}** and **{{CCpwd}}** are used and can be viewed by checking show password, and hovering over the variables presented. The values are pulled from the environment variables.
 
       ![Request Authorization](./assets/Postman-Collection-Token-Auth.png?raw=true)
 
@@ -56,11 +56,11 @@ Within the API, we will investigate the `Headers` through the following:
 
 ### Tests
 
-Within the API, we will investigate the `Tests` through the following:
+Within the API, we will investigate the post response scripts formerly `Tests` through the following:
 
-   1. Click the `Tests` tab to to display the Test parameters:
+   1. Click the `Tests` or on the newer UI `Scripts` tab and select `Post Response` to display the Test parameters:
 
-   ![Request Test Script](./assets/Postman-Collection-Token-Test.png?raw=true)
+      ![Request Test Script](./assets/Postman-Collection-Token-Test.png?raw=true)
    
    2. The API has the following defined:
 

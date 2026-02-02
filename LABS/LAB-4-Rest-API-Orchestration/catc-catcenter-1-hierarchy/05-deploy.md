@@ -9,7 +9,7 @@ Follow these steps:
 Navigate and open the desired collection runner through the following:
 
    1. Within Postman, click on the collection shortcut in the sidebar
-   2. Hover over the collection `Catalyst Center API LAP 100 - Build Hierarchy`
+   2. Hover over the collection `Catalyst Center API LAB 100 - Build Hierarchy`
    3. Click the `Run Collection` submenu option
 
       ![Collection Run](./assets/Postman-Collection-Hierarchy.png?raw=true)
@@ -25,7 +25,7 @@ To run the collection, do the following:
 
       ![Select File](./assets/Postman-Collection-Hierarchy-Run-CSV.png?raw=true)
 
-   5. Click  the `Run Catalyst Center API LAP 100 - Build Hierarchy` button
+   5. Click  the `Run Catalyst Center API LAB 100 - Build Hierarchy` button
 
       ![Collection Runner](./assets/Postman-Collection-Hierarchy-Runner.png?raw=true)
 
@@ -39,31 +39,34 @@ To verify that the Hierarchy was built successfully, we will inspect the site in
 
 Follow these steps:
 
-1. Open a browser and navigate to `https://198.18.129.100`, where an SSL Error is displayed as depicted. Click the `Proceed to https://192.18.129.100 (unsafe)` link to continue
+1. Open a browser and navigate to [**Catalyst Center**](https://198.18.129.100), where an SSL Error is displayed as depicted. Click the **Proceed to `https://192.18.129.100` (unsafe)** link to continue
 
-   ![SSL Error](./assets/DNAC-SSLERROR.png?raw=true)
+   ![SSL Error](./assets/catc-SSLERROR.png?raw=true)
 
-2. Log into Catalyst Center using the username of `admin` and the password `C1sco12345`.
+2. Log into Catalyst Center using 
 
-   ![Login](./assets/DNAC-Login.png?raw=true)
+   * username: `admin`
+   * password: `C1sco12345`
 
-3. When the Catalyst Center Dashboard is displayed, Click the  icon to display the menu'
+   ![Login](./assets/catc-Login.png?raw=true)
 
-   ![Hamburger](./assets/DNAC-Menu.png?raw=true)
+3. When the Catalyst Center Dashboard is displayed, Click the **&#8801;** icon to display the menu'
+
+   ![Hamburger](./assets/catc-Menu.png?raw=true)
 
 4. Select `Design>Network Hierarchy` from the menu to continue.
 
-   ![Menu](./assets/DNAC-Menu-Hierarchy.png?raw=true)
+   ![Menu](./assets/catc-Menu-Hierarchy.png?raw=true)
 
 5. Expand the Hierarchy on the left to show your specific `Area`
 
-   ![Verify](./assets/DNAC-Hierarchy-Student-Verify.png?raw=true)
+   ![Verify](./assets/catc-Hierarchy-Student-Verify.png?raw=true)
 
 ## Summary
 
 At this point, we have built the Hierarchy utilizing environment variables and REST-API's within the collection runner. To continue your learning, look at the various REST-API's used to complete this task. Notice that there was a task to create a **{{Token}}** for authentication, which was used and proceeded with the calls to create the Area, Building, and Floor. Each layer of the hierarchy was a singular call. 
 
-> **Note**: Additionally, if there is time, look at the pre and post-scripts.
+> **Note**: Additionally, if there is time, look at the pre and response scripts.
 
 > [**Next Module**](../catc-catcenter-2-settings/01-intro.md)
 
