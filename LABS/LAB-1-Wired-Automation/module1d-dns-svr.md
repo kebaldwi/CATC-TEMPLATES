@@ -4,7 +4,7 @@ As you may recall, for a device to discover Catalyst Center, the device uses a d
 
 The PnP components are as follows:
 
-![json](../../ASSETS/pnp-workflows.png?raw=true "Import JSON")
+![json](../../ASSETS/COMMON/CATC/pnp-workflows.png?raw=true "Import JSON")
 
 There are three automated methods to make that occur and in this section we will use DNS Discovery. To aide in that we are goiing to utilize both Windows DHCP and DNS services. The Target switch, commonly called Access switch will need to do a DNS lookup in order to find Catalyst Center.
 

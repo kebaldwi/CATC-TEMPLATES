@@ -208,7 +208,7 @@ In order for **Plug and Play (PnP)** to work, we need to the device to communica
 
 The PnP components are as follows:
 
-![json](../../ASSETS/pnp-workflows.png?raw=true "Import JSON")
+![json](../../ASSETS/COMMON/CATC/pnp-workflows.png?raw=true "Import JSON")
 
 ### Step 5.1 - PnP Requirements
 
