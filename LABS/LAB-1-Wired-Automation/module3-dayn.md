@@ -79,26 +79,26 @@ We will use the **Template Hub** to write, maintain and test template projects. 
 
 1. Navigate to the **Template Hub**  within Catalyst Center through the menu **`Tools > Template Hub`**.
 
-   ![json](./images/DNAC-NavigateTemplate.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateTemplate.png?raw=true "Import JSON")
 
 2. Within the **Template Hub**, hover over the import link and select **Import Project** within the menu.  
 
-   ![json](./images/DNAC-ProjectImportBegins.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ProjectImportBegins.png?raw=true "Import JSON")
 
 3. Click **Select a file from your computer**, then in the file explorer search for the file as shown in the image `Titanium_WiredAutoLab_Jinja2_project.json`. This project will be the one that has all our templates. Click **Open** to prepare it for uploading.
 
-   ![json](./images/DNAC-ProjectImportSelect.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ProjectImportSelect.png?raw=true "Import JSON")
 
 4. Click **Import** 
 
-   ![json](./images/DNAC-ProjectImportDayN.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ProjectImportDayN.png?raw=true "Import JSON")
 
 5. Within the **Template Hub** you will notice a new Project appear, click on the **Project Name** link to display the Projects. Notice the following:
    1. Project - **DCLOUD CATC Template Labs DayN Jinja2** 
    2. Composite Template - **CATC Template Labs DayN Composite Jinja2** 
    3. Regular Template - **c9300-2-Setup-Configuratioh**
 
-   ![json](./images/DNAC-ProjectImported.png?raw=true "New IMage Required")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ProjectImported.png?raw=true "New IMage Required")
 
 6. Select the **AAA-Configuration** template and notice it has configuration within it. Some templates are just that, others make use of logical statements, conditional statements, looping structures and variables. You will see the following commands in the template selected.
 
@@ -130,7 +130,7 @@ We will Create and Assign **TAGs** to the **ACCESS** switch and the **DISTRO** s
 
    1. Within Catalyst Center Navigate to **`Provision > Network Devices > Inventory`**      
 
-      ![json](./images/DNAC-NavigateInventory.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateInventory.png?raw=true "Import JSON")
 
    2. We will **TAG** the device **c9300-1** as **ACCESS**, complete the following:
 
@@ -139,7 +139,7 @@ We will Create and Assign **TAGs** to the **ACCESS** switch and the **DISTRO** s
       3. Enter **`ACCESS`** in the search field for the **TAG** 
       4. Click the option **Create new tag (ACCESS)**   
 
-            ![json](./images/CATC-Inventory-TAG-9300-1-ACCESS.png?raw=true "Import JSON")
+            ![json](../../ASSETS/LABS/WIRED/CATC-Inventory-TAG-9300-1-ACCESS.png?raw=true "Import JSON")
 
    3. We will **TAG** the device **c9300-2** as **DISTRO**, complete the following:
 
@@ -148,11 +148,11 @@ We will Create and Assign **TAGs** to the **ACCESS** switch and the **DISTRO** s
       2. Enter **`DISTRO`** in the search field for the **TAG** 
       3. Click the option **Create new tag (DISTRO)**   
 
-            ![json](./images/CATC-Inventory-TAG-9300-2-DISTRO.png?raw=true "Import JSON")
+            ![json](../../ASSETS/LABS/WIRED/CATC-Inventory-TAG-9300-2-DISTRO.png?raw=true "Import JSON")
 
    4. At this point the two switches **c9300-1** and **c9300-2** should be tagged accordingly as shown:    
 
-      ![json](./images/CATC-Inventory-TAG-9300s-RESULT.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/CATC-Inventory-TAG-9300s-RESULT.png?raw=true "Import JSON")
 
 #### Step 2 - Modify the Network Profile for the DayN Templates
 
@@ -162,16 +162,16 @@ We will Modify and Assign **DayN Templates** to the switches using **ACCESS** an
 
    1. Navigate to Network Profiles by selecting **`Design > Network Profiles`**.
 
-      ![json](./images/DNAC-NavigateProfile.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateProfile.png?raw=true "Import JSON")
 
 
    2. Click the **Edit** link next to the **CATC Template Lab Floor 1** switching profile created earlier.  
 
-      ![json](./images/DNAC-ProfileEdit.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileEdit.png?raw=true "Import JSON")
 
    3. Within the Profile Editor, select the **Day-N Template(s)** tab click **⨁ Add Template** 
 
-         ![json](./images/DNAC-ProfileDayNAdd.png?raw=true "Import JSON")   
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileDayNAdd.png?raw=true "Import JSON")   
 
    4. Within the **Add Template** side tile complete the following:
 
@@ -183,7 +183,7 @@ We will Modify and Assign **DayN Templates** to the switches using **ACCESS** an
       4. The **ACCESS** tag should now appear as shown in the **APPLICABLE DEVICE TAGS** section
       5. Click **Add**
 
-         ![json](./images/DNAC-ProfileDayN-ACCESS.png?raw=true "Import JSON")   
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileDayN-ACCESS.png?raw=true "Import JSON")   
 
       For the **`c9300-2-Setup-Configuration`** Template do the following:
 
@@ -193,23 +193,23 @@ We will Modify and Assign **DayN Templates** to the switches using **ACCESS** an
       4. The **DISTRO** tag should now appear as shown in the **APPLICABLE DEVICE TAGS** section
       5. Click **Add**
 
-         ![json](./images/DNAC-ProfileDayN-DISTRO.png?raw=true "Import JSON")   
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileDayN-DISTRO.png?raw=true "Import JSON")   
 
    5. Click **X** to close the **Add Template** window.
 
-         ![json](./images/DNAC-ProfileCloseAddTemplate.png?raw=true "Import JSON")   
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileCloseAddTemplate.png?raw=true "Import JSON")   
 
    6. You will notice both templates as shown click the **view Device Tag** link on the **`c9300-2-Setup-Configuration`** Template and verify the **DISTRO** tag appears as shown.
 
-      ![json](./images/DNAC-ProfileSuccess-1.png?raw=true "Import JSON")   
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileSuccess-1.png?raw=true "Import JSON")   
 
    7. You will notice both templates as shown click the **view Device Tag** link on the **`c9300-2-Setup-Configuration`** Template and verify the **DISTRO** tag appears as shown.
 
-      ![json](./images/DNAC-ProfileSuccess-2.png?raw=true "Import JSON")   
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileSuccess-2.png?raw=true "Import JSON")   
 
    8. Click **Save** to save the modifications to the Network Profile.
 
-      ![json](./images/DNAC-ProfileSuccess.png?raw=true "Import JSON")   
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileSuccess.png?raw=true "Import JSON")   
 
 ### Section 3 - Greenfield DayN Provisioning Sequence
 
@@ -223,20 +223,20 @@ We will now provision the switch using DayN Templates. To do this, do the follow
 
    1. Within Catalyst Center Navigate to **`Provision > Network Devices > Inventory`**.      
 
-      ![json](./images/DNAC-NavigateInventory.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateInventory.png?raw=true "Import JSON")
 
    2. Put a checkmark next to the device **c9300-1** to be provisioned.
    3. Click the **Actions > Provision > Provision Device** link and walk through the workflow presented:    
 
-      ![json](./images/DNAC-ProvisionBegin.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionBegin.png?raw=true "Import JSON")
 
       1. The floor was already selected as part of the claim so click **next**    
 
-         ![json](./images/DNAC-ProvisionSite.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionSite.png?raw=true "Import JSON")
 
       2. Select **c9300-1** on the left and ensure the two tick boxes at the top of the page are ticked, then click the **SystemManagement-Configuration** tab. Enter `Building10` as the location  
 
-         ![json](./images/DNAC-ProvisionAdvConfig-1.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionAdvConfig-1.png?raw=true "Import JSON")
       
       3. Click the **Interfaces-Configuration** tab. Select the following as shown:
 
@@ -244,33 +244,33 @@ We will now provision the switch using DayN Templates. To do this, do the follow
          1. Access Point Interfaces: **`GigabitEnthernet1/0/2`**  
          1. Then click **Next** to continue
 
-            ![json](./images/DNAC-ProvisionAdvConfig-2.png?raw=true "Import JSON")
+            ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionAdvConfig-2.png?raw=true "Import JSON")
       
       4. Review the information to be deployed and click **Deploy**.
 
-         ![json](./images/DNAC-ProvisionDeploy.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionDeploy.png?raw=true "Import JSON")
 
       5. Select **`Generate Configuration Preview`** and then click **Apply** on the Provision Device pop-up screen.
 
-         ![json](./images/DNAC-ProvisionApply.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionApply.png?raw=true "Import JSON")
 
    4. The task will be submitted, and the deployment will run. Click on **Work Items** to display the configuration rendered prior to provisioning.
 
-      ![json](./images/DNAC-ProvisionTask.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionTask.png?raw=true "Import JSON")
 
    5. The configuration will be rendered, and you can click the preview to show it, and continue the deployment. Within the preview page click **Deploy** and the deployment will run. 
 
-      ![json](./images/DNAC-ProvisionTasking.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionTasking.png?raw=true "Import JSON")
 
    6. You will be presented with a screen to schedule the deployment, select **Now** and click **Apply**. A screen will pop up after this asking whether you wish to delete the task, click **No** to keep a history.
 
-      ![json](./images/DNAC-ProvisionScheduled.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionScheduled.png?raw=true "Import JSON")
 
-      ![json](./images/DNAC-ProvisionScheduled-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionScheduled-2.png?raw=true "Import JSON")
 
    7. You can monitor the deployment on the Inventory page. Return to the Inventory via the menu, and change to the **Provisioning** Focus as shown.
 
-      ![json](./images/DNAC-InventoryProvision.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-InventoryProvision.png?raw=true "Import JSON")
        
 At this point, we have onboarded a device and successfully pushed configuration via Onboarding and DayN Templates. Our DayN automation for the Greenfield device used a **Composite** template composed of **Regular** templates. Take some time and review the templates and logic used.
 
@@ -289,43 +289,43 @@ We will now provision the switch using DayN Templates. To do this, do the follow
 
    1. Within Catalyst Center Navigate to **`Provision > Inventory`**.      
 
-      ![json](./images/DNAC-NavigateInventory.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateInventory.png?raw=true "Import JSON")
 
    2. Put a checkmark next to the device **c9300-2** to be provisioned.
    3. Click the **Actions > Provision > Provision Device** link and walk through the workflow presented:    
 
-      ![json](./images/DNAC-ProvisionBegin-c9300-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionBegin-c9300-2.png?raw=true "Import JSON")
 
       1. The floor was already selected as part of the claim so click **next**    
 
-         ![json](./images/DNAC-ProvisionSite-c9300-2.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionSite-c9300-2.png?raw=true "Import JSON")
 
       2. Select **c9300-2** on the left and ensure the two tick boxes at the top of the page are ticked, then complete the following:
       
          1. Enter **`Building10`** for the SNMP Location 
          2. Click the down arrow beside **Routed Interfaces** to allow you to search and select interface **`GigabitEthernet1/0/48`**  
 
-            ![json](./images/DNAC-ProvisionAdvConfig-1-c9300-2.png?raw=true "Import JSON")
+            ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionAdvConfig-1-c9300-2.png?raw=true "Import JSON")
       
       3. Click the **Access Point Interfaces** dropdown and then search and select interface **`GigabitEthernet1/0/2`** which has an Access Point attached to it.
 
-         ![json](./images/DNAC-ProvisionAdvConfig-2-c9300-2.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionAdvConfig-2-c9300-2.png?raw=true "Import JSON")
 
       4. Review the information and click **Next**.
 
-         ![json](./images/DNAC-ProvisionAdvConfig-3-c9300-2.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionAdvConfig-3-c9300-2.png?raw=true "Import JSON")
 
       5. Review the information and click **Deploy**.
 
-         ![json](./images/DNAC-ProvisionSummary-c9300-2.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionSummary-c9300-2.png?raw=true "Import JSON")
 
       6. Select **`Now`** and then click **Apply** on the Provision Device pop-up screen to deploy the template immediately.
 
-         ![json](./images/DNAC-ProvisionDeploy-c9300-2.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ProvisionDeploy-c9300-2.png?raw=true "Import JSON")
 
    5. The task will be submitted, and the deployment will run. You can monitor the deployment on the Inventory page. Change to the **Provisioning** Focus as shown.
 
-      ![json](./images/DNAC-InventoryProvision.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-InventoryProvision.png?raw=true "Import JSON")
        
 At this point, we have onboarded a device and successfully pushed configuration via Discovery and DayN Templates. Our DayN automation for the Brownfield Device used a **Regular** template and within it multiple **Included** templates. Take some time and review the templates and logic used.
 

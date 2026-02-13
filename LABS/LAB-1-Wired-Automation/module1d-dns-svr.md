@@ -25,7 +25,7 @@ If we want to use the Windows DHCP service, connect to the windows **AD1** serve
 
 When using the Windows DHCP Server with the DNS Lookup discovery method, we will add the appropriate DNS server IP addresses along with the domain suffix that the switch will use to resolve the **pnpserver** record within DNS. 
 
-![json](./images/WindowsDHCPscope.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/WindowsDHCPscope.png?raw=true "Import JSON")
 
 This is an **example** of how you can build a **scope** below. For the **configuration** please download and use the **script** here: 
 
@@ -45,9 +45,9 @@ Next, we will add the relevant DNS entries into the Windows DNS service to allow
 
 The DNS Zone will look like this in Windows DNS Administrative tool: 
 
-![json](./images/DNACenterDNSentries.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DNACenterDNSentries.png?raw=true "Import JSON")
 
-![json](./images/DNACenterDNSentries2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DNACenterDNSentries2.png?raw=true "Import JSON")
 
 > [!NOTE] 
 > To utilize DNS Entry for Discovery purposes Certificates will need to be rebuilt with Subject Alternative Names. Please utilize the process documented in the following page [**Certificate Deployment**](./Certificates.md) for information on that process.
@@ -76,20 +76,20 @@ In this section we will prepare Domain Name System (DNS) and Dynamic Host Config
 
 2. Once downloaded, extract the file.
 
-   ![json](./images/Powershell-Extract.png?raw=true "Import JSON")
-   ![json](./images/Powershell-Extract-Location.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Extract.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Extract-Location.png?raw=true "Import JSON")
 
 3. Right click on the file and run with powershell.
 
-   ![json](./images/Powershell-Run.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Run.png?raw=true "Import JSON")
 
 4. You may see a security warning. If you do accept it by entering **Y**.
 
-   ![json](./images/Powershell-Security.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Security.png?raw=true "Import JSON")
 
 At this point all the DNS and DHCP configuration on the **windows server** will be generated.
 
-   ![json](./images/DNS-DHCP.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNS-DHCP.png?raw=true "Import JSON")
 
 ### Step 5.2c - Windows DHCP Helper Configuration
 
@@ -120,7 +120,7 @@ nslookup pnpserver.pnp.dcloud.cisco.com
 
 The following output or something similar shows the resolution of the alias to the A host record entry which identifies the VIP address for the Catalyst Center Cluster will display.
 
-![json](./images/CC-Discovery-dns-lookup-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-dns-lookup-ipv4.png?raw=true "Import JSON")
 
 Second, we need to ensure the Catalyst Center responds on the VIP, so use the ping command within the CMD application window previously opened as follows:
 
@@ -131,7 +131,7 @@ ping pnpserver.pnp.dcloud.cisco.com
 
 The test results should look similar to this:
 
-![json](./images/CC-Discovery-dns-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-dns-ipv4.png?raw=true "Import JSON")
 
 Third, we can ping Catalyst Center from the Distribution Switch utilizing the following scripts:
 
@@ -170,7 +170,7 @@ conf t
 ```
 The test results should look similar to this:
 
-![json](./images/CC-Discovery-DNS-Test-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-DNS-Test-ipv4.png?raw=true "Import JSON")
 
 At this point, the environment should be set up to onboard devices within VLAN 5 using the network address **192.168.5.0/24** utilizing **DNS discovery **
 

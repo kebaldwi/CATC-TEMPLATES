@@ -21,23 +21,23 @@ During this section we will duplicate the previously created **Basic RF Profile*
 
 1. To create our **AI RF Profile**, first open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select **`Design > Network Settings`**.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the **`Wireless`** tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page select the **checkbox**  beside the **Basic RF Profile** named **BASIC-RF**
 
-   ![json](./images/module2-wlans/dnac-wireless-rfprofile-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-results.png?raw=true "Import JSON")
 
 4. To Create **AI RF Profile** from the Actions menu select **Upgrade to AI**. This will **duplicate** the wireless settings and open up an **AI profile** to be edited.
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile.png?raw=true "Import JSON")
 
 5. Select **Yes** to the **Upgrade to AI** popup
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-1.png?raw=true "Import JSON")
 
 6. An editable version of the new **AI RF Profile** will appear. Complete the following steps: 
 
@@ -45,7 +45,7 @@ During this section we will duplicate the previously created **Basic RF Profile*
    2. Set the **Busy Hours** to **low** as shown
    3. Click **Save** continue
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-2.png?raw=true "Import JSON")
 
 </details>
 
@@ -63,11 +63,11 @@ To assign the **AI Profile** to the **Building**. **AI Profiles** if you remembe
 
 1. To assign **AI RF Profile** we need to first enable the **AI Analytics** within the **Catalyst Center** system settings. Navigate to **`System > Settings`**. 
 
-   ![json](./images/module2-wlans/dnac-navigate-system.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigate-system.png?raw=true "Import JSON")
 
 2. Select **Cisco AI Analytics** to enable the capability.
 
-   ![json](./images/module2-wlans/dnac-navigate-system-ai.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigate-system-ai.png?raw=true "Import JSON")
 
 3. The **Cisco AI Analytics** page displays. Enable the following:
 
@@ -76,24 +76,24 @@ To assign the **AI Profile** to the **Building**. **AI Profiles** if you remembe
    3. Enable Endpoint Smart Grouping
    4. Enable AI Spoofing Detection
    
-      ![json](./images/module2-wlans/dnac-system-ai-analytics-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-system-ai-analytics-1.png?raw=true "Import JSON")
 
    5. Enable log export
    6. On the dropdown provided choose **US East (N. Virginia)** for the storage of data.
 
-      ![json](./images/module2-wlans/dnac-system-ai-analytics-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-system-ai-analytics-2.png?raw=true "Import JSON")
 
    7. Click the **Enable** button to continue.
 
-      ![json](./images/module2-wlans/dnac-system-ai-analytics-3.png?raw=true "Import JSON")  
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-system-ai-analytics-3.png?raw=true "Import JSON")  
 
 4. Click the **checkbox** to accept the **EULA** and then click **Submit**
 
-   ![json](./images/module2-wlans/dnac-system-ai-analytics-4.png?raw=true "Import JSON")  
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-system-ai-analytics-4.png?raw=true "Import JSON")  
 
 5. Click **OK** on the Success Popup displayed.
 
-   ![json](./images/module2-wlans/dnac-system-ai-analytics-5.png?raw=true "Import JSON")  
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-system-ai-analytics-5.png?raw=true "Import JSON")  
 
 ### Step 2 - ***Assign AI RF Profile***
 
@@ -101,35 +101,35 @@ During this section we will assign the previously created **AI RF Profile**. If 
 
 1. To assign our **AI RF Profile**, first open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select **`Design > Network Settings`**.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the **`Wireless`** tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page select the **AI RF Profile**  beside the **Basic RF Profile** 
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-1.png?raw=true "Import JSON")
 
 4. In the **AI RF Profile** section locate the profile **AI-RFP** and on the right click the **`...`** symbol and then from the menu **Assign Locations** 
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-2.png?raw=true "Import JSON")
 
 5. On the **Assign Locations to AI RF-Profile** popout page use the hierarchy to navigate and select the **Building** as shown. Then click **Assign**
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-3.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-3.png?raw=true "Import JSON")
 
 6. Click **Confirm** to continue  
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-4.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-4.png?raw=true "Import JSON")
 
 7. Click **Continue** to continue 
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-5.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-5.png?raw=true "Import JSON")
 
 8. On the **AI RF Profile** section click the **1**  beside the **AI-RFP Profile** to see where its assigned.
 
-   ![json](./images/module2-wlans/dnac-wireless-airfprofile-assign-6.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-airfprofile-assign-6.png?raw=true "Import JSON")
 
 </details>
 

@@ -26,7 +26,7 @@ The lab will be split into modules to concentrate on specific tasks. Each is des
 
 ## Preparation
 
-To complete this module, it's best to connect to the dCloud lab environment using your laptop so that you can get accustomed to and begin using the tools. If you cannot install postman, completing all tasks via the workstation in the DCLOUD environment is possible.
+To complete this module, it's best to connect to the DCLOUD lab environment using your laptop so that you can get accustomed to and begin using the tools. If you cannot install postman, completing all tasks via the workstation in the DCLOUD environment is possible.
 
 Our screenshots will all be from the jump host but remember you can use your laptop.
 
@@ -34,7 +34,7 @@ If you would like to connect to the DCLOUD environment, please ensure you instal
 
 ### Lab Requirements
 
-This lab is designed to be run in Cisco dClouds - Enterprise Network Sandbox Lab. It was developed in version 4, including Catalyst Center 2.2.3.4 and equipment running at least 17.x versions of code. 
+This lab is designed to be run in Cisco DCLOUDs - Enterprise Network Sandbox Lab. It was developed in version 4, including Catalyst Center 2.2.3.4 and equipment running at least 17.x versions of code. 
 
 > [!IMPORTANT] 
 > Please note that LAB content in this Repository is aligned with specific DCLOUD Demonstrations that have to be set up by either a **Cisco Employee** or a **Cisco Parter**. If you are having trouble accessing the DCLOUD content please get in touch with your **Local Cisco Account Team**.
@@ -79,7 +79,7 @@ Hardware Devices:
 
 The lab envionment that is available is depicted here:
 
-![json](../../ASSETS/COMMON/DCLOUD/DCLOUD_Topology3.png?raw=true "Import JSON")
+![json](../../../ASSETS/COMMON/DCLOUD/DCLOUD_Topology3.png?raw=true "Import JSON")
 
 ## Lab Credentials:
 
@@ -103,9 +103,9 @@ Please utilize the following tools to run the lab effectively and ensure they ar
 
 #### Cisco AnyConnect VPN Client
 
-This software is required to connect your workstation to Cisco dCloud. For an explanation of AnyConnect and how to use it with dCloud, please visit the following URL: 
+This software is required to connect your workstation to Cisco DCLOUD. For an explanation of AnyConnect and how to use it with DCLOUD, please visit the following URL: 
 
-- <a href="https://dcloud-cms.cisco.com/help/android_anyconnect" target="_blank">dCloud AnyConnect Documentation</a>
+- <a href="https://dcloud-cms.cisco.com/help/android_anyconnect" target="_blank">DCLOUD AnyConnect Documentation</a>
 
 If you do not have the AnyConnect client, please visit. 
 

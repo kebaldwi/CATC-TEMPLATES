@@ -38,7 +38,7 @@ For routing in the environment an OSPF IGP process has been created to propogate
 
 The 9130AX and or 4800 Access Points are connected to both access switches and the ports are automatically configured via the AUTOCONF feature.
 
-![json](./images/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
 
 # Lab Section 1 - Access Point PnP
 
@@ -52,7 +52,7 @@ In order to land on Catalyst Center though the device needs help in finding it.
 
 The PnP components are as follows:
 
-![json](./images/module3-approvisioning/pnp-workflows.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/pnp-workflows.png?raw=true "Import JSON")
 
 There are 3 automated methods to make that occur:
 
@@ -73,7 +73,7 @@ There are 3 automated methods to make that occur:
 
 **Option 3:** requires that along with the address and gateway the DHCP server offer a name server to resolve the address of **device-helper.cisco.com**. Additionally it requires the that Catalyst Center register a file with the PnP Connect portal which it will offer via SSL to a device which reaches out. In order to whitelist those devices, the serial number would have to be associated to the DNAC profile within software centrals pnp connect portal.
 
-![json](./images/module3-approvisioning/pnp-connect.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/pnp-connect.png?raw=true "Import JSON")
 
 Once one of the options has been built devices will get the address and be pointed to and land on Catalyst Center within the PnP Device list.
 
@@ -84,11 +84,11 @@ Once one of the options has been built devices will get the address and be point
 
 DHCP services are important to understand primarily because along with the address and the gateway for connectivity is assigned option 43 which primes or directs the Cisco Access Point towards **Catalyst Center** or typically a **Wireless Controller**.
 
-![json](./images/module1-pnpdiscovery/dhcp-lab-scope.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dhcp-lab-scope.png?raw=true "Import JSON")
 
 Within the Scopes is a scope for the Access Point Vlan, aptly named *APVLAN* and within that you will see option 43 defined which is given to all clients within the scope.
 
-![json](./images/module1-pnpdiscovery/dhcp-apvlan-option43.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dhcp-apvlan-option43.png?raw=true "Import JSON")
 
 ## Step 2 - ***Access Point Port Configuration***
 
@@ -134,7 +134,7 @@ The Access Points are typically in varied states. Use the DCLOUD UI to console i
 6. The AP will clear its config and reboot.
 7. After a few moments have passed check the PnP Claim page and the AP should be in the list.
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-unclaimed.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-unclaimed.png?raw=true "Import JSON")
 
 At this point of the process the Access Points should appear in the PnP Claim window.
 
@@ -142,65 +142,65 @@ At this point of the process the Access Points should appear in the PnP Claim wi
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select **`Provision > Network Devices > Plug and Play`**.
 
-   ![json](./images/module3-approvisioning/dnac-menu-provision-pnp.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-menu-provision-pnp.png?raw=true "Import JSON")
 
 2. On the *Plug and Play* page the following will appear. Notice the two access points have discovered and landed on Catalyst Center.
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-unclaimed.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-unclaimed.png?raw=true "Import JSON")
 
 3. On the *Plug and Play* page select the two access points as shown, then click on *Actions > Claim* within the **Actions** menu. 
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim.png?raw=true "Import JSON")
 
 4. Within the **Claim** workflow on page **1** you will notice the Access Points may already be within the site **`Global/DNAC Template Lab/Building/Floor 1`** if not you have an option to select the Floor1 at this time if necessary complete the task. When ready click **Next** to continue the workflow. 
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-1.png?raw=true "Import JSON")
 
 5. Within the **Claim** workflow on page **2** we need to assign an *RF Profile*. When ready click **Assign** to continue on this section. 
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-2-assign-a.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-2-assign-a.png?raw=true "Import JSON")
 
 6. A slide out **Configuration** window will appear. Please complete the following:
    1. Click the **Radio Frequency Profile** drop down selection window
    2. From the list that appears select **BASIC-RFP** which we previously created and click **Save**
 
-      ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-1.png?raw=true "Import JSON")
    
    3. Then click the **`...`** on the right and a menu will appear. Select the option to duplicate the **BASIC-RFP** Profile to the other Access Point.
 
-      ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-2.png?raw=true "Import JSON")
 
    4. Another window will appear and **select** the Access Point or multiple Access Points to assign. Then click **Assign**
 
-      ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-3.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-3.png?raw=true "Import JSON")
 
 7. Within the *Claim* workflow on page *2* ensure both access points have assigned *RF Profile's*. When ready click **Next** to continue the workflow. 
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-4.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-2-rfprofile-4.png?raw=true "Import JSON")
 
 8. Within the *Claim* workflow on page *3* ensure both access points appear as shown. Click the **Preview Day-0 Config** links to discover what will be pushed to the access points.
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-summary-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-summary-1.png?raw=true "Import JSON")
 
 9. Within the *Claim* workflow on page *3*  a *Summary Page* will slide out. Click on the details to display the relevant information. When ready click **X** at the top right to close the *Summary Page* and to continue the workflow. 
 
-   ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-summary-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-summary-2.png?raw=true "Import JSON")
 
 10. Within the *Claim* workflow on page *3* when ready click **Claim** to Claim the access points and begin the Day-0 provisioning process. 
 
-    ![json](./images/module3-approvisioning/dnac-pnp-ap-claiming.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claiming.png?raw=true "Import JSON")
 
 11. A verification popup will appear, when ready click **Yes** to continue the Claim of the access points and begin the Day-0 provisioning process. 
 
-    ![json](./images/module3-approvisioning/dnac-pnp-ap-claiming-verify.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claiming-verify.png?raw=true "Import JSON")
 
 12. The access points will be displayed within the *Plug and Play* *Unclaimed* window as shown here initally as **Planned**. They will over time show **Onboarding**. 
 
-    ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-planned.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-planned.png?raw=true "Import JSON")
 
 13. Eventually will show as **Provisoned** under the *Provisioned* section
 
-    ![json](./images/module3-approvisioning/dnac-pnp-ap-claim-provisioned.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-pnp-ap-claim-provisioned.png?raw=true "Import JSON")
 
 At this point the access points will synchronize with the inventory and display there for Day-N Provisioning.
 
@@ -215,41 +215,41 @@ With the access points now onboarded through the claim process, they are now in 
 
 1. Click the *Inventory* tab within the Provision Window. The following page will appear in the *Inventory* focus. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-inventory.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-inventory.png?raw=true "Import JSON")
 
 2. Please do the following:
    1. Select the two access points as shown
    2. Click the *Actions* menu and select `Actions > Provision > Provision Device` to begin the provisioning workflow.
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap.png?raw=true "Import JSON")
 
 3. Within the *Provisioning* workflow on page *1* observe the settings only. When ready click **Next** to continue the Day-N provisioning process. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-1.png?raw=true "Import JSON")
 
 4. Within the *Provisioning* workflow on page *2* observe the settings only. When ready click **Next** to continue the Day-N provisioning process. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-2.png?raw=true "Import JSON")
 
 5. Within the *Provisioning* workflow on page *3* observe the device summarys only. When ready click **Deploy** to continue the Day-N provisioning process. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-3.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-3.png?raw=true "Import JSON")
 
 6. Within the *Provisioning* workflow a slide-out Provision Device window will appear on page *3*. Leave the default selection of **Now**. When ready click **Apply** to continue the Day-N provisioning process. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-start.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-start.png?raw=true "Import JSON")
 
 7. A verification popup will appear, when ready click **Yes** to continue the Claim of the access points and begin the Day-N provisioning process. 
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-start-verify.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-start-verify.png?raw=true "Import JSON")
 
 8. Within the *Inventory* tab within the Provision Window change the focus by clicking the area indicated and select the *Provision* focus. Then click the **See Details** link beside one of the access points and view the information displayed.
 
-   ![json](./images/module3-approvisioning/dnac-provision-ap-focus-provision.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-focus-provision.png?raw=true "Import JSON")
                                         dnac-provision-ap-focus-provison
 10. A summary of the tasks applied to the selected access point will be displayed. 
 
-    ![json](./images/module3-approvisioning/dnac-provision-ap-device-summary.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module3-approvisioning/dnac-provision-ap-device-summary.png?raw=true "Import JSON")
 
 </details>
 

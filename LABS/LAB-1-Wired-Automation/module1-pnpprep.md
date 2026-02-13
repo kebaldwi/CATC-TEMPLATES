@@ -10,7 +10,7 @@ As you may recall, in the informational sections of this repository, we describe
 
 We will be utilizing the lab in this manner:
 
-![json](./images/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
 
 ## Lab Credentials:
 
@@ -32,43 +32,43 @@ In this lab our focus changes slightly as we start to automate for host onboardi
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Identity Services Engine (ISE) and select the hamburger menu icon to open the system menu.
 
-   ![json](./images/module1-preparation/ise-dashboard.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/ise-dashboard.png?raw=true "Import JSON")
 
 2. From the system menu under Administration select PxGrid Settings
 
-   ![json](./images/module1-preparation/ise-menu.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/ise-menu.png?raw=true "Import JSON")
 
 3. On the PxGrid Settings page select both of the available options and click Save to allow Catalyst Center to integrate.
 
-   ![json](./images/module1-preparation/ise-pxgrid-settings.png?raw=true "Import JSON")
-   ![json](./images/module1-preparation/ise-pxgrid-setup.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/ise-pxgrid-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/ise-pxgrid-setup.png?raw=true "Import JSON")
 
 ### Step 2 - Catalyst Center and ISE Integration
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon and navigate to the System > Settings menu item.
 
-   ![json](./images/module1-preparation/dnac-system-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings.png?raw=true "Import JSON")
 
 2. Within the System Settings page navigate down the list on the left and select the Authentication and Policy Server section.
 
-   ![json](./images/module1-preparation/dnac-system-settings-aaa.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa.png?raw=true "Import JSON")
 
 3. On the page select from the dropdown ISE to configure ISE integration.
 
-   ![json](./images/module1-preparation/dnac-system-settings-aaa-ise.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa-ise.png?raw=true "Import JSON")
 
 4. Enter the information as seen on the page and click save.
 
-   ![json](./images/module1-preparation/dnac-system-settings-aaa-ise-config.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa-ise-config.png?raw=true "Import JSON")
 
 5. A popup will appear as the ISE node is using an untrusted SelfSigned Certificate. For lab purposes Accept the certificate, this may appear a couple of times as shown.
 
-   ![json](./images/module1-preparation/dnac-system-settings-aaa-ise-trust.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa-ise-trust.png?raw=true "Import JSON")
 
 6. You will see the the various stages of integration proceed and finally a success message as shown below.
 
-   ![json](./images/module1-preparation/dnac-system-settings-aaa-ise-done.png?raw=true "Import JSON")
-   ![json](./images/module1-preparation/dnac-system-settings-aaa-ise-complete.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa-ise-done.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/module1-preparation/dnac-system-settings-aaa-ise-complete.png?raw=true "Import JSON")
 
 ## Step 3 - Router Connectivity
 
@@ -113,7 +113,7 @@ As you may recall, a factory default configuration uses VLAN 1 as no other VLAN 
 
 As depicted in the following image, the 9300-2 will serve as the upstream neighbor for this exercise and the environment's distribution switch. The Catalyst 9300-1 will act as the target switch, which we will deploy via PnP and DayN templates.
 
-![json](./images/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
 
 For the lab, we will utilize **VLAN 5** as the management VLAN. Connect to switch **c9300-2** and paste the following configuration:
 

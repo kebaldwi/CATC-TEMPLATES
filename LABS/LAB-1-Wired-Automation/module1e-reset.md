@@ -97,11 +97,11 @@ prep4dnac
 
 The Switch should reboot and display this eventually in the console which acknowledges that the 9300 has discovered the Catalyst Center.
 
-![json](./images/DNAC-IPV4-DISCOVERY.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DNAC-IPV4-DISCOVERY.png?raw=true "Import JSON")
 
 Additionally, within Catalyst Center on the Plug and Play window, the device should show as unclaimed.
 
-![json](./images/DNAC-9300-Discovery.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DNAC-9300-Discovery.png?raw=true "Import JSON")
 
 ## Summary
 

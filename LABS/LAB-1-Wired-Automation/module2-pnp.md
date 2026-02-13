@@ -22,7 +22,7 @@ Be aware that with Brownfield device configurations, there is no template learni
 
 In this section will go through the flows involved with PnP and Discovery to allow for the successful onboarding of network devices into Catalyst Center in both Brownfield and Greenfield situations.
 
-![json](./images/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DCLOUD_Topology_PnPLab2.png?raw=true "Import JSON")
 
 ## Lab Credentials:
 
@@ -79,7 +79,7 @@ Although you can manually set up the hierarchy we will use automation scripts bu
 2. Extract both files to the desktop using **Winrar** to expand them
 3. Open the **postman** application from the desktop. Once the application is open click the *Import* link.
 
-   ![json](./images/Postman-Pre-Collection-Import.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Pre-Collection-Import.png?raw=true "Import JSON")
 
 4. A popup import window should appear. Ensure File is selected and click the Upload Files button. Select the downloads folder and select both files named:
 
@@ -88,35 +88,35 @@ Although you can manually set up the hierarchy we will use automation scripts bu
 
    Click open to import them both into Postman
 
-   ![json](./images/Postman-Collection-Select.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Collection-Select.png?raw=true "Import JSON")
 
 5. When the files are selected and ready for import a window will appear, click Import to complete the import process.
 
-   ![json](./images/Postman-Collection-Selected.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Collection-Selected.png?raw=true "Import JSON")
 
 6. Then click import and the collection should be loaded into the collections as shown.
 
-   ![json](./images/Postman-Post-Collection-Import.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Post-Collection-Import.png?raw=true "Import JSON")
 
 7. Then click import and the environment should be loaded into the environments as shown.
 
-   ![json](./images/Postman-Post-Environment-Import.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Post-Environment-Import.png?raw=true "Import JSON")
 
 ### Step 2 - Select Postman Environment **(REQUIRED)** 
 
 1. We will select the environment by hovering over the environment shown and selecting the three dots which appear and from that clicking **`Set Active`** as shown.
 
-   ![json](./images/Postman-Environment-Selection.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Environment-Selection.png?raw=true "Import JSON")
 
 ### Step 3 - Prepare Postman SSL Settings
 
 1. Click the **Gear** icon to select **settings** 
 
-    ![json](./images/Postman-Settings.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRED/Postman-Settings.png?raw=true "Import JSON")
 
 2. **Deselect** `SSL certificate verification` and then close the settings window. 
 
-    ![json](./images/Postman-SSL-Deselect.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRED/Postman-SSL-Deselect.png?raw=true "Import JSON")
 
 ## Section 2 - Catalyst Center Design Preparation
 
@@ -143,25 +143,25 @@ The collection previously imported along with the ennvironment variables will pu
 
 1. Within **postman** click **`Collections`** and hover over the right side of the collection **`Catalyst Center - Wired Automation Design`** click the Elipsis **`...`** to display a menu. Select **Run collection**. 
 
-   ![json](./images/Postman-Run-Collection-Begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Run-Collection-Begin.png?raw=true "Import JSON")
 
 2. Ensure the all the requests are selected and click the blue **`Run Catalyst Center - Wired Automation Design`** button.
 
-   ![json](./images/Postman-Run-Collection-Start.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Run-Collection-Start.png?raw=true "Import JSON")
 
 3. A summary of all the request steps run will appear and a green pass lamp beside those that were successful as shown.    
 
-   ![json](./images/Postman-Run-Collection-Summary.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Postman-Run-Collection-Summary.png?raw=true "Import JSON")
 
 ### Step 2 - Verify Design Hierarchy, Settings and Credentials **(REQUIRED)** 
 
 1. Then open a browser and log back into Catalyst Center and navigate the hamburger menu **`Design > Network Hierarchy`** as shown. You will see the hierarchy has been built within Catalyst Center under the Global Site.
 
-   ![json](./images/Verify_Hierarchy.gif?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Verify_Hierarchy.gif?raw=true "Import JSON")
 
 2. Then on the side of Global click the Elipsis **`...`** to display a menu. Select **View Settings**. You will be taken to the **`Network`** page where you will see the various settings for the hierarchy. Click **`Device Credentials`** to see the credentials and **`Telemetry`** to view the telemetry settings set.
 
-   ![json](./images/Verify_Settings.gif?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Verify_Settings.gif?raw=true "Import JSON")
 
 ### Step 3 - Image Repository (DO NOT DO IN DCLOUD)
 
@@ -177,39 +177,39 @@ The image used in this lab for the **9300** is downloadable from here [⬇︎Cup
 
 1. Within Catalyst Center Navigate to *Design>Image Repository*  
 
-   ![json](./images/DNAC-NavigateImageRepo.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateImageRepo.png?raw=true "Import JSON")
 
 2. **Image Repository** should be populated with the image of the network device you wish to deploy. You can import the image using the **Import** link which will open a popup allowing you to choose a file from the local file system, or allow you to reference a URL for either HTTP or FTP transfer.    
 
-   ![json](./images/DNAC-ImportImageRepo.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ImportImageRepo.png?raw=true "Import JSON")
 
 3. You then indicate whether the file is Cisco or 3rd Party and click import. 
 4. The file will then import into Catalyst Center.    
 
-   ![json](./images/DNAC-ImportedImageRepo.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-ImportedImageRepo.png?raw=true "Import JSON")
 
 5. Once the file is imported if there is no instance of the device on the system you can go into the imported images section and assign it to a specific type of device. First click the **Assign** link as shown
 
-   ![json](./images/DNAC-AssignImageRepo.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-AssignImageRepo.png?raw=true "Import JSON")
 
    1. Then on the windo that appears select the **All Device Series** dropdown, and then select *switches and hubs* and filter for the **9300** and click assign.   
 
-      ![json](./images/DNAC-AssignSiteImageRepo.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-AssignSiteImageRepo.png?raw=true "Import JSON")
 
    2. Next expand the hierarchy on the window that appears and select **Floor1** then **Assign**.    
 
-      ![json](./images/DNAC-SiteImageRepo.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-SiteImageRepo.png?raw=true "Import JSON")
 
    3. You will then have a save button to save the assignment. Click Save.    
 
-      ![json](./images/DNAC-SaveImageRepo.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-SaveImageRepo.png?raw=true "Import JSON")
 
    4. Your screen should look as shown.    
 
-      ![json](./images/DNAC-DeviceAssigned-ImageRepo.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-DeviceAssigned-ImageRepo.png?raw=true "Import JSON")
 
 6. Select the image and mark it as golden for PnP to use it.   
-   ![json](./images/DNAC-GoldenImageRepo.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-GoldenImageRepo.png?raw=true "Import JSON")
 
 </details>
 
@@ -415,19 +415,19 @@ We will now **download** and **import** one of the following PnP Onboarding Temp
 
 1. Navigate to the **Template Hub** formerly known as the **Template Editor** within Catalyst Center through the menu **`Tools > Template Hub`**.
 
-   ![json](./images/DNAC-NavigateTemplate.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateTemplate.png?raw=true "Import JSON")
 
 2. Click **Import** then select **Template(s)** from the menu.    
 
-   ![json](./images/DNAC-TemplateImport-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-TemplateImport-1.png?raw=true "Import JSON")
 
 3. Click the link to select files from the local computer. In the Windows explorer window search for the extracted json file, select it and open it into the import window.
 
-   ![json](./images/DNAC-TemplateSelection-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-TemplateSelection-1.png?raw=true "Import JSON")
 
 4. Click import to install and import the template.
 
-   ![json](./images/DNAC-TemplatedSelected-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-TemplatedSelected-1.png?raw=true "Import JSON")
 
 ### Step 2 - Create a Network Profile **(REQUIRED)**
 
@@ -435,34 +435,34 @@ Next we need to assign the Onboarding Template to a site using the Network Profi
 
    1. Navigate to Network Profiles by selecting *Design> Network Profiles* 
 
-      ![json](./images/DNAC-NavigateProfile.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateProfile.png?raw=true "Import JSON")
 
    2. Select *Switching* under **Add Profile**
 
-      ![json](./images/DNAC-SelectProfile.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-SelectProfile.png?raw=true "Import JSON")
 
    3. Enter the following: 
 
       1. Enter the **Profile name** 
       2. Select the **Onboarding Template** tab and click **Add Template** to add a template
 
-         ![json](./images/DNAC-Onboard-Add.png?raw=true "Import JSON")
+         ![json](../../ASSETS/LABS/WIRED/DNAC-Onboard-Add.png?raw=true "Import JSON")
 
       3. Select the correct PnP Onboarding template that you imported earlier and click **Add**   
 
-         ![json](./images/DNAC-ChoosePnPTemplate.png?raw=true "Import JSON") 
+         ![json](../../ASSETS/LABS/WIRED/DNAC-ChoosePnPTemplate.png?raw=true "Import JSON") 
 
    4. On the Onboarding Template page confirm the template(s) to be used for onboarding then **Save** the profile
 
-      ![json](./images/DNAC-ProfileComplete.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileComplete.png?raw=true "Import JSON")
 
    5. Assign the network profile to the hierarchy 
 
-      ![json](./images/DNAC-ProfileAssign.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileAssign.png?raw=true "Import JSON")
 
    6. Select the sites to apply the profile within the hierarchy and click **Save**.
 
-      ![json](./images/DNAC-ProfileAssigned.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-ProfileAssigned.png?raw=true "Import JSON")
 
 ## Section 4 - PnP Claim and Onboarding Device
 
@@ -474,26 +474,26 @@ At this point you can claim the device putting it in a planned state for onboard
 
    1. Within Catalyst Center Navigate to **`Provision > Plug and Play`**      
 
-      ![json](./images/DNAC-NavigatePnP.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-NavigatePnP.png?raw=true "Import JSON")
 
    2. Put a checkmark next to the device *Switch* to be claimed
    3. Click the **Actions>Claim** link and walk through the workflow    
 
-      ![json](./images/DNAC-BeginClaim.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-BeginClaim.png?raw=true "Import JSON")
 
    4. Section 1 click the **Assign** link to select the part of the hierarchy to assign the device
 
-      ![json](./images/DNAC-AssignSite-Start.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-AssignSite-Start.png?raw=true "Import JSON")
 
    5. Click the part of the hierarchy to assign the device to and then click **Assign**
    
-      ![json](./images/DNAC-AssignSite-Save.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-AssignSite-Save.png?raw=true "Import JSON")
 
    6. The assigned site will appear on the section page, click **next** to continue
 
    7. Section 2 you can click the hyperlinks to the right of the workflow page and view or amend the templates and images utilized. We will make no changes so click **next** to continue   
 
-      ![json](./images/DNAC-SiteClaim.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-SiteClaim.png?raw=true "Import JSON")
 
    8. Section 3 select the device **serial number** on the left and fill in the variables within the template click **next**. Please use the following:
    
@@ -508,19 +508,19 @@ At this point you can claim the device putting it in a planned state for onboard
       > [!NOTE] 
       > Leave the rest of the settings default 
 
-        ![json](./images/DNAC-TemplateClaim.png?raw=true "Import JSON")
+        ![json](../../ASSETS/LABS/WIRED/DNAC-TemplateClaim.png?raw=true "Import JSON")
 
    9. Section 4 review the elements including configuration to be deployed. Click **claim** to initiate
 
-      ![json](./images/DNAC-Claim.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Claim.png?raw=true "Import JSON")
 
    10. At this stage the device will be placed in **Planned** state, and will cycle through **Onboarding** and **Provisioned** when complete     
 
-       ![json](./images/DNAC-Claimed.png?raw=true "Import JSON")
+       ![json](../../ASSETS/LABS/WIRED/DNAC-Claimed.png?raw=true "Import JSON")
 
    11. After the device is completed it will appear in the device inventory after being sync'd with Catalyst Center.      
 
-       ![json](./images/DNAC-Inventory.png?raw=true "Import JSON")
+       ![json](../../ASSETS/LABS/WIRED/DNAC-Inventory.png?raw=true "Import JSON")
 
 ### Step 2 - Post PnP Onboarding - **(OPTIONAL)**
 
@@ -542,11 +542,11 @@ To create a Discovery task complete the following actions:
 
 1. Navigate to the Discovery Tool **`Tools > Discovery`**
 
-   ![json](./images/DNAC-Tools-Discovery.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-Tools-Discovery.png?raw=true "Import JSON")
 
 2. On the Discovery Portal click **Add Discovery**
 
-   ![json](./images/DNAC-DiscoveryPortal.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-DiscoveryPortal.png?raw=true "Import JSON")
 
 3. On the **New Discovery** page complete the following:
 
@@ -556,65 +556,65 @@ To create a Discovery task complete the following actions:
       * `198.18.133.145 - 198.18.133.145`
    3. Click **Next**
 
-      ![json](./images/DNAC-Discovery-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-1.png?raw=true "Import JSON")
 
    4. Select the **CLI** and then select the tick box for `netadmin` which should already appear from the **Settings**
 
-      ![json](./images/DNAC-Discovery-2a.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2a.png?raw=true "Import JSON")
 
    5. Select the **SNMPv2c Read** and then select the tick box for `RO` which should already appear from the **Settings**
 
-      ![json](./images/DNAC-Discovery-2b.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2b.png?raw=true "Import JSON")
 
    6. Select the **SNMPv2c Write** and then select the tick box for `RW` which should already appear from the **Settings**
 
-      ![json](./images/DNAC-Discovery-2c.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2c.png?raw=true "Import JSON")
       
    7. Select the **NETCONF** then **Add NETCONF Port** and select `Global` from the menu
 
-      ![json](./images/DNAC-Discovery-2d.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2d.png?raw=true "Import JSON")
       
    8. Enter `NETCONF` as the description and the port as `830` then click **Next**
 
-      ![json](./images/DNAC-Discovery-2e.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2e.png?raw=true "Import JSON")
       
    9. Click **Next** to accept the given Protocols and Timers
 
-      ![json](./images/DNAC-Discovery-2f.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2f.png?raw=true "Import JSON")
       
    10. Select **Assign Device to Site** and navigate the hierarchy and select the `Floor 1` then click **Next**
 
-       ![json](./images/DNAC-Discovery-2g.png?raw=true "Import JSON")
+       ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2g.png?raw=true "Import JSON")
 
    11. Click **Next** to begin the schedule the discovery for **Now**
 
-       ![json](./images/DNAC-Discovery-2h.png?raw=true "Import JSON")
+       ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-2h.png?raw=true "Import JSON")
 
 4. Click **Start Discovery and Telemetry** to initiate the discovery task.
 
-   ![json](./images/DNAC-Discovery-3.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-3.png?raw=true "Import JSON")
 
 ### Step 2 - Verify the Discovery Completed
 
 1. Select **View Discovery** to Exit the Discovery Workflow tool
 
-   ![json](./images/DNAC-Discovery-ExitWorkflow.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-ExitWorkflow.png?raw=true "Import JSON")
 
 1. Select the `WIRED` discovery within the Discovery Portal to view the results
 
-   ![json](./images/DNAC-DiscoveryPortal-3.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-DiscoveryPortal-3.png?raw=true "Import JSON")
 
 1. View the results
 
-   ![json](./images/DNAC-Discovery-Verify.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-Verify.png?raw=true "Import JSON")
 
 2. Navigate to the Inventory to see the discovered devices **`Provision > Inventory`**
 
-   ![json](./images/DNAC-NavigateInventory2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-NavigateInventory2.png?raw=true "Import JSON")
 
 3. Notice the additional Brownfield devices learned through the discovery process
 
-   ![json](./images/DNAC-Discovery-Done.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNAC-Discovery-Done.png?raw=true "Import JSON")
 
 ## Summary
 

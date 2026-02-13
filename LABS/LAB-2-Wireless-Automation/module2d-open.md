@@ -13,15 +13,15 @@ For our lab scenario we will assume this is to be used for Guest access only.
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Design>Network Settings`.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the `Wireless` tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page click `Add` above the *SSID* section to create a new Wireless LAN
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-begin.png?raw=true "Import JSON")
 
 4. A Wireless SSID workflow will begin with *BASIC Settings* which will guide you through the build process of the WLAN. Complete the following steps:
    1. Enter the **Wireless Network Name (SSID)** as `GUESTNET-<POD#>`
@@ -31,7 +31,7 @@ For our lab scenario we will assume this is to be used for Guest access only.
    5. **Broadcast SSID** *enables the SSID to be broadcast allowing clients to see it*
    6. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-basic.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-basic.png?raw=true "Import JSON")
 
 5. The Wireless SSID workflow will continue with *Security Settings*. Complete the following steps:
    1. In the *Level of Security* section select **Open**
@@ -42,28 +42,28 @@ For our lab scenario we will assume this is to be used for Guest access only.
       3. Select **Original URL**
    4. In the *AAA Configuration section* click **Configure AAA**
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-security.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-security.png?raw=true "Import JSON")
 
    5. Click the dropdown arrow on the left to select a value and then select the VIP `198.18.133.27` of the **ISE Cluster**. Click **Configure** to continue.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-aaa-config.png?raw=true "Import JSON")
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-aaa-configured.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-aaa-config.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-aaa-configured.png?raw=true "Import JSON")
 
    6. In the *AAA Configuration section* select **Fast Lane** and then click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-security-complete.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-security-complete.png?raw=true "Import JSON")
 
 6. The Wireless SSID workflow continues with *Advance Settings*. Complete the following steps:
    1. Select **Radius Client Profiling** and Leave all other sections here as default 
    2. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-advance.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-advance.png?raw=true "Import JSON")
 
 #### Step 2 - ***Associate SSID to Profile***
 
 1. The Wireless SSID workflow continues with *Associate SSID to Profile*. Select the Wireless Profile on the left as shown `DNAC-WIRELESS`
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-profile-begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-profile-begin.png?raw=true "Import JSON")
 
    > [!NOTE]
    > If no *Wireless Profile* exists, we must click **Add Profile** to add one to Catalyst Center.
@@ -76,34 +76,34 @@ For our lab scenario we will assume this is to be used for Guest access only.
    5. Select **FlexConnect Local Switching** and enter **20** for *Local to VLAN* setting
    6. Click **Associate Profile**
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-1.png?raw=true "Import JSON")
 
 3. The Wireless SSID workflow continues with *Associate SSID to Profile*. On the left the Profile **DNAC-WIRELESS** will be displayed with a green checkmark. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-2.png?raw=true "Import JSON")
 
 4. The Wireless SSID workflow continues launching the Guest SSID Portal Editor, which allows us to make configuration changes to the Guest Portal environment in an editor. Click **Save** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-portal.png)
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-portal.png)
 
 5. Once the Guest Portal has been saved, you will be presented with a page allowing access to it in future. Click **Next** to continue.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-portal-settings.png)
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-portal-settings.png)
 
 6. The Wireless SSID workflow continues with a *Summary* page. On the left the a summary of all the changes will be displayed. Click **Save** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-summary.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-summary.png?raw=true "Import JSON")
 
 7. The Wireless SSID workflow completes with a *Results* page displaying that both the SSID and the Profiles were successfully saved and updated. Click **Wireless Home** to finish the process.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-profile-campus-guest-results.png?raw=true "Import JSON")
 
    > [!NOTE]
    > If this is a new **Wireless Profile** then select **Configure Network Profile** and complete the optional steps for assigning sites as detailed in Step 3 of creating a PSK WLAN above.
 
 8. Return to the **Wireless Settings** page and you should see now our new *SSID* **GUESTNET-<POD#>**.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-guest-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-guest-results.png?raw=true "Import JSON")
 
 </details>
 
@@ -120,11 +120,11 @@ In this lab, we need to utilize FlexConnect, and so to allow for CoA of clients 
 
 1. To create an RF Profile, first open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Design>Network Settings`.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the `Wireless` tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page scroll down to the *FlexConnect VLAN* section and enter the following:
    1. Enter *Native VLAN ID* as `10`
@@ -135,7 +135,7 @@ In this lab, we need to utilize FlexConnect, and so to allow for CoA of clients 
    6. Set the *VLAN Name* to **guestvlan** as shown
    7. Click **Save** continue
 
-      ![json](./images/module2-wlans/dnac-wireless-flexconnect-vlan.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-flexconnect-vlan.png?raw=true "Import JSON")
 
 </details>
 

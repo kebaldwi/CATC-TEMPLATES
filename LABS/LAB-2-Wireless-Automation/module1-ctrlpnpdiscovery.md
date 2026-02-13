@@ -37,7 +37,7 @@ For routing in the environment an OSPF IGP process has been created to propogate
 
 The 9130AX Access Points are connected to both access switches and the ports are automatically configured via the AUTOCONF feature.
 
-![json](./images/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
 
 ## Lab Credentials:
 
@@ -68,22 +68,22 @@ While we have the ability to PnP a Wireless Controller typically these are estan
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Tools>Discovery`.
 
-   ![json](./images/module1-pnpdiscovery/dnac-navigation-discovery.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-navigation-discovery.png?raw=true "Import JSON")
 
 2. On the Discovery page click `Add Discovery`.
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-dashboard.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-dashboard.png?raw=true "Import JSON")
 
 3. The **New Discovery** workflow will begin. Click **Next** to continue.
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-wizard.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-wizard.png?raw=true "Import JSON")
 
 4. On the **New Discovery** Page enter the following:
    1. *Discovery Name* for the discovery `WIRELESS`
    2. Select *Discovery Type* of `IP Address/Range`
    3. Enter *From - To* fields with `198.19.11.2`
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new.png?raw=true "Import JSON")
 
 5. On the new Credentials page we will add credentials for the Wireless Controller. The credentials on the controller are different to those of the Global settings shown. Catalyst Center allows for us to use separate credentials where necesssary. 
 
@@ -93,7 +93,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       2. Hover over the **Add CLI Credential** link
       3. In the sub menu select **Global** to add the credential to the Global store.
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-cli.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-cli.png?raw=true "Import JSON")
 
    2. To add the details for the **CLI** Credential:
    
@@ -103,7 +103,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       - *Password* as `C1sco12345`
       - *Enable Password* as `C1sco12345`
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-cli-add.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-cli-add.png?raw=true "Import JSON")
 
    3. To add **SNMPv2c Read** Credentials do the following;
 
@@ -111,7 +111,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       2. Hover over the **Add SNMPv2c Read Credential** link
       3. In the sub menu select **Global** to add the credential to the Global store.
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-snmp-ro.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-snmp-ro.png?raw=true "Import JSON")
 
    4. To add the details for the **SNMPv2c Read** Credential:
    
@@ -119,7 +119,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       - *Name* as `public`
       - *Read Community* as `public`
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-snmp-ro-add.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-snmp-ro-add.png?raw=true "Import JSON")
 
       > [!NOTE] 
       > a Warning will appear after the Save. Click `Ok` this is expected.
@@ -130,7 +130,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       2. Hover over the **Add SNMPv2c Write Credential** link
       3. In the sub menu select **Global** to add the credential to the Global store.
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-snmp-rw.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-snmp-rw.png?raw=true "Import JSON")
 
    6. To add the details for the **SNMPv2c Write** Credential:
    
@@ -138,7 +138,7 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       - *Name* as `private`
       - *Write Community* as `private`
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-new-snmp-rw-add.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-new-snmp-rw-add.png?raw=true "Import JSON")
 
       > [!NOTE] 
       > a Warning will appear after the Save. Click `Ok` this is expected.
@@ -149,11 +149,11 @@ While we have the ability to PnP a Wireless Controller typically these are estan
       2. Select the existing NETCONF port **830**
       3. Click **Next** to add the credentials
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-netconf-add.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-netconf-add.png?raw=true "Import JSON")
 
 6. On the **Advanced Settings** page as no changes will be made, click **Next** to continue
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-advanced.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-advanced.png?raw=true "Import JSON")
 
 7. On the **Assign Devices to Site** page, do the following:
 
@@ -161,37 +161,37 @@ While we have the ability to PnP a Wireless Controller typically these are estan
    2. Within the hierarchy click the **>** symbol to open each layer and select the **Building**
    3. Click **Next** to continue
 
-      ![json](./images/module1-pnpdiscovery/dnac-discovery-assign.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-assign.png?raw=true "Import JSON")
 
 8. On the **Schedule Job** page click **Next** to continue the discovery
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-schedule.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-schedule.png?raw=true "Import JSON")
 
 9. On the **Summary Job** page click **Start Discovery and Telemetry** to continue and **Start** the discovery task
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-summary.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-summary.png?raw=true "Import JSON")
 
 10. On the next page click **View Discovery** to return to the the **Discovery Dashboard**
 
-    ![json](./images/module1-pnpdiscovery/dnac-discovery-view.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-view.png?raw=true "Import JSON")
 
 ### Step 2 - ***Verifying Discovery Job***
 
 1. On the **Discovery Dashboard** click the **WIRELESS**  discovery to view the results
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-select.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-select.png?raw=true "Import JSON")
 
 2. After a while the discovery will display the following results
 
-   ![json](./images/module1-pnpdiscovery/dnac-discovery-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-discovery-results.png?raw=true "Import JSON")
 
 3. Navigate to the Inventory through the menu. Select `Provision>Network Devices>Inventory`
 
-   ![json](./images/module1-pnpdiscovery/dnac-navigation-inventory.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-navigation-inventory.png?raw=true "Import JSON")
 
 4. After some time the Wireless Controller will appear as shown in the inventory.
 
-   ![json](./images/module1-pnpdiscovery/dnac-inventory-controller-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module1-pnpdiscovery/dnac-inventory-controller-results.png?raw=true "Import JSON")
 
 </details>
 

@@ -54,12 +54,12 @@ While on Cisco Catalyst (DNA) Center you can import templates, we will build one
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Tools>Template Editor`.
 
-   ![json](./images/module8-wirelesstemplates/dnac-menu-tools-templateeditor.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-menu-tools-templateeditor.png?raw=true "Import JSON")
 
 2. In the Template Editor **create** a new Jinja2 Regular Template in the DCLOUD PrepEnvironment Project. Customize a name that you will remember and select Regular, Jinja2, Wireless Controllers as device type and IOS-XE as software.
 
-   ![json](./images/module8-wirelesstemplates/dnac-templateeditor-add.png?raw=true "Import JSON")
-   ![json](./images/module8-wirelesstemplates/dnac-templateeditor-parameters.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-templateeditor-add.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-templateeditor-parameters.png?raw=true "Import JSON")
 
 3. Within the Editor View **paste** the following:
 
@@ -75,21 +75,21 @@ radius-server attribute wireless accounting mac-delimiter colon
 [//]: # ({% endraw %})
 4. **Save** and **Commit** the Template to the project.
 
-   ![json](./images/module8-wirelesstemplates/dnac-templateeditor-save-commit.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-templateeditor-save-commit.png?raw=true "Import JSON")
 
 ## Step 2 - ***Assigning Wireless Templates***
 
 1. Select the hamburger menu icon to open the menu. Select `Design>Network Profiles`.
 
-   ![json](./images/module8-wirelesstemplates/dnac-menu-profiles.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-menu-profiles.png?raw=true "Import JSON")
 
 2. Select the **edit** button beside the Wireless Network Profile
 
-   ![json](./images/module8-wirelesstemplates/dnac-profiles-edit.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-profiles-edit.png?raw=true "Import JSON")
 
 3. Scroll down to the **Attach Templates** and click the **⨁ Add Wireless Template** button
 
-   ![json](./images/module8-wirelesstemplates/dnac-profile-template-add.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-profile-template-add.png?raw=true "Import JSON")
 
 4. In the Window that appears:
    
@@ -98,11 +98,11 @@ radius-server attribute wireless accounting mac-delimiter colon
    3. Select **Wireless CCKM**
    4. Click **Add**
 
-      ![json](./images/module8-wirelesstemplates/dnac-profile-template-add.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-profile-template-add.png?raw=true "Import JSON")
 
 5. Click Save to add the changes.
 
-   ![json](./images/module8-wirelesstemplates/dnac-profiles-template-save.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module8-wirelesstemplates/dnac-profiles-template-save.png?raw=true "Import JSON")
 
 6. The configuration changes would now need to be provisioned to the Wireless Controller.
 

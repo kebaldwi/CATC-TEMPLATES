@@ -27,61 +27,61 @@ The Application Policy methodology within Catalyst Center allows for two types o
 
 1. Navigate to **Application Policy** within Catalyst Center through the menu *Policy>Application*.
 
-   ![json](./images/module4-applicationqos/dnac-menu-appqos.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos.png?raw=true "Import JSON")
 
 2. In the Application Policy page, click **Add Policy**. 
 
-   ![json](./images/module4-applicationqos/dnac-menu-appqos-addpolicy.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos-addpolicy.png?raw=true "Import JSON")
 
 3. Complete the following steps:
    1. Enter `Wireless-CAMPUS-PSK` as the name for the Application Policy Name. 
    2. Select **Wireless** as the type of Application Policy to be built.
 
-      ![json](./images/module4-applicationqos/dnac-menu-appqos-policy-name.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos-policy-name.png?raw=true "Import JSON")
 
 4. Select **Yes** in the popup window that appears.
 
-   ![json](./images/module4-applicationqos/dnac-menu-appqos-policy-wifi.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos-policy-wifi.png?raw=true "Import JSON")
 
 #### Site to Apply Policy
 
 5. Click the **Site** and then on the popup on the right click **Edit Scope**
 
-   ![json](./images/module4-applicationqos/dnac-menu-appqos-policy-wifi-sites.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos-policy-wifi-sites.png?raw=true "Import JSON")
 
 6. Put a tick next to *Building*. Click **Save**  
 
-   ![json](./images/module4-applicationqos/dnac-menu-appqos-policy-wifi-sites-edit.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/dnac-menu-appqos-policy-wifi-sites-edit.png?raw=true "Import JSON")
 
 #### Queuing Policy to Apply
 
 7. Click the **CVD_QUEUING_PROFILE** link to open the Queuing Profile Editor.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-5-Queue.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-5-Queue.png?raw=true "Import JSON")
 
 8. If you wished to deviate from the CVD Queuing Profile you could click **Add Profile**
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-6-QueueCVD.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-6-QueueCVD.png?raw=true "Import JSON")
 
 9. Within the Queuing Profile Editor you would name the new profile and then adjust the sliders to set your queuing policy. Once complete you would click **Select** to use that policy. We will not deviate from the CVD standard at this time so click **Cancel**.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-7-QueueCustom.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-7-QueueCustom.png?raw=true "Import JSON")
 
 #### Host Tracking
 
 10. Click the **Host Tracking Slider** to allow for QoS policy to work with endpoint mobility. When host tracking is turned on, Catalyst Center tracks the connectivity of the collaboration endpoints within the site scope and automatically reconfigures the ACL entries when the collaboration endpoints connect to the network or move from one interface to another. 
 
-    ![json](./images/module4-applicationqos/DNAC-AppPolicy-8-Tracking.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-8-Tracking.png?raw=true "Import JSON")
 
 #### Saving Draft Policy
 
 11. At this point we could save a copy of the Application Policy by selecting the three dots beside Deploy a pop up menu will appear.
 
-    ![json](./images/module4-applicationqos/DNAC-AppPolicy-8.5-Menu.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-8.5-Menu.png?raw=true "Import JSON")
 
 12. Click **Save Draft** from the pop up menu 
 
-    ![json](./images/module4-applicationqos/DNAC-AppPolicy-9-SaveDraft.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-9-SaveDraft.png?raw=true "Import JSON")
 
 ### Step 2 - ***Deploying Application Policy***
 
@@ -89,49 +89,49 @@ The Application Policy methodology within Catalyst Center allows for two types o
 
 1. Click the three dots beside Deploy a pop up menu will appear.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-8.5-Menu.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-8.5-Menu.png?raw=true "Import JSON")
 
 2. Click **Preview** on the popup menu to preview the policy.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-10-PreviewStart.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-10-PreviewStart.png?raw=true "Import JSON")
 
 3. Click **Generate** on the popup on the right to generate the policy.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-11-PreviewGenerate.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-11-PreviewGenerate.png?raw=true "Import JSON")
 
 4. Click **View** on the popup on the right to view the policy.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-12-PreviewView.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-12-PreviewView.png?raw=true "Import JSON")
 
 5. Take a look at the policy in the popup on the right.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-13-Preview.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-13-Preview.png?raw=true "Import JSON")
 
 #### Deploy Policy
 
 6. Click the **Deploy** and click **Yes** on the pop up that will appear.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-14-Deploy.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-14-Deploy.png?raw=true "Import JSON")
 
 7. Click the **Apply** on the pop up on the right that will appear. You could alternatively schedule this task.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-15-Apply.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-15-Apply.png?raw=true "Import JSON")
 
 8. Another pop up will appear with the word *configuring* to symbolize the policy push.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-16-Configuring.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-16-Configuring.png?raw=true "Import JSON")
 
 9. The word *Success* should be displayed shortly after to symbolize the policy has been pushed. Click the Success link to view the deployed policy.
 
-   ![json](./images/module4-applicationqos/DNAC-AppPolicy-17-Success.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-17-Success.png?raw=true "Import JSON")
 
 10. Another pop up will appear with the deployed policy which has been pushed.
 
-    ![json](./images/module4-applicationqos/DNAC-AppPolicy-18-DeployedPolicy.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-18-DeployedPolicy.png?raw=true "Import JSON")
 
 11. After closing the popups you will notice two elements in the Application Policy page. The Draft Policy which can be reused and the Policy as pushed to the site..
 
-    ![json](./images/module4-applicationqos/DNAC-AppPolicy-19-DraftAndPolicy.png?raw=true "Import JSON")
+    ![json](../../ASSETS/LABS/WIRELESS/module4-applicationqos/DNAC-AppPolicy-19-DraftAndPolicy.png?raw=true "Import JSON")
 
 At this point you have successfully pushed a CVD QoS Policy to the network.
 

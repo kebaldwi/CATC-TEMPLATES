@@ -8,7 +8,7 @@ This section is merely here to help new users of ISE to build test environments 
 
 To review the lab envionment that is available is depicted here:
 
-![json](./images/DCLOUD_Topology_Wireless-v1.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/DCLOUD_Topology_Wireless-v1.png?raw=true "Import JSON")
 
 ISE is stood up beside the Windows AD server. The two are configured but not integrated. Beyond basic IP connectivity the ISE server is in a default state.
 
