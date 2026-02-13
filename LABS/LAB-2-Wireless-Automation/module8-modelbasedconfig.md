@@ -34,7 +34,7 @@ As we have 4 SSID's our scenario will be as such:
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select **`Tools > Model Config Editor`**.
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-navigation.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-navigation.png?raw=true "Import JSON")
 
 ### Step 1 - **Create AAA Configuration**
 
@@ -45,13 +45,13 @@ Sometimes it is required to send additional information in the RADIUS request. T
    1. Select a model-based config as shown **AAA Radius Attributes Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-aaa-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-aaa-1.png?raw=true "Import JSON")
 
    3. Enter a Name for the Design Element, `AAA`
    4. From the dropdown select the value `ap-macaddress-ssid` for the **Called Station Id**
    5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-aaa-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-aaa-2.png?raw=true "Import JSON")
 
 ### Step 2 - **Create SSID Configurations**
 
@@ -70,7 +70,7 @@ In this section we have three scenarios we will deal with from above, as detaile
    1. Select a model-based config as shown **Advanced SSID Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-1.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `VOICE`
@@ -79,7 +79,7 @@ In this section we have three scenarios we will deal with from above, as detaile
       4. Set the **DTIM period** to **2** for both the **2.4 and 5 Ghz** networks
       5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-2.png?raw=true "Import JSON")
 
 #### Step 2b - **Create Guest SSID Configuration**
 
@@ -88,7 +88,7 @@ In this section we have three scenarios we will deal with from above, as detaile
    1. Select a model-based config as shown **Advanced SSID Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-3.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-3.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `GUEST`
@@ -97,7 +97,7 @@ In this section we have three scenarios we will deal with from above, as detaile
       4. From the dropdown for **DHCP Required** select the value `YES`
       5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-4.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-4.png?raw=true "Import JSON")
 
 #### Step 2c - **Create Internal SSID Configuration**
 
@@ -106,7 +106,7 @@ In this section we have three scenarios we will deal with from above, as detaile
    1. Select a model-based config as shown **Advanced SSID Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-5.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-5.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `EMPLOYEE`
@@ -115,7 +115,7 @@ In this section we have three scenarios we will deal with from above, as detaile
       4. Set the **DTIM period** to **2** for both the **2.4 and 5 Ghz** networks
       5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-6.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ssid-6.png?raw=true "Import JSON")
 
 ### Step 3 - **Create CleanAir Configuration**
 
@@ -128,7 +128,7 @@ To enable CleanAir on a Wireless Controller, you can do that for each band. In t
    1. Select a model-based config as shown **Clean Air Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-1.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `CA-24`
@@ -144,7 +144,7 @@ To enable CleanAir on a Wireless Controller, you can do that for each band. In t
          * **Video Camera**
       5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-2.png?raw=true "Import JSON")
 
 #### CleanAir Configuration for 5 Ghz
 
@@ -153,7 +153,7 @@ To enable CleanAir on a Wireless Controller, you can do that for each band. In t
    1. Select a model-based config as shown **Clean Air Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-3.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-3.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `CA-5`
@@ -168,7 +168,7 @@ To enable CleanAir on a Wireless Controller, you can do that for each band. In t
          * **Video Camera**
       5. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-4.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-ca-4.png?raw=true "Import JSON")
 
 ### Step 4 - **Create EDRRM Configuration**
 
@@ -181,7 +181,7 @@ To enable Event Driven RRM (EDRRM) for the wireless controller for the 2.4 and 5
    1. Select a model-based config as shown **Clean Air Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-1.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `EDRRM-24`
@@ -191,7 +191,7 @@ To enable Event Driven RRM (EDRRM) for the wireless controller for the 2.4 and 5
          * From the dropdown for **Sensitivity Threshold** select the value `Low`
       3. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-2.png?raw=true "Import JSON")
 
 #### EDRRM Configuration for 5 Ghz
 
@@ -200,7 +200,7 @@ To enable Event Driven RRM (EDRRM) for the wireless controller for the 2.4 and 5
    1. Select a model-based config as shown **Clean Air Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-3.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-3.png?raw=true "Import JSON")
 
    3. Then on the page that appears:
       1. Enter a Name for the Design Element, `EDRRM-5`
@@ -210,7 +210,7 @@ To enable Event Driven RRM (EDRRM) for the wireless controller for the 2.4 and 5
          * From the dropdown for **Sensitivity Threshold** select the value `Low`
       3. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-4.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-edrrm-4.png?raw=true "Import JSON")
 
 ### Step 5 - **Create Flex Configuration**
 
@@ -221,28 +221,28 @@ For times when we have overlapping IP with wireless or when using VN's or VRF we
    1. Select a model-based config as shown **AAA Radius Attributes Configuration**
    2. Click the **⨁ Add** button to create custom config.
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-flex-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-flex-1.png?raw=true "Import JSON")
 
    3. Complete the following:
       1. Enter a Name for the Design Element, `FLEX`
       2. Enable the slider for **IP Overlap**
       3. Click **Save**
 
-      ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-sect-flex-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-sect-flex-2.png?raw=true "Import JSON")
 
 ## Section 2 - **Assigning Model-Based Configuration**
 
 1. Select the hamburger menu icon to open the menu. Select **`Design > Network Profiles`**.
 
-   ![json](./images/module7-modelbasedconfig/dnac-menu-profiles.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-menu-profiles.png?raw=true "Import JSON")
 
 2. Select the **edit** button beside the Wireless Network Profile
 
-   ![json](./images/module7-modelbasedconfig/dnac-profiles-edit.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-profiles-edit.png?raw=true "Import JSON")
 
 3. Select the **Model Configs** Tab 
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-1.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-1.png?raw=true "Import JSON")
 
 ### Global Parameters in Model Based-Configs
 
@@ -255,7 +255,7 @@ We now will add Model configs for the various global configurations all at once.
 
 1. Click the **⨁ Add Model Config** button
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-2.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-2.png?raw=true "Import JSON")
 
 2. In the Window that appears select the following:
    
@@ -271,7 +271,7 @@ We now will add Model configs for the various global configurations all at once.
       * **CA-5**
    5. Click **Add**
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-3.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-3.png?raw=true "Import JSON")
 
 ### Voice Phone Parameters for 8821 IP Phones on the CAMPUS-PSK SSID
 
@@ -287,7 +287,7 @@ Complete the following:
 
 1. Click the **⨁ Add Model Config** button
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-4.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-4.png?raw=true "Import JSON")
 
 2. In the Window that appears select the following:
    
@@ -295,7 +295,7 @@ Complete the following:
    2. Within **Applicability** select **CAMPUS-PSK**:
    3. Click **Add**
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-5.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-5.png?raw=true "Import JSON")
 
 ### Guest Parameters for Guest Traffic on the GUESTNET SSID
 
@@ -311,7 +311,7 @@ Complete the following:
 
 1. Click the **⨁ Add Model Config** button
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-6.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-6.png?raw=true "Import JSON")
 
 2. In the Window that appears select the following:
    
@@ -319,7 +319,7 @@ Complete the following:
    2. Within **Applicability** select **GUESTNET**:
    3. Click **Add**
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-7.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-7.png?raw=true "Import JSON")
 
 ### Employee and IOT Parameters for Internal Traffic on the CAMPUS-EAP SSID
 
@@ -335,7 +335,7 @@ Complete the following:
 
 1. Click the **⨁ Add Model Config** button
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-8.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-8.png?raw=true "Import JSON")
 
 2. In the Window that appears select the following:
    
@@ -343,13 +343,13 @@ Complete the following:
    2. Within **Applicability** select **CAMPUS-EAP**:
    3. Click **Add**
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-9.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-9.png?raw=true "Import JSON")
 
 ### To complete the selections SAVE
 
 1. Click Save to add the changes.
 
-   ![json](./images/module7-modelbasedconfig/dnac-design-ftmbc-deploy-save.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module7-modelbasedconfig/dnac-design-ftmbc-deploy-save.png?raw=true "Import JSON")
 
 2. The configuration changes would now need to be provisioned to the Wireless Controller.
 

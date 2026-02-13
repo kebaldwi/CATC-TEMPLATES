@@ -18,7 +18,7 @@ For routing in the environment an OSPF IGP process has been created to propogate
 
 The 9130AX Access Points are connected to both access switches and the ports are automatically configured via the AUTOCONF feature.
 
-![json](./images/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/DCLOUD_Topology_Wireless-v2.png?raw=true "Import JSON")
 
 The clients will be connected connected to the network via FlexConnect due to the nature of the DCLOUD labs design. Where applicable we will call out the differences between FlexConnect and Local Mode Design.
 

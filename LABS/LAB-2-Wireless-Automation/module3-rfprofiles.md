@@ -19,26 +19,26 @@ During the next few steps we will create a **Basic RF Profile**.
 
 1. To create an Basic RF Profile, first open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select **`Design > Network Settings`**.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the **`Wireless`** tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page hover over `Add` beside the **Wireless Radio Frequency Profile** section to create a new Basic RF Profile
 
-   ![json](./images/module2-wlans/dnac-wireless-rfprofile-begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-begin.png?raw=true "Import JSON")
 
 4. The Create RF Profile page displays. Complete the following steps:
    1. Enter the **Profile Name** as `BASIC-RFP` then scroll down to continue
    2. Ensure that **2.4 Ghz** is selected
 
-      ![json](./images/module2-wlans/dnac-wireless-rfprofile-24ghz-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-24ghz-1.png?raw=true "Import JSON")
 
    3. Set the **Supported Data Rates** to start at **`12`** and the **Mandatory Data Rates** to **`18`** and **`36`** as shown
    4. Set the **Data RSSI threshold** to **`72`** and the **Voice RSSI threshold** to **`72`** as shown
    
-      ![json](./images/module2-wlans/dnac-wireless-rfprofile-24ghz-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-24ghz-2.png?raw=true "Import JSON")
 
 5. Scroll back to the top and continue creating the Basic RF Profile by completing the following steps:
 
@@ -46,22 +46,22 @@ During the next few steps we will create a **Basic RF Profile**.
    2. For **Channel Width** from **Best** by selecting the drop down.
    3. Then select **40 Mhz** from the channel sizes available.
 
-      ![json](./images/module2-wlans/dnac-wireless-rfprofile-5ghz-1.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-5ghz-1.png?raw=true "Import JSON")
 
    4. Enable **Zero Wait DFS** to ensure the wireless does not impede **RADAR**.
    5. Click the **Select All** for the DCA Channels and then **Deselect** Channels **`169-173`** as they are impeded by **LTE**.
 
-      ![json](./images/module2-wlans/dnac-wireless-rfprofile-5ghz-2.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-5ghz-2.png?raw=true "Import JSON")
 
    6. Set the **Supported Data Rates** to start at **`12`** and the **Mandatory Data Rates** to **`18`** and **`36`** as shown
    7. Set the **Data RSSI threshold** to **`72`** and the **Voice RSSI threshold** to **`72`** as shown
    8. Click **Save** continue
 
-      ![json](./images/module2-wlans/dnac-wireless-rfprofile-5ghz-3.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-5ghz-3.png?raw=true "Import JSON")
 
 6. The `Wireless` tab will reappear with the new **BASIC RF Profile** as displayed.
 
-   ![json](./images/module2-wlans/dnac-wireless-rfprofile-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-rfprofile-results.png?raw=true "Import JSON")
 
 </details>
 

@@ -13,15 +13,15 @@ For our lab scenario we will assume this is to be used for Cisco 8821 IP Phones.
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Design>Network Settings`.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the `Wireless` tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page click `Add` above the *SSID* section to create a new Wireless LAN
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-begin.png?raw=true "Import JSON")
 
 4. A Wireless SSID workflow will begin with *BASIC Settings* which will guide you through the build process of the WLAN. Complete the following steps:
    1. Enter the **Wireless Network Name (SSID)** as `CAMPUS-PSK-<POD#>`
@@ -31,7 +31,7 @@ For our lab scenario we will assume this is to be used for Cisco 8821 IP Phones.
    5. **Broadcast SSID** *enables the SSID to be broadcast allowing clients to see it*
    6. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-basic.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-basic.png?raw=true "Import JSON")
 
 5. The Wireless SSID workflow will continue with *Security Settings*. Complete the following steps:
    1. In the *Level of Security* section select **Personal**
@@ -41,19 +41,19 @@ For our lab scenario we will assume this is to be used for Cisco 8821 IP Phones.
    5. In the *AAA Configuration section* select **Fast Lane**
    6. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-security.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-security.png?raw=true "Import JSON")
 
 6. The Wireless SSID workflow continues with *Advance Settings*. Complete the following steps:
    1. Leave all sections here as default as shown
    2. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-advance.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-advance.png?raw=true "Import JSON")
 
 #### Step 2 - ***Associate SSID to Profile***
 
 1. The Wireless SSID workflow continues with *Associate SSID to Profile*. As no *Wireless Profile* exists, we must click **Add Profile** to add one to Catalyst Center.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-profile-begin.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-profile-begin.png?raw=true "Import JSON")
 
 2. The Wireless SSID workflow continues with *Associate SSID to Profile*. Complete the following steps:
    1. Enter the **Profile Name** as `DNAC-WIRELESS`
@@ -65,38 +65,38 @@ For our lab scenario we will assume this is to be used for Cisco 8821 IP Phones.
    7. Enter **20** for *Local to VLAN*
    8. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk.png?raw=true "Import JSON")
 
 3. The Wireless SSID workflow continues with *Associate SSID to Profile*. On the left the Profile **DNAC-WIRELESS** will be displayed with a green checkmark. Click **Next** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-associated.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-associated.png?raw=true "Import JSON")
 
 4. The Wireless SSID workflow continues with a *Summary* page. On the left the a summary of all the changes will be displayed. Click **Save** to continue
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-summary.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-summary.png?raw=true "Import JSON")
 
 5. The Wireless SSID workflow completes with a *Results* page displaying that both the SSID and the Profiles were successfully saved and updated. Click **Configure Network Profile** to assign the profile to a site.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-profile-campus-psk-results.png?raw=true "Import JSON")
 
 #### Step 3 - ***Assign Sites to Network Profile***
 
 1. On the *Network Profile* page select **Assign** beside the wireless profile **DNAC-WIRELESS**
 
-   ![json](./images/module2-wlans/dnac-wireless-network-profile-assign.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-network-profile-assign.png?raw=true "Import JSON")
 
 2. On the *Add Sites to Profile* slide out page select **Floor 1** to assign the site to the wireless network profile. 
 3. Click ***Save*** to complete the assignment
 
-   ![json](./images/module2-wlans/dnac-wireless-network-profile-add-sites.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-network-profile-add-sites.png?raw=true "Import JSON")
 
 4. On the *Network Profile* page note **1 Site** appears under *Sites* for the wireless profile **DNAC-WIRELESS**
 
-   ![json](./images/module2-wlans/dnac-wireless-network-profile-assigned.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-network-profile-assigned.png?raw=true "Import JSON")
 
 5. Return to the **Wireless Settings** page and you should see now our new *SSID* **CAMPUS-PSK-<POD#>**.
 
-   ![json](./images/module2-wlans/dnac-wireless-ssid-psk-results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-ssid-psk-results.png?raw=true "Import JSON")
 
 </details>
 
@@ -113,11 +113,11 @@ In this lab, we need to utilize FlexConnect, and so to allow for CoA of clients 
 
 1. To create an RF Profile, first open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon to open the menu. Select `Design>Network Settings`.
 
-   ![json](./images/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-menu-network-settings.png?raw=true "Import JSON")
 
 2. On the Network page click the `Wireless` tab to navigate to the wireless page.
 
-   ![json](./images/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-navigation-wireless-settings.png?raw=true "Import JSON")
 
 3. On the **Wireless** page scroll down to the *FlexConnect VLAN* section and enter the following:
    1. Enter *Native VLAN ID* as `10`
@@ -128,7 +128,7 @@ In this lab, we need to utilize FlexConnect, and so to allow for CoA of clients 
    6. Set the *VLAN Name* to **guestvlan** as shown
    7. Click **Save** continue
 
-      ![json](./images/module2-wlans/dnac-wireless-flexconnect-vlan.png?raw=true "Import JSON")
+      ![json](../../ASSETS/LABS/WIRELESS/module2-wlans/dnac-wireless-flexconnect-vlan.png?raw=true "Import JSON")
 
 </details>
 

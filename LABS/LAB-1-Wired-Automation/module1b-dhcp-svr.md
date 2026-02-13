@@ -67,7 +67,7 @@ Add-Dhcpserverv4ExclusionRange -ScopeId 192.168.5.0 -StartRange 192.168.5.1 -End
 
 The DHCP scope will look like this in Windows DHCP Administrative tool:
 
-![json](./images/WindowsDHCPscoperouteronly.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/WindowsDHCPscoperouteronly.png?raw=true "Import JSON")
 
 To deploy Option 43 on the Windows DHCP Server Scope, this additional line is required.
 
@@ -77,7 +77,7 @@ Set-DhcpServerv4OptionValue -ScopeId 192.168.5.0 -OptionId 43 -Value ([System.Te
 
 The DHCP scope modification will resemble the following image of the Windows DHCP Administrative tool:
 
-![json](./images/DNACDHCPoption43.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/DNACDHCPoption43.png?raw=true "Import JSON")
 
 ### Step 5.2b - Windows DHCP and DNS Services Configuration
 
@@ -89,20 +89,20 @@ In this section we will prepare Domain Name System (DNS) and Dynamic Host Config
 
 2. Once downloaded, extract the file.
 
-   ![json](./images/Powershell-Extract.png?raw=true "Import JSON")
-   ![json](./images/Powershell-Extract-Location.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Extract.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Extract-Location.png?raw=true "Import JSON")
 
 3. Right click on the file and run with powershell.
 
-   ![json](./images/Powershell-Run.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Run.png?raw=true "Import JSON")
 
 4. You may see a security warning. If you do accept it by entering **Y**.
 
-   ![json](./images/Powershell-Security.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/Powershell-Security.png?raw=true "Import JSON")
 
 At this point all the DNS and DHCP configuration on the **windows server** will be generated.
 
-   ![json](./images/DNS-DHCP.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRED/DNS-DHCP.png?raw=true "Import JSON")
 
 ### Step 5.2c - Windows DHCP Helper Configuration
 
@@ -138,7 +138,7 @@ conf t
 
 ```
 
-![json](./images/CC-Discovery-pretest-dhcp-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-pretest-dhcp-ipv4.png?raw=true "Import JSON")
 
 Second, lets check the configuration on the **9300-2**:
 
@@ -168,7 +168,7 @@ ping 198.18.129.100 source vlan 5 repeat 3
 
 The test results should look similar to this:
 
-![json](./images/CC-Discovery-test2-dhcp-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-test2-dhcp-ipv4.png?raw=true "Import JSON")
 
 Last, we need to ensure the **9300-2** is in the normal state:
 
@@ -184,7 +184,7 @@ conf t
 
 ```
 
-![json](./images/CC-Discovery-posttest-dhcp-ipv4.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRED/CC-Discovery-posttest-dhcp-ipv4.png?raw=true "Import JSON")
 
 At this point, the environment should be set up to onboard devices within VLAN 5 using the network address **192.168.5.0/24** utilizing **DHCP discovery**
 

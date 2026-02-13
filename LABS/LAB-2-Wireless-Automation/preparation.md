@@ -17,7 +17,7 @@ For routing in the environment an OSPF IGP process has been created to propogate
 
 The 9130AX Access Points are connected to both access switches and the ports are automatically configured via the AUTOCONF feature.
 
-![json](./images/DCLOUD_Topology_Wireless-v1.png?raw=true "Import JSON")
+![json](../../ASSETS/LABS/WIRELESS/DCLOUD_Topology_Wireless-v1.png?raw=true "Import JSON")
 
 ### Lab Credentials:
 
@@ -39,43 +39,43 @@ The 9130AX Access Points are connected to both access switches and the ports are
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Identity Services Engine (ISE) and select the hamburger menu icon to open the system menu.
 
-   ![json](./images/module0-preparation/ise-dashboard.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/ise-dashboard.png?raw=true "Import JSON")
 
 2. From the system menu under Administration select PxGrid Settings
 
-   ![json](./images/module0-preparation/ise-menu.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/ise-menu.png?raw=true "Import JSON")
 
 3. On the PxGrid Settings page select both of the available options and click Save to allow Catalyst Center to integrate.
 
-   ![json](./images/module0-preparation/ise-pxgrid-settings.png?raw=true "Import JSON")
-   ![json](./images/module0-preparation/ise-pxgrid-setup.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/ise-pxgrid-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/ise-pxgrid-setup.png?raw=true "Import JSON")
 
 ### Step 2 - ***Catalyst Center and ISE Integration***
 
 1. Open a web browser on the Windows Workstation Jump host. Open a connection to Catalyst Center and select the hamburger menu icon and navigate to the System > Settings menu item.
 
-   ![json](./images/module0-preparation/dnac-system-settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings.png?raw=true "Import JSON")
 
 2. Within the System Settings page navigate down the list on the left and select the Authentication and Policy Server section.
 
-   ![json](./images/module0-preparation/dnac-system-settings-aaa.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa.png?raw=true "Import JSON")
 
 3. On the page select from the dropdown ISE to configure ISE integration.
 
-   ![json](./images/module0-preparation/dnac-system-settings-aaa-ise.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa-ise.png?raw=true "Import JSON")
 
 4. Enter the information as seen on the page and click save.
 
-   ![json](./images/module0-preparation/dnac-system-settings-aaa-ise-config.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa-ise-config.png?raw=true "Import JSON")
 
 5. A popup will appear as the ISE node is using an untrusted SelfSigned Certificate. For lab purposes Accept the certificate, this may appear a couple of times as shown.
 
-   ![json](./images/module0-preparation/dnac-system-settings-aaa-ise-trust.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa-ise-trust.png?raw=true "Import JSON")
 
 6. You will see the the various stages of integration proceed and finally a success message as shown below.
 
-   ![json](./images/module0-preparation/dnac-system-settings-aaa-ise-done.png?raw=true "Import JSON")
-   ![json](./images/module0-preparation/dnac-system-settings-aaa-ise-complete.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa-ise-done.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/dnac-system-settings-aaa-ise-complete.png?raw=true "Import JSON")
 
 ## Lab Section 2 - DHCP & DNS Service Preparation
 
@@ -87,15 +87,15 @@ In this section we will prepare Domain Name System (DNS) and Dynamic Host Config
 2. Once downloaded, locate the file in the download folder.
 3. Right click on the file and run with powershell.
 
-   ![json](./images/module0-preparation/Powershell-Run.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Powershell-Run.png?raw=true "Import JSON")
 
 4. You may see a security warning. If you do accept it by entering **Y**.
 
-   ![json](./images/module0-preparation/Powershell-Security.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Powershell-Security.png?raw=true "Import JSON")
 
 At this point all the DNS and DHCP configuration on the ***windows server*** will be generated.
 
-   ![json](./images/module0-preparation/DNS-DHCP.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/DNS-DHCP.png?raw=true "Import JSON")
 
 ## Lab Section 3 - Catalyst Center Design Preparation
 
@@ -111,25 +111,25 @@ We will now prepare Catalyst Center and onboard the devices in preparation for u
 2. Locate the file in the download folder.
 3. Open the **postman** application from the desktop. Once the application is open select *Collections* then click the *Import* link. 
 
-   ![json](./images/module0-preparation/Postman-Pre-Collection-Import.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Pre-Collection-Import.png?raw=true "Import JSON")
 
 4. A window should appear on the file upload page. Click the upload button and select desktop from the windows explorer. Select the files named `lab-2-wireless-auto-postman-collection.json`, and `lab-2-wireless-auto-postman-environment.json` then click open. 
 
-   ![json](./images/module0-preparation/Postman-Collection-Select.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Collection-Select.png?raw=true "Import JSON")
 
 5. Then click import and the collection and environment should be loaded into the postman as shown.
 
-   ![json](./images/module0-preparation/Postman-Post-Collection-Import.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Post-Collection-Import.png?raw=true "Import JSON")
 
 6. Next we will choose the environment by clicking the checkmark on the right of Environment in postman as shown here. 
 
-   ![json](./images/module0-preparation/Postman-Environment-Selection.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Environment-Selection.png?raw=true "Import JSON")
 
 ### Step 2 - ***Turn off SSL validation for LAB purposes within Postman***
 
 1. Turn off SSL verification for lab purposes in the settings of Postman by click the **Gear** icon to select **settings** and **deselect** `SSL certificate verification` and then close the settings window. 
 
-   ![json](./images/module0-preparation/Postman-SSL-Deselect.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-SSL-Deselect.png?raw=true "Import JSON")
 
 2. With these steps completed we are prepared to start the walk through of the sections below.
 
@@ -139,20 +139,20 @@ This collection is built with a flow and delay timers wait for the collection to
 
 1. If not open, open the **postman** application from the desktop. Once the application is open select *Collections* and then the '...' link and select **run collection**. </br>
 
-   ![json](./images/module0-preparation/Postman-CollectionRunner.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-CollectionRunner.png?raw=true "Import JSON")
 
 2. On the right ensure all API are selected and click run collection. 
 
-   ![json](./images/module0-preparation/Postman-CollectionRunner-Run.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-CollectionRunner-Run.png?raw=true "Import JSON")
 
 3. After the entire collection has run you will see all of them listed on the left as shown, and two buttons on the top right, one for results and the other to run again.
 
-   ![json](./images/module0-preparation/Postman-CollectionRunner-Results.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-CollectionRunner-Results.png?raw=true "Import JSON")
 
 4. Within Catalyst Center you should see 3 devices within the inventory and additionally you should observe a complete hierarchy as well as settings and telemetry configured. The Devices will be discovered in the Building level at this stage.
 
-   ![json](./images/module0-preparation/Postman-Discovery.png?raw=true "Import JSON")
-   ![json](./images/module0-preparation/Postman-Settings.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Discovery.png?raw=true "Import JSON")
+   ![json](../../ASSETS/LABS/WIRELESS/module0-preparation/Postman-Settings.png?raw=true "Import JSON")
 
 ## Summary
 
