@@ -1,7 +1,7 @@
 # ISE Automation
 
 > [!WARNING]
-> For best results and if you have not ensured that the lab is functioning correctly, please consider checking the readiness of the lab in this [DCLOUD LAB PREPARATION](./DCLOUD.md) section.
+> For best results and if you have not ensured that the lab is functioning correctly, please consider checking the readiness of the lab in this [DCLOUD LAB PREPARATION](../DCLOUD.md) section.
 
 ## Overview
 

@@ -110,10 +110,10 @@ Use AnyConnect VPN to connect to DCLOUD. When connecting, look at the session de
 
 #### DCLOUD LAB Preparation
 
-In order to prepare the lab for use with this section of the repository please ensure that you prepare the lab according to the information detailed in the [DCLOUD LAB PREPARATION](./DCLOUD.md) section.
+In order to prepare the lab for use with this section of the repository please ensure that you prepare the lab according to the information detailed in the [DCLOUD LAB PREPARATION](../DCLOUD.md) section.
 
 > [!TIP]
-> If this is the first time you have used these labs it is worth going through the LAB preparation documentation to ensure that the lab is functioning correctly. Please consider checking the readiness of the lab in this [DCLOUD LAB PREPARATION](./DCLOUD.md) section.
+> If this is the first time you have used these labs it is worth going through the LAB preparation documentation to ensure that the lab is functioning correctly. Please consider checking the readiness of the lab in this [DCLOUD LAB PREPARATION](../DCLOUD.md) section.
 
 ## Disclaimer
 
