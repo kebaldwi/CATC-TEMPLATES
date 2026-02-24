@@ -1,4 +1,4 @@
-## DAY N Templates and Flows [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
+# DAY N Templates and Flows [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
 
 In this section we will go through the flow involved in creating a Template from an IOS configuration script for a Catalyst switch and various thoughts around how to link it to a Switch profile and deploy it through Catalyst Center using Plug and Play workflows.
 
@@ -10,11 +10,108 @@ Another important consideration is that part of a typical configuration would in
 
 As a guidance try and use Design settings for as much of the configurations as you can leaving Templates light and nimble for configurations which might change ongoing. Day N templates allows for administrators to build either monolithic or regular templates and add them to workflows, or to build composite templates for use in provisioning. 
 
-### Regular Templates
+## Considerations about Templates
+
+* PnP vs. DayN Templates: Cisco recommends using DayN Templates for most configurations, reserving PnP templates for establishing a stable network connection.
+
+* Inventory Database Limitations: The inventory database is inaccessible before the claim process, complicating onboarding. This results in a need for manual input in scripts instead of leveraging known device information.
+
+* Ongoing Modifications: DayN operations templates are stored within a project, while onboarding templates are located in the project Onboarding Configuration. Using onboarding templates post-PnP is impractical due to the absence of **system** and **bind** variables, which could simplify code and reduce repetition.
+
+* Automation Potential: DayN templates facilitate ongoing modifications and automate configurations using data from the inventory database, minimizing manual input.
+
+* Mandatory configuration is deployed by Catalyst Center during the PnP Onboarding process and it is impossible to disable currently. This facilitates the need to perhaps make modifications post PnP. Configuration seen below:
+
+   <details closed>
+   <summary> Expand to review the complete configuration</summary></br>
+   
+   This is configuration that is automated by default from Catalyst Center claim process. This config that is **deployed automatically**.</br>
+
+   ```
+   archive
+    log config
+     logging enable
+     logging size 500
+     hidekeys
+     !
+    !
+   !
+   service timestamps debug datetime msec
+   service timestamps log datetime msec
+   service password-encryption
+   service sequence-numbers
+   !
+   ! Disable external HTTP(S) access
+   ! Disable external Telnet access
+   ! Enable external SSHv2 access
+   !
+   no ip http server
+   !
+   no ip http secure-server
+   !
+   crypto key generate rsa label dnac-sda modulus 2048
+   ip ssh version 2
+   !
+   ip scp server enable
+   !
+   line vty 0 15
+    ! maybe redundant
+   login xxxxxx
+    transport input ssh
+    ! maybe redundant
+    transport preferred none
+   !
+   ! Set VTP mode to transparent (no auto VLAN propagation)
+   ! Set STP mode to Rapid PVST+ (prefer for non-Fabric compatibility)
+   ! Enable extended STP system ID
+   ! Set Fabric Node to be STP Root for all local VLANs
+   ! Enable STP Root Guard to prevent non-Fabric nodes from becoming Root
+   ! Confirm whether vtp mode transparent below is needed
+   vtp mode transparent
+   !
+   spanning-tree mode rapid-pvst
+   !
+   spanning-tree extend system-id
+   ! spanning-tree bridge priority 0
+   ! spanning-tree rootguard
+   ! spanning-tree portfast bpduguard default
+   no udld enable
+   !
+   errdisable recovery cause all
+   !
+   errdisable recovery interval 300
+   !
+   ! Enable SNMP and RW access
+   !
+   snmp-server xxxxxxxx
+   !
+   username xxxxxx
+   !
+   enable algorithm-type scrypt secret xxxxxxxx
+   !
+   hostname Switch
+   ! DNS settings
+   !
+   ip domain name base2hq.com
+   !
+   ip name-server 10.10.0.250
+   !
+   ```
+   </details>
+
+* Due to the nature of PnP onboarding, and as the device is not yet in the system database, **compliance** is not tracked for any template used in the PnP onboarding process. For this reason **ONLY** do enough to bring up the switch. All other configuration should be done in DayN
+
+* Configuration Best Practices: Typical configurations should automatically derive from the Network Settings in Catalyst Center. Avoid deploying CLI code in templates for tasks already defined by design components, promoting a more UI-centric and maintainable configuration approach.
+
+* Guidance: Utilize design settings for as much configuration as possible, keeping templates streamlined for configurations that may change frequently, enhancing maintainability and troubleshooting.
+
+* **Jinja** vs **Velocity**, choose wisely. My recommendation is to use Jinja simply because it is the defacto template rendering language used in multiple platforms. It is modular, and the logic constructs are based on **Python**. 
+
+## Regular Templates
 
 The use of regular templates allows you to reuse build code in the form of a set of IOS commands listed out very much like a configuration file. Those commands may be nested within logical constructs using either Velocity or Jinja2 scripting language, but the intent is that this regular template is a set of instructions initiated on a target device to create a configuration. Here we may introduce Variables, Conditional Logic and Looping constructs to address the delivery of conficguration. 
 
-#### **Jinja2 Scripting Language** 
+### **Jinja2 Scripting Language** 
 
 Catalyst Center allows for the use of Jinja2 Scripting Language which bares some resembelance to Python. It uses similar Variable, Conditional Logic and Looping constructs as Python and allows for developers who use Python to make an easy quick transition to utilizing this form of scripting language. Additionally, Jinja2 incorporates **include** and **extend** functionality which Velocity 1.7.5 does not have implemented within Catalyst Center. This allows for better modularization and reuse of code, in addition to the Composite Template approach.
 
@@ -33,7 +130,7 @@ Catalyst Center allows for the use of Velocity Scripting Language which was prev
    - [Onboarding Template Examples](../CODE/TEMPLATES/VELOCITY/ONBOARDING/)
    - [DayN Template Examples](../CODE/TEMPLATES/VELOCITY/DAYN/)
 
-### Composite Templates
+## Composite Templates
 
 The use of composite templates allows you to reuse templates and code that you have previously used on other deployments without duplicating it on Catalyst Center. This allows you to manage those smaller templates or modules allowing for easier management moving forward. Composite templates may incorporate a mix of regular templates written in both Velocity and Jinja2 scripting languages. This allows you to adopt either Scripting Language for a specific use case, and reuse older modules while allowing for newer ones to be written in the most optimal way.
 
