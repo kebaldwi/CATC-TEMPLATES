@@ -255,7 +255,7 @@ To be able to delete the interface description when the link goes down in the ca
  event manager applet remove-port-description-on-link-down
   event syslog pattern "%LINK.* Interface.* changed state to .* down"
   action 100 regexp "Interface ([^ ]+)," "$_syslog_msg" match intf
-  action 101 regexp "^GigabitEthernet1/0([1-5])$"
+  action 101 regexp "^GigabitEthernet1/0([1-5])$" "$intf"
   action 110 if $_regexp_result eq "1"
   action 120   cli command "enable"
   action 121   cli command "config t"
