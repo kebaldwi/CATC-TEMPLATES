@@ -121,6 +121,8 @@ You will see that lines *201 to 220* were added to the EEM script. We look for t
 
 You will see that lines *250 to 260* were added to the EEM script. We look for the keyword `Phone` within the built-in variable to determine if the port is connected to a Phone within that section. It results in a True or binary 1 state, and the included code from lines *253 to 260* runs line by line. For example, the configuration adds a description to the interface for the phone of `description Phone - SEPB07D47D34910 - Port 1`.
 
+### ***LLDP version of Code***
+
 In case you are interested in **LLDP** take a look at this.
 
 ```vtl
@@ -184,6 +186,8 @@ event manager applet update-port-lldp authorization bypass
 
 After working with Meraki equipment a bit more I have tested and updated ths version to allow for MX appliances which did not show up due to a issue with their system names
 
+### ***Modify Code***
+
 ```vtl
 event manager applet update-port-lldp authorization bypass
  event neighbor-discovery interface regexp GigabitEthernet.* lldp add
@@ -241,6 +245,25 @@ event manager applet update-port-lldp authorization bypass
  action 203  cli command "end"
  action 204 end
  action 205 cli command "write mem" 
+```
+
+### ***Code to remove Descriptions on Link Down Events***
+
+To be able to delete the interface description when the link goes down in the case where you wish to track actual devices on the interface like dynamic workstation ports you can add this supplemental script:
+
+```
+event manager applet remove-port-description-on-link-down
+ event interface status down
+ action 101 if $_nd_local_intf_name regexp "^GigabitEthernet1/0([1-5])$"
+ action 110 if $_regexp_result eq "1"
+ action 120   cli command "enable"
+ action 121   cli command "config t"
+ action 122   cli command "interface $_nd_local_intf_name"
+ action 123   cli command "no description"
+ action 124   cli command "end"
+ action 130 end
+ action 140 end
+ action 200 cli command "write mem"
 ```
 
 ## Case 2 - ***Sending a IOS-XE command to clear a table - Use Case***
