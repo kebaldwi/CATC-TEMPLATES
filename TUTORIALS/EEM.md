@@ -252,18 +252,19 @@ event manager applet update-port-lldp authorization bypass
 To be able to delete the interface description when the link goes down in the case where you wish to track actual devices on the interface like dynamic workstation ports you can add this supplemental script:
 
 ```
-event manager applet remove-port-description-on-link-down
- event interface status down
- action 101 if $_nd_local_intf_name regexp "^GigabitEthernet1/0([1-5])$"
- action 110 if $_regexp_result eq "1"
- action 120   cli command "enable"
- action 121   cli command "config t"
- action 122   cli command "interface $_nd_local_intf_name"
- action 123   cli command "no description"
- action 124   cli command "end"
- action 130 end
- action 140 end
- action 200 cli command "write mem"
+ event manager applet remove-port-description-on-link-down
+  event syslog pattern "%LINK.* Interface.* changed state to .* down"
+  action 100 regexp "Interface ([^ ]+)," "$_syslog_msg" match intf
+  action 101 regexp "^GigabitEthernet1/0([1-5])$"
+  action 110 if $_regexp_result eq "1"
+  action 120   cli command "enable"
+  action 121   cli command "config t"
+  action 122   cli command "interface $_nd_local_intf_name"
+  action 123   cli command "no description"
+  action 124   cli command "end"
+  action 130 end
+  action 140 end
+  action 200 cli command "write mem"
 ```
 
 ## Case 2 - ***Sending a IOS-XE command to clear a table - Use Case***
