@@ -660,6 +660,33 @@ event man run installToBundle
 
 Catalyst Center template to follow with kron scheduling option and self deletion.
 
+### Case 11 - ***Automatically moving a routed link to another interface***
+
+Recently, I had to move some addressing as I was moving things round in my test lab. To avoid running downstairs with a console cable, I decided to move the IP and routing pragmatically. Here is how I did that.
+
+```
+ no event manager applet configure-interface-on-link-down
+ event manager applet configure-interface-on-link-down
+  event syslog pattern "%LINK.* Interface.* changed state to .* down"
+  action 100 regexp "Interface ([^ ]+)," "$_syslog_msg" match intf_name
+  action 101 if $intf_name eq "GigabitEthernet0/0/1"
+  action 110  if $_regexp_result eq "1"
+  action 120   cli command "enable"
+  action 121   cli command "config t"
+  action 122   cli command "interface GigabitEthernet0/0/1"
+  action 123   cli command "no ip router isis"
+  action 124   cli command "no ip address"
+  action 125   cli command "exit"
+  action 130   cli command "interface GigabitEthernet0/0/0"
+  action 131   cli command "ip address 10.0.1.4 255.255.255.254"
+  action 132   cli command "ip router isis"
+  action 140   cli command "end"
+  action 200   cli command "write mem"
+  action 210  end
+  action 220 end
+
+```
+
 The examples are designed to get you thinking about operations, and what is possible. They may need heavy modification for a production use-case and so these are provided for LAB purposes only. Any use in a production environment should not be done without testing and validation.
 
 > [!IMPORTANT]
