@@ -1,0 +1,27 @@
+{# Jinja Template for Elisity Netflow Augmentations #}
+{# Author: kebaldwi@cisco.com #}
+{# 1. Create a Jinja Template, map to the right device type and TAG the template #}
+{# 2. Add to network (switch) profile as DayN Template and select sites #}
+{# 3. TAG device(s) #}
+{# 4. Ensure the device has been assigned to site and has telemetry pushed #}
+{# 5. Provision with CSV using variables for Elisity Netflow Collectors #}
+
+{# NOTE: will need to be reprovisioned EVERY time telemetry is updated by Catalyst Center #}
+
+! Ensure to enter IP Address in Form {{ IPaddr }} 
+
+{% macro ElisityNFconfig(IPaddr) %}
+flow exporter ElisityNetFlowExporter-0
+ description ElisityNetFlowExporter-0
+ destination {{IPaddr}}
+ source Loopback 0 
+ transport udp 9996
+ template data timeout 240
+!
+flow monitor dnacmonitor exporter dnacexporter
+ exporter ElisityNetFlowExporter-0
+{% endmacro %}
+
+{{ ElisityNFconfig(IPaddr) }}
+
+{# end of file #}
