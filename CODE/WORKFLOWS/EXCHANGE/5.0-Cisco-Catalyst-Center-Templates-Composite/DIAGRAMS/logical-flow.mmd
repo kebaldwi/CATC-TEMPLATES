@@ -1,0 +1,85 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Get-GitHub-Directory-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}
+    X-GitHub-Api-Version: 2022-11-28  |  Auth: Basic"] --> B
+
+    B["Step 2 - JSONPath Queries on Directory Response
+    $.length()  -> NumberFiles
+    $..name     -> GithubFileList array"] --> C
+
+    C["Step 3 - Execute Python Script
+    Extract last segment of GITHUB-PATH
+    Strip non-alpha characters -> CATC-ProjectName"] --> D
+
+    D{TemplateHubProjectName<br/>provided?} -->|No - use path| E1
+    D -->|Yes - use input| E2
+
+    E1["Set Project Variables - Branch A
+    ProjectName    = GITHUB-PATH
+    CATC-ProjectName = Python cleaned path segment
+    GithubFileList = names array
+    NumberFiles    = Length"] --> F
+
+    E2["Set Project Variables - Branch B
+    ProjectName    = TemplateHubProjectName
+    CATC-ProjectName = TemplateHubProjectName
+    GithubFileList = names array
+    NumberFiles    = Length"] --> F
+
+    F(["For each file in GithubFileList"]) --> G
+
+    G{File extension<br/>matches yml?} -->|No - skip| F
+    G -->|Yes| H
+
+    H["Step 5a - Get-GitHub-File-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}/{file}
+    Header: Accept: application/vnd.github.raw+json
+    Returns: raw YAML composite template definition"] --> I
+
+    I["Step 5b - Execute Python Script
+    Replace .yml extension with .j2
+    Derive matching Jinja2 template filename -> TemplateName"] --> J
+
+    J["Step 5c - Set File Data
+    OUTPUT      = YAML file raw content
+    TemplateName = .j2 filename derived from .yml"] --> K
+
+    subgraph STEP5D["Step 5d - CATC-CreateCompositeTemplate-v3"]
+        direction TB
+        K["1) GET /dna/intent/api/v1/template-programmer/project
+        Find or create project by ProjectName in Template Hub"] --> K2
+        K2["2) Check if composite template already exists
+        GET /dna/intent/api/v1/template-programmer/project/{id}/template
+        Filter by TemplateName"] --> K3
+        K3{"Template<br/>exists and<br/>FORCE=false?"} -->|Yes - skip| K5
+        K3 -->|No or FORCE=true| K4
+        K4["3) Parse YAML body for composite sequence
+        Identify member template references in sequence order
+        GET /dna/intent/api/v1/template-programmer/template
+        Resolve each member template name to template ID"] --> K4B
+        K4B["4) POST /dna/intent/api/v1/template-programmer/project/{id}/template
+        Body: name=TemplateName, language=JINJA
+        softwareType=IOS-XE, composite=true
+        containingTemplates: ordered member template ID list
+        deviceTypes: C9000/C9300/C9400/C9500 Series"] --> K5
+        K5["5) Return compositeId of created or existing template"]
+    end
+
+    K5 --> L["Step 5e - Set Variables
+    Store CompositeId returned by CATC-CreateCompositeTemplate-v3"] --> M{More files<br/>in GithubFileList?}
+
+    M -->|Yes| F
+    M -->|No| N
+
+    N["Step 6 - Sleep 30 Seconds
+    Allow Template Hub to settle after composite creation"] --> O
+
+    O["Step 7 - CATC-CommitTemplate-v2
+    POST /dna/intent/api/v1/template-programmer/template/version
+    Body: templateId = CompositeId
+    Commits and versions the composite template (publishes it)"] --> DONE([Done])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

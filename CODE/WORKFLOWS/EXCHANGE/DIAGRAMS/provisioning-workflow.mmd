@@ -1,0 +1,64 @@
+flowchart TD
+    %% Input Source
+    SJ[(settings.json\nProject settings and targets)]:::source
+
+    %% Workflow 1.0
+    W1["1.0 - Site Hierarchy\nGitOps-BuildHierarchy-v3.json"]:::infra
+    R1(["CatC Site Hierarchy\nAreas / Buildings / Floors"]):::resource
+
+    %% Workflow 2.0
+    W2["2.0 - Settings and Credentials\nGitOps-BuildSettings-v3.json"]:::infra
+    R2(["CatC Site Network Configuration\nDNS NTP Syslog SNMP AAA\nGlobal Credentials Assigned"]):::resource
+
+    %% Workflow 3.0
+    W3["3.0 - Device Discovery and Assign\nGitOps-DeviceDiscovery-v3.json"]:::infra
+    R3(["CatC Inventory and Site Assignment\nManaged Devices Bound to Site"]):::resource
+
+    %% Workflow 4.0
+    W4["4.0 - Templates GitHub Integration\nGitOps-BuildTemplates-v3.json"]:::gitops
+    R4(["CatC Template Project\nDayN Member Templates Synced"]):::resource
+
+    %% Workflow 5.0
+    W5["5.0 - Templates Composite\nGitOps-BuildCompositeTemplate-v3.json"]:::gitops
+    R5(["CatC Composite Template\nMember Relationships Built and Committed"]):::resource
+
+    %% Workflow 6.0
+    W6["6.0 - Network Profile\nGitOps-BuildNetworkProfile-v3.json"]:::infra
+    R6(["CatC Network Profile\nSite Bound with Day0 and DayN Template IDs"]):::resource
+
+    %% Workflow 7.0
+    W7["7.0 - Provision Composite\nGitOps-Provisioning-v3.json"]:::deploy
+    FINAL(["Done: Fabric Devices Provisioned\nComposite DayN Configuration Applied"]):::done
+
+    %% Dependency Notes
+    D34["Devices must be discovered\nand assigned before provisioning"]:::constraint
+    D45["Member templates must exist\nbefore composite build"]:::constraint
+    D67["Network profile binding required\nbefore composite deployment"]:::constraint
+
+    %% Wiring
+    SJ --> W1 --> R1
+    R1 --> W2
+    SJ --> W2 --> R2
+    R2 --> W3 --> R3
+    SJ --> W3
+
+    SJ --> W4 --> R4
+    R4 --> D45 --> W5 --> R5
+
+    R1 --> W6
+    R5 --> W6
+    SJ --> W6 --> R6
+
+    R3 --> D34 --> W7
+    R6 --> D67 --> W7
+    R5 --> W7
+    SJ --> W7 --> FINAL
+
+    %% Styles
+    classDef infra fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef gitops fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef deploy fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef source fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef resource fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef done fill:#27ae60,color:#fff,stroke:#1e8449
+    classDef constraint fill:#c0392b,color:#fff,stroke:#922b21,stroke-dasharray:4 4
