@@ -1,0 +1,119 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Get-GitHub-Directory-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}
+    X-GitHub-Api-Version: 2022-11-28  |  Auth: Basic"] --> B
+
+    B["Step 2 - JSONPath Queries on Directory Response
+    $.length()  -> NumberFiles
+    $..name     -> GithubFileList array"] --> C
+
+    C(["For each file in GithubFileList"]) --> D{File ==<br/>GITHUB-FILE<br/>settings.json?}
+    D -->|No - skip| C
+    D -->|Yes| E
+
+    E["Step 3 - Get-GitHub-File-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}/{file}
+    Header: Accept: application/vnd.github.raw+json
+    Returns: raw JSON content"] --> F
+
+    F["Step 4a - JSONPath Queries on File Content
+    $.length()  -> hierarchyLength
+    $.project   -> ProjectJson full array"] --> G
+
+    G["Step 4b - Read Table from JSON
+    JSONPath: $.[*] -> HierarchyList table
+    Columns: HierarchyParent | HierarchyArea
+             HierarchyBldg   | HierarchyFloor"] --> H
+
+    H(["For each row in HierarchyList"]) --> I
+
+    I["Step 5a - Replace String + JSONPath Queries
+    Extract 10 fields for current row:
+    HierarchyParent, HierarchyArea, HierarchyBldg, HierarchyFloor
+    HierarchyBldgAddress, cli_username
+    snmp_v2c_read desc, snmp_v2c_write desc
+    netconf_port, deviceDiscoveryList"] --> J1
+
+    subgraph STEP5B["Step 5b - Resolved Discovery Inputs"]
+        direction TB
+        J1["HierarchyParent
+        Parent area path root"] --> J2
+        J2["HierarchyArea
+        Area name for site lookup"] --> J3
+        J3["HierarchyBldg + HierarchyBldgAddress
+        Building name and address"] --> J4
+        J4["HierarchyFloor
+        Floor name within building"] --> J5
+        J5["Device Credentials
+        cli_username | snmp_v2c_read | snmp_v2c_write | netconf_port"] --> J6
+        J6["deviceDiscoveryList
+        Comma-separated IP list to discover"]
+    end
+
+    subgraph STEP5C["Step 5c - CATC-DeviceDiscovery-v3"]
+        direction TB
+        K1["1) GET /dna/intent/api/v2/global-credential
+        Retrieve all global credentials snapshot"] --> K2
+        K2["2) Extract UUIDs via JSONPath
+        cliCredential by username    -> uuidCLI
+        snmpV2cRead by description   -> uuidSNMPv2READ
+        snmpV2cWrite by description  -> uuidSNMPv2WRITE
+        netconfCredential by port    -> uuidNETCONF"] --> K3
+        K3["3) GET /dna/intent/api/v1/dnac-release
+        Determine installed Catalyst Center version"] --> K4
+        K4["4) Python Data Transformation
+        DiscoveryType: Range or Multi Range (by IP count)
+        DeviceRange: ip-ip format (version-aware separator)
+        siteNameHierarchy: Parent/Area/Bldg/Floor"] --> K5
+        K5["5) GET /api/v1/discovery/1/100
+        List existing discovery jobs"] --> K6
+        K6["6) JSONPath: Find discovery by siteNameHierarchy name"] --> K7
+        K7{Discovery<br/>already<br/>exists?} -->|No - error 400| K8A
+        K7 -->|Yes - found| K8B
+
+        K8A["7a) POST /dna/intent/api/v1/discovery
+        Body: name, discoveryType, ipAddressList
+        protocolOrder: ssh | timeout: 5 | retry: 3
+        globalCredentialIdList: CLI, SNMPv2R, SNMPv2W, NETCONF
+        Extract taskId from response"] --> K9
+
+        K8B["7b) Extract existing discoveryId
+        DELETE /dna/intent/api/v1/discovery/{id}
+        Pause 8 seconds
+        POST /dna/intent/api/v1/discovery (recreate)
+        Extract taskId from response"] --> K9
+
+        K9["8) Wait For Catalyst Center Task
+        Poll task status every 5 seconds"] --> K10
+        K10["9) GET /dna/intent/api/v1/task/{taskId}
+        Extract discoveryId from task progress
+        Sleep 180 seconds for discovery to complete"] --> K11
+        K11["10) GET /dna/intent/api/v1/discovery/{id}/network-device
+        Retrieve discovered devices
+        Extract deviceUuid array + managementIpAddress list"] --> K12
+        K12["11) GET /dna/intent/api/v2/site
+        Query by groupNameHierarchy = siteNameHierarchy
+        Extract siteId"] --> K13
+        K13["12) Build Assign Request Body
+        body: { deviceIds: [uuids], siteId: siteId }
+        POST /dna/intent/api/v1/networkDevices/assignToSite/apply
+        Assign discovered devices to target site"] --> K14
+        K14["Return: discoveredDevices array + siteNameHierarchy"]
+    end
+
+    J6 --> K1
+    K14 --> L{Discovery<br/>and assign<br/>result OK?}
+    L -->|No| FAIL_A([Fail: CATC-DeviceDiscovery-v3<br/>returned error])
+    L -->|Yes| M{More rows<br/>in HierarchyList?}
+
+    M -->|Yes| H
+    M -->|No| N
+
+    N["Step 6 - Sleep 30 Seconds
+    Allow Catalyst Center device inventory to settle"] --> DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

@@ -1,0 +1,110 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Get-GitHub-Directory-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}
+    X-GitHub-Api-Version: 2022-11-28  |  Auth: Basic"] --> B
+
+    B["Step 2 - JSONPath Queries on Directory Response
+    $.length()  -> NumberFiles
+    $..name     -> GithubFileList array"] --> C
+
+    C["Step 3 - Execute Python Script
+    Extract last segment of GITHUB-PATH
+    Strip non-alpha characters -> CATC-ProjectName"] --> D
+
+    D{TemplateHubProjectName<br/>provided?} -->|No - use path| E1
+    D -->|Yes - use input| E2
+
+    E1["Set Project Variables - Branch A
+    ProjectName    = GITHUB-PATH
+    CATC-ProjectName = Python cleaned path segment
+    GithubFileList = names array
+    NumberFiles    = Length"] --> F
+
+    E2["Set Project Variables - Branch B
+    ProjectName    = TemplateHubProjectName
+    CATC-ProjectName = TemplateHubProjectName
+    GithubFileList = names array
+    NumberFiles    = Length"] --> F
+
+    subgraph STEP4["Step 4 - CATC-DependencyMapping-v1"]
+        direction TB
+        F["Analyse GitHub directory for Jinja2 template dependencies
+        Inputs: GITHUB-OWNER, GITHUB-REPO, GITHUB-PATH
+                TemplateHubProjectName, FORCE Update flag
+        Parse each file for dependency references
+        Build dependency-ordered GithubFileList
+        ensuring referenced templates are imported first"]
+    end
+
+    F --> G["Step 5 - Set Variables
+    Update GithubFileList with dependency-ordered
+    list returned by CATC-DependencyMapping-v1"]
+
+    G --> H(["For each file in GithubFileList"])
+
+    H --> I{File extension<br/>matches<br/>j2 or vm or json?}
+    I -->|No - skip| H
+    I -->|Yes| J
+
+    J["Step 6a - Get-GitHub-File-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}/{file}
+    Header: Accept: application/vnd.github.raw+json
+    Returns: raw template content"] --> K
+
+    K["Step 6b - Execute Python Script
+    Replace placeholder in file content:
+    {{ TEMPLATE_PROJECT_NAME }} -> ProjectName
+    Outputs: processed template body"] --> L
+
+    L["Step 6c - Set File Data
+    OUTPUT      = processed template body
+    TemplateName = current filename"] --> M
+
+    subgraph STEP6D["Step 6d - CATC-CreateTemplate-v3"]
+        direction TB
+        M["1) GET /dna/intent/api/v1/template-programmer/project
+        Find or create project by CATC-ProjectName"] --> M2
+        M2["2) Check if template already exists in project
+        GET /dna/intent/api/v1/template-programmer/project/{id}/template"] --> M3
+        M3{"Template<br/>exists and<br/>FORCE=false?"} -->|Yes - skip| M5
+        M3 -->|No or FORCE=true| M4
+        M4["3) POST /dna/intent/api/v1/template-programmer/project/{id}/template
+        Body: name=TemplateName, language=JINJA
+        softwareType=IOS-XE, templateContent=OUTPUT
+        deviceTypes: C9000/C9300/C9400/C9500 Series"] --> M5
+        M5["4) Return template create / update result"]
+    end
+
+    M5 --> N{More files<br/>in GithubFileList?}
+    N -->|Yes| H
+    N -->|No| O
+
+    O["Step 7 - Sleep 30 Seconds
+    Allow Template Hub to settle after imports"] --> P
+
+    P["Step 8 - CATC-GetProjectTemplatesIDs
+    GET /dna/intent/api/v1/template-programmer/project
+    Filter by CATC-ProjectName
+    Retrieve all template metadata for the project"] --> Q
+
+    Q["Step 9 - JSONPath Query Template ID
+    $.response..templates[*].id -> ListTemplateId array
+    Collect all template IDs in the project"] --> R
+
+    R["Step 10 - Set TemplateID List
+    Store ListTemplateId array -> TemplateListIDs"] --> S
+
+    S(["For each template in TemplateListIDs"]) --> T
+
+    T["Step 11 - CATC-CommitTemplate-v2
+    POST /dna/intent/api/v1/template-programmer/template/version
+    Body: templateId = current template ID
+    Commits and versions the template (publishes it)"] --> U{More templates<br/>in TemplateListIDs?}
+
+    U -->|Yes| S
+    U -->|No| DONE([Done])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

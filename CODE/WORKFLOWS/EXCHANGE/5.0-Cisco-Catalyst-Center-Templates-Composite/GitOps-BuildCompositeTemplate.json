@@ -1,0 +1,3792 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00",
+    "name": "GitOps-BuildCompositeTemplate",
+    "title": "GitOps-BuildCompositeTemplate",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "TemplateName",
+          "type": "datatype.string",
+          "description": "TemplateName for Template Hub",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKR14J5xoFkou9zx9jYb7XkekL7F",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "CompositeId",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "xml"
+        },
+        "unique_name": "variable_workflow_02UHZL9N05F6X3GTghkHXCt0XRohDPJnrQa",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "ProjectName",
+          "type": "datatype.string",
+          "description": "ProjectName for Template Hub",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKQQ9Q324my5rOWA75JRGL6pQWZn",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "false",
+          "scope": "input",
+          "name": "FORCE Update",
+          "type": "datatype.string",
+          "description": "Variable Flag to Force Update of Templates",
+          "is_required": true,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKRGT659LZ5VehDh70cQT9zbxXeJ",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "kebaldwi",
+          "scope": "input",
+          "name": "GITHUB-OWNER",
+          "type": "datatype.string",
+          "description": "GitHub Repository OWNER",
+          "is_required": true,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKRNWZ3mxWgMqsa0nQ2DobvZF89E",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [],
+          "scope": "local",
+          "name": "TemplateListIDs",
+          "type": "datatype.array",
+          "description": "List of Template ID",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02UHSZTOKQHA65EgvICtzC9Zqd8wI9eVSmK",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "GITHUB-FILE",
+          "type": "datatype.string",
+          "description": "File on GitHub to reference per Iteration",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKR66C282ic3v8SINEPIVtcXsvt5",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "CATC-ProjectName",
+          "type": "datatype.string",
+          "description": "Truncated Project Name",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKRSEN2RzkGYU9hFXMUUBfP8xJYG",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "OUTPUT",
+          "type": "datatype.string",
+          "description": "Output Variable",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKS65G2kCUM2KngTE5g4cLRTbXyy",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "BGP_EVPN",
+          "scope": "input",
+          "name": "TemplateHubProjectName",
+          "type": "datatype.string",
+          "description": "Project Name for Site",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKRWU77XyfNwmye2JkdyTtsrne0H",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "TECOPS-2599",
+          "scope": "input",
+          "name": "GITHUB-REPO",
+          "type": "datatype.string",
+          "description": "Github Repo to Target",
+          "is_required": true,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKRB5N1CkhRHR5cz6o63q8isJN0q",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Projects/BGP_EVPN/DayNTemplates",
+          "scope": "input",
+          "name": "GITHUB-PATH",
+          "type": "datatype.string",
+          "description": "Path on GitHub Repository",
+          "is_required": true,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKQW2X5i5lt9WsEidW6aX9HuVpPU",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [],
+          "scope": "local",
+          "name": "GithubFileList",
+          "type": "datatype.array",
+          "description": "List of Files for GitHub",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02UHSZTOKQ7813GGpP636M7tLkAWkBD2DFx",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "NumberFiles",
+          "type": "datatype.string",
+          "description": "Number of GitHub Files in Directory",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02UHSZTOKS1QZ2m8SLPiZDfNH3kDWAuxPcj",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Build Composite Templates from GitHub Yaml including templates moved to to Catalyst Center",
+      "display_name": "GitOps-BuildCompositeTemplate",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02UHSZTSGRKFO0Hlp6ncBxiu3BX9ZtxpreY",
+        "name": "Get-GitHub-Directory",
+        "title": "Get-GitHub-Directory",
+        "type": "workflow.sub_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Get Directory from GitHub",
+          "display_name": "Get-GitHub-Directory",
+          "input": {
+            "variable_workflow_02Q9GGEZSODUX3n2GTtrR8diXO3Sh3VkiI8": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRNWZ3mxWgMqsa0nQ2DobvZF89E$",
+            "variable_workflow_02Q9GGEZSOJ5Y3HhmalBUc4zOCPEAAmVNFs": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKQW2X5i5lt9WsEidW6aX9HuVpPU$",
+            "variable_workflow_02Q9GGEZSOPD55JjRnnQXM8y9jiruF31RVb": "",
+            "variable_workflow_02Q9GGEZSOVZP54S6DUxmY0VVGtI4OGlmPr": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRB5N1CkhRHR5cz6o63q8isJN0q$"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "no_target": true
+          },
+          "workflow_id": "definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU",
+          "workflow_name": "Get-GitHub-Directory-v2"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02UHSZTVEBWH21tTwNQA2AIB6gvRzGgxRg0",
+        "name": "JSONPath Query",
+        "title": "JSONPath Queries",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "JSONPath Query to get length and names in JSON",
+          "display_name": "JSONPath Queries",
+          "input_json": "$activity.definition_activity_02UHSZTSGRKFO0Hlp6ncBxiu3BX9ZtxpreY.output.variable_workflow_02Q9GGEZSO5X27eWDpTqxC3REDYMMk0bXyv$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$.length()",
+              "jsonpath_query_name": "Length",
+              "jsonpath_query_type": "string",
+              "set_default_value": false,
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            },
+            {
+              "default_value": "",
+              "jsonpath_query": "$..name",
+              "jsonpath_query_name": "names",
+              "jsonpath_query_type": "array",
+              "set_default_value": false,
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02UHSZTY9RU955g2Erbz8vC9P0FaC3IDUBs",
+        "name": "Execute Python Script",
+        "title": "Execute Python Script",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "Execute Python Script",
+          "display_name": "Execute Python Script",
+          "script": "import sys\nlast = [p for p in sys.argv[1].replace(\"\\\\\", \"/\").split(\"/\") if p][-1]\ncleaned = \"\".join(ch for ch in last if (\"A\" <= ch <= \"Z\") or (\"a\" <= ch <= \"z\"))\nprint(cleaned)",
+          "script_arguments": [
+            "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKQW2X5i5lt9WsEidW6aX9HuVpPU$"
+          ],
+          "script_queries": [],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02UHSZU13FD1T25iCq3KHNIasjrLEYtPvAF",
+        "name": "Condition Block",
+        "title": "Condition Project Name Block",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "conditions": [],
+          "continue_on_failure": false,
+          "description": "If-Else condition block",
+          "display_name": "Condition Project Name Block",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_02UHSZU46I6OH2vVE5ezseY2WlhI1BNaatT",
+            "name": "Condition Branch",
+            "title": "IF NOT Template Hub Project Name",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRWU77XyfNwmye2JkdyTtsrne0H$",
+                "operator": "eq",
+                "right_operand": ""
+              },
+              "continue_on_failure": false,
+              "display_name": "IF NOT Template Hub Project Name",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02UHSZU7L81MZ4B4O3orZ4Ry3L1dCsQFNJW",
+                "name": "Set Variables",
+                "title": "Set Project Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set \nProjectName\nNumber of Files\nList of Files",
+                  "display_name": "Set Project Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQQ9Q324my5rOWA75JRGL6pQWZn$",
+                      "variable_value_new": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKQW2X5i5lt9WsEidW6aX9HuVpPU$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQ7813GGpP636M7tLkAWkBD2DFx$",
+                      "variable_value_new": "$activity.definition_activity_02UHSZTVEBWH21tTwNQA2AIB6gvRzGgxRg0.output.jsonpath_queries.names$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKS1QZ2m8SLPiZDfNH3kDWAuxPcj$",
+                      "variable_value_new": "$activity.definition_activity_02UHSZTVEBWH21tTwNQA2AIB6gvRzGgxRg0.output.jsonpath_queries.Length$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKRSEN2RzkGYU9hFXMUUBfP8xJYG$",
+                      "variable_value_new": "$activity.definition_activity_02UHSZTY9RU955g2Erbz8vC9P0FaC3IDUBs.output.response_body$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02UHSZUADYTTH3sytwr5rNXzO199Hicdlhw",
+            "name": "Condition Branch",
+            "title": "IF Template Hub Project Name",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRWU77XyfNwmye2JkdyTtsrne0H$",
+                "operator": "ne",
+                "right_operand": ""
+              },
+              "continue_on_failure": false,
+              "display_name": "IF Template Hub Project Name",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02UHSZUDSD4UF7VDKRGpe7vXzlSawrlDD1V",
+                "name": "Set Variables",
+                "title": "Set Project Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set \nProjectName\nNumber of Files\nList of Files",
+                  "display_name": "Set Project Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQQ9Q324my5rOWA75JRGL6pQWZn$",
+                      "variable_value_new": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRWU77XyfNwmye2JkdyTtsrne0H$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQ7813GGpP636M7tLkAWkBD2DFx$",
+                      "variable_value_new": "$activity.definition_activity_02UHSZTVEBWH21tTwNQA2AIB6gvRzGgxRg0.output.jsonpath_queries.names$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKS1QZ2m8SLPiZDfNH3kDWAuxPcj$",
+                      "variable_value_new": "$activity.definition_activity_02UHSZTVEBWH21tTwNQA2AIB6gvRzGgxRg0.output.jsonpath_queries.Length$"
+                    },
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKRSEN2RzkGYU9hFXMUUBfP8xJYG$",
+                      "variable_value_new": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRWU77XyfNwmye2JkdyTtsrne0H$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02UHSZUOE9EQZ3IAfZtFiwP5ee3fEdbhi9w",
+        "name": "For Each",
+        "title": "For Each GitHub File",
+        "type": "logic.for_each",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "ForEach block for GitHub Files in Repository Folder",
+          "display_name": "For Each GitHub File",
+          "skip_execution": false,
+          "source_array": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQ7813GGpP636M7tLkAWkBD2DFx$"
+        },
+        "object_type": "definition_activity",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02UHSZUTA2A0O52TuUi5BAJfhrBFHF9MXOP",
+            "name": "Condition Block",
+            "title": "YAML File Block",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "conditions": [],
+              "continue_on_failure": true,
+              "description": "Looking for YAML file Only",
+              "display_name": "YAML File Block",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02UHSZUVYWBN12Z0EB2L27pDHRqZZECqUE6",
+                "name": "Condition Branch",
+                "title": "YAML Branch",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$activity.definition_activity_02UHSZUOE9EQZ3IAfZtFiwP5ee3fEdbhi9w.input.source_array[@]$",
+                    "operator": "mregex",
+                    "right_operand": "(yml)"
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "YAML Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UHSZUZLA7LL4wMeUnozqrBocy8DsBmc4b",
+                    "name": "Get-GitHub-File",
+                    "title": "Get-GitHub-File",
+                    "type": "workflow.sub_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Get File from GitHub",
+                      "display_name": "Get-GitHub-File",
+                      "input": {
+                        "variable_workflow_02Q9GGEZI3R0F5g8tgIgxpYlxoxPzzzN0fb": "$activity.definition_activity_02UHSZUOE9EQZ3IAfZtFiwP5ee3fEdbhi9w.input.source_array[@]$",
+                        "variable_workflow_02Q9GGEZI3YNO6chQNjtYw0xqJ9B4WH2x3d": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKQW2X5i5lt9WsEidW6aX9HuVpPU$",
+                        "variable_workflow_02Q9GGEZI4EK732dcSi8isKlZex1XJAm2dV": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRB5N1CkhRHR5cz6o63q8isJN0q$",
+                        "variable_workflow_02Q9GGEZI4JZS3OLmIP5kOJiBuxKVgUht1l": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.input.variable_workflow_02UHSZTOKRNWZ3mxWgMqsa0nQ2DobvZF89E$"
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "no_target": true
+                      },
+                      "workflow_id": "definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp",
+                      "workflow_name": "Get-GitHub-File-v2"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHSZV2JK1OG4ieXAHBpfEeeOd9wMCv7Ge",
+                    "name": "Execute Python Script",
+                    "title": "Execute Python Script",
+                    "type": "python3.script",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "Execute Python Script",
+                      "display_name": "Execute Python Script",
+                      "script": "import sys\nresult = sys.argv[1].replace(\".yml\", \".j2\")\nprint(result)\n\n",
+                      "script_arguments": [
+                        "$activity.definition_activity_02UHSZUOE9EQZ3IAfZtFiwP5ee3fEdbhi9w.input.source_array[@]$"
+                      ],
+                      "script_queries": [],
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHSZV5PNVB95iQdVrXcft0Tc7OLbfiGao",
+                    "name": "Set Variables",
+                    "title": "Set File Data",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set File Data",
+                      "display_name": "Set File Data",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKS65G2kCUM2KngTE5g4cLRTbXyy$",
+                          "variable_value_new": "$activity.definition_activity_02UHSZUZLA7LL4wMeUnozqrBocy8DsBmc4b.output.variable_workflow_02Q9GGEZI48QN1UOANjqFIXxRVfPUdLE3Zz$"
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKR14J5xoFkou9zx9jYb7XkekL7F$",
+                          "variable_value_new": "$activity.definition_activity_02UHSZV2JK1OG4ieXAHBpfEeeOd9wMCv7Ge.output.response_body$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHTF6OXH2YK2GlTDdV1ufcoh1bZ0pQd9d",
+                    "name": "CATC-CreateCompositeTemplate-v3",
+                    "title": "CATC-CreateCompositeTemplate-v3",
+                    "type": "workflow.sub_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "atomic": {},
+                      "continue_on_failure": false,
+                      "description": "Creates a Composite Template in a Project at Template Hub",
+                      "display_name": "CATC-CreateCompositeTemplate-v3",
+                      "input": {
+                        "variable_workflow_02UGWH44WQKQJ3DdwGH05fvkctJ8S0qoTZ5": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKR14J5xoFkou9zx9jYb7XkekL7F$",
+                        "variable_workflow_02UGWH44WQTQR1KVVlPf042VNLPnD8ESf3Q": "JINJA",
+                        "variable_workflow_02UGWH44WR38A6ycI4bteUoFXh7IFfGJ5LR": "IOS-XE",
+                        "variable_workflow_02UGWH44WS9AI6sZByROIs6E2IMZDBIYCmb": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHSZTOKQQ9Q324my5rOWA75JRGL6pQWZn$",
+                        "variable_workflow_02UGWH44WSXD76sdrIlCulVOtiL7ASQkiW5": "Cisco Catalyst 9300 Series Switches",
+                        "variable_workflow_02UHK1JR8EVID224JvJHwAuKUeqI0ID92a7": "$activity.definition_activity_02UHSZUZLA7LL4wMeUnozqrBocy8DsBmc4b.output.variable_workflow_02Q9GGEZI48QN1UOANjqFIXxRVfPUdLE3Zz$",
+                        "variable_workflow_02UIMAYAJGQ1V5nUNkTwGLLjzRUwIH9Da3R": [
+                          "Cisco Catalyst 9000 Series Virtual Switches",
+                          "Cisco Catalyst 9300 Series Switches",
+                          "Cisco Catalyst 9400 Series Switches",
+                          "Cisco Catalyst 9500 Series Switches"
+                        ]
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "target_type": "catalystcenter.endpoint",
+                        "use_workflow_target": true
+                      },
+                      "workflow_id": "definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3",
+                      "workflow_name": "CATC-CreateCompositeTemplate-v3"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHZXBTLMZ3E1N3AehSrhWnEzJpFWoDptQ",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHZL9N05F6X3GTghkHXCt0XRohDPJnrQa$",
+                          "variable_value_new": "$activity.definition_activity_02UHTF6OXH2YK2GlTDdV1ufcoh1bZ0pQd9d.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02UHSZVCS6DX32JQ47J71tHVTCN4AmpaIlb",
+        "name": "Sleep",
+        "title": "Sleep",
+        "type": "core.sleep",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Sleep",
+          "display_name": "Sleep",
+          "skip_execution": false,
+          "sleep_interval": 30
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02UHSZVTL0Y042SSNvrgh2d2VYOOxqnSN1U",
+        "name": "CATC-CommitTemplate",
+        "title": "CATC-CommitTemplate",
+        "type": "workflow.sub_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": true,
+          "description": "Commits Templates in a Project at Template Hub",
+          "display_name": "CATC-CommitTemplate",
+          "input": {
+            "variable_workflow_02Q9GGEW5VOEN7DGBegzb0TudruIacUuJNt": "$workflow.definition_workflow_02UHSZTO3P8TZ4jom75tcm5YTVsQUBHne00.local.variable_workflow_02UHZL9N05F6X3GTghkHXCt0XRohDPJnrQa$"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02Q9GGEVOQKXT4yFKmSl9RzHU9SEyeYpDdN",
+          "workflow_name": "CATC-CommitTemplate-v2"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02UHSZVWM67S60XHf7jfvP3MquZTnohPrLf",
+        "name": "Completed",
+        "title": "Completed",
+        "type": "logic.completed",
+        "base_type": "activity",
+        "properties": {
+          "completion_type": "succeeded",
+          "continue_on_failure": false,
+          "description": "Completed action",
+          "display_name": "Completed",
+          "result_message": "Success",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_02UJO8Z2XI6AT0BYbZkV9h8zti20Fia4NT1"
+    ]
+  },
+  "categories": {
+    "category_02OEWDW2ZV1Q2248n5kBKeTKjD4Us8XsFlJ": {
+      "unique_name": "category_02OEWDW2ZV1Q2248n5kBKeTKjD4Us8XsFlJ",
+      "name": "Cisco Catalyst Center - Template Hub",
+      "title": "Cisco Catalyst Center - Template Hub",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "system",
+      "object_type": "category"
+    },
+    "category_02Q3JWJZSKWMQ7NII1RMc7xi2WDcAAW9SHo": {
+      "unique_name": "category_02Q3JWJZSKWMQ7NII1RMc7xi2WDcAAW9SHo",
+      "name": "GITHUB UTILITIES",
+      "title": "GITHUB UTILITIES",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "GitHub Adapter",
+      "category_type": "custom",
+      "object_type": "category"
+    },
+    "category_02UJO8Z2XI6AT0BYbZkV9h8zti20Fia4NT1": {
+      "unique_name": "category_02UJO8Z2XI6AT0BYbZkV9h8zti20Fia4NT1",
+      "name": "Catalyst Center GitOps",
+      "title": "Catalyst Center GitOps",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "GitOps with Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  },
+  "targets": {
+    "definition_target_02Q3KUIL1M43W4P7K6o5bDcSLGxcyavtM0P": {
+      "unique_name": "definition_target_02Q3KUIL1M43W4P7K6o5bDcSLGxcyavtM0P",
+      "name": "GITHUB",
+      "title": "GITHUB",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_02UMM14H2QDFO4LwVxzZknihvvo27r3Y2tN",
+        "description": "",
+        "disable_certificate_validation": false,
+        "display_name": "GITHUB",
+        "host": "api.github.com",
+        "ignore_proxy": false,
+        "is_https_proxy": false,
+        "no_runtime_user": false,
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_02UMM14H2QDFO4LwVxzZknihvvo27r3Y2tN": {
+      "unique_name": "definition_runtime_user_02UMM14H2QDFO4LwVxzZknihvvo27r3Y2tN",
+      "name": "REPO-KEYS",
+      "title": "REPO-KEYS",
+      "type": "runtime_user.web-service_bearer_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "bearer_token": "*****",
+        "description": "Put your key in here from the legacy token section",
+        "display_name": "REPO-KEYS"
+      }
+    }
+  },
+  "subworkflows": [
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU",
+        "name": "Get-GitHub-Directory-v2",
+        "title": "Get-GitHub-Directory-v2",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "OUTPUT",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZSO5X27eWDpTqxC3REDYMMk0bXyv",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "GITHUB-FILE",
+              "type": "datatype.string",
+              "description": "GitHub File to Get",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZSOPD55JjRnnQXM8y9jiruF31RVb",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "CODE/TEMPLATES/JINJA2/DAYN/J2",
+              "scope": "input",
+              "name": "GITHUB-PATH",
+              "type": "datatype.string",
+              "description": "Path on the GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZSOJ5Y3HhmalBUc4zOCPEAAmVNFs",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "CATC-TEMPLATES",
+              "scope": "input",
+              "name": "GITHUB-REPO",
+              "type": "datatype.string",
+              "description": "GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZSOVZP54S6DUxmY0VVGtI4OGlmPr",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "kebaldwi",
+              "scope": "input",
+              "name": "GITHUB-OWNER",
+              "type": "datatype.string",
+              "description": "Owner user id for GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZSODUX3n2GTtrR8diXO3Sh3VkiI8",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Get Directory from GitHub",
+          "display_name": "Get-GitHub-Directory-v2",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "no_target": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02Q9GGF1WZQY42kCPEwneqH2sivvCbmbG7F",
+            "name": "Execute Python Script",
+            "title": "Execute Python Script Encoder",
+            "type": "python3.script",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Execute Python Script to Encode Variables",
+              "display_name": "Execute Python Script Encoder",
+              "script": "import sys\nimport string\nfrom urllib.parse import quote\n\nencoded_repo = quote(sys.argv[1])\nencoded_path = quote(sys.argv[2])",
+              "script_arguments": [
+                "$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.input.variable_workflow_02Q9GGEZSOVZP54S6DUxmY0VVGtI4OGlmPr$",
+                "$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.input.variable_workflow_02Q9GGEZSOJ5Y3HhmalBUc4zOCPEAAmVNFs$"
+              ],
+              "script_queries": [
+                {
+                  "script_query": "encoded_repo",
+                  "script_query_name": "encoded_repo",
+                  "script_query_type": "string"
+                },
+                {
+                  "script_query": "encoded_path",
+                  "script_query_name": "encoded_path",
+                  "script_query_type": "string"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF2Y0KKI1Y72IcSIMcYeH3RLMeWMp0",
+            "name": "HTTP Request",
+            "title": "Get GitHub Directory",
+            "type": "web-service.http_request",
+            "base_type": "activity",
+            "properties": {
+              "accept": "application/vnd.github.raw+json",
+              "action_timeout": 180,
+              "allow_auto_redirect": true,
+              "allow_headers_redirect": false,
+              "content_type": "text/plain",
+              "continue_on_error_status_code": false,
+              "continue_on_failure": false,
+              "custom_headers": [
+                {
+                  "name": "X-GitHub-Api-Version",
+                  "value": "2022-11-28"
+                }
+              ],
+              "description": "Get GitHub File",
+              "display_name": "Get GitHub Directory",
+              "method": "GET",
+              "relative_url": "/repos/$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.input.variable_workflow_02Q9GGEZSODUX3n2GTtrR8diXO3Sh3VkiI8$/$activity.definition_activity_02Q9GGF1WZQY42kCPEwneqH2sivvCbmbG7F.output.script_queries.encoded_repo$/contents/$activity.definition_activity_02Q9GGF1WZQY42kCPEwneqH2sivvCbmbG7F.output.script_queries.encoded_path$",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "override_workflow_target": true,
+                "target_id": "definition_target_02Q3KUIL1M43W4P7K6o5bDcSLGxcyavtM0P"
+              },
+              "user_agent": "$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.output.variable_workflow_02Q9GGEZSO5X27eWDpTqxC3REDYMMk0bXyv$"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF4NZ7HC3XhnQLVEkqleMZLTJSwbKq",
+            "name": "Set Variables",
+            "title": "Set OUTPUT",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Set OUTPUT",
+              "display_name": "Set OUTPUT",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.output.variable_workflow_02Q9GGEZSO5X27eWDpTqxC3REDYMMk0bXyv$",
+                  "variable_value_new": "$activity.definition_activity_02Q9GGF2Y0KKI1Y72IcSIMcYeH3RLMeWMp0.output.response_body$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU.output.workflow_results$",
+                  "variable_value_new": "$activity.definition_activity_02Q9GGF2Y0KKI1Y72IcSIMcYeH3RLMeWMp0.output.response_body$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02Q3JWJZSKWMQ7NII1RMc7xi2WDcAAW9SHo"
+        ]
+      }
+    },
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp",
+        "name": "Get-GitHub-File-v2",
+        "title": "Get-GitHub-File-v2",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "kebaldwi",
+              "scope": "input",
+              "name": "GITHUB-OWNER",
+              "type": "datatype.string",
+              "description": "Owner user id for GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZI4JZS3OLmIP5kOJiBuxKVgUht1l",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "OUTPUT",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZI48QN1UOANjqFIXxRVfPUdLE3Zz",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "CATC-TEMPLATES",
+              "scope": "input",
+              "name": "GITHUB-REPO",
+              "type": "datatype.string",
+              "description": "GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZI4EK732dcSi8isKlZex1XJAm2dV",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "Platinum-Stacking-Template-v2.j2",
+              "scope": "input",
+              "name": "GITHUB-FILE",
+              "type": "datatype.string",
+              "description": "GitHub File to Get",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZI3R0F5g8tgIgxpYlxoxPzzzN0fb",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "CODE/TEMPLATES/JINJA2/DAYN/J2",
+              "scope": "input",
+              "name": "GITHUB-PATH",
+              "type": "datatype.string",
+              "description": "Path on the GitHub Repository",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEZI3YNO6chQNjtYw0xqJ9B4WH2x3d",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Get File from GitHub",
+          "display_name": "Get-GitHub-File-v2",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "no_target": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02Q9GGF1ZZDSI6zfjeeDmKnfwCXmaVSsAHo",
+            "name": "Execute Python Script",
+            "title": "Execute Python Script Encoding",
+            "type": "python3.script",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Execute Python Script Encoding",
+              "display_name": "Execute Python Script Encoding",
+              "script": "import sys\nimport string\nfrom urllib.parse import quote\n\nencoded_repo = quote(sys.argv[1])\nencoded_path = quote(sys.argv[2])\nencoded_file= quote(sys.argv[3])",
+              "script_arguments": [
+                "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI4EK732dcSi8isKlZex1XJAm2dV$",
+                "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI3YNO6chQNjtYw0xqJ9B4WH2x3d$",
+                "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI3R0F5g8tgIgxpYlxoxPzzzN0fb$"
+              ],
+              "script_queries": [
+                {
+                  "script_query": "encoded_repo",
+                  "script_query_name": "encoded_repo",
+                  "script_query_type": "string"
+                },
+                {
+                  "script_query": "encoded_path",
+                  "script_query_name": "encoded_path",
+                  "script_query_type": "string"
+                },
+                {
+                  "script_query": "encoded_file",
+                  "script_query_name": "encoded_file",
+                  "script_query_type": "string"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF2YZEY01QRpeeAaORcglIAYfezuSD",
+            "name": "HTTP Request",
+            "title": "Get GitHub File",
+            "type": "web-service.http_request",
+            "base_type": "activity",
+            "properties": {
+              "accept": "application/vnd.github.raw+json",
+              "action_timeout": 180,
+              "allow_auto_redirect": true,
+              "allow_headers_redirect": false,
+              "content_type": "text/plain",
+              "continue_on_error_status_code": false,
+              "continue_on_failure": false,
+              "custom_headers": [
+                {
+                  "name": "X-GitHub-Api-Version",
+                  "value": "2022-11-28"
+                }
+              ],
+              "description": "Get GitHub File",
+              "display_name": "Get GitHub File",
+              "method": "GET",
+              "relative_url": "/repos/$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI4JZS3OLmIP5kOJiBuxKVgUht1l$/$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI4EK732dcSi8isKlZex1XJAm2dV$/contents/$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI3YNO6chQNjtYw0xqJ9B4WH2x3d$/$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.input.variable_workflow_02Q9GGEZI3R0F5g8tgIgxpYlxoxPzzzN0fb$",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "override_workflow_target": true,
+                "target_id": "definition_target_02Q3KUIL1M43W4P7K6o5bDcSLGxcyavtM0P"
+              },
+              "user_agent": "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.output.variable_workflow_02Q9GGEZI48QN1UOANjqFIXxRVfPUdLE3Zz$"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF4NNE5V7YPmyNsicZK4omiroUbTgZ",
+            "name": "Set Variables",
+            "title": "Set OUTPUT",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Set OUTPUT",
+              "display_name": "Set OUTPUT",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.output.workflow_results$",
+                  "variable_value_new": "$activity.definition_activity_02Q9GGF2YZEY01QRpeeAaORcglIAYfezuSD.output.response_body$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp.output.variable_workflow_02Q9GGEZI48QN1UOANjqFIXxRVfPUdLE3Zz$",
+                  "variable_value_new": "$activity.definition_activity_02Q9GGF2YZEY01QRpeeAaORcglIAYfezuSD.output.response_body$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02Q3JWJZSKWMQ7NII1RMc7xi2WDcAAW9SHo"
+        ]
+      }
+    },
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3",
+        "name": "CATC-CreateCompositeTemplate-v3",
+        "title": "CATC-CreateCompositeTemplate-v3",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "BGP-EVPN-BUILD.j2",
+              "scope": "input",
+              "name": "Template Name",
+              "type": "datatype.string",
+              "description": "Template Name within Project in Template Hub",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WQKQJ3DdwGH05fvkctJ8S0qoTZ5",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "Cisco Catalyst 9300 Series Switches",
+              "scope": "input",
+              "name": "Product Series",
+              "type": "datatype.string",
+              "description": "Product Series, one of:\nCisco Catalyst 9000 Series Virtual Switches\nCisco Catalyst 9200 Series Switches\nCisco Catalyst 9300 Series Switches\nCisco Catalyst 9400 Series Switches\nCisco Catalyst 9500 Series Switches\nCisco Catalyst 9600 Series Switches\nCisco Catalyst IE9300 Rugged Series\nCisco Catalyst IE3400 Rugged Series\nCisco Catalyst IE3400 Heavy Duty Series\nCisco Catalyst Micro Switches",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WSXD76sdrIlCulVOtiL7ASQkiW5",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "containingTemplates",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Project Id",
+              "type": "datatype.string",
+              "description": "Project Unique Identifier",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.integer",
+            "properties": {
+              "value": 0,
+              "scope": "local",
+              "name": "count",
+              "type": "datatype.integer",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "Product Family",
+              "type": "datatype.string",
+              "description": "Product Family",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WSRUJ2ex8204eoeAEoqHwCNVsZA",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+            "properties": {
+              "value": [],
+              "scope": "local",
+              "name": "iterationArray",
+              "type": "datatype.array",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02UHR5B4B2DJC7lrla7S0ftmgyE0PKR3u9k",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "Template Id",
+              "type": "datatype.string",
+              "description": "Template Unique Identifier",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "baseCompositeContent",
+              "type": "datatype.string",
+              "description": "Base Composite Content",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02UGWH44WRLD07V3zlWOYdJGIxzQ1jJqszb",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+            "properties": {
+              "value": [
+                "Cisco Catalyst 9000 Series Virtual Switches",
+                "Cisco Catalyst 9300 Series Switches",
+                "Cisco Catalyst 9400 Series Switches",
+                "Cisco Catalyst 9500 Series Switches"
+              ],
+              "scope": "input",
+              "name": "productSeriesArray",
+              "type": "datatype.array",
+              "description": "Product Series, array of:\nCisco Catalyst 9000 Series Virtual Switches\nCisco Catalyst 9200 Series Switches\nCisco Catalyst 9300 Series Switches\nCisco Catalyst 9400 Series Switches\nCisco Catalyst 9500 Series Switches\nCisco Catalyst 9600 Series Switches\nCisco Catalyst IE9300 Rugged Series\nCisco Catalyst IE3400 Rugged Series\nCisco Catalyst IE3400 Heavy Duty Series\nCisco Catalyst Micro Switches",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02UIMAYAJGQ1V5nUNkTwGLLjzRUwIH9Da3R",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "jsonCompositeDefinition",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02UHKF2CDZCSE7J7mJvysxr9upm6ML4vDxr",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "IOS-XE",
+              "scope": "input",
+              "name": "Template Software",
+              "type": "datatype.string",
+              "description": "Template Software, one of: IOS-XE or IOS",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WR38A6ycI4bteUoFXh7IFfGJ5LR",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "Request Body",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02UGWH44WQ2JS2O3LuzUsyISDDV6K2T70Cm",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "deviceTypes",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02UIMBO9W7LPK2GFW26DsbxgmwupM7YU41b",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "BGP_EVPN",
+              "scope": "input",
+              "name": "Project Name",
+              "type": "datatype.string",
+              "description": "Project Name in Template Hub",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WS9AI6sZByROIs6E2IMZDBIYCmb",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "JINJA",
+              "scope": "input",
+              "name": "Template Language",
+              "type": "datatype.string",
+              "description": "Template Language, one of: \n\nJINJA, VELOCITY or JSON for JSON Payload",
+              "is_required": true,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WQTQR1KVVlPf042VNLPnD8ESf3Q",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "IOS",
+              "scope": "local",
+              "name": "Software Type",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WRC7Z0MMY8eKFLXmDI1123t6GHg",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "IOS",
+              "scope": "local",
+              "name": "Software Variant",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02UGWH44WQEXC6TkWs7lhwOtXiYrVGp7hfC",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "# Composite Template Definition for BGP-EVPN-BUILD\n# This file defines the ordered list of templates that comprise this composite template\n#\n# NAMING: The composite template name in Catalyst Center defaults to the filename (without .yml) + \".j2\"\n#         Override with 'composite_name' field below if different naming is required.\n#\n# NOTE: DEFN-* and FUNC-* templates are included via Jinja {% include %} statements\n# within FABRIC-* templates. Do NOT add them here - only list top-level FABRIC templates.\n#\n# STRUCTURE: This matches Catalyst Center's composite template export format:\n#   - Each containingTemplates entry includes: name, id, composite, language, description,\n#     projectName, deviceTypes, templateParams, tags\n\n# Optional: Override composite template name (defaults to filename + \".j2\")\n# composite_name: \"COMPOSITE\"\n\n# Templates are applied in the order listed below (matches BGP-EVPN-BUILD.j2 include order)\ntemplates:\n  - name: \"FABRIC-VRF.j2\"\n  - name: \"FABRIC-LOOPBACKS.j2\"\n  - name: \"FABRIC-L3OUT.j2\"\n  - name: \"FABRIC-NVE.j2\"\n  - name: \"FABRIC-MCAST.j2\"\n  - name: \"FABRIC-EVPN.j2\"\n  - name: \"FABRIC-OVERLAY.j2\"\n  - name: \"FABRIC-CLIENT-PORTS.j2\"\n  - name: \"FABRIC-NAC.j2\"",
+              "scope": "input",
+              "name": "CompositeDefinition",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "yaml"
+            },
+            "unique_name": "variable_workflow_02UHK1JR8EVID224JvJHwAuKUeqI0ID92a7",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Creates a Composite Template in a Project at Template Hub",
+          "display_name": "CATC-CreateCompositeTemplate-v3",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX",
+            "name": "CATC-GetTemplates",
+            "title": "CATC-GetTemplates",
+            "type": "workflow.sub_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": true,
+              "description": "Read Templates in Template Hub",
+              "display_name": "CATC-GetTemplates",
+              "input": {
+                "variable_workflow_02Q9GGEWPJT9I66OwdEGjLt989lZeCiOGQ6": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WQKQJ3DdwGH05fvkctJ8S0qoTZ5$",
+                "variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WS9AI6sZByROIs6E2IMZDBIYCmb$"
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "target_type": "catalystcenter.endpoint",
+                "use_workflow_target": true
+              },
+              "workflow_id": "definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp",
+              "workflow_name": "CATC-GetTemplates-v2"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UHK5RWAPXDR64gb6nG2JnzDMNZvKuISJj",
+            "name": "Execute Python Script",
+            "title": "YAML to JSON",
+            "type": "python3.script",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Execute Python Script",
+              "display_name": "YAML to JSON",
+              "script": "import sys\nimport yaml\nimport json\n\nyaml_data = sys.argv[1]\n\ndef yaml_string_to_json(yaml_string):\n    # Load YAML data from the string, ignoring comments\n    data = yaml.safe_load(yaml_string)\n    \n    # Convert to JSON and return as a string\n    return json.dumps(data, indent=2)\n\njson_output = yaml_string_to_json(yaml_data)\nprint(json_output)",
+              "script_arguments": [
+                "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UHK1JR8EVID224JvJHwAuKUeqI0ID92a7$"
+              ],
+              "script_queries": [
+                {
+                  "script_query": "json_output",
+                  "script_query_name": "jsonCompositeDefinition",
+                  "script_query_type": "string"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UHR5GF08I0D4Bvxhgst1fg9u3MG6oHLB9",
+            "name": "JSONPath Query",
+            "title": "JSONPath Query",
+            "type": "corejava.jsonpathquery",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "JSONPath Query to get value in JSON",
+              "display_name": "JSONPath Query",
+              "input_json": "$activity.definition_activity_02UHK5RWAPXDR64gb6nG2JnzDMNZvKuISJj.output.script_queries.jsonCompositeDefinition$",
+              "jsonpath_queries": [
+                {
+                  "jsonpath_query": "$..name",
+                  "jsonpath_query_name": "templateOrderedArray",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": false,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UHQCNLAO8SP0rYJK2Y1NeGRyIrvg3gnIo",
+            "name": "Read Table from JSON",
+            "title": "Read Table from JSON",
+            "type": "corejava.read_table_from_json",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Reading table data from JSON",
+              "display_name": "Read Table from JSON",
+              "input_json": "$activity.definition_activity_02UHK5RWAPXDR64gb6nG2JnzDMNZvKuISJj.output.script_queries.jsonCompositeDefinition$",
+              "jsonpath_query": "$.templates",
+              "persist_output": true,
+              "populate_columns": true,
+              "skip_execution": false,
+              "table_columns": []
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UGWH4C0NPMD6Urz7Tf8kTnbh9GmfEmdN1",
+            "name": "Condition Block",
+            "title": "Proceed with Template Creation ?",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "conditions": [],
+              "continue_on_failure": false,
+              "description": "If-Else condition block",
+              "display_name": "Proceed with Template Creation ?",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02UGWH4EW8IBV4xfgDliKfEem2UOqylY4fX",
+                "name": "Condition Branch",
+                "title": "Project & Template Already Exist",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.succeeded$",
+                    "operator": "eq",
+                    "right_operand": true
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Project & Template Already Exist",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UGWH4JT9U3X2fxnxVy5wKOFLB2tLR50aG",
+                    "name": "Set Variables",
+                    "title": "Set Output",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Output",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$",
+                          "variable_value_new": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPK73R62JTpWvFe6ZGW7miAmmGVy$"
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z$",
+                          "variable_value_new": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPK1T56xhBbnE5PbCptYUaWFH3id$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UGWH4ST4CYF6q630D5l476d7JGU1hBWfI",
+                    "name": "Completed",
+                    "title": "Completed",
+                    "type": "logic.completed",
+                    "base_type": "activity",
+                    "properties": {
+                      "completion_type": "succeeded",
+                      "continue_on_failure": false,
+                      "description": "Completed action",
+                      "display_name": "Completed",
+                      "result_message": "Template: ",
+                      "skip_execution": true
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02UGWH4W04XZJ6vWTufuINc1ksFhjqIFdhN",
+                "name": "Condition Branch",
+                "title": "Project Exists & Template Does Not",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.succeeded$",
+                      "operator": "eq",
+                      "right_operand": false
+                    },
+                    "operator": "and",
+                    "right_operand": {
+                      "left_operand": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$",
+                      "operator": "eq",
+                      "right_operand": "Template Not Found"
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Project Exists & Template Does Not",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UGWH4ZWVYQ87LvFODtFUHjsTcb7WwDNz5",
+                    "name": "Set Variables",
+                    "title": "Get Project Id",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Get Project Id",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z$",
+                          "variable_value_new": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPK1T56xhBbnE5PbCptYUaWFH3id$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02UGWH53G2XF834HdA5hIt5kx1c3UYbCZNI",
+                "name": "Condition Branch",
+                "title": "Project & Template Do Not Exist",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.succeeded$",
+                      "operator": "eq",
+                      "right_operand": false
+                    },
+                    "operator": "and",
+                    "right_operand": {
+                      "left_operand": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$",
+                      "operator": "eq",
+                      "right_operand": "Project Not Found"
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Project & Template Do Not Exist",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UGWH56ZGYCC0HFbMghEDDd4IRTFIYGZ3R",
+                    "name": "Generic Catalyst Center API Request",
+                    "title": "Create Project",
+                    "type": "catalystcenter.invoke_api",
+                    "base_type": "activity",
+                    "properties": {
+                      "_body": "{\n    \"description\": \"This Project was deployed by Workflows\",\n    \"name\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WS9AI6sZByROIs6E2IMZDBIYCmb$\"\n}",
+                      "_endpoint": "/dna/intent/api/v1/template-programmer/project",
+                      "_method": "POST",
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "Generic Catalyst Center API Request",
+                      "display_name": "Create Project",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "use_workflow_target": true
+                      }
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UGWH5B1UCB65RN1GaSfaZReXlc1qKCrQV",
+                    "name": "Get Task ID",
+                    "title": "Get Task ID",
+                    "type": "workflow.atomic_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nParses JSON object to retrieve DNAC Task Id",
+                      "display_name": "Get Task ID",
+                      "input": {
+                        "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02UGWH56ZGYCC0HFbMghEDDd4IRTFIYGZ3R.output.raw_body$"
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "no_target": true
+                      },
+                      "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+                      "workflow_name": "Get Task ID"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UGWH5FJCZ0N0J7fOUvlsh5nEc7kqoLBc3",
+                    "name": "Wait For Catalyst Center Task",
+                    "title": "Wait For Catalyst Center Task",
+                    "type": "workflow.atomic_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+                      "display_name": "Wait For Catalyst Center Task",
+                      "input": {
+                        "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                        "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02UGWH5B1UCB65RN1GaSfaZReXlc1qKCrQV.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                        "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "target_type": "catalystcenter.endpoint",
+                        "use_workflow_target": true
+                      },
+                      "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                      "workflow_name": "Wait For Catalyst Center Task"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UGWH5JGE6851m6ChOuL914ymGCAdLRqwK",
+                    "name": "Set Variables",
+                    "title": "Get Project Id",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Get Project Id",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z$",
+                          "variable_value_new": "$activity.definition_activity_02UGWH5FJCZ0N0J7fOUvlsh5nEc7kqoLBc3.output.variable_workflow_02OFYZOITMBBS1zyVEpqyV4tMf8Aas25eHQ$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02UHKKYYQ9IDS0HKl2CPNTcLTBEZjxnLYaH",
+            "name": "Parallel Block",
+            "title": "Create Template",
+            "type": "logic.parallel",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Parallel block action\n\nCreate the Composite Template and \nCreate the ordered list of Templates for update",
+              "display_name": "Create Template",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02UHKKZ1FY34G3ekWHz2NaSxiwVDRFrx6P7",
+                "name": "Parallel Branch",
+                "title": "Create Base Composite Template",
+                "type": "logic.parallel_block",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "This will create the base composite template",
+                  "display_name": "Create Base Composite Template",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UHKO505Y7NY6VZE7HqDyLRnBk1JZpp4vM",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WRLD07V3zlWOYdJGIxzQ1jJqszb$",
+                          "variable_value_new": "{\n\"name\":\"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WQKQJ3DdwGH05fvkctJ8S0qoTZ5$\",\n\"composite\":true,\n\"description\":\"template Created by Workflows\",\n\"tags\":[],\n\"language\":\"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WQTQR1KVVlPf042VNLPnD8ESf3Q$\",\n\"deviceTypes\":[\n{\"productFamily\":\"Switches and Hubs\",\"productSeries\":\"Cisco Catalyst 9300 Series Switches\"},{\"productFamily\":\"Switches and Hubs\",\"productSeries\":\"Cisco Catalyst 9000 Series Virtual Switches\"}\n],\n\"softwareType\":\"IOS-XE\",\n\"softwareVariant\":\"\",\n\"projectName\":\"BGP_EVPN\",\n\"projectId\":\"0c95983d-5e28-4e7c-82ea-3e6667222f9e\"\n}"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UL61JXXGF7Q4HTdKDBNEZKqgylpcPZFQ6",
+                    "name": "Condition Block",
+                    "title": "Template Exists?",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "conditions": [],
+                      "continue_on_failure": false,
+                      "description": "If-Else condition block",
+                      "display_name": "Template Exists?",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_02UL61K3X7Q4Q0Uk6gYq88QX2FIiAUwG5VS",
+                        "name": "Condition Branch",
+                        "title": "Template Not Exist Condition",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$",
+                            "operator": "eq",
+                            "right_operand": ""
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "Template Not Exist Condition",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02UHKRAK0VWZT1aeEv5RLyINORpLVApsa0W",
+                            "name": "Generic Catalyst Center API Request",
+                            "title": "Create Template",
+                            "type": "catalystcenter.invoke_api",
+                            "base_type": "activity",
+                            "properties": {
+                              "_body": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WRLD07V3zlWOYdJGIxzQ1jJqszb$",
+                              "_endpoint": "/dna/intent/api/v1/template-programmer/project/$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z$/template",
+                              "_headers": [
+                                {
+                                  "name": "Accept",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "name": "ContentType",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "_method": "POST",
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "description": "Generic Catalyst Center API Request",
+                              "display_name": "Create Template",
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "use_workflow_target": true
+                              }
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02UGWH78UV90O7Vklt2MEW5EwFTB5MtHluY",
+                            "name": "Get Task ID",
+                            "title": "Get Task ID",
+                            "type": "workflow.atomic_workflow",
+                            "base_type": "subworkflow",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nParses JSON object to retrieve DNAC Task Id",
+                              "display_name": "Get Task ID",
+                              "input": {
+                                "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02UHKRAK0VWZT1aeEv5RLyINORpLVApsa0W.output.raw_body$"
+                              },
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "no_target": true
+                              },
+                              "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+                              "workflow_name": "Get Task ID"
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02UHRRU2LGCSV7gKIgSInoZ6baWqSQ2A2cF",
+                            "name": "Wait For Catalyst Center Task",
+                            "title": "Wait For Catalyst Center Task",
+                            "type": "workflow.atomic_workflow",
+                            "base_type": "subworkflow",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+                              "display_name": "Wait For Catalyst Center Task",
+                              "input": {
+                                "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                                "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02UGWH78UV90O7Vklt2MEW5EwFTB5MtHluY.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                                "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+                              },
+                              "runtime_user": {
+                                "target_default": true
+                              },
+                              "skip_execution": false,
+                              "target": {
+                                "target_type": "catalystcenter.endpoint",
+                                "use_workflow_target": true
+                              },
+                              "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+                              "workflow_name": "Wait For Catalyst Center Task"
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02UGWH7GL5YUP1nK8bv5IGFhobnfk5eyYg1",
+                            "name": "Set Variables",
+                            "title": "Set Output",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "Set Variables",
+                              "display_name": "Set Output",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$",
+                                  "variable_value_new": "$activity.definition_activity_02UHRRU2LGCSV7gKIgSInoZ6baWqSQ2A2cF.output.variable_workflow_02OFYZOITMBBS1zyVEpqyV4tMf8Aas25eHQ$"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02UHKKZ4EGASS2AkXhaTEYL5o0YSEYRWb0I",
+                "name": "Parallel Branch",
+                "title": "Parallel Branch",
+                "type": "logic.parallel_block",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Parallel Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UHQPYGFHY0N0Up4AMrTLPfvpLz7mD26WL",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$",
+                          "variable_value_new": 0
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHR5B4B2DJC7lrla7S0ftmgyE0PKR3u9k$",
+                          "variable_value_new": "$activity.definition_activity_02UHR5GF08I0D4Bvxhgst1fg9u3MG6oHLB9.output.jsonpath_queries.templateOrderedArray$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw",
+                    "name": "For Each",
+                    "title": "For Each",
+                    "type": "logic.for_each",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "ForEach block",
+                      "display_name": "For Each",
+                      "skip_execution": false,
+                      "source_array": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHR5B4B2DJC7lrla7S0ftmgyE0PKR3u9k$"
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz",
+                        "name": "JSONPath Query",
+                        "title": "JSONPath Query",
+                        "type": "corejava.jsonpathquery",
+                        "base_type": "activity",
+                        "properties": {
+                          "action_timeout": 180,
+                          "continue_on_failure": false,
+                          "description": "JSONPath Query to get value in JSON",
+                          "display_name": "JSONPath Query",
+                          "input_json": "$activity.definition_activity_02UGWH48OP1WF6FD05anpXOSrFHOyBeQBNX.output.variable_workflow_02Q9GGEWPKDR53Jnng4wOwKmTRMJ4Qsb9mU$",
+                          "jsonpath_queries": [
+                            {
+                              "jsonpath_query": "$..[?(@.name == '$activity.definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw.input.source_array[@]$')].name",
+                              "jsonpath_query_name": "name",
+                              "jsonpath_query_type": "string",
+                              "set_default_value": false,
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            },
+                            {
+                              "jsonpath_query": "$..[?(@.name == '$activity.definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw.input.source_array[@]$')].id",
+                              "jsonpath_query_name": "id",
+                              "jsonpath_query_type": "string",
+                              "set_default_value": false,
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            },
+                            {
+                              "jsonpath_query": "$..[?(@.name == '$activity.definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw.input.source_array[@]$')].composite",
+                              "jsonpath_query_name": "composite",
+                              "jsonpath_query_type": "string",
+                              "set_default_value": false,
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            },
+                            {
+                              "jsonpath_query": "$..[?(@.name == '$activity.definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw.input.source_array[@]$')].language",
+                              "jsonpath_query_name": "language",
+                              "jsonpath_query_type": "string",
+                              "set_default_value": false,
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            },
+                            {
+                              "jsonpath_query": "$..[?(@.name == '$activity.definition_activity_02UHQAFWDF7VX6zyjtgco2y6qjduswODHOw.input.source_array[@]$')].projectName",
+                              "jsonpath_query_name": "projectName",
+                              "jsonpath_query_type": "string",
+                              "set_default_value": false,
+                              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                            }
+                          ],
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02UHQQGZVE3DC59IawddS7ImmwSLVQsEQvg",
+                        "name": "Condition Block",
+                        "title": "Condition Block",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "description": "If-Else condition block",
+                          "display_name": "Condition Block",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_02UHQQH34BAST49PDE44zKwQNfsAX9GdN6S",
+                            "name": "Condition Branch",
+                            "title": "Condition Branch",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$",
+                                "operator": "eq",
+                                "right_operand": 0
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Condition Branch",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02UHQR24IOGB13xBCqMN0uEXXBu3hvIGEes",
+                                "name": "Set Variables",
+                                "title": "Set Variables",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "description": "Set Variables",
+                                  "display_name": "Set Variables",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$",
+                                      "variable_value_new": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$ + 1"
+                                    },
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$",
+                                      "variable_value_new": "{\n      \"name\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.name$\",\n      \"id\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.id$\",\n      \"composite\": $activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.composite$,\n      \"language\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.language$\",\n      \"description\": \"template Created by Workflows\",\n      \"projectName\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.projectName$\",\n      \"parentTemplateId\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.id$\"\n    }"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02UHQQH64WPAJ6uLLkrkICGxr4yAIDn6ZGo",
+                            "name": "Condition Branch",
+                            "title": "Condition Branch",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$",
+                                "operator": "gt",
+                                "right_operand": 0
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Condition Branch",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02UHRE3BU7G7W2v6ODDcYirYrltCQ3dbvzk",
+                                "name": "Set Variables",
+                                "title": "Set Variables",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "description": "Set Variables",
+                                  "display_name": "Set Variables",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$",
+                                      "variable_value_new": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHQPRS6PF4470CahIEGnaXqcY7t1cjmtR$ + 1"
+                                    },
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$",
+                                      "variable_value_new": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$,\n{\n      \"name\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.name$\",\n      \"id\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.id$\",\n      \"composite\": $activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.composite$,\n      \"language\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.language$\",\n      \"description\": \"template Created by Workflows\",\n      \"projectName\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.projectName$\",\n      \"parentTemplateId\": \"$activity.definition_activity_02UHQRVESTNIT2SIgPTb3jOgZyUroaL7quz.output.jsonpath_queries.id$\"\n    }"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02UHRFOZP3ZFJ5zhu9Ffo2QUwXya6Ez7Oln",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$",
+                          "variable_value_new": "[\n$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$\n]"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02UHJQUI4KL8M50VAnyinBV9veuSSlHYFvs",
+            "name": "Group",
+            "title": "Update Composite Template",
+            "type": "logic.group",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Group",
+              "display_as_suggestion": false,
+              "display_name": "Update Composite Template",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02UIMCIPW0Z2V5AvePiJT5IoSj9V0Pgnguf",
+                "name": "CATC-ProductFamily-v1",
+                "title": "CATC-ProductFamily-v1",
+                "type": "workflow.sub_workflow",
+                "base_type": "subworkflow",
+                "properties": {
+                  "atomic": {},
+                  "continue_on_failure": false,
+                  "display_name": "CATC-ProductFamily-v1",
+                  "input": {
+                    "variable_workflow_02UIL6KF25PM25xMYxQl18UdMCYOKpkeZQX": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UIMAYAJGQ1V5nUNkTwGLLjzRUwIH9Da3R$"
+                  },
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "no_target": true
+                  },
+                  "workflow_id": "definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT",
+                  "workflow_name": "CATC-ProductFamily-v1"
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02UIMCXO61U7F3k7JHKw1SdXeuffaTpgeNE",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set Variables",
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UIMBO9W7LPK2GFW26DsbxgmwupM7YU41b$",
+                      "variable_value_new": "$activity.definition_activity_02UIMCIPW0Z2V5AvePiJT5IoSj9V0Pgnguf.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02UGWH6IQQXHT47QXF0Iez3f2VugHpf9PPV",
+                "name": "Condition Block",
+                "title": "Software Variant ?",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "conditions": [],
+                  "continue_on_failure": false,
+                  "description": "If-Else condition block",
+                  "display_name": "Software Variant ?",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_02UGWH6LE31V26vYzf4arx3ec4ZP3niycAH",
+                    "name": "Condition Branch",
+                    "title": "IOS-XE",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WR38A6ycI4bteUoFXh7IFfGJ5LR$",
+                        "operator": "eq",
+                        "right_operand": "IOS-XE"
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "IOS-XE",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02UGWH6ONT58C2GUykdBAz1xBWuGdqRpKUM",
+                        "name": "Set Variables",
+                        "title": "Software Variant =  XE",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "description": "Set Variables",
+                          "display_name": "Software Variant =  XE",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WQEXC6TkWs7lhwOtXiYrVGp7hfC$",
+                              "variable_value_new": "XE"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WRC7Z0MMY8eKFLXmDI1123t6GHg$",
+                              "variable_value_new": "IOS"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02UGWH6RQQ2S20fjHxZT5fL5YvNYqBP9TSm",
+                    "name": "Condition Branch",
+                    "title": "IOS",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WR38A6ycI4bteUoFXh7IFfGJ5LR$",
+                        "operator": "ne",
+                        "right_operand": "IOS-XE"
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "IOS",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02UGWH6UX48UD2NCG1XV0ftLWt7XTcpj1Wg",
+                        "name": "Set Variables",
+                        "title": "Software Variant = \"\"",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "description": "Set Variables",
+                          "display_name": "Software Variant = \"\"",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WQEXC6TkWs7lhwOtXiYrVGp7hfC$",
+                              "variable_value_new": ""
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02UGWH6Y0JG2K3Fl3GuwfszNP8srEszMV5Q",
+                "name": "Execute Python Script",
+                "title": "Escape Template Content",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Execute Python Script",
+                  "display_name": "Escape Template Content",
+                  "script": "import json\nimport sys\n\n# Format for JSON value\njson_value = json.dumps(sys.argv[1])\n# Trim first and last characters\ntrimmed_json_value = json_value[1:-1]",
+                  "script_arguments": [
+                    "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WRLD07V3zlWOYdJGIxzQ1jJqszb$"
+                  ],
+                  "script_queries": [
+                    {
+                      "script_query": "trimmed_json_value",
+                      "script_query_name": "Encoded Template Content",
+                      "script_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02UGWH72HBPLM7lAjLUVpDiEO6BLTXDqFNC",
+                "name": "Set Variables",
+                "title": "Compose Request Body",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set Variables",
+                  "display_name": "Compose Request Body",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WQ2JS2O3LuzUsyISDDV6K2T70Cm$",
+                      "variable_value_new": "{\n  \"id\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$\",\n  \n\"name\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WQKQJ3DdwGH05fvkctJ8S0qoTZ5$\",\n  \"description\": \"template Created by Workflows\",\n  \"tags\": [\n  ],\n  \"deviceTypes\": $workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UIMBO9W7LPK2GFW26DsbxgmwupM7YU41b$,\n  \"softwareType\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WRC7Z0MMY8eKFLXmDI1123t6GHg$\",\n  \"softwareVariant\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WQEXC6TkWs7lhwOtXiYrVGp7hfC$\",\n  \"templateParams\": [\n  ],\n  \"rollbackTemplateParams\": [\n  ],\n  \"customParamsOrder\": false,\n  \"projectName\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WS9AI6sZByROIs6E2IMZDBIYCmb$\",\n  \"projectId\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WRX0J4sOJRmcEUVL42eKO0jJb7Z$\",\n  \"parentTemplateId\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$\",\n  \"composite\": true,\n  \"containingTemplates\": $workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UHRBE1MB1QQ4ewASj189QHiMCOE9HUGMN$,\n  \"language\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.input.variable_workflow_02UGWH44WQTQR1KVVlPf042VNLPnD8ESf3Q$\",\n  \"validationErrors\": {\n    \"templateErrors\": [\n],\n    \"rollbackTemplateErrors\": [\n    ],\n    \"templateId\": \"$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.output.variable_workflow_02UGWH44WSLNL1Hh7JfN3ykoo9BNlcAi8n9$\",\n    \"templateVersion\": null\n  },\n  \"noOfConflicts\": 0,\n  \"documentDatabase\": false,\n  \"projectAssociated\": true\n}"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02UGWH75HZ4607dBOkC4POW252dyeIO0jbL",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Update Composite Template",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_body": "$workflow.definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3.local.variable_workflow_02UGWH44WQ2JS2O3LuzUsyISDDV6K2T70Cm$",
+              "_endpoint": "/api/v1/template-programmer/template",
+              "_headers": [
+                {
+                  "name": "Accept",
+                  "value": "application/json"
+                },
+                {
+                  "name": "ContentType",
+                  "value": "application/json"
+                }
+              ],
+              "_method": "PUT",
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Generic Catalyst Center API Request",
+              "display_name": "Update Composite Template",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UHRQ78LD2KC0w2WRPdhRjYD6MOvH6wznn",
+            "name": "Get Task ID",
+            "title": "Get Task ID",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nParses JSON object to retrieve DNAC Task Id",
+              "display_name": "Get Task ID",
+              "input": {
+                "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02UGWH75HZ4607dBOkC4POW252dyeIO0jbL.output.raw_body$"
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "no_target": true
+              },
+              "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+              "workflow_name": "Get Task ID"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UGWH7CXKG6K3vVlyxNU6VU43RYpdl0LcG",
+            "name": "Wait For Catalyst Center Task",
+            "title": "Wait For Catalyst Center Task",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+              "display_name": "Wait For Catalyst Center Task",
+              "input": {
+                "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02UHRQ78LD2KC0w2WRPdhRjYD6MOvH6wznn.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "target_type": "catalystcenter.endpoint",
+                "use_workflow_target": true
+              },
+              "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+              "workflow_name": "Wait For Catalyst Center Task"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02UGWH7JQ3OGB1qghFK0lHA0xCQU6NQcSrV",
+            "name": "Completed",
+            "title": "Completed",
+            "type": "logic.completed",
+            "base_type": "activity",
+            "properties": {
+              "completion_type": "succeeded",
+              "continue_on_failure": false,
+              "description": "Completed action",
+              "display_name": "Completed",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02OEWDW2ZV1Q2248n5kBKeTKjD4Us8XsFlJ"
+        ]
+      },
+      "subworkflows": [
+        {
+          "workflow": {
+            "unique_name": "definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp",
+            "name": "CATC-GetTemplates-v2",
+            "title": "CATC-GetTemplates-v2",
+            "type": "generic.workflow",
+            "base_type": "workflow",
+            "variables": [
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "IPsec 2 Branch for Cloud Router - System Default",
+                  "scope": "input",
+                  "name": "Search Name",
+                  "type": "datatype.string",
+                  "description": "Template Name to search for",
+                  "is_required": true,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPJT9I66OwdEGjLt989lZeCiOGQ6",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Template Id",
+                  "type": "datatype.string",
+                  "description": "Template Unique Identified",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPK73R62JTpWvFe6ZGW7miAmmGVy",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "Onboarding Configuration",
+                  "scope": "input",
+                  "name": "Project Name",
+                  "type": "datatype.string",
+                  "description": "Project Name in Template Hub",
+                  "is_required": true,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Project Templates",
+                  "type": "datatype.string",
+                  "description": "All Templates in Project",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "json"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPKDR53Jnng4wOwKmTRMJ4Qsb9mU",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Failure Reason",
+                  "type": "datatype.string",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Template",
+                  "type": "datatype.string",
+                  "description": "Template General Details",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "json"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPKJU738Wsggihq5npuvqbCwkrUb",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "Project Id",
+                  "type": "datatype.string",
+                  "description": "Project Unique Id",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "text"
+                },
+                "unique_name": "variable_workflow_02Q9GGEWPK1T56xhBbnE5PbCptYUaWFH3id",
+                "object_type": "variable_workflow"
+              }
+            ],
+            "properties": {
+              "atomic": {
+                "is_atomic": false
+              },
+              "delete_workflow_instance": false,
+              "description": "Retrieves Templates from a Project at Template Hub",
+              "display_name": "CATC-GetTemplates-v2",
+              "runtime_user": {
+                "target_default": true
+              },
+              "target": {
+                "target_type": "catalystcenter.endpoint",
+                "specify_on_workflow_start": true
+              }
+            },
+            "object_type": "definition_workflow",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02Q9GGF2F38HK0TrKNoKe7MBo24ik1DxpZy",
+                "name": "Execute Python Script",
+                "title": "URL Encode Input",
+                "type": "python3.script",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "URL Encode the Project & Template Name to be use in Cat Center Intent API query",
+                  "display_name": "URL Encode Input",
+                  "script": "import sys\nimport string\nfrom urllib.parse import quote\n\nencoded_project = quote(sys.argv[1])\nencoded_template_name = quote(sys.argv[2])",
+                  "script_arguments": [
+                    "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6$",
+                    "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPJT9I66OwdEGjLt989lZeCiOGQ6$"
+                  ],
+                  "script_queries": [
+                    {
+                      "script_query": "encoded_project",
+                      "script_query_name": "Encoded Project Name",
+                      "script_query_type": "string"
+                    },
+                    {
+                      "script_query": "encoded_template_name",
+                      "script_query_name": "Encoded Template Name",
+                      "script_query_type": "string"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02Q9GGF3F5SS32C5LTjglvyzpVYbrZ3J58y",
+                "name": "Generic Catalyst Center API Request",
+                "title": "GetApiV2TemplateProgrammerProject",
+                "type": "catalystcenter.invoke_api",
+                "base_type": "activity",
+                "properties": {
+                  "_endpoint": "/dna/intent/api/v2/template-programmer/project?name=$activity.definition_activity_02Q9GGF2F38HK0TrKNoKe7MBo24ik1DxpZy.output.script_queries.Encoded Project Name$",
+                  "_method": "GET",
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "Generic Catalyst Center API Request",
+                  "display_name": "GetApiV2TemplateProgrammerProject",
+                  "runtime_user": {
+                    "target_default": true
+                  },
+                  "skip_execution": false,
+                  "target": {
+                    "use_workflow_target": true
+                  }
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF",
+                "name": "JSONPath Query",
+                "title": "Get Project",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Parse Catalyst Center Response, extract UUIDs for Project",
+                  "display_name": "Get Project",
+                  "input_json": "$activity.definition_activity_02Q9GGF3F5SS32C5LTjglvyzpVYbrZ3J58y.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$.response..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6$\")].id",
+                      "jsonpath_query_name": "Project Id",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    },
+                    {
+                      "jsonpath_query": "$.response..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6$\")].templates",
+                      "jsonpath_query_name": "List Of Templates",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL",
+                "name": "JSONPath Query",
+                "title": "Get Template",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": true,
+                  "description": "Parse Catalyst Center Response, extract UUIDs Template  and its Details",
+                  "display_name": "Get Template",
+                  "input_json": "$activity.definition_activity_02Q9GGF3F5SS32C5LTjglvyzpVYbrZ3J58y.output.raw_body$",
+                  "jsonpath_queries": [
+                    {
+                      "jsonpath_query": "$.response..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6$\")].templates..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPJT9I66OwdEGjLt989lZeCiOGQ6$\")]",
+                      "jsonpath_query_name": "Template",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    },
+                    {
+                      "jsonpath_query": "$.response..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPKPM73fkPX5whUTvFiODIvXjkn6$\")].templates..[?(@.name==\"$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.input.variable_workflow_02Q9GGEWPJT9I66OwdEGjLt989lZeCiOGQ6$\")].id",
+                      "jsonpath_query_name": "Template Id",
+                      "jsonpath_query_type": "string",
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02Q9GGF7NR8S90zwVCTy2f5BdB92SO8v8Aj",
+                "name": "Condition Block",
+                "title": "Project & Template Found ?",
+                "type": "logic.if_else",
+                "base_type": "activity",
+                "properties": {
+                  "conditions": [],
+                  "continue_on_failure": false,
+                  "description": "Validates the response is an exact match to the queried project & template",
+                  "display_name": "Project & Template Found ?",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "blocks": [
+                  {
+                    "unique_name": "definition_activity_02Q9GGF8KTK8C5QBQDggPXDeNArDKqBpex9",
+                    "name": "Condition Branch",
+                    "title": "Found Both",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": {
+                          "left_operand": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.succeeded$",
+                          "operator": "eq",
+                          "right_operand": true
+                        },
+                        "operator": "and",
+                        "right_operand": {
+                          "left_operand": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.succeeded$",
+                          "operator": "eq",
+                          "right_operand": true
+                        }
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Found Both",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02Q9GGF9ZL9NR46eqkszpMTaL1ebXLXCems",
+                        "name": "Set Variables",
+                        "title": "Set Output",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "description": "Set Output",
+                          "display_name": "Set Output",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPKDR53Jnng4wOwKmTRMJ4Qsb9mU$",
+                              "variable_value_new": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.jsonpath_queries.List Of Templates$"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPK73R62JTpWvFe6ZGW7miAmmGVy$",
+                              "variable_value_new": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.jsonpath_queries.Template Id$"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPK1T56xhBbnE5PbCptYUaWFH3id$",
+                              "variable_value_new": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.jsonpath_queries.Project Id$"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.workflow_results_code$",
+                              "variable_value_new": "completed-successfully"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPKJU738Wsggihq5npuvqbCwkrUb$",
+                              "variable_value_new": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.jsonpath_queries.Template$"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02Q9GGFB6N1OB7ZdCHouPiDuXvZDUdSykOT",
+                    "name": "Condition Branch",
+                    "title": "Only One was Found",
+                    "type": "logic.condition_block",
+                    "base_type": "activity",
+                    "properties": {
+                      "condition": {
+                        "left_operand": {
+                          "left_operand": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.succeeded$",
+                          "operator": "eq",
+                          "right_operand": false
+                        },
+                        "operator": "or",
+                        "right_operand": {
+                          "left_operand": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.succeeded$",
+                          "operator": "eq",
+                          "right_operand": false
+                        }
+                      },
+                      "continue_on_failure": false,
+                      "display_name": "Only One was Found",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "actions": [
+                      {
+                        "unique_name": "definition_activity_02Q9GGFCE2JXH1uuNR7qpyOv55rVtBU8Yil",
+                        "name": "Condition Block",
+                        "title": "Search Failure",
+                        "type": "logic.if_else",
+                        "base_type": "activity",
+                        "properties": {
+                          "conditions": [],
+                          "continue_on_failure": false,
+                          "description": "Checks the reason of Search Failure",
+                          "display_name": "Search Failure",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "blocks": [
+                          {
+                            "unique_name": "definition_activity_02Q9GGFDBFV1J2Hf1e0U3migXP1scEwf4zr",
+                            "name": "Condition Branch",
+                            "title": "Project Not Found",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.succeeded$",
+                                "operator": "eq",
+                                "right_operand": false
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Project Not Found",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02Q9GGFEMV3K43aYudcIz59fSN2fF7iJQ0G",
+                                "name": "Set Variables",
+                                "title": "Workflow Result = Project Not Found",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "description": "Set Variables",
+                                  "display_name": "Workflow Result = Project Not Found",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$",
+                                      "variable_value_new": "Project Not Found"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          },
+                          {
+                            "unique_name": "definition_activity_02Q9GGFFKICKW4kaJdQ5qlcixf5MtMf2bD4",
+                            "name": "Condition Branch",
+                            "title": "Template Not Found",
+                            "type": "logic.condition_block",
+                            "base_type": "activity",
+                            "properties": {
+                              "condition": {
+                                "left_operand": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.succeeded$",
+                                "operator": "eq",
+                                "right_operand": false
+                              },
+                              "continue_on_failure": false,
+                              "display_name": "Template Not Found",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "actions": [
+                              {
+                                "unique_name": "definition_activity_02Q9GGFGTZG5B0MMsHFVQ8Mm3em9S2uvJBZ",
+                                "name": "Set Variables",
+                                "title": "Workflow Result = Template Not Found",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "description": "Set Variables",
+                                  "display_name": "Workflow Result = Template Not Found",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$",
+                                      "variable_value_new": "Template Not Found"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              },
+                              {
+                                "unique_name": "definition_activity_02Q9GGFI1IVE309ATL68ByiZqcggSsNOitg",
+                                "name": "Set Variables",
+                                "title": "Set Output",
+                                "type": "core.set_multiple_variables",
+                                "base_type": "activity",
+                                "properties": {
+                                  "continue_on_failure": false,
+                                  "description": "Set Variables",
+                                  "display_name": "Set Output",
+                                  "skip_execution": false,
+                                  "variables_to_update": [
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPK1T56xhBbnE5PbCptYUaWFH3id$",
+                                      "variable_value_new": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.jsonpath_queries.Project Id$"
+                                    },
+                                    {
+                                      "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPKDR53Jnng4wOwKmTRMJ4Qsb9mU$",
+                                      "variable_value_new": "$activity.definition_activity_02Q9GGF5XDC685X5wbCmlYijXlXGXMCA9eF.output.jsonpath_queries.List Of Templates$"
+                                    }
+                                  ]
+                                },
+                                "object_type": "definition_activity"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "unique_name": "definition_activity_02Q9GGFJR35VP4RkuREa1v5AkQHiBNFBJcG",
+                        "name": "Set Variables",
+                        "title": "Set Output",
+                        "type": "core.set_multiple_variables",
+                        "base_type": "activity",
+                        "properties": {
+                          "continue_on_failure": false,
+                          "description": "Set Variables",
+                          "display_name": "Set Output",
+                          "skip_execution": false,
+                          "variables_to_update": [
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.workflow_results_code$",
+                              "variable_value_new": "workflow-errored"
+                            },
+                            {
+                              "variable_to_update": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.workflow_results$",
+                              "variable_value_new": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$"
+                            }
+                          ]
+                        },
+                        "object_type": "definition_activity"
+                      },
+                      {
+                        "unique_name": "definition_activity_02Q9GGFKS7NP84olJmJVW6lnfKoDF4Pq8gN",
+                        "name": "Completed",
+                        "title": "Failed",
+                        "type": "logic.completed",
+                        "base_type": "activity",
+                        "properties": {
+                          "completion_type": "failed-completed",
+                          "continue_on_failure": false,
+                          "description": "Completed action",
+                          "display_name": "Failed",
+                          "result_message": "$workflow.definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp.output.variable_workflow_02Q9GGEWPJLFQ4f0eYmGBCF8wyCA4viFtMO$",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02Q9GGFLV04VN4uDXpBtNtvMBThMG9aI6QY",
+                "name": "Completed",
+                "title": "Success",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "succeeded",
+                  "continue_on_failure": false,
+                  "description": "Completed action",
+                  "display_name": "Success",
+                  "result_message": "$activity.definition_activity_02Q9GGF6T1JZX4jHqwplc0mOttdQ9tdjAVL.output.jsonpath_queries.Template Id$",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ],
+            "categories": [
+              "category_02OEWDW2ZV1Q2248n5kBKeTKjD4Us8XsFlJ"
+            ]
+          }
+        },
+        {
+          "workflow": {
+            "unique_name": "definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT",
+            "name": "CATC-ProductFamily-v1",
+            "title": "CATC-ProductFamily-v1",
+            "type": "generic.workflow",
+            "base_type": "workflow",
+            "variables": [
+              {
+                "schema_id": "datatype.integer",
+                "properties": {
+                  "value": 0,
+                  "scope": "local",
+                  "name": "counter",
+                  "type": "datatype.integer",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": ""
+                },
+                "unique_name": "variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+                "properties": {
+                  "value": [
+                    "Cisco Catalyst 9500 Series Switches",
+                    "Cisco Catalyst 9400 Series Switches",
+                    "Cisco Catalyst 9300 Series Switches",
+                    "Cisco Catalyst 9000 Series Virtual Switches"
+                  ],
+                  "scope": "input",
+                  "name": "productSeries",
+                  "type": "datatype.array",
+                  "description": "Switching",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": ""
+                },
+                "unique_name": "variable_workflow_02UIL6KF25PM25xMYxQl18UdMCYOKpkeZQX",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+                "properties": {
+                  "value": [
+                    "Switches and Hubs",
+                    "Routers"
+                  ],
+                  "scope": "local",
+                  "name": "productFamily",
+                  "type": "datatype.array",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": ""
+                },
+                "unique_name": "variable_workflow_02UIL7TT5UTMJ2MXE6aITrCAxc1AOx6MXcc",
+                "object_type": "variable_workflow"
+              },
+              {
+                "schema_id": "datatype.string",
+                "properties": {
+                  "value": "",
+                  "scope": "output",
+                  "name": "deviceTypes",
+                  "type": "datatype.string",
+                  "is_required": false,
+                  "display_on_wizard": false,
+                  "is_invisible": false,
+                  "variable_string_format": "json"
+                },
+                "unique_name": "variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn",
+                "object_type": "variable_workflow"
+              }
+            ],
+            "properties": {
+              "atomic": {
+                "is_atomic": false
+              },
+              "delete_workflow_instance": false,
+              "display_name": "CATC-ProductFamily-v1",
+              "owner": "system",
+              "runtime_user": {
+                "target_default": true
+              },
+              "target": {
+                "no_target": true
+              }
+            },
+            "object_type": "definition_workflow",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02UIL84L60YUR2V1MqyJAeS4sjX3iv9xhEx",
+                "name": "JSONPath Query",
+                "title": "JSONPath Query",
+                "type": "corejava.jsonpathquery",
+                "base_type": "activity",
+                "properties": {
+                  "action_timeout": 180,
+                  "continue_on_failure": false,
+                  "description": "JSONPath Query to get value in JSON",
+                  "display_name": "JSONPath Query",
+                  "input_json": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.input.variable_workflow_02UIL6KF25PM25xMYxQl18UdMCYOKpkeZQX$",
+                  "jsonpath_queries": [
+                    {
+                      "default_value": 0,
+                      "jsonpath_query": "$.length()",
+                      "jsonpath_query_name": "length",
+                      "jsonpath_query_type": "integer",
+                      "set_default_value": false,
+                      "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                    }
+                  ],
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at",
+                "name": "For Each",
+                "title": "For Each",
+                "type": "logic.for_each",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "ForEach block",
+                  "display_name": "For Each",
+                  "skip_execution": false,
+                  "source_array": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.input.variable_workflow_02UIL6KF25PM25xMYxQl18UdMCYOKpkeZQX$"
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02UILAKESESLR2qW3vCFqpiBO6PvQ0WPOcU",
+                    "name": "Match Regex",
+                    "title": "Match Regex",
+                    "type": "core.matchregex",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "Match Regex",
+                      "display_name": "Match Regex",
+                      "input_regex": "\\b(Switches|IE|Micro)\\b",
+                      "input_string": "$activity.definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at.input.source_array[@]$",
+                      "match_case": true,
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02UILD0KDK9O85qUZw8wB40u5fBCjeNeArx",
+                    "name": "Condition Block",
+                    "title": "Condition Block",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "If-Else condition block",
+                      "display_name": "Condition Block",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_02UILD0NOWJUC44y0A418AWjud7yct3GxBL",
+                        "name": "Condition Branch",
+                        "title": "Condition Branch",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$activity.definition_activity_02UILAKESESLR2qW3vCFqpiBO6PvQ0WPOcU.output.has_match$",
+                            "operator": "eq",
+                            "right_operand": true
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "Condition Branch",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02UILEVFALGX92sB505k1LwxCmCyqqXTYfL",
+                            "name": "Condition Block",
+                            "title": "Condition Block",
+                            "type": "logic.if_else",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "If-Else condition block",
+                              "display_name": "Condition Block",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "blocks": [
+                              {
+                                "unique_name": "definition_activity_02UILEVI75B543WqS3zqbIdXHG3qZg911Ca",
+                                "name": "Condition Branch",
+                                "title": "Condition Branch",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                    "operator": "eq",
+                                    "right_operand": 0
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Condition Branch",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02UILE98FJ1VO7VaWOVSc0FpDhXF0LWu6l9",
+                                    "name": "Set Variables",
+                                    "title": "Set Variables",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "description": "Set Variables",
+                                      "display_name": "Set Variables",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$+1"
+                                        },
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$",
+                                          "variable_value_new": "{\n  \"productFamily\": \"Switches and Hubs\",\n  \"productSeries\": \"$activity.definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at.input.source_array[@]$\"\n}"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              },
+                              {
+                                "unique_name": "definition_activity_02UILEVL5MBZY7PqK6Zl1DOuYiC72nqT6Kc",
+                                "name": "Condition Branch",
+                                "title": "Condition Branch",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                    "operator": "gte",
+                                    "right_operand": 1
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Condition Branch",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02UILF1KH7Q522dh4ClGMgmSe3560gvVEAn",
+                                    "name": "Set Variables",
+                                    "title": "Set Variables",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "description": "Set Variables",
+                                      "display_name": "Set Variables",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$+1"
+                                        },
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$,\n{\n  \"productFamily\": \"Switches and Hubs\",\n  \"productSeries\": \"$activity.definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at.input.source_array[@]$\"\n}"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "unique_name": "definition_activity_02UILD0QMBEZM1q2a6LprqTq3np0eRgB0mp",
+                        "name": "Condition Branch",
+                        "title": "Condition Branch",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$activity.definition_activity_02UILAKESESLR2qW3vCFqpiBO6PvQ0WPOcU.output.has_match$",
+                            "operator": "eq",
+                            "right_operand": false
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "Condition Branch",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02UILF77BLP2O26MAe4nfJcmIg6qzFWBya2",
+                            "name": "Condition Block",
+                            "title": "Condition Block",
+                            "type": "logic.if_else",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "If-Else condition block",
+                              "display_name": "Condition Block",
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity",
+                            "blocks": [
+                              {
+                                "unique_name": "definition_activity_02UILF7AD7FR115qE0hVnjXeAMdDJsmOh5f",
+                                "name": "Condition Branch",
+                                "title": "Condition Branch",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                    "operator": "eq",
+                                    "right_operand": 0
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Condition Branch",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02UILEJIJUSDL5ZB3Jd1SMV49NzOYMJyS75",
+                                    "name": "Set Variables",
+                                    "title": "Set Variables",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "description": "Set Variables",
+                                      "display_name": "Set Variables",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$+1"
+                                        },
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$",
+                                          "variable_value_new": "{\n  \"productFamily\": \"Routers\",\n  \"productSeries\": \"$activity.definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at.input.source_array[@]$\"\n}"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              },
+                              {
+                                "unique_name": "definition_activity_02UILF7DAMXKF7bXcFvcby9ksOkTe5ZUNAh",
+                                "name": "Condition Branch",
+                                "title": "Condition Branch",
+                                "type": "logic.condition_block",
+                                "base_type": "activity",
+                                "properties": {
+                                  "condition": {
+                                    "left_operand": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                    "operator": "gte",
+                                    "right_operand": 1
+                                  },
+                                  "continue_on_failure": false,
+                                  "display_name": "Condition Branch",
+                                  "skip_execution": false
+                                },
+                                "object_type": "definition_activity",
+                                "actions": [
+                                  {
+                                    "unique_name": "definition_activity_02UILF9UW27OT4f2gYCbwHKedVF0gNDA49D",
+                                    "name": "Set Variables",
+                                    "title": "Set Variables",
+                                    "type": "core.set_multiple_variables",
+                                    "base_type": "activity",
+                                    "properties": {
+                                      "continue_on_failure": false,
+                                      "description": "Set Variables",
+                                      "display_name": "Set Variables",
+                                      "skip_execution": false,
+                                      "variables_to_update": [
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.local.variable_workflow_02UILE23ODHEX3hlUTIuWtd5qe6JayGZNmb$+1"
+                                        },
+                                        {
+                                          "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$",
+                                          "variable_value_new": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$,\n{\n  \"productFamily\": \"Routers\",\n  \"productSeries\": \"$activity.definition_activity_02UILCCLHMTQB0f2GRFcrteog3CN1i7s7at.input.source_array[@]$\"\n}"
+                                        }
+                                      ]
+                                    },
+                                    "object_type": "definition_activity"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02UILKYYP5YRY0aZQ5kj26CDUH5oKEjKnui",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set Variables",
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$",
+                      "variable_value_new": "[\n$workflow.definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT.output.variable_workflow_02UILGKCAI4OA7hydahEcGi5yZG3ZI0FMgn$\n]"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              }
+            ],
+            "categories": [
+              "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+            ]
+          }
+        }
+      ],
+      "atomic_workflows": [
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ],
+      "dependent_workflows": [
+        "definition_workflow_02Q9GGEWC5QFD1Kg9idMDmcmegVxAdbPYzp",
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+        "definition_workflow_02UIL41I64EXF4Y2B657GxsIqkS9xgMiRJT"
+      ]
+    },
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02Q9GGEVOQKXT4yFKmSl9RzHU9SEyeYpDdN",
+        "name": "CATC-CommitTemplate-v2",
+        "title": "CATC-CommitTemplate-v2",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "input",
+              "name": "Template Id",
+              "type": "datatype.string",
+              "description": "Template Unique Identifier",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02Q9GGEW5VOEN7DGBegzb0TudruIacUuJNt",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Commits Templates in a Project at Template Hub",
+          "display_name": "CATC-CommitTemplate-v2",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02Q9GGF2AG6YU7T9OP8CpbMn5RunjkhEhTu",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Commit Template",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_body": "{\n    \"commitNote\": \"Template Initial Version\"\n}",
+              "_endpoint": "/dna/intent/api/v1/templates/$workflow.definition_workflow_02Q9GGEVOQKXT4yFKmSl9RzHU9SEyeYpDdN.input.variable_workflow_02Q9GGEW5VOEN7DGBegzb0TudruIacUuJNt$/versions/commit",
+              "_method": "POST",
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Generic Catalyst Center API Request",
+              "display_name": "Commit Template",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": true,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF3DVS4S5iw6ZoxmGqQr6Tl5KaweSB",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Commit Template - Unpub API",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_body": "{   \n    \"comments\": \"Template Initial Version\", \n    \"templateId\": \"$workflow.definition_workflow_02Q9GGEVOQKXT4yFKmSl9RzHU9SEyeYpDdN.input.variable_workflow_02Q9GGEW5VOEN7DGBegzb0TudruIacUuJNt$\"\n}",
+              "_endpoint": "/api/v1/template-programmer/template/version",
+              "_method": "POST",
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Generic Catalyst Center API Request",
+              "display_name": "Commit Template - Unpub API",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF66BC541mg48WKuxHlDom4NZ7XoEb",
+            "name": "Get Task ID",
+            "title": "Get Task ID",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nParses JSON object to retrieve DNAC Task Id",
+              "display_name": "Get Task ID",
+              "input": {
+                "variable_workflow_01MXNHOI45A294TLtoWY8Zt1l5jxFpQH1hv": "$activity.definition_activity_02Q9GGF3DVS4S5iw6ZoxmGqQr6Tl5KaweSB.output.raw_body$"
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "no_target": true
+              },
+              "workflow_id": "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+              "workflow_name": "Get Task ID"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF7KEQ345FFMp0ivgGhMgA0eTxEGE2",
+            "name": "Wait For Catalyst Center Task",
+            "title": "Wait For Catalyst Center Task",
+            "type": "workflow.atomic_workflow",
+            "base_type": "subworkflow",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "//\n// Copyright (c) 2021 Cisco Systems, Inc and its affiliates\n// All Rights reserved\n//\n\nWaits for a DNAC task to complete or fail",
+              "display_name": "Wait For Catalyst Center Task",
+              "input": {
+                "variable_workflow_02MYO8WS19JGZ0ZxLx9jt1chDSxtXS9dvAZ": 5,
+                "variable_workflow_02MYO8WS1RZ0O3d33nj4g7F468ExWszvccp": "$activity.definition_activity_02Q9GGF66BC541mg48WKuxHlDom4NZ7XoEb.output.variable_workflow_01MXNICK47EAD5oTu6l6pFqtg87eWBUrbSg$",
+                "variable_workflow_02MYO8WS2A04G0V7EWzuF6J084TIngHHYg2": 5
+              },
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "target_type": "catalystcenter.endpoint",
+                "use_workflow_target": true
+              },
+              "workflow_id": "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ",
+              "workflow_name": "Wait For Catalyst Center Task"
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF91OXH73mg09v3sb9CS8Mx9KD377F",
+            "name": "Sleep",
+            "title": "Sleep",
+            "type": "core.sleep",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Sleep",
+              "display_name": "Sleep",
+              "skip_execution": false,
+              "sleep_interval": 5
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02Q9GGF9NIS4J1o5qXSV7gXO2PHYXgNHmAU",
+            "name": "Completed",
+            "title": "Completed",
+            "type": "logic.completed",
+            "base_type": "activity",
+            "properties": {
+              "completion_type": "succeeded",
+              "continue_on_failure": false,
+              "description": "Completed action",
+              "display_name": "Completed",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02OEWDW2ZV1Q2248n5kBKeTKjD4Us8XsFlJ"
+        ]
+      },
+      "atomic_workflows": [
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ],
+      "dependent_workflows": [
+        "definition_workflow_01MXNG0KEEZFY4tZ9xFzej731gBSpkNrzwO",
+        "definition_workflow_02MYO8WQRTQ0L0yqAI6aoCSoM5AD9vA6vBQ"
+      ]
+    }
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02Q9GGEZEOWW10zaWn8KerzDnjwKSZMr1iU",
+    "definition_workflow_02Q9GGEZ0YHK50iCAFrgI8DB9SjlqUlaLvp",
+    "definition_workflow_02UGWH44APYYG589H8zFTWzUwVMOD1yNYO3",
+    "definition_workflow_02Q9GGEVOQKXT4yFKmSl9RzHU9SEyeYpDdN"
+  ]
+}

@@ -1,0 +1,225 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Get-GitHub-File-v2
+    GET api.github.com/repos/{owner}/{repo}/contents/{path}/settings.json
+    Header: Accept: application/vnd.github.raw+json
+    GITHUB-FILE = settings.json (pre-configured input)
+    Returns: raw JSON settings content"] --> B
+
+    B["Step 2 - JSONPath Queries on Settings File
+    $.project[*].HierarchyParent                               -> HierarchyParent
+    $.project[*].HierarchyArea                                 -> HierarchyArea
+    $.project[*].HierarchyBldg                                 -> HierarchyBldg
+    $.project[*].HierarchyFloor                                -> HierarchyFloor
+    $.project[*].network_profile.DayNTemplateNames[*].TemplateTarget -> templateTarget array
+    $.project[*].network_profile.DayNTemplateNames[*].TemplateName  -> templateName"] --> PAR1
+
+    PAR1(["Step 3 - Parallel Block: Resolve Site, Template, and Device IDs
+    Three branches execute simultaneously"])
+
+    PAR1 --> PA1 & PB1 & PC1
+
+    subgraph SITE_BRANCH["Step 3a - Site ID Branch (parallel)"]
+        direction TB
+        PA1["Site Design Get Sites
+        GET /dna/intent/api/v1/sites?nameHierarchy=Parent/Area/Bldg/Floor
+        Resolve full hierarchy path to site UUID"] --> PA2
+        PA2["JSONPath Query
+        $.[*].id  ->  siteId"] --> PA3
+        PA3["Set Variables
+        Store siteId for later use"]
+    end
+
+    subgraph TEMPLATE_BRANCH["Step 3b - Composite Template ID Branch (parallel)"]
+        direction TB
+        PB1["Configuration Templates Get Project(S) Details
+        GET /dna/intent/api/v2/template-programmer/project?name={Project Name}
+        Fetch project containing the composite template"] --> PB2
+        PB2["JSONPath Query
+        $..templates[?(@.name==templateName)].id  ->  compositeTemplateId"] --> PB3
+        PB3["Set Variables
+        Store compositeTemplateId as templateId"]
+    end
+
+    subgraph DEVICE_BRANCH["Step 3c - Device ID Resolution Branch (parallel)"]
+        direction TB
+        PC1["Devices Get Device List
+        GET /dna/intent/api/v1/network-device
+        Fetch all managed network devices"] --> PC2
+        PC2["Set Variables
+        Store templateTarget IP array from settings"] --> PC3
+        PC3(["For Each IP address in templateTarget"]) --> PC4
+        PC4["JSONPath Query
+        $.response[?(@.managementIpAddress=='{ip}')].id  ->  deviceId"] --> PC5
+        PC5{Pass counter<br/>== 0 or > 0?}
+        PC5 -->|"1st pass (counter == 0)"| PC6
+        PC5 -->|"subsequent (counter > 0)"| PC7
+        PC6["Set Variables
+        Initialize deviceId string with first ID
+        Increment counter"] --> PC3
+        PC7["Set Variables
+        Append deviceId to comma-separated string
+        Increment counter"] --> PC3
+        PC3 -->|All IPs processed| PC8
+        PC8["Split String
+        Split device ID string by comma delimiter
+        -> parts array"] --> PC9
+        PC9["Set Variables
+        Store deviceIdArray array
+        Reset counter to 0"]
+    end
+
+    PA3 & PB3 & PC9 --> C1
+
+    subgraph GCB["Group: Get Composite as Built"]
+        direction TB
+        C1["Step 4 - Configuration Templates Get Template(S) Details
+        GET /dna/intent/api/v2/template-programmer/template?id={templateId}
+        Fetch full composite template definition"] --> C2
+        C2["Step 5 - Main Template JSONPath Query
+        $.response[*].containingTemplates[*].id          -> containingTemplateIds
+        $.response[?(@.id==templateId)].composite        -> isComposite
+        $.response[?(@.id==templateId)].id               -> mainTemplateId"] --> C3
+        C3["Step 6 - Set Array Variables
+        Store containingTemplateIds array for iteration"]
+    end
+
+    C3 --> D1
+
+    D1(["Step 7 - For Each Member Template in containingTemplateIds"]) --> D2
+
+    D2["Configuration Templates Get Template(S) Details
+    GET /dna/intent/api/v2/template-programmer/template?id={memberId}
+    Fetch details for each child/member template"] --> D3
+
+    D3["Child Details JSONPath Query
+    $.response[?(@.id==memberId)]                          -> childTemplateBody
+    $.response[?(@.id==memberId)].parentTemplateId         -> mainTemplateId
+    $.response[?(@.id==memberId)].composite                -> isComposite
+    $.response[?(@.id==memberId)].templateParams[*].parameterName -> params
+    $.response[?(@.id==memberId)].templateParams[*].defaultValue  -> defaultValue
+    $.response[?(@.id==memberId)].templateParams[*]               -> templateParams"] --> D4
+
+    D4["Read Table from JSON
+    JSONPath: $.  ->  templateParams table
+    Populate columns from templateParams array"] --> D5
+
+    D5{Template parameter<br/>count?}
+    D5 -->|"row_count <= 1"| D6
+    D5 -->|"row_count > 1"| D7
+
+    D6["Set Variables
+    Build simple param JSON object
+    { paramName: defaultValue }"] --> D8
+
+    D7["Execute Python Script
+    Transform templateParams array entries to
+    { paramName: defaultValue } JSON object"] --> D7b
+
+    D7b["Set Variables
+    Store Python script result as param JSON"] --> D8
+
+    D8{Member template<br/>pass counter?}
+    D8 -->|"counter == 0 (1st pass)"| D9
+    D8 -->|"counter >= 1 (subsequent)"| D10
+
+    D9["Set Variables - Build Member Template Deployment Info
+    Initialize memberTemplateDeploymentInfo with first entry
+    { templateId, mainTemplateId, targetInfo: [deviceId placeholder], params }
+    Increment counter"] --> D11
+
+    D10["Set Variables - Build Member Template Deployment Info
+    Append next member template entry to deployment info array
+    { templateId, mainTemplateId, targetInfo: [deviceId placeholder], params }
+    Increment counter"] --> D11
+
+    D11{More member<br/>templates?}
+    D11 -->|Yes| D1
+    D11 -->|No| E1
+
+    subgraph GBV["Group: Build Versioned Composite Body"]
+        direction TB
+        E1["Step 8 - GET /dna/intent/api/v1/templates/{templateId}/versions
+        Retrieve version history for the composite template"] --> E2
+        E2["Get Version Count from JSONPath Query
+        $.response.length()  ->  versionNumber (latest version integer)"] --> E3
+        E3["Get versionId from JSONPath Query
+        $.response[?(@.version==versionNumber)].versionId  ->  templateId (versioned)"] --> E4
+        E4["Complete Request Body
+        Assemble full composite template deployment JSON body:
+        isComposite, targetInfo (device placeholder), mainTemplateId,
+        templateId (versioned), forcePushTemplate=true,
+        memberTemplateDeploymentInfo array"]
+    end
+
+    E4 --> F1
+
+    subgraph GDEPLOY["Group: Deploy"]
+        direction TB
+        F1["Step 9 - Devices Get Device List
+        GET /dna/intent/api/v1/network-device
+        Fetch hostname info for all devices"] --> F2
+        F2["SDA Get Provisioned Devices
+        GET /dna/intent/api/v1/sda/provisionDevices
+        Check which devices are already SDA-provisioned to the site"] --> F3
+        F3["JSONPath Query
+        $.response[?(@.siteId==siteId)].networkDeviceId  ->  provisionedDeviceList"] --> F4
+        F4(["Step 10 - For Each Device in deviceIdArray"]) --> F5
+
+        subgraph GPB["Group: Prep Body for Device"]
+            direction TB
+            F5["Set Variables
+            Copy requestBody template to working variable"] --> F6
+            F6["JSONPath Query
+            $.response[?(@.id==deviceId)].hostname  ->  hostname"] --> F7
+            F7["Replace String - Replace for each Device
+            **REPLACE_DEVICE_HOSTNAME**  ->  hostname
+            **REPLACE_DEVICE_ID**        ->  deviceId"] --> F8
+            F8["Set Variables
+            Store updated body with device-specific values"]
+        end
+
+        F8 --> F9
+
+        F9["JSONPath Query - Check Provisioning Status
+        $.response[?(@.networkDeviceId==deviceId)].siteId  ->  provisionedFlag
+        $.response[?(@.networkDeviceId==deviceId)].id      ->  provisionedId"] --> F10
+
+        F10{Device already<br/>provisioned to site?}
+        F10 -->|"Not provisioned (flag empty)"| F11
+        F10 -->|"Already provisioned"| F13
+
+        F11["SDA Provision Devices
+        POST /dna/intent/api/v1/sda/provisionDevices
+        Body: siteId + networkDeviceId"] --> F12
+        F12["Wait For Catalyst Center Task
+        Poll task until complete or fail"] --> F14
+
+        F13["SDA Re-Provision Devices
+        PUT /dna/intent/api/v1/sda/provisionDevices
+        Body: id + siteId + networkDeviceId"] --> F13b
+        F13b["Wait For Catalyst Center Task
+        Poll task until complete or fail"] --> F14
+
+        subgraph GDT["Group: Deploy Template"]
+            direction TB
+            F14["Step 11 - POST /dna/intent/api/v2/template-programmer/template/deploy
+            Deploy composite template with member template deployment info
+            Target device substituted with actual device UUID and hostname"] --> F15
+            F15["Get Task ID
+            Parse Intent API response body
+            Extract Catalyst Center Service Task ID"] --> F16
+            F16["Wait For Catalyst Center Task
+            Poll task at 5-second intervals until complete or fail"]
+        end
+
+        F16 --> F17{More devices<br/>in deviceIdArray?}
+        F17 -->|Yes| F4
+        F17 -->|No| DONE
+    end
+
+    DONE([Done])
+
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
