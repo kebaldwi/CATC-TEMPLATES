@@ -1,24 +1,26 @@
-# Application Policys
+# Application QoS Policys
 
 ## Overview
 
-This Lab is designed to be used after first completing labs A through D and has been created to address how to properly deal with Quality of Service with regard to Catalyst Center. During the lab we will use Application Policies and apply Quality of Service (QoS) within Catalyst Center. We will also discuss, set up and use Controller Based Application Recognition. This allows Network Administrators the ability to configure network devices in an ongoing and programmatic manner from within Catalyst Center to make sure application policies are consistent throughout networks whether using SD-Access or Legacy Network Concepts. This set of concepts requires **Advantage Licensing**.
+This section has been created to address how to properly deal with Quality of Service with regard to Catalyst Center. During the wired and wireless automation labs we use Application Policies and apply Quality of Service (QoS) within Catalyst Center. We will also discuss, set up and use **Controller Based Application Recognition (CBAR)**. This allows Network Administrators the ability to configure network devices in an ongoing and programmatic manner from within Catalyst Center to make sure application policies are consistent throughout networks whether using SD-Access or Legacy Network Concepts. This set of concepts requires **Advantage Licensing**.
 
 ## General Information
 
 There are a number of hurdles to applying Quality of Service. If we were to read and study the Quality of Service whitepaper we would still have hours of work to determine the correct MQC policies to be deployed for the various linecards and chassis within our network. Catalyst Center allows us to do three things:
+
 1. Update all protocol packs and dynamic URL's used for Application Discovery.
 2. Deploy a consistent end-to-end QoS policy.
 3. Monitor application usage to assure application and user satisfaction
+
 In order to accomplish this we will discuss all the relevant aspects of these goals along with how we accomplish them in this lab.
 
-## Section 1 - Controller Based Application Recognition
+## Controller Based Application Recognition
 
-The Application Visibility service lets you manage your built-in and custom applications and application sets. The Application Visibility service, hosted as an application stack within Catalyst Center, lets you enable the **C**ontroller-**B**ased **A**pplication **R**ecognition (CBAR) function on a specific device to classify thousands of network and home-grown applications and network traffic. This allows us to deal with applications beyond the capabilities of NBAR 2 which is some 1400 applications currently. 
+The Application Visibility service lets you manage your **built-in** and **custom applications** and **application sets**. The Application Visibility service, hosted as an application stack within Catalyst Center, lets you enable the **C**ontroller-**B**ased **A**pplication **R**ecognition (CBAR) function on a specific device to classify thousands of network and home-grown applications and network traffic. This allows us to deal with applications beyond the capabilities of NBAR 2 which is some 1500 applications currently at scale. 
 
 ![json](../../ASSETS/LABS/WIRED/CBAR.png?raw=true "Import JSON")
 
-The following packages must be installed and are in the dCLOUD environment:
+The following packages must be installed:
 
 1. *Application Policy*: Lets you automate QOS policies across LAN, WAN, and wireless within your campus and branch.
 2. *Application Registry*: Lets you view, manage, and create applications and application sets.
@@ -34,7 +36,7 @@ As the number of applications is always changing and protocol packs are always b
 
 ![json](../../ASSETS/LABS/WIRED/CBAR-ProtocolPacks.png?raw=true "Import JSON")
 
-Lets get started.
+To get started.
 
 ### Step 1 - Enabling Controller Based Application Recognition
 
@@ -149,7 +151,7 @@ Within the CBAR Application, we will now review the way the devices will be upda
 
    ![json](../../ASSETS/LABS/WIRED/DNAC-CBAR-ISR-WAN-Enable-CBAR-4.png?raw=true "Import JSON")
 
-## Section 2 - Building and Deploying an Application Policy
+## Building and Deploying an Application Policy
 
 The Application Policy methodology within Catalyst Center allows for two types of policies to be constructed, wired and wireless. During this section we will build and deploy an Application Policy for a wired environment.
 
@@ -263,7 +265,7 @@ The Application Policy methodology within Catalyst Center allows for two types o
 
 At this point you have successfully pushed a CVD QoS Policy to the network.
 
-## Lab Section 3 - Building and Deploying a Custom Application
+## Building and Deploying a Custom Application
 
 The Application Policy methodology within Catalyst Center allows for two types of policies to be constructed, wired and wireless. During this section we will build and deploy an Application Policy for a wired environment.
 
@@ -360,6 +362,6 @@ The next step will be to build Enable Telemetry in the network infrastructure.
 > **Feedback:** If you found this set of **labs** or **content** helpful, please fill in comments on this feedback form [give feedback](https://github.com/kebaldwi/DNAC-TEMPLATES/discussions/new?category=feedback-and-ideas).</br></br>
 **Content Problems and Issues:** If you found an **issue** on the **lab** or **content** please fill in an [issue](https://github.com/kebaldwi/DNAC-TEMPLATES/issues/new) include what file, along with the issue you ran into. 
 
-> [**Continue to Telemetry Lab**](./module5-telemetry.md)
+Special mention to: https://jinja.palletsprojects.com/en/3.0.x/templates as examples and extrapolations were made using this documentation.
 
-> [**Return to LAB Menu**](./README.md)
+> [**Return to Main Menu**](../README.md)
