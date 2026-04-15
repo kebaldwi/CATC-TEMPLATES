@@ -83,6 +83,7 @@ You will find various examples within the various folders of this repository, wi
 
 * [Management and Scale](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/ManagementScale.md#managing-complex-environments-with-cisco-catalyst-center-) - This section explains general design, management and scale of Catalyst Center
 * [Software Image Management (SWIM)](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/SWIM.md#software-image-management-swim-and-cisco-catalyst-center-) - This section explains how to use SWIM for staging and activating software
+* [Application QoS Policy](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/TUTORIALS/ApplicationQos.md) - This section explains how to use Application QoS for automating QoS at scale in an Enterprise.
 
 ## Configuration Automation
 
