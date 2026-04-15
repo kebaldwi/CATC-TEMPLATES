@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
             files: |
-              CODE/WORKFLOWS/CATC/*.json
+              CODE/WORKFLOWS/CATC/*/*.json
               CODE/POSTMAN/*.json
               CODE/POSTMAN/*.zip
               CODE/POSTMAN/DEVNET-IGNITE/*.zip
