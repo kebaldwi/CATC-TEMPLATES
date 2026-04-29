@@ -42,7 +42,8 @@ This section built out in a lab format to guide you through the typical steps to
     * Lab 5 Python Orchestration - In Development - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
     * Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
     * [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
-
+    * [Lab 10 GitOps Orchestration](  https://https://github.com/kebaldwi/TECOPS-2599) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)** (TBD)
+    
     #### Meraki Dashboard
 
     :mega: Upcoming stay tuned!

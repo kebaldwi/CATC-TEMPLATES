@@ -27,6 +27,7 @@ This newer and more modular lab approach is designed to deal with and includes c
 7. [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
 8. [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
 9. [Lab 9 ISE Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-9-ISE-Automation) - Covers how to automate ISE **(allow 4.0 hrs)**
+10. [Lab 10 GitOps Orchestration](  https://https://github.com/kebaldwi/TECOPS-2599) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)** (TBD)
 
 ### Legacy Lab Content
 
