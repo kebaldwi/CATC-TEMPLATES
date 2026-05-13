@@ -1,0 +1,27 @@
+{#- Dictionaries of VLANS per Site -#}
+{% set SiteAvlans = [
+  {'vlan':'5','name':'mgmtvlan'},
+  {'vlan':'10','name':'apvlan'},
+  {'vlan':'20','name':'datavlan'},
+  {'vlan':'30','name':'voicevlan'},
+  {'vlan':'40','name':'guestvlan'},
+  {'vlan':'999','name':'disabledvlan'}
+  ]%}
+{% set SiteBvlans = [
+  {'vlan':'5','name':'mgmtvlan'},
+  {'vlan':'10','name':'apvlan'},
+  {'vlan':'20','name':'datavlan'},
+  {'vlan':'30','name':'voicevlan'},
+  {'vlan':'40','name':'guestvlan'},
+  {'vlan':'999','name':'disabledvlan'}
+  ]%}
+!
+{#- Dictionaries of VLANS per Site with Addressing-#}
+{% set SiteAvlansLibrary = [
+  {'vlan':'5','name':'mgmtvlan','ip':'192.168.5.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'10','name':'apvlan','ip':'192.168.10.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'20','name':'datavlan','ip':'192.168.20.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'30','name':'voicevlan','ip':'192.168.30.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'40','name':'guestvlan','ip':'192.168.40.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'999','name':'disabledvlan','ip':'192.168.99.1','mask':'255.255.255.0','dhcp':'198.18.133.1'}
+  ]%}

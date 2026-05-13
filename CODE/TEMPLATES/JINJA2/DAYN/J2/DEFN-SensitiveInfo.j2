@@ -1,0 +1,11 @@
+{#- Dictionaries of SNMP V2 Community Strings -#}
+{% set snmpCommunityStrings = [
+  {'string':'Test_ro','privilege':'RO'},
+  {'string':'Test_rw','privilege':'RW'}
+  ]%}
+
+{#- Dictionaries of User information -#}
+{% set users = [
+  {'name':'demouser1','priv':'15','key':'$9$DwFGXgdsukL4qE$7LI.Kq6vijfo/BkM53McdTrlfS.ou4CmOQ6zYH8iba2'},
+  {'name':'demouser2','priv':'3','key':'$9$DwFGXgdsukL4qE$7LI.Kq6vijfo/BkM53McdTrlfS.ou4CmOQ6zYH8iba2'}
+  ]%}

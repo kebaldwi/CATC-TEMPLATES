@@ -1,0 +1,45 @@
+{#- This module adds Security configuration -#}
+{% macro SecurityConfig() %}
+{#- Additional AAA commands not added by DNA Center Automation (uncomment if needed below)-#}
+{#- aaa authorization config-commands -#}
+{#- aaa authorization commands 0 default group tacacs+ local  -#}
+{#- aaa authorization commands 1 default group tacacs+ local  -#}
+{#- aaa authorization commands 15 default group tacacs+ local  -#}
+!
+{#- Default Parameters -#}
+{#- ip arp entry learn 10240 -#}
+ip domain retry 1
+ip domain timeout 5
+login on-success log
+ip forward-protocol nd
+no ip http server
+no ip http authentication local
+no ip http secure-server
+ip ssh version 2
+!
+{#- Banner Configuration -#}
+<MLTCMD>
+banner login ^
+ ******************************************************************
+ * CISCO SYSTEMS EXAMPLE                                          *
+ ******************************************************************
+ *                                                                *
+ * THIS DEVICE IS PART OF A DEMONSTRATION COMPUTER NETWORK AND IS *
+ * PROVIDED FOR OFFICIAL USE BY AUTHORIZED USERS ONLY. ANY        *
+ * INFORMATION, DOCUMENTS, OR MATERIALS IN THE NETWORK ARE THE    *
+ * PROPERTY OF THIS FIRM. UNAUTHORIZED USE, DUPLICATION, OR       *
+ * DISCLOSURE OF INFORMATION OR SYSTEMS IN THIS NETWORK IS        *
+ * STRICTLY PROHIBITED BY FEDERAL LAW (18 USC 10130). USE OF THIS *
+ * NETWORK CONSTITUTES CONSENT TO MONITORING WHICH MAY BE         *
+ * RELEASED TO FIRM MANAGEMENT AND/OR LAW ENFORCEMENT AGENCIES    *
+ * AND MAY RESULT IN DISCIPLINARY ACTION, CIVIL ACTION, AND/OR    *
+ * CRIMINAL OR CIVIL LITIGATION.                                  *
+ *                                                                *
+ ******************************************************************
+   Hostname: $(hostname)
+ ******************************************************************
+ * CISCO SYSTEMS EXAMPLE *
+ ******************************************************************
+ ^
+</MLTCMD>
+{% endmacro %}

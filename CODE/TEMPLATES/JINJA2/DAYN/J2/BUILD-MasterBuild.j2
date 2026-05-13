@@ -1,0 +1,90 @@
+{#- Definition Files -#}
+{% include "DayNTemplates/DEFN-AclInfo.j2" %}
+{% include "DayNTemplates/DEFN-SensitiveInfo.j2" %}
+{% include "DayNTemplates/DEFN-VlanInfo.j2" %}
+{% include "DayNTemplates/DEFN-PortInfo.j2" %}
+!
+{#- Global Module Includes -#}
+{% include "DayNTemplates/BUILD-AaaConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-AclConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-SystemConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-SecurityConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-StackingConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-InterfaceMacros.j2" %}
+{% include "DayNTemplates/BUILD-VlanConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-AutoconfConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-IbnsConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-AccessConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-AutoDescriptionConfiguration.j2" %}
+{% include "DayNTemplates/BUILD-AppHostingConfiguration.j2" %}
+!
+{#- Global Set Variables -#}
+{% set uplink_portarray = [] %}
+{% set vlanArray = [] %}
+{% set snmpLocation = "FISHERS" %}
+{% set vlan_number = "10" %}
+{% set data_number = "10" %}
+{% set voice_number = "10" %}
+{% set guest_number = "10" %}
+!
+{#- Device Build Configuration -#}
+{#- Build Dependencies -#}
+{{ StandardSnmpLineAcl() }}
+{{ StandardSnmpAcl() }}
+{{ StandardVtyLineAcl() }}
+{{ StandardVtyAcl() }}
+{{ StandardAcl("ACL-DEFAULT",AclDefaultEntries) }}
+!
+{#- Device Level Configuration -#}
+{{ AaaConfig() }}
+{{ SystemConfig(users, snmpLocation, snmpCommunityStrings, __device.snmpLocation) }}
+{{ SecurityConfig() }}
+{{ IbnsConfig() }}
+{{ StackwiseConfig(__device.platformId) }}
+!
+{#- Vlan Configurations -#}
+{{ configure_vlans(SiteBvlans) }}
+{{ search_vlans(SiteBvlans) }}
+{{ configure_cts(SiteBvlans) }}
+!
+{#- Uplink Configurations -#}
+{#- Determine whether target is Dual or Single Uplink Target -#}
+{% for interface in __interface %}
+  {% if interface.portMode == "trunk" && interface.interfaceType == "Physical" %}
+    {% do uplink_portarray.append(interface.portName) %}
+  {% endif %}
+{% endfor %}
+!
+{% if uplink_portarray | length == 2 %}
+  {{ configure_stp_dualuplink(vlanArray) }}
+{% elif uplink_portarray | length == 1 %}
+  {{ configure_stp_singleuplink(vlanArray) }}
+{% endif %}
+!
+{#- Interface Templates -#}
+{{ ibns_baseconfig(vlanArray[1]) }}
+{{ ibns_accesspoint(vlanArray[1]) }}
+{{ ibns_flexaccesspoint(vlanArray[1], vlanArray[2], vlanArray[3], vlanArray[4]) }} 
+{{ ibns_workstation(vlanArray[2], vlanArray[3]) }}
+{{ ibns_guest(vlanArray[4]) }} 
+{{ autoconf_accesspoint(vlanArray[1]) }}
+{{ autoconf_flexaccesspoint(vlanArray[1], vlanArray[2], vlanArray[3], vlanArray[4]) }} 
+{{ autoconf_workstation(vlanArray[2], vlanArray[3]) }}
+{{ autoconf_baseconfig(vlanArray[1]) }}
+!
+{{ AutoConf() }}
+!
+{#- Interface Configurations -#}
+!
+{{ accessPortConfig(__interface, uplink_portarray, accesspoint_interfaces) }}
+!
+{#- APP Hosting Configuration -#}
+{{ APP_Hosting(__device.platformId, vlanArray[2]) }}
+!
+{#- Propagate CTS Configuration -#}
+{{ propagate_cts(uplink_portarray) }}
+!
+{#- Auto Description Configuration -#}
+{{ AutoName() }}
+!
+{#end#}
