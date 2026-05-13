@@ -1,0 +1,113 @@
+{# DEFINE VARIABLES #}
+{% set ip1totext = ip1|string %}
+{% set ip2totext = ip2|string %}
+{% set octets1 = ip1totext|split('.') %}
+{% set octets2 = ip2totext|split('.') %}
+! OFPF Area: {{ area }}
+! CATC IP:   {{ DNACip }}
+! 3rd Octet: {{ oct3currip }}
+! 4th Octet: {{ oct4currip }} 
+! Int IP:    {{ intip }} 
+
+{# MACRO #}
+{# Interface basic configuration #}
+{% macro int_basicconf() %}
+    no switchport
+    no shutdown
+    ip ospf network point-to-point
+    ip ospf 1 area {{ area }}
+    bfd interval 300 min_rx 300 multiplier 3
+    no bfd echo
+    ip pim sparse-mode
+    description UNDERLAY ROUTED UPLINK
+{% endmacro %}
+
+{# DHCP pool config template #}
+{% macro dhcp_set(oct1currip,oct2currip,oct3currip,oct4currip) %}
+    {% set intip = (oct4currip | int) + 1 %}
+    {% set dhcpip = (oct4currip | int ) + 2 %}
+    ip dhcp pool pool.{{ oct3currip }}.{{ oct4currip }}
+    {#network {{ octets1[0] }}.{{ octets1[1] }}.{{ oct3currip }}.{{ oct4currip }} 255.255.255.252#}
+    network {{ oct1currip }}.{{ oct2currip }}.{{ oct3currip }}.{{ oct4currip }} 255.255.255.252
+    {#default-router {{ octets1[0] }}.{{ octets1[1] }}.{{ oct3currip }}.{{ intip }}#}
+    default-router {{ oct1currip }}.{{ oct2currip }}.{{ oct3currip }}.{{ intip }}
+    option 43 ascii 5A1D;B1;K4;I{{ DNACip }};J80;
+    class ciscopnp
+    {#address range {{ octets1[0] }}.{{ octets1[1] }}.{{ oct3currip }}.{{ dhcpip }} {{ octets1[0] }}.{{ octets1[1] }}.{{ oct3currip }}.{{ dhcpip }}#}
+    address range {{ oct1currip }}.{{ oct2currip }}.{{ oct3currip }}.{{ dhcpip }} {{ oct1currip }}.{{ oct2currip }}.{{ oct3currip }}.{{ dhcpip }}
+{% endmacro %}
+
+{% macro pool_exh() %}
+    !!!!!!!!!!!!!!!!!!!!!!!!!!
+    !!!!!UNABLE TO ALLOCATE IP
+    !!!!!!!!!!!!!!!!!!!!!!!!!!
+    description IP ADDRESS ALLOCATION ERROR
+{% endmacro %}
+
+{% macro ip_addr(oct1currip,oct2currip,oct3currip,oct4currip) %}
+    {% set intip = (oct4currip | int) + 1 %}
+    {#ip address {{ octets1[0] }}.{{ octets1[1] }}.{{ oct3currip }}.{{ intip }} 255.255.255.252#}
+    ip address {{ oct1currip }}.{{ oct2currip }}.{{ oct3currip }}.{{ intip }} 255.255.255.252
+{% endmacro %}
+{# END MACROS #}
+
+{% if (((octets1[3] | int) % 4) != 0) or ((((octets2[3] | int) + 1) % 4) != 0) %}
+    !incorrect IP1 or IP2. Please check!
+    {{ octets1[3] }}
+    {{ octets2[3] }}
+{% else %}
+    {# MAIN BODY #}
+    {% set oct3currip = (octets1[2] | int) %}
+    {% set oct4currip = (octets1[3] | int) %}
+    {% if primaryseed == "1" %}
+       !
+    {% endif %}
+    !
+    ip dhcp class ciscopnp
+    option 60 hex 636973636f706e70
+    !
+    ! Select interfaces {{ interfaces }}
+    {% for port in __interface %}
+        {% if port.portName in interfaces %}
+            {% if !(port.ipv4Address) %}
+                default interface {{ port.portName }}
+                interface {{ port.portName }}
+                 {{ int_basicconf() }}
+                {% if oct4currip >= 256 %}
+                    {% set oct3currip = oct3currip + 1 %}
+                    {% if oct3currip <= (octets2[2] | int) %}
+                        {% set oct4currip = 0 %}
+                        {% if oct3currip == (octets2[2] | int) and oct4currip >= (octets2[3] | int) %}
+                            {{ pool_exh() }}
+                        {% else %}
+                            !did it here A
+                            {{ ip_addr(octets1[0],octets1[1],oct3currip,oct4currip) }}
+                            {% if primaryseed == "1" %}
+                                {{ dhcp_set(octets1[0],octets1[1],oct3currip,oct4currip) }}
+                            {% endif %}
+                            {% set oct4currip = oct4currip + 4 %}
+                        {% endif %}
+                    {% else %}
+                        {{ pool_exh() }}
+                    {% endif %}
+                {% else %}
+                    {% if oct3currip == (octets2[2] | int) and oct4currip >= (octets2[3] | int) %}
+                        {{ pool_exh() }}
+                    {% else %}
+                        !did it here B
+                        {{ ip_addr(octets1[0],octets1[1],oct3currip,oct4currip) }}
+                        {% if primaryseed == "1" %}
+                            {{ dhcp_set(octets1[0],octets1[1],oct3currip,oct4currip) }}
+                        {% endif %}
+                        {% set oct4currip = (oct4currip | int) + 4 %}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                !!!Interface {{port.portName}} already configured with IP address. Skip!
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

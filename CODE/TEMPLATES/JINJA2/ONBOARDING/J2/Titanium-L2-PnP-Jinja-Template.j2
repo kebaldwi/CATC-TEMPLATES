@@ -1,0 +1,69 @@
+{# <------Onboarding-Template for L2 Access-------> #}
+{# To be used for onboarding when using Day N Templates #}
+!
+{# Set MTU if required #}
+{% if SystemMTU != 1500 %} 
+   system mtu {{SystemMTU}}
+{% endif %}
+!
+{# Set hostname #}
+hostname (Hostname}}
+!
+{# Set VTP and VLAN for onboarding #}
+{% set VtpDomain = Hostname %} 
+vtp domain {{VtpDomain}}
+vtp mode transparent
+!
+{# Set Management VLAN #}
+vlan {{MgmtVlan}}
+!
+{% if MgmtVlan > 1 %} 
+   name MgmtVlan
+   interface Vlan 1 
+     shutdown
+{% endif %}
+!
+{# Set Up Interfaces #}
+interface vlan {{MgmtVlan}}
+ ip address {{SwitchIP}} {{SubnetMask}}
+ no shutdown
+ no ip redirects
+ no ip proxy-arp exit
+ exit
+!
+ip default-gateway {{Gateway}}
+!
+!{{Portchannel)}
+interface range {{Interfaces)}
+ shut
+ switchport mode trunk
+ switchport trunk allowed vlan {{MgmtVlan}}
+ {% if "," in Interfaces || "-" in Interfaces %}
+    channel-protocol lacp
+    channel-group {{Portchannel}} mode active
+ {% endif %}
+ no shut
+!
+{% if "," in Interfaces || in Interfaces %} 
+   interface Port-channel ((Portchannel}}
+    switchport trunk native vlan {{MgmtVlan}}   
+switchport trunk allowed vlan {{MgmtVlan}}   
+switchport mode trunk
+    no port-channel standalone-disable
+{% endif %}
+!
+{# Set Source of Management Traffic #}
+ip domain lookup source-interface Vlan {{MgmtVlan}}
+ip http client source-interface Vlan {{MgmtVlan}}
+ip ftp source-interface Vlan {{MgmtVlan}}
+ip tftp source-interface Vlan {{MgmtVlan}}
+ip ssh source-interface Vlan {{MgmtVlan}}
+ip radius source-interface Vlan {{MgmtVlan}}
+logging source-interface Vlan {{MgmtVlan}}
+snmp-server trap-source Vlan {{MgmtVlan}}
+ntp source Vlan {{MgmtVlan}}
+!
+netconf-yang
+netconf-yang ssh port 830
+!
+end

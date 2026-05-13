@@ -1,0 +1,31 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{% set DEFN_VRF = [
+  {'id':'901','name':'red', 'mdt_default':'239.190.0.1', 'mdt_data':'239.190.1.0'},
+  {'id':'902','name':'blue', 'mdt_default':'239.190.0.2', 'mdt_data':'239.190.2.0'},
+  {'id':'903','name':'green', 'mdt_default':'239.190.0.3', 'mdt_data':'239.190.3.0'}
+  ]
+%}
+{# VRF TO NODE MAPPINGS #}
+{# NOT ALL VRF AND VNI NEED TO BE INSTANTIATED ON ALL THE NODES IN FABRIC #}
+{# -------------------------------------------------------------------- #}
+{# L3OUT COUPLING — SPINE ENTRIES                                        #}
+{# Spine nodes are listed here with their L3OUT VRF IDs (e.g. '901').   #}
+{# This is required so FABRIC-NVE.j2 and FABRIC-VRF.j2 generate the    #}
+{# L3VNI / VRF definition on Spines to support VRF route leaking to the #}
+{# upstream core via L3OUT sub-interfaces.                               #}
+{#                                                                       #}
+{# When disabling L3OUT (DEFN_L3OUT_NODES = [] in DEFN-L3OUT.j2):       #}
+{#   Remove the L3OUT VRF IDs from the Spine entries below.              #}
+{#   Example: 'Spine-01.dcloud.cisco.com': [] (or omit entirely)        #}
+{#   Leaving L3OUT VRF IDs here while DEFN_L3OUT_NODES is empty will    #}
+{#   produce orphaned VRF/NVE config on Spines with no external         #}
+{#   connectivity — sub-interfaces and BGP neighbors will be missing.   #}
+{# -------------------------------------------------------------------- #}
+{% set DEFN_VRF_TO_NODE = {
+  'Spine-01.dcloud.cisco.com':  ['901'],
+  'Spine-02.dcloud.cisco.com':  ['901'],
+  'Leaf-01.dcloud.cisco.com':   ['901','902','903'],
+  'Leaf-02.dcloud.cisco.com':   ['901','902','903'],
+  'Border-01.dcloud.cisco.com': ['902','903'],
+  'Border-02.dcloud.cisco.com': ['902','903']
+} %}

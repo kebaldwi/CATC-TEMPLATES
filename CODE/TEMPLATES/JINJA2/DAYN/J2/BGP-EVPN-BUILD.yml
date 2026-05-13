@@ -1,0 +1,27 @@
+# Composite Template Definition for BGP-EVPN-BUILD
+# This file defines the ordered list of templates that comprise this composite template
+#
+# NAMING: The composite template name in Catalyst Center defaults to the filename (without .yml) + ".j2"
+#         Override with 'composite_name' field below if different naming is required.
+#
+# NOTE: DEFN-* and FUNC-* templates are included via Jinja {% include %} statements
+# within FABRIC-* templates. Do NOT add them here - only list top-level FABRIC templates.
+#
+# STRUCTURE: This matches Catalyst Center's composite template export format:
+#   - Each containingTemplates entry includes: name, id, composite, language, description,
+#     projectName, deviceTypes, templateParams, tags
+
+# Optional: Override composite template name (defaults to filename + ".j2")
+# composite_name: "COMPOSITE"
+
+# Templates are applied in the order listed below (matches BGP-EVPN-BUILD.j2 include order)
+templates:
+  - name: "FABRIC-VRF.j2"
+  - name: "FABRIC-LOOPBACKS.j2"
+  - name: "FABRIC-L3OUT.j2"
+  - name: "FABRIC-NVE.j2"
+  - name: "FABRIC-MCAST.j2"
+  - name: "FABRIC-EVPN.j2"
+  - name: "FABRIC-OVERLAY.j2"
+  - name: "FABRIC-CLIENT-PORTS.j2"
+  - name: "FABRIC-NAC.j2"
