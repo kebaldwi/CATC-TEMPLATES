@@ -1,0 +1,19 @@
+{# For APP Hosting APP interface must be enabled #}
+
+{% macro APP_Hosting(vlan_number) %}
+{# Set up one APP port to support environment #}
+{% for interface in __interface %}
+  {% if "App" in interface.portName %}
+    interface {{ interface.portName }}
+     switchport trunk allowed vlan {{ vlan_number }}
+     switchport mode trunk
+  {% endif %}
+{% endfor %}
+
+{# Enable IOX functionality required for containers #}
+iox
+ip http server
+ip http secure-server
+ip http authentication local
+
+{% endmacro %}

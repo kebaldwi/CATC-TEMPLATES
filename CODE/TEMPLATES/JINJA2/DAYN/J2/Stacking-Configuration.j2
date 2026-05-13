@@ -1,0 +1,37 @@
+{#
+  Template Parameters (bind variables):
+    - __device (STRING, required)
+#}
+{#- 9300 Stack Power and 9300, 9200 Priority -#}
+{% set StackCount = __device.platformId | split(",")  %}
+{% set StackMemberCount =  StackCount | length  -%}
+
+{% if StackMemberCount > 1 && ("C93" in __device.platformId || "C92" in __device.platformId) %}
+  {% if "C93" in __device.platformId %}
+     stack-power stack Powerstack1
+     mode redundant strict
+     {% if StackMemberCount > 4 %}
+        stack-power stack Powerstack2
+        mode redundant strict
+     {% endif %}
+     {% for Switch in range(0,StackMemberCount,1) %}
+        stack-power switch {{ loop.index }}
+        {% if loop.index <= (StackMemberCount/2|round('ceil')) or StackMemberCount < 5 %}
+           stack Powerstack1
+        {% elif loop.index > (StackMemberCount/2|round('ceil')) %}
+           stack Powerstack2
+        {% endif %}
+     {% endfor %}
+  {% endif %}
+  #MODE_ENABLE
+  {% for Switch in range(0,StackMemberCount,1) %}
+    {% if loop.index == 1 %}
+       switch {{ loop.index }} priority 10
+    {% elif loop.index == 2 %}
+       switch {{ loop.index }} priority 9
+    {% else %}
+       switch {{ loop.index }} priority 8
+    {% endif %}
+  {% endfor %}
+  #MODE_END_ENABLE
+{% endif %}

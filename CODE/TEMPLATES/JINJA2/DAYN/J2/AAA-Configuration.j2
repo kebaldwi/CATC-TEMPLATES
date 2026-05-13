@@ -1,0 +1,15 @@
+aaa new-model
+!
+{# user prompt line below optionally modifies user prompt on login #}
+{# do not use next line on DCLOUD please as it breaks DCLOUD orchestration #}
+{# aaa authentication username-prompt "Authorized Username: " #}
+aaa authentication login admin local
+aaa authorization console
+aaa authorization exec admin local
+aaa authentication login admin local-case
+aaa authorization exec admin local 
+!
+mac address-table notification mac-move
+mac address-table notification threshold
+mac-address-table notification change
+!

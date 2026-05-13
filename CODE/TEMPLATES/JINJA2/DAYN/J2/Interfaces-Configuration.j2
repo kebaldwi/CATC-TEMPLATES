@@ -1,0 +1,115 @@
+{#
+  Template Parameters (bind variables):
+    - Site (STRING, required) - The Letter denotes the VLAN Schema
+         AP, Data, Voice, Guest, Disabled
+A = 10,20,30,40,99
+B = 20,30,40,50,99
+    - __interface (STRING, required, array)
+    - __device (STRING, required)
+    - accesspoint_interfaces (STRING, required, array, binding='{"provider":"Inventory","attributeToDisplay":"portName","params":[{"type":"MANAGED_DEVICE_UUID","scope":"RUNTIME","value":null},{"type":"MANAGED_DEVICE_IP","scope":"RUNTIME","value":null},{"type":"MANAGED_DEVICE_HOSTNAME","scope":"RUNTIME","value":null}],"value":null,"source":"Inventory","entity":"Interface","attribute":"portName","filterType":"regex","filterValue":"GigabitEthernet[1-9]/0/[0-9]+","filterByAttribute":"portName"}') - Select the ports where Access Points will be connected. All other interfaces will be configured with Host facing connectivity for Workstations and Phones
+    - vlan_number (STRING)
+    - guest_number (STRING)
+    - data_number (STRING)
+    - voice_number (STRING)
+#}
+{# Interface Configurations #}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/Interfaces-Macros" %}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/VLAN-Configuration" %}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/IBNS2.0-Configuration" %}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/APP-Hosting-Configuration" %}
+!
+{% set vlanArray = [] %}
+{% if Site == "A" %}
+  {{ configure_vlans(SiteAvlans) }}
+  {{ search_vlans(SiteAvlans) }}
+  {{ configure_cts(SiteAvlans) }}
+{% elif Site == "B" %}
+  {{ configure_vlans(SiteBvlans) }}
+  {{ search_vlans(SiteBvlans) }}
+  {{ configure_cts(SiteBvlans) }}
+{% endif %}
+!
+{# Determine whether target is Dual or Single Uplink Target #}
+{% set uplink_portarray = [] %}
+{% for interface in __interface %}
+  {% if interface.portMode == "trunk" && interface.interfaceType == "Physical" %}
+    {% do uplink_portarray.append(interface.portName) %}
+  {% endif %}
+{% endfor %}
+!
+{% if uplink_portarray | length == 2 %}
+  {{ configure_stp_dualuplink(vlanArray) }}
+{% elif uplink_portarray | length == 1 %}
+  {{ configure_stp_singleuplink(vlanArray) }}
+{% endif %}
+!
+{# Interface Templates #}
+{{ ibns_baseconfig(vlanArray[1]) }}
+{{ ibns_accesspoint(vlanArray[1]) }}
+{{ ibns_flexaccesspoint(vlanArray[1], vlanArray[2], vlanArray[3], vlanArray[4]) }} 
+{{ ibns_workstation(vlanArray[2], vlanArray[3]) }}
+{{ ibns_guest(vlanArray[4]) }} 
+{{ autoconf_accesspoint(vlanArray[1]) }}
+{{ autoconf_flexaccesspoint(vlanArray[1], vlanArray[2], vlanArray[3], vlanArray[4]) }} 
+{{ autoconf_workstation(vlanArray[2], vlanArray[3]) }}
+{{ autoconf_baseconfig(vlanArray[1]) }}
+!
+{% include "DCLOUD CATC Template Lab DayN Jinja2/AutoConf-Configuration" %}
+!
+{# Interface Interations #}
+!
+{# System Variable example interfaces in one logical code construct #}
+{# Select and Configure Access Point interfaces#}
+{% set apintlog = uplink_portarray %}
+!
+{% for apinterface in accesspoint_interfaces %}
+  {% for interface in __interface %}
+    {% if interface.portName in apintlog %}
+    {% elif interface.portName == apinterface %}
+      default interface {{ interface.portName }}
+      interface {{ interface.portName }}
+       {{ baseconf_interface() }}
+      {% do apintlog.append(interface.portName) %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+!
+{# Automatically Configure Workstation Remaining interfaces#}
+{% for interface in __interface %}
+  {% if interface.interfaceType == "Physical" && interface.portName.replaceAll("(^[a-zA-Z]+).*","$1") == "GigabitEthernet"  %}
+    {% if interface.portName.replaceAll("(^[a-zA-Z]+.).*", "$1") != "GigabitEthernet0" %}
+      {% if interface.portName.replaceAll("^[a-zA-Z]+(\\d+)/(\\d+)/(\\d+)", "$2") != 1 %}
+        {% if interface.portName in apintlog %}
+        {% else %}
+          default interface {{ interface.portName }}
+          interface {{ interface.portName }}
+            {{ ibns_baseconf_interface() }}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+!
+interface GigabitEthernet0/0
+ no ip address
+ shutdown
+!
+{% if "C93" in __device.platformId %}
+  {{ APP_Hosting(vlanArray[1]) }}
+{% endif %}
+!
+{#- Automated Script for cts manual disruptive config -#}
+{#- This will always ensure the uplink get the cts manual for with  -#}
+{#- timed self deleting EEM script  -#}
+event manager applet POST_CTS_MANUAL authorization bypass
+ event timer countdown time 30
+ action 1.0 cli command "enable"
+ action 1.1 cli command "config t"
+ action 2.0 cli command "interface range {{ uplink_portarray|join(',') }}"
+ action 2.1 cli command "cts manual"
+ action 2.2 cli command "policy static sgt 2 trusted"
+ action 2.3 cli command "propagate sgt"
+ action 2.4 cli command "no event manager applet POST_CTS_MANUAL"
+ action 2.5 cli command "end"
+ action 2.6 cli command "wr"
+ action 2.7 cli command "exit"
