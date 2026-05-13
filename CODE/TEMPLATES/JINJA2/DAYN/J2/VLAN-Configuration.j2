@@ -1,0 +1,105 @@
+{# Dictionaries of VLANS per Site #}
+{% set SiteAvlans = [
+  {'vlan':'5','name':'mgmtvlan'},
+  {'vlan':'10','name':'apvlan'},
+  {'vlan':'20','name':'datavlan'},
+  {'vlan':'30','name':'voicevlan'},
+  {'vlan':'40','name':'guestvlan'},
+  {'vlan':'999','name':'disabledvlan'}
+  ]%}
+{% set SiteBvlans = [
+  {'vlan':'5','name':'mgmtvlan'},
+  {'vlan':'10','name':'apvlan'},
+  {'vlan':'20','name':'datavlan'},
+  {'vlan':'30','name':'voicevlan'},
+  {'vlan':'40','name':'guestvlan'},
+  {'vlan':'999','name':'disabledvlan'}
+  ]%}
+!
+{# Dictionaries of VLANS per Site with Addressing#}
+{% set SiteAvlansLibrary = [
+  {'vlan':'5','name':'mgmtvlan','ip':'192.168.5.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'10','name':'apvlan','ip':'192.168.10.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'20','name':'datavlan','ip':'192.168.20.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'30','name':'voicevlan','ip':'192.168.30.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'40','name':'guestvlan','ip':'192.168.40.1','mask':'255.255.255.0','dhcp':'198.18.133.1'},
+  {'vlan':'999','name':'disabledvlan','ip':'192.168.99.1','mask':'255.255.255.0','dhcp':'198.18.133.1'}
+  ]%}
+!
+{# MACRO VLAN DB Dependencies #}
+{% macro configure_vlans(vlanpairs)  %}
+  {% for vlanpair in vlanpairs %}
+    vlan {{ vlanpair['vlan'] }}
+    name {{ vlanpair['name'] }}
+  {% endfor %}
+{% endmacro %}
+!
+{# MACRO VLAN DB Dependencies #}
+{% macro configure_vlans_svi(vlanpairs)  %}
+  {% for vlanpair in vlanpairs %}
+    vlan {{ vlanpair['vlan'] }}
+    name {{ vlanpair['name'] }}
+    {% if "mgmtvlan" in vlanpair['name'] %}
+        pnp startup-vlan {{ vlanpair['vlan'] }}
+    {% else %}
+      int vlan {{ vlanpair['vlan'] }}
+       description {{ vlanpair['name'] }}
+       ip address {{ vlanpair['ip'] }} {{ vlanpair['mask'] }}
+       ip helper-address {{ vlanpair['dhcp'] }}                  
+       ip ospf 1 area 0
+       no shutdown
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+!
+{# MACRO STP with PC Dependencies #}
+{% macro configure_stp_dualuplink(vlanpairs) %}
+  {% for interface in __interface %}
+    {% if interface.portMode == "trunk" && interface.interfaceType == "Physical" %}
+      interface {{ interface.portName }}
+        #INTERACTIVE
+        access-session inherit disable autoconf<IQ>yes<R>y
+        #END_INTERACTIVE 
+    {% elif 'Port-channel' in interface.portName  %}
+      interface {{ interface.portName }} 
+        switchport trunk allowed vlan add {{ vlanpairs|join(',') }}
+    {% endif %}
+  {% endfor %}
+{% endmacro %} 
+!
+{# MACRO STP Dependencies #}
+{# This is an example of the configure_stp macro for a single uplink. As the ports are   #}
+{# showing prior to the portchannels it needs two logical constructs and as sort doesn't #}
+{# work. #}
+{% macro configure_stp_singleuplink(vlanpairs) %}
+  {% for interface in __interface %}
+    {% if interface.portMode == "trunk" && interface.interfaceType == "Physical" %}
+      interface {{ interface.portName }}
+        switchport trunk allowed vlan add {{ vlanpairs|join(',') }}
+        #INTERACTIVE
+        access-session inherit disable autoconf<IQ>yes<R>y
+        #END_INTERACTIVE 
+    {% endif %}
+  {% endfor %}
+{% endmacro %} 
+!
+{# MACRO Vlan Search Function #}
+{% macro search_vlans(vlanpairs) %}
+  {#{% set vlanArray = [] %}#}
+  {% for vlanpair in vlanpairs %}
+    {% if vlanpair['name'] == "apvlan" %}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% elif vlanpair['name'] == "datavlan"%}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% elif "voice" in vlanpair['name'] %}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% elif "guest" in vlanpair['name'] %}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% elif "disabled" in vlanpair['name'] %}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% else %}
+      {% do vlanArray.append(vlanpair['vlan']) %}
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+!

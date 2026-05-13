@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Composite template manifest: CATC Template Lab DayN Composite Jinja2
+#
+# This file lists the child templates that make up the composite template
+# 'CATC Template Lab DayN Composite Jinja2' as exported from the DNAC/Catalyst Center project
+# 'DCLOUD CATC Template Lab DayN Jinja2'. The `templates` list below preserves the execution
+# order recorded in the composite. Each entry corresponds to an individual
+# .j2 file in this same folder (matched by `name`).
+# ---------------------------------------------------------------------------
+templates:
+  - name: AAA-Configuration.j2
+  - name: SystemManagement-Configuration.j2
+  - name: Security-AAA-Configuration.j2
+  - name: Stacking-Configuration.j2
+  - name: Interfaces-Configuration.j2
+  - name: AutoNaming-EEM-Scripting.j2

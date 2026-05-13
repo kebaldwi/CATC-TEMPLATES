@@ -1,0 +1,55 @@
+{#
+  Template Parameters (bind variables):
+    - snmpLocation (STRING, required)
+#}
+{# System Management for Catalyst Only #}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/Sensitive-Info" %}
+{% include "DCLOUD CATC Template Lab DayN Jinja2/VLAN-Configuration" %}
+
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec show-timezone
+service password-encryption
+service sequence-numbers
+!
+ip subnet-zero
+!
+lldp run
+!
+port-channel load-balance src-dst-ip
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+!
+logging buffered 64000 debug
+no logging console
+logging trap notifications
+!
+{%- include "DCLOUD CATC Template Lab DayN Jinja2/ACL-Configuration" -%}
+!
+snmp-server location {{ snmpLocation }} 
+{# snmp-server location {{ __device.snmpLocation }} #}
+!
+{% for snmpCommunityString in snmpCommunityStrings %}
+  snmp-server community {{ snmpCommunityString['string'] }} {{ snmpCommunityString['privilege'] }} 10
+{% endfor %}
+!
+{% for user in users %}
+  username {{ user.name }} priv {{ user.priv }} secret 9 {{ user.key }}
+{% endfor %}
+!
+line con 0
+ exec-timeout 15 0
+ login authentication admin
+ logging synchronous
+ authorization exec admin
+line vty 0 15
+ {# access-class 20 in #}
+ exec-timeout 15 0
+ login authentication admin
+ logging synchronous
+ authorization exec admin
+ transport input ssh

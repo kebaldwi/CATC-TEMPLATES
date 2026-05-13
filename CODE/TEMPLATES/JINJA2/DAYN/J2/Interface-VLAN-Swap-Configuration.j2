@@ -1,0 +1,75 @@
+{#
+  Template Parameters (bind variables):
+    - vlan_y (INTEGER, required)
+    - __interface (STRING, required, array)
+    - vlan_y_name (STRING, required)
+    - uplink_ports (STRING, required, array, binding='{"provider":"Inventory","source":"Inventory","entity":"Interface","variableName":"__interface","attribute":"portName","attributeToDisplay":"portName","attributesAvailable":["addresses","adminStatus","className","deviceId","duplex","ifIndex","interfaceType","ipv4Address","ipv4Mask","isisSupport","lastUpdated","macAddress","mappedPhysicalInterfaceId","mappedPhysicalInterfaceName","mediaType","mtu","nativeVlanId","networkdevice_id","ospfSupport","pid","portMode","portName","portType","poweroverethernet","serialNo","series","speed","status","vlanId","voiceVlan","managedComputeElement","managedNetworkElement","description","owningEntityId"],"params":[{"type":"MANAGED_DEVICE_UUID","scope":"RUNTIME","value":null},{"type":"MANAGED_DEVICE_IP","scope":"RUNTIME","value":null},{"type":"MANAGED_DEVICE_HOSTNAME","scope":"RUNTIME","value":null}],"value":null,"errorMessage":null,"sortAttribute":null,"sortValues":null,"filterType":null,"filterValue":null,"filterByAttribute":null,"filterSupported":true}') - Select the Uplink Ports for the switch
+    - port_channel (INTEGER) - Enter a Port-channel number if used or leave empty if not used.
+    - vlan_x (INTEGER, required)
+#}
+{# Set variables for maximum reusability #}
+{# uncomment next 3 lines to use statically #}
+{#{% set vlan_x = 10 %}  {# Replace with your VLAN X value #}
+{#{% set vlan_y = 20 %}  {# Replace with your VLAN Y value #}
+{#{% set vlan_y_name = "description" %}  {# Replace with your VLAN Y description #}
+! Find {{ vlan_x }}. Replace with {{vlan_y}} name {{vlan_y_name}}
+! Uplink Ports {{ uplink_ports }} {% if port_channel %} with Port-channel interface {{ port_channel }} {% endif %}
+
+{# Array to hold uplink ports in VLAN X #}
+{% set uplinks = [] %}
+
+{# Array to hold access ports in VLAN X #}
+{% set access_ports = [] %}
+
+{# Loop through the interfaces to find access ports in VLAN X #}
+{% for access_port in __interface %}
+    {% if (access_port.portName in uplink_ports) %}
+    {% elif (access_port.portMode == 'access') and (access_port.vlanId == vlan_x)  %}
+        {% do access_ports.append(access_port.portName) %}
+    {% endif %}
+{% endfor %}
+
+{# Check if any access ports were found #}
+{% if access_ports %}
+    {# Create VLAN Y if VLAN X exists #}
+    vlan {{ vlan_y }}
+    name {{ vlan_y_name }}
+
+    {# Loop to apply the config to each access port #}
+    {% for port in access_ports %}
+        interface {{ port }}
+        switchport mode access
+        switchport access vlan {{ vlan_y }}
+    {% endfor %}
+{% endif %}
+
+{% if access_ports %}
+    {# Loop through the Uplink interfaces to find ports trunking VLAN X #}
+    {% if uplink_ports %}
+        {% for port in __interface %}
+            {% if (port.portName in uplink_ports) and (port.portMode == 'trunk') %}
+                {% do uplinks.append(port.portName) %}
+            {% endif %}
+        {% endfor %}
+        {% if uplinks %}
+            {# Loop to apply the config to a uplink ports #}
+            {# If Port Channel is not blank configure it #}
+            {% if port_channel != "" %}
+                interface Port-channel {{ port_channel }}
+                  switchport trunk allowed vlan add {{ vlan_y }}
+            {# If single ports are used but not bundled #}
+            {% else %}
+                interface range {{ uplink_ports|join(',') }}
+                  switchport trunk allowed vlan add {{ vlan_y }}
+            {% endif %}
+        {% else %}
+            !**************************************
+            !******WARNING NO TRUNKS DEFINED*******
+            !**************************************
+        {% endif %}
+    {% else %}
+        !**************************************
+        !******WARNING NO UPLINKS DEFINED******
+        !**************************************
+    {% endif %}
+{% endif %}
