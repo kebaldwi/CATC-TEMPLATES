@@ -1,0 +1,57 @@
+{#- This module adds System configuration -#}
+{% macro SystemConfig(users, snmpLocation, snmpCommunityStrings, __device.snmpLocation) %}
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec show-timezone
+service password-encryption
+service sequence-numbers
+!
+ip subnet-zero
+!
+lldp run
+!
+port-channel load-balance src-dst-ip
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+!
+logging buffered 64000 debug
+no logging console
+logging trap notifications
+!
+{% for user in users %}
+  username {{ user.name }} priv {{ user.priv }} secret 9 {{ user.key }}
+{% endfor %}
+!
+snmp-server location {{ snmpLocation }} 
+{#- snmp-server location {{ __device.snmpLocation }} -#}
+!
+{% for snmpCommunityString in snmpCommunityStrings %}
+  snmp-server community {{ snmpCommunityString['string'] }} {{ snmpCommunityString['privilege'] }} 10
+{% endfor %}
+!
+{#-Management Interface Configuration -#}
+interface GigabitEthernet0/0
+ no ip address
+ shutdown
+!
+{#- VTY and Console Line Modifications -#}
+line con 0
+ exec-timeout 0 0
+ login authentication admin
+ logging synchronous
+ authorization exec admin
+ stopbits 1
+line vty 0 15
+ {#- access-class 20 in -#}
+ exec-timeout 0 0
+ login authentication admin
+ logging synchronous
+ authorization exec admin
+ transport input ssh
+!
+netconf-yang
+{% endmacro %}

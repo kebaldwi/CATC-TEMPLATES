@@ -1,0 +1,36 @@
+{#- Interface Configurations -#}
+
+{% macro accessPortConfig(__interface, uplink_portarray, accesspoint_interfaces) %}
+{#- System Variable example interfaces in one logical code construct -#}
+{#- Select and Configure Access Point interfaces -#}
+{% set intlog = uplink_portarray %}
+!
+{% for apinterface in accesspoint_interfaces %}
+  {% for interface in __interface %}
+    {% if interface.portName in intlog %}
+    {% elif interface.portName == apinterface %}
+      default interface {{ interface.portName }}
+      interface {{ interface.portName }}
+       {{ baseconf_interface() }}
+      {% do intlog.append(interface.portName) %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+!
+{#- Automatically Configure Workstation Remaining interfaces -#}
+{% for interface in __interface %}
+  {% if interface.interfaceType == "Physical" && interface.portName.replaceAll("(^[a-zA-Z]+).*","$1") == "GigabitEthernet"  %}
+    {% if interface.portName.replaceAll("(^[a-zA-Z]+.).*", "$1") != "GigabitEthernet0" %}
+      {% if interface.portName.replaceAll("^[a-zA-Z]+(\\d+)/(\\d+)/(\\d+)", "$2") != 1 %}
+        {% if interface.portName in intlog %}
+        {% else %}
+          default interface {{ interface.portName }}
+          interface {{ interface.portName }}
+            {{ ibns_baseconf_interface() }}
+          {% do intlog.append(interface.portName) %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% endmacro %}

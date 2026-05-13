@@ -1,0 +1,49 @@
+{#- ACLs Standard Macro - Pragmatically Build Standard ACL from Object -#}
+{% macro StandardAcl(name,lists) %}
+  ip access-list standard {{ name }}
+  {% for list in lists %}
+    {{ list['entry'] }} {{ list['rule'] }} {{ list['range'] }} {{ list['mask'] }}
+  {% endfor %}
+{% endmacro %}
+
+{#- SNMP ACL -#}
+{% macro StandardSnmpLineAcl() %}
+ access-list 10 permit 198.18.129.0 0.0.0.255
+ access-list 10 permit 198.18.133.0 0.0.0.255
+ access-list 10 permit 198.18.134.0 0.0.0.255
+ access-list 10 permit 198.18.135.0 0.0.0.255
+ access-list 10 permit 198.18.136.0 0.0.0.255
+ access-list 10 permit 198.18.137.0 0.0.0.255
+{% endmacro %}
+!
+{#- SNMP ACL - Named ACL -#}
+{% macro StandardSnmpAcl() %}
+ip access-list standard SNMP
+ 10 permit 198.18.129.0 0.0.0.255
+ 20 permit 198.18.133.0 0.0.0.255
+ 30 permit 198.18.134.0 0.0.0.255
+ 40 permit 198.18.135.0 0.0.0.255
+ 50 permit 198.18.136.0 0.0.0.255
+ 60 permit 198.18.137.0 0.0.0.255
+{% endmacro %}
+!
+{#- VTY ACL -#}
+{% macro StandardVtyLineAcl() %}
+ access-list 20 permit 198.18.129.0 0.0.0.255
+ access-list 20 permit 198.18.133.0 0.0.0.255
+ access-list 20 permit 198.18.134.0 0.0.0.255
+ access-list 20 permit 198.18.135.0 0.0.0.255
+ access-list 20 permit 198.18.136.0 0.0.0.255
+ access-list 20 permit 198.18.137.0 0.0.0.255
+{% endmacro %}
+!
+{#- VTY ACL - Named ACL -#}
+{% macro StandardVtyAcl() %}
+ip access-list standard VTY
+ 10 permit 198.18.129.0 0.0.0.255
+ 20 permit 198.18.133.0 0.0.0.255
+ 30 permit 198.18.134.0 0.0.0.255
+ 40 permit 198.18.135.0 0.0.0.255
+ 50 permit 198.18.136.0 0.0.0.255
+ 60 permit 198.18.137.0 0.0.0.255
+{% endmacro %}

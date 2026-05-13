@@ -1,0 +1,24 @@
+{#- Dictionaries of ACL's -#}
+{% set MgmtAceEntries = [
+  {'entry':'10','rule':'permit','range':'198.18.129.0','mask':'0.0.0.255'},
+  {'entry':'20','rule':'permit','range':'198.18.133.0','mask':'0.0.0.255'},
+  {'entry':'30','rule':'permit','range':'198.18.134.0','mask':'0.0.0.255'},
+  {'entry':'40','rule':'permit','range':'198.18.135.0','mask':'0.0.0.255'},
+  {'entry':'50','rule':'permit','range':'198.18.136.0','mask':'0.0.0.255'},
+  {'entry':'60','rule':'permit','range':'198.18.137.0','mask':'0.0.0.255'}
+  ]%}
+ 
+ {% set VtyAccessAceEntries = [
+  {'entry':'10','rule':'permit','range':'198.18.129.0','mask':'0.0.0.255'},
+  {'entry':'20','rule':'permit','range':'198.18.133.0','mask':'0.0.0.255'},
+  {'entry':'30','rule':'permit','range':'198.18.134.0','mask':'0.0.0.255'},
+  {'entry':'40','rule':'permit','range':'198.18.135.0','mask':'0.0.0.255'},
+  {'entry':'50','rule':'permit','range':'198.18.136.0','mask':'0.0.0.255'},
+  {'entry':'60','rule':'permit','range':'198.18.137.0','mask':'0.0.0.255'}
+  ]%}
+  
+{% set AclDefaultEntries = [
+  {'entry':'10','rule':'permit','range':'198.18.129.100','mask':'0.0.0.0'},
+  {'entry':'20','rule':'permit','range':'198.18.133.27','mask':'0.0.0.0'},
+  {'entry':'30','rule':'permit','range':'198.18.133.1','mask':'0.0.0.0'}
+  ]%}

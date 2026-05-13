@@ -1,0 +1,70 @@
+{#- Automated Uplink Description Script -#}
+{#- This will always ensure the uplink descriptions are correct to upstream -#}
+{#- Switches within the infrastructure  -#}
+{% macro AutoName() %}
+event manager applet update-port-lldp authorization bypass
+ event neighbor-discovery interface regexp GigabitEthernet.* lldp add
+  action 101 regexp "(B|R|W|T)" "$_nd_lldp_system_capabilities_string"
+  action 110 if $_regexp_result eq "1"
+  action 111  regexp "(B|R)" "$_nd_lldp_system_capabilities_string"
+  action 112  set lldp_switch $_regexp_result
+  action 113  regexp "(W)" "$_nd_lldp_system_capabilities_string"
+  action 114  set lldp_wireless $_regexp_result
+  action 115  regexp "(T)" "$_nd_lldp_system_capabilities_string"
+  action 116  set lldp_phone $_regexp_result
+  action 120  if $lldp_wireless eq "1"
+  action 121   cli command "enable"
+  action 122   cli command "config t"
+  action 123   cli command "interface $_nd_local_intf_name"
+  action 124   regexp "^([^\.]+)" "$_nd_lldp_system_name" match host
+  action 125   regexp "^([^\.]+)" "$_nd_lldp_port_description" match connectedport
+  action 126   cli command "no description"
+  action 127   cli command "description AP - $host - $connectedport"
+  action 128   cli command "end"
+  action 130  elseif $lldp_phone eq "1"
+  action 131   cli command "enable"
+  action 132   cli command "config t"
+  action 133   cli command "interface $_nd_local_intf_name"
+  action 134   regexp "^([^\.]+)" "$_nd_lldp_system_name" match host
+  action 135   regexp ":\s*P([0-9]+)" "$_nd_port_id" match connectedport
+  action 136   cli command "no description"
+  action 137   cli command "description Phone - $host - Port $connectedport"
+  action 138   cli command "end"
+  action 140  elseif $lldp_switch eq "1"
+  action 141   cli command "enable"
+  action 142   cli command "config t"
+  action 143   cli command "interface $_nd_local_intf_name"
+  action 144   regexp "^([^\.]+)\." "$_nd_lldp_system_name" match host
+  action 145   regexp "^([^\.]+)" "$_nd_port_id" match connectedport
+  action 146   cli command "no description"
+  action 147   cli command "description Link - $host - $connectedport"
+  action 148   cli command "do show running-config interface $_nd_lldp_system_name | include channel-group"
+  action 149   regexp "channel-group ([0-9]+)" "$_cli_result" match portchannel
+  action 150   if $_regexp_result eq "1"
+  action 151    cli command "interface port-channel $portchannel"
+  action 152    cli command "no description"
+  action 153    cli command "description Link - $host"
+  action 154   end
+  action 155   cli command "end"
+  action 160  else
+  action 161   cli command "enable"
+  action 162   cli command "config t"
+  action 163   cli command "interface $_nd_local_intf_name"
+  action 164   regexp "^([^\.]+)\." "$_nd_lldp_system_name" match host
+  action 165   regexp "^([^\.]+)" "$_nd_port_id" match connectedport
+  action 166   cli command "no description"
+  action 167   cli command "description Link - $host - $connectedport"
+  action 168   cli command "end"
+  action 170  end
+  action 180 end
+  action 200 cli command "write mem" 
+!
+event manager applet POST_PNP authorization bypass
+ event timer countdown time 30
+ action 1.0 cli command "enable"
+ action 1.1 cli command "clear lldp table"
+ action 2.0 cli command "config t"
+ action 2.1 cli command "no event manager applet POST_PNP"
+ action 2.2 cli command "end"
+ action 2.3 cli command "wr"
+{% endmacro %}

@@ -1,0 +1,36 @@
+{#- AutoConf Configurations -#}
+{% macro AutoConf() %}
+!
+{#- Enabling Autoconf on switch with interactive command -#}
+#INTERACTIVE
+autoconf enable<IQ>yes<R>y
+#END_INTERACTIVE 
+!
+{#- Augmenting existing hidden parameter map with modifications -#}
+parameter-map type subscriber attribute-to-service BUILTIN_DEVICE_TO_TEMPLATE
+ 10 map device-type regex "Cisco-IP-Phone"
+  20 interface-template WORKSTATION
+ 20 map device-type regex "Cisco-IP-Camera"
+  20 interface-template WORKSTATION
+ 30 map device-type regex "Cisco-DMP"
+  20 interface-template WORKSTATION
+ 40 map oui eq "00.0f.44"
+  20 interface-template WORKSTATION
+ 50 map oui eq "00.23.ac"
+  20 interface-template WORKSTATION
+ 60 map device-type regex "Cisco-AIR-AP"
+  20 interface-template FLEX_ACCESS_POINT
+ 70 map device-type regex "Cisco-AIR-LAP"
+  20 interface-template FLEX_ACCESS_POINT
+ 80 map device-type regex "Cisco-TelePresence"
+  20 interface-template WORKSTATION
+ 90 map device-type regex "Surveillance-Camera"
+  10 interface-template WORKSTATION
+ 100 map device-type regex "Video-Conference"
+  10 interface-template WORKSTATION
+ 110 map device-type regex "Cisco-CAT-LAP"
+  10 interface-template FLEX_ACCESS_POINT
+ 120 map oui eq "00.24.9b"
+  10 interface-template WORKSTATION 
+!
+{% endmacro %}
