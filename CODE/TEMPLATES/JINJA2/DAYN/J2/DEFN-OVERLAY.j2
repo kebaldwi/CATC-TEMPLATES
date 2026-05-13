@@ -1,0 +1,27 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{% set FABRIC_BGP_ASN = '65001' %}
+{% set FABRIC_UNDERLAY = {'proto':'ospf', 'instance_id':'1', 'area':'0'} %}
+{% set DEFN_OVERLAY = [
+  {
+    'vrf': 'red',
+    'vlan_ids': ['101', '102'],
+    'vlans': {
+      '101': {'name':'corp-101', 'ipaddr':'198.18.101.1 255.255.255.0', 'mac':'0000.0901.0101', 'dhcp_helper':'198.19.2.78', 'bum_addr':'239.190.100.101', 'network':'198.18.101.0 255.255.255.0'},
+      '102': {'name':'corp-102', 'ipaddr':'198.18.102.1 255.255.255.0', 'mac':'0000.0901.0102', 'dhcp_helper':'198.19.2.78', 'bum_addr':'239.190.100.102', 'network':'198.18.102.0 255.255.255.0'}
+    }
+  },
+  {
+    'vrf': 'blue',
+    'vlan_ids': ['201'],
+    'vlans': {
+      '201': {'name':'iot-blue-201', 'ipaddr': '198.18.201.1 255.255.255.0', 'mac':'0000.0902.0201', 'dhcp_helper':'198.18.144.100', 'bum_addr':'239.190.100.201', 'network':'198.18.201.0 255.255.255.0'}
+    }
+  },
+  {
+    'vrf': 'green',
+    'vlan_ids': ['221'],
+    'vlans': {
+      '221': {'name':'iot-green-221', 'ipaddr': '198.18.221.1 255.255.255.0', 'mac':'0000.0903.0221', 'dhcp_helper':'198.18.143.100', 'bum_addr':'239.190.100.221', 'network':'198.18.221.0 255.255.255.0'}
+    }
+  }
+] %}

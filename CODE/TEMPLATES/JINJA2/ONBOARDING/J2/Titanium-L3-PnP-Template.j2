@@ -1,0 +1,190 @@
+{# <------Onboarding-Template for L3 Routed Access-------> #}
+{# To be used for onboarding when using Day N Templates #}
+{# Define Variables provision with vlan and port channel #}
+!
+{# Optional set Routing Protocol = OSPF|EIGRP|NULL #}
+!
+{# Service Configuration #}
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service sequence-numbers
+no service pad
+!
+{# Set MTU if required #}
+{% if SystemMTU != 1500 %}
+    system mtu {{ SystemMTU }}
+{% endif %}
+!
+{# Set hostname #}
+hostname {{ Hostname }}
+!
+{% set VtpDomain = Hostname %}
+!
+{# Set VTP and VLAN for onboarding #}
+vtp domain {{ VtpDomain }}
+vtp mode transparent
+!
+{# Set Archiving if required #}
+archive
+log config
+logging enable
+logging size 500
+hidekeys
+!
+{# Spanning Tree Configuration #}
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 1-4094 priority 0
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+no udld enable
+!
+{# Set Management VLAN if used #}
+{% if MgmtVlan > 1 %}
+vlan {{ MgmtVlan }}
+ name MgmtVlan
+{% endif %}
+!
+{# Disable Vlan 1 (optional) #}
+{% if MgmtVlan > 1 || MgmtVlan == 0 %}
+interface Vlan 1
+ shutdown
+{% endif %}
+!
+{# Error Disable Recovery Configuration #}
+errdisable recovery cause all
+errdisable recovery interval 300
+!
+ip domain lookup
+lldp run
+!
+{# Set Routing Statements #}
+{% if RoutingProtocol %}
+ip routing
+ip multicast-routing
+ip multicast multipath
+ip pim ssm default
+ip multicast route-limit 1000 900
+ip pim rp-address {{ RPaddress }}
+{% endif %}
+!
+{# Set Up Management Interfaces #}
+interface {{ MgmtInterface }}
+ ip address {{ SwitchIP }} {{ SubnetMask }}
+ {% if "OSPF" in RoutingProtocol %}
+ ip ospf network point-to-point
+ ip ospf {{ ProcessID }} area {{ OSPFArea }}
+ {% endif %}
+ ip pim sparse-mode
+!
+{# Set Routed Interfaces #}
+udld enable
+!
+{# Enable Routing Protocol #}
+{% if "OSPF" in RoutingProtocol %}
+router ospf {{ ProcessID }} 
+ router-id {{ SwitchIP }}
+ passive-interface {{ MgmtInterface }}
+ bfd all-interfaces
+{% elif "EIGRP" in RoutingProtocol %}
+router eigrp {{ ProcessID }} 
+ eigrp router-id {{ SwitchIP }}
+ eigrp stub connected summary
+ passive-interface default
+ passive-interface {{ MgmtInterface }}
+ eigrp log-neighbor-warnings 300
+ eigrp event-log-size 1000
+ bfd all-interfaces
+{% endif %}
+!
+event manager applet SETUPLINK
+event timer countdown time 15
+action 1.0 cli command "enable"
+action 1.1 cli command "show cdp ne detail | i IP add|Interface"
+action 1.2 set _ip "0"
+action 2.0 foreach _iterator $_cli_result "\n"
+action 2.1 regexp "([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)" "$_iterator" _match _ip
+action 2.2 regexp "Interface: (.*/1/[0-9]+),  Port ID" "$_iterator" _match _interface
+action 2.3 if $_regexp_result eq "1"
+action 2.4 if $_ip ne "0"
+action 2.5 regexp "([0-9]+\.[0-9]+\.[0-9]+\.)([0-9]+)" "$_ip" _match _ip_p1 _ip_p2
+action 2.6 increment _ip_p2
+action 2.7 append _ip_p1 $_ip_p2
+action 3.0 cli command "config terminal"
+action 3.1 cli command "interface $_interface"
+action 3.2 cli command "no switchport"
+action 3.3 cli command "ip addr $_ip_p1 255.255.255.252"
+action 3.4 cli command "description UNDERLAY ROUTED UPLINK"
+action 3.5 cli command "bfd interval 300 min_rx 300 multiplier 3"
+action 3.6 cli command "no bfd echo"
+action 3.7 cli command "ip pim sparse-mode"
+action 3.8 cli command "no ip redirects"
+action 3.9 cli command "no ip unreachables"
+action 4.0 cli command "no ip proxy-arp"
+{% if "OSPF" in RoutingProtocol %}
+action 5.0 cli command "ip ospf network point-to-point"
+action 5.1 cli command "ip ospf {{ ProcessID }} area {{ OSPFArea }}" 
+{% elif "EIGRP" in RoutingProtocol %}
+action 5.0 cli command "ip hello-interval eigrp {{ ProcessID }} 2"
+action 5.1 cli command "ip hold-time eigrp {{ ProcessID }} 6"
+action 5.2 cli command "load-interval 30"
+action 5.3 cli command "carrier-delay msec 0"
+{% endif %}
+action 6.0 cli command "udld port"
+action 6.1 cli command "no shutdown"
+action 6.2 cli command "exit"
+{% if "OSPF" in RoutingProtocol %}
+action 7.0 cli command "router ospf {{ ProcessID }}"
+action 7.1 cli command "no passive-interface $_interface"
+{% elif "EIGRP" in RoutingProtocol %}
+action 7.0 cli command "router eigrp {{ ProcessID }}"
+action 7.1 cli command "no passive-interface $_interface"
+action 7.2 cli command "network $_ip_p1 0.0.0.0"
+action 7.3 cli command "end"
+{% endif %}
+action 8.0 cli command "end"
+action 8.1 set _ip "0"
+action 8.2 end
+action 8.3 end
+action 8.4 end
+action 8.5 cli command "config terminal"
+action 8.6 cli command "no event manager applet SETUPLINK"
+action 8.7 cli command "end"
+action 8.8 cli command "exit"
+action 8.9 syslog msg "SETUPLINK job DONE"
+!
+{# Management Configuration #}
+no ip http server
+no ip http secure-server
+ip ssh version 2
+ip scp server enable
+!
+{# Set Console and VTY access #}
+line con 0
+ exec-timeout 30 0
+ logging synchronous
+line vty 0 15
+ login local
+ transport input ssh
+ transport preferred none
+ exec-timeout 30 0
+ logging synchronous
+!
+{# Set Source of Management Traffic #}
+ip domain lookup source-interface {{ MgmtInterface }}
+ip http client source-interface {{ MgmtInterface }}
+ip http client connection forceclose
+ip ftp source-interface {{ MgmtInterface }}
+ip tftp source-interface {{ MgmtInterface }}
+ip ssh source-interface {{ MgmtInterface }}
+ip radius source-interface {{ MgmtInterface }}
+logging source-interface {{ MgmtInterface }}
+snmp-server trap-source {{ MgmtInterface }}
+ntp source {{ MgmtInterface }}
+ip http client connection forceclose
+!
+netconf-yang
+netconf-yang ssh port 830
+!
+end

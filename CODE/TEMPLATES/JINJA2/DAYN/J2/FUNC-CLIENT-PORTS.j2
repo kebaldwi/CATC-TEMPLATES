@@ -1,0 +1,110 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# ======================================== #}
+{# Client Port Utility Macros (Library)     #}
+{# ======================================== #}
+{# render_port_config: emits IOS-XE CLI     #}
+{# for a single port_entry dict, expanding  #}
+{# port ranges (e.g., Gi0/0/1-5) inline.   #}
+{# Called from FABRIC-CLIENT-PORTS.j2       #}
+
+{% macro switchport_access(port_entry) %}
+{% if '-' in port_entry.port %}
+  {# Port range: parse prefix and start/end numbers #}
+  {% set parts = port_entry.port.split('-') %}
+  {% if parts | length == 2 %}
+    {% set last_slash = parts[0].rfind('/') %}
+    {% set prefix = parts[0][:last_slash + 1] %}
+    {% set start_num = parts[0][last_slash + 1:] | int %}
+    {% set end_num = parts[1] | int %}
+    {% for i in range(start_num, end_num + 1) %}
+interface {{ prefix }}{{ i }}
+ description {{ port_entry.description }}
+ switchport mode access
+ switchport access vlan {{ port_entry.vlan }}
+      {% if port_entry.portfast is defined and port_entry.portfast %}
+ spanning-tree portfast
+      {% endif %}
+!
+    {% endfor %}
+  {% endif %}
+{% else %}
+  {# Single port #}
+interface {{ port_entry.port }}
+ description {{ port_entry.description }}
+ switchport mode access
+ switchport access vlan {{ port_entry.vlan }}
+  {% if port_entry.portfast is defined and port_entry.portfast %}
+ spanning-tree portfast
+  {% endif %}
+!
+{% endif %}
+{% endmacro %}
+
+{% macro switchport_trunk(port_entry) %}
+{% if '-' in port_entry.port %}
+  {# Port range: parse prefix and start/end numbers #}
+  {% set parts = port_entry.port.split('-') %}
+  {% if parts | length == 2 %}
+    {% set last_slash = parts[0].rfind('/') %}
+    {% set prefix = parts[0][:last_slash + 1] %}
+    {% set start_num = parts[0][last_slash + 1:] | int %}
+    {% set end_num = parts[1] | int %}
+    {% for i in range(start_num, end_num + 1) %}
+interface {{ prefix }}{{ i }}
+ description {{ port_entry.description }}
+ switchport mode trunk
+      {% if port_entry.vlan is defined and port_entry.vlan %}
+ switchport trunk allowed vlan {{ port_entry.vlan }}
+      {% endif %}
+!
+    {% endfor %}
+  {% endif %}
+{% else %}
+  {# Single port #}
+interface {{ port_entry.port }}
+ description {{ port_entry.description }}
+ switchport mode trunk
+  {% if port_entry.vlan is defined and port_entry.vlan %}
+ switchport trunk allowed vlan {{ port_entry.vlan }}
+  {% endif %}
+!
+{% endif %}
+{% endmacro %}
+
+{% macro switchport_reserved_mode(port_entry, mode_name) %}
+{% if '-' in port_entry.port %}
+  {# Port range: parse prefix and start/end numbers #}
+  {% set parts = port_entry.port.split('-') %}
+  {% if parts | length == 2 %}
+    {% set last_slash = parts[0].rfind('/') %}
+    {% set prefix = parts[0][:last_slash + 1] %}
+    {% set start_num = parts[0][last_slash + 1:] | int %}
+    {% set end_num = parts[1] | int %}
+    {% for i in range(start_num, end_num + 1) %}
+! Mode '{{ mode_name }}' reserved for {{ prefix }}{{ i }} (no CLI emitted yet)
+    {% endfor %}
+  {% endif %}
+{% else %}
+! Mode '{{ mode_name }}' reserved for {{ port_entry.port }} (no CLI emitted yet)
+{% endif %}
+{% endmacro %}
+
+{% macro switchport_config(port_entry) %}
+{% set port_mode = 'access' %}
+{% if port_entry.mode is defined and port_entry.mode %}
+  {% set port_mode = port_entry.mode %}
+{% endif %}
+{% if port_mode == 'access' %}
+{{ switchport_access(port_entry) }}
+{% elif port_mode == 'trunk' %}
+{{ switchport_trunk(port_entry) }}
+{% elif port_mode == 'autoconf' %}
+{{ switchport_reserved_mode(port_entry, 'autoconf') }}
+{% elif port_mode == 'ibns' %}
+{{ switchport_reserved_mode(port_entry, 'ibns') }}
+{% else %}
+! Unknown mode '{{ port_mode }}' for {{ port_entry.port }}; defaulting to access
+{{ switchport_access(port_entry) }}
+{% endif %}
+{% endmacro %}
+

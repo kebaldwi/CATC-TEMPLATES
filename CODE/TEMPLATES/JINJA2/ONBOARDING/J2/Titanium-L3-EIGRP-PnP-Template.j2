@@ -1,0 +1,168 @@
+{# <------Onboarding-Template for EIGRP Routed Access-------> #}
+{# To be used for onboarding when using Day N Templates #}
+{# Define Variables provision with vlan and port channel #}
+!
+{# Service Configuration #}
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service sequence-numbers
+no service pad
+!
+{# Set MTU if required #}
+{% if SystemMTU != 1500 %}
+    system mtu {{ SystemMTU }}
+{% endif %}
+!
+{# Set hostname #}
+hostname {{ Hostname }}
+!
+{% set VtpDomain = Hostname %}
+!
+{# Set VTP and VLAN for onboarding #}
+vtp domain {{ VtpDomain }}
+vtp mode transparent
+!
+{# Set Archiving if required #}
+archive
+log config
+logging enable
+logging size 500
+hidekeys
+!
+{# Spanning Tree Configuration #}
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 1-4094 priority 61440
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+no udld enable
+!
+{# Set Management VLAN if used #}
+{% if MgmtVlan > 1 %}
+vlan {{ MgmtVlan }}
+ name MgmtVlan
+{% endif %}
+!
+{# Disable Vlan 1 (optional) #}
+{% if MgmtVlan > 1 || MgmtVlan == 0 %}
+interface Vlan 1
+ shutdown
+{% endif %}
+!
+{# Error Disable Recovery Configuration #}
+errdisable recovery cause all
+errdisable recovery interval 300
+!
+ip domain lookup
+lldp run
+!
+{# Set Routing Statements #}
+ip routing
+ip multicast-routing
+ip multicast multipath
+ip pim ssm default
+ip multicast route-limit 1000 900
+ip pim rp-address {{ RPaddress }}
+{% endif %}
+!
+{# Set Up Managment Interfaces #}
+interface {{ MgmtInterface }}
+ description MGMT Interface
+ ip address {{ SwitchIP }} {{ SubnetMask }}
+ ip pim sparse-mode
+ no shut
+!
+{# Set Routed Interfaces #}
+udld enable
+!
+{# Set Up Routing for EIGRP #}
+router eigrp {{ ProcessID }} 
+ eigrp router-id {{ SwitchIP }}
+ eigrp stub connected summary
+ passive-interface default
+ passive-interface {{ MgmtInterface }}
+ eigrp log-neighbor-warnings 300
+ eigrp event-log-size 1000
+ bfd all-interfaces
+!
+{# Build Interfaces #}
+event manager applet SETUPLINK
+event timer countdown time 15
+action 1.0 cli command "enable"
+action 1.6 cli command "show cdp ne detail | i IP add|Interface"
+action 1.7 set _ip "0"
+action 2.0 foreach _iterator $_cli_result "\n"
+action 2.1 regexp "([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)" "$_iterator" _match _ip
+action 3.1 regexp "Interface: (.*/1/[0-9]+),  Port ID" "$_iterator" _match _interface
+action 3.2 if $_regexp_result eq "1"
+action 3.3 if $_ip ne "0"
+action 3.4 regexp "([0-9]+\.[0-9]+\.[0-9]+\.)([0-9]+)" "$_ip" _match _ip_p1 _ip_p2
+action 3.6 increment _ip_p2
+action 4.2 append _ip_p1 $_ip_p2
+action 5.1 cli command "config terminal"
+action 5.2 cli command "interface $_interface"
+action 5.3 cli command "no switchport"
+action 5.4 cli command "ip addr $_ip_p1 255.255.255.252"
+action 5.5 cli command "description UNDERLAY ROUTED UPLINK"
+action 5.6 cli command "bfd interval 300 min_rx 300 multiplier 3"
+action 5.7 cli command "no bfd echo"
+action 5.8 cli command "ip pim sparse-mode"
+action 5.9 cli command "no ip redirects"
+action 6.0 cli command "no ip unreachables"
+action 6.1 cli command "no ip proxy-arp"
+action 6.2 cli command "ip hello-interval eigrp {{ ProcessID }} 2"
+action 6.3 cli command "ip hold-time eigrp {{ ProcessID }} 6"
+action 6.4 cli command "load-interval 30"
+action 6.5 cli command "carrier-delay msec 0"
+action 6.6 cli command "udld port"
+action 6.7 cli command "no shutdown"
+action 6.8 cli command "exit"
+action 6.9 cli command "router eigrp {{ ProcessID }}"
+action 7.0 cli command "no passive-interface $_interface"
+action 7.1 cli command "network $_ip_p1 0.0.0.0"
+action 7.2 cli command "end"
+action 7.3 set _ip "0"
+action 7.4 end
+action 7.5 end
+action 7.6 end
+action 9.0 cli command "config terminal"
+action 9.1 cli command "no event manager applet SETUPLINK"
+action 9.7 cli command "end"
+action 9.8 cli command "exit"
+action 9.9 syslog msg "SETUPLINK job DONE"
+!
+{# Management Configuration #}
+no ip http server
+no ip http secure-server
+ip ssh version 2
+ip scp server enable
+!
+{# Set Console and VTY access #}
+line con 0
+ exec-timeout 30 0
+ logging synchronous
+line vty 0 15
+ login local
+ transport input ssh
+ transport preferred none
+ exec-timeout 30 0
+ logging synchronous
+!
+{# Set Source of Management Traffic #}
+ip domain lookup source-interface {{ MgmtInterface }}
+ip http client source-interface {{ MgmtInterface }}
+ip http client connection forceclose
+ip ftp source-interface {{ MgmtInterface }}
+ip tftp source-interface {{ MgmtInterface }}
+ip ssh source-interface {{ MgmtInterface }}
+ip radius source-interface {{ MgmtInterface }}
+logging source-interface {{ MgmtInterface }}
+snmp-server trap-source {{ MgmtInterface }}
+ntp source {{ MgmtInterface }}
+ip http client connection forceclose
+!
+netconf-yang
+netconf-yang ssh port 830
+!
+end

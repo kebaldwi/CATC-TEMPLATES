@@ -1,0 +1,27 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# FABRIC-VRF.j2 - Standalone VRF Definition Template #}
+{# Generates VRF definitions for the current device #}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-VRF.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/FUNC-VRF-LOOKUP.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-LOOPBACKS.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-OVERLAY.j2" %}
+{# Dereference Catalyst Center magic variable #}
+{% set DEVICE_HOSTNAME = __device.hostname | default('', true) %}
+{# Resolve the VRF objects for this device #}
+{% set vrf_objs = [] %}
+{{ vrf_definition(DEFN_VRF, DEFN_VRF_TO_NODE, DEVICE_HOSTNAME) }}
+{# Dummy set to satisfy CatC static UDV scanner - overridden at runtime by for-loop #}
+{% set vrf = {'name': '', 'id': '', 'mdt_default': '', 'mdt_data': ''} %}
+{% for vrf in vrf_objs %}
+vrf definition {{ vrf.name }}
+description VRF {{ vrf.name }} definition
+rd {{ DEFN_LOOP_UNDERLAY[DEVICE_HOSTNAME] }}:{{ vrf.id }}
+!
+address-family ipv4
+route-target export {{ FABRIC_BGP_ASN }}:{{ vrf.id }}
+route-target import {{ FABRIC_BGP_ASN }}:{{ vrf.id }}
+route-target export {{ FABRIC_BGP_ASN }}:{{ vrf.id }} stitching
+route-target import {{ FABRIC_BGP_ASN }}:{{ vrf.id }} stitching
+exit-address-family
+!
+{% endfor %}

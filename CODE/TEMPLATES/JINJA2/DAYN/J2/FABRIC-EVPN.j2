@@ -1,0 +1,272 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# FABRIC-EVPN.j2 - BGP EVPN Peering Configuration Template #}
+{# Generates BGP EVPN peering, address-families, and route policies #}
+{# L3OUT interface configuration in FABRIC-L3OUT.j2 #}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-VRF.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/FUNC-VRF-LOOKUP.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-ROLES.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-LOOPBACKS.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-VNIOFFSETS.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-L3OUT.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-OVERLAY.j2" %}
+{# Dereference Catalyst Center magic variable #}
+{% set DEVICE_HOSTNAME = __device.hostname | default('', true) %}
+{# Resolve the VRF objects for this device #}
+{% set vrf_objs = [] %}
+{{ vrf_definition(DEFN_VRF, DEFN_VRF_TO_NODE, DEVICE_HOSTNAME) }}
+{# Dummy set to satisfy CatC static UDV scanner - overridden at runtime by for-loop #}
+{% set vrf = {'name': '', 'id': '', 'mdt_default': '', 'mdt_data': ''} %}
+{# =========================================== #}
+{# BGP Border Prefix-List to prevent loops     #}
+{# =========================================== #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['RR'] %}
+ip as-path access-list 100 permit _$
+!
+route-map EVPN-PEER-BORDER-OUT permit 10 
+ match as-path 100
+{% endif %}
+!
+{# ================================================================== #}
+{# FABRIC-LOOPBACKS: intra-fabric iBGP peer /32 fall-over tracking    #}
+{# Iterate SPINE then CLIENT roles - covers all fabric nodes           #}
+{# ================================================================== #}
+{% for node in DEFN_NODE_ROLES['SPINE'] %}
+ip prefix-list FABRIC-LOOPBACKS seq {{loop.index}} permit {{DEFN_LOOP_UNDERLAY[node]}}/32
+{% endfor %}
+{% for node in DEFN_NODE_ROLES['CLIENT'] %}
+ip prefix-list FABRIC-LOOPBACKS seq {{DEFN_NODE_ROLES['SPINE'] | length + loop.index}} permit {{DEFN_LOOP_UNDERLAY[node]}}/32
+{% endfor %}
+!
+route-map FABRIC-LOOPBACKS permit 10
+ match ip address prefix-list FABRIC-LOOPBACKS
+!
+{# ================================================================== #}
+{# MCLUSTER-LOOPBACKS: eBGP multi-cluster peer /32 fall-over tracking #}
+{# Only rendered on BORDER nodes                                       #}
+{# ================================================================== #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] %}
+{% for remote in DEFN_NODE_ROLES['MCLUSTER'] %}
+ip prefix-list MCLUSTER-LOOPBACKS seq {{loop.index}} permit {{DEFN_LOOP_MCLUSTER[remote]['ip']}}/32
+{% endfor %}
+!
+route-map MCLUSTER-LOOPBACKS permit 10
+ match ip address prefix-list MCLUSTER-LOOPBACKS
+!
+{% endif %}
+router bgp {{FABRIC_BGP_ASN}}
+{# ============================= #}
+{# BGP Global Settings Block     #}
+{# ============================= #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['RR'] %}
+ template peer-policy OVERLAY-LEAF-EVPN-PEER-POLICY
+  route-reflector-client
+  soft-reconfiguration inbound
+  send-community both
+  advertise additional-paths all
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+!
+ template peer-policy OVERLAY-LEAF-MVPN-PEER-POLICY
+  route-reflector-client
+  soft-reconfiguration inbound
+  send-community both
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+!
+ template peer-policy OVERLAY-BORDER-MVPN-PEER-POLICY
+  soft-reconfiguration inbound
+  send-community both
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+!
+ template peer-policy OVERLAY-BORDER-EVPN-PEER-POLICY
+  route-map EVPN-PEER-BORDER-OUT out
+  route-reflector-client
+  soft-reconfiguration inbound
+  send-community both
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+!
+ template peer-session UNDERLAY-LEAF-EVPN-PEER-SESSION-POLICY
+  remote-as {{FABRIC_BGP_ASN}}
+  log-neighbor-changes
+  update-source {{DEFN_LOOP_NAME['UNDERLAY']}}
+  fall-over route-map FABRIC-LOOPBACKS
+! @start-ignore-compliance
+  exit-peer-session
+! @end-ignore-compliance
+!
+{% endif %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['CLIENT'] %}
+ template peer-policy OVERLAY-SPINE-EVPN-PEER-POLICY
+  soft-reconfiguration inbound
+  send-community both
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+!
+ template peer-session UNDERLAY-SPINE-EVPN-PEER-SESSION-POLICY
+  remote-as {{FABRIC_BGP_ASN}}
+  description SPINE-EVPN-PEER
+  log-neighbor-changes
+  update-source {{DEFN_LOOP_NAME['UNDERLAY']}}
+  fall-over route-map FABRIC-LOOPBACKS
+! @start-ignore-compliance
+  exit-peer-session
+! @end-ignore-compliance
+!
+{% endif %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] %}
+ template peer-session OVERLAY-MCLUSTER-EVPN-PEER-SESSION-POLICY
+  description VXLAN-MULTICLUSTER-REMOTE-SITE-EVPN-PEER
+  log-neighbor-changes
+  ebgp-multihop 4
+  update-source {{DEFN_LOOP_NAME['UNDERLAY']}}
+  fall-over route-map MCLUSTER-LOOPBACKS
+! @start-ignore-compliance
+ exit-peer-session
+! @end-ignore-compliance
+!
+ template peer-policy OVERLAY-MCLUSTER-EVPN-PEER-POLICY
+  soft-reconfiguration inbound
+  send-community both
+! @start-ignore-compliance
+  exit-peer-policy
+! @end-ignore-compliance
+{% endif %}
+ bgp router-id interface Loopback0
+ bgp log-neighbor-changes
+ {# bgp graceful-restart #}
+ no bgp default ipv4-unicast
+!
+{# ============================= #}
+{# BGP Neighbors                #}
+{# ============================= #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['RR'] %}
+{% for client in DEFN_NODE_ROLES['CLIENT'] %}
+  neighbor {{DEFN_LOOP_UNDERLAY[client]}} inherit peer-session UNDERLAY-LEAF-EVPN-PEER-SESSION-POLICY
+{% endfor %}
+{% endif %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['CLIENT'] %}
+{% for rr in DEFN_NODE_ROLES['RR'] %}
+  neighbor {{DEFN_LOOP_UNDERLAY[rr]}} inherit peer-session UNDERLAY-SPINE-EVPN-PEER-SESSION-POLICY
+{% endfor %}
+{% endif %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] %}
+{# BUILD MULTI-CLUSTER NEIGHBORS - REMOTE SITE LOOPBACK0 PEERING (eBGP) #}
+{% for remote in DEFN_NODE_ROLES['MCLUSTER'] %}
+  neighbor {{DEFN_LOOP_MCLUSTER[remote]['ip']}} remote-as {{DEFN_LOOP_MCLUSTER[remote]['asn']}}
+  neighbor {{DEFN_LOOP_MCLUSTER[remote]['ip']}} inherit peer-session OVERLAY-MCLUSTER-EVPN-PEER-SESSION-POLICY
+{% endfor %}
+{% endif %}
+!
+{# ============================= #}
+{# Address-Family: ipv4 vrf      #}
+{# L3OUT CONFIGURATION ON SPINES #}
+{# Only rendered when device is  #}
+{# listed in DEFN_L3OUT_NODES    #}
+{# ============================= #}
+{% if DEVICE_HOSTNAME in DEFN_L3OUT_NODES %}
+{% for vrf in vrf_objs %}
+{% for l3out in DEFN_L3OUT %}
+{% if l3out.vrf == vrf.name and l3out.node == DEVICE_HOSTNAME and DEVICE_HOSTNAME in DEFN_NODE_ROLES['SPINE'] %}
+  address-family ipv4 vrf {{vrf.name}}
+   advertise l2vpn evpn
+   import path selection all
+{% for aggregate in DEFN_L3OUT_AGGREGATES %}
+   aggregate-address {{aggregate}} summary-only
+{% endfor %}
+   redistribute static
+   redistribute connected
+{% for iface in l3out.interfaces %}
+   neighbor {{iface.neighbour}} remote-as {{l3out.neighbour_asn}}
+   neighbor {{iface.neighbour}} activate
+{% endfor %}
+   maximum-paths ibgp {{ DEFN_NODE_ROLES['BORDER'] | length }}
+! @start-ignore-compliance
+   exit-address-family
+! @end-ignore-compliance
+!
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+!
+{# ============================= #}
+{# Address-Family: l2vpn evpn    #}
+{# ============================= #}
+  address-family l2vpn evpn
+   bgp nexthop trigger delay 0
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['RR'] %}
+   bgp additional-paths select all
+   bgp additional-paths send receive
+{% for client in DEFN_NODE_ROLES['CLIENT'] %}
+{# BORDER PEER POLICY APPLIES AS-PATH PREFIX OUT TO PREVENT SPINES FROM          #}
+{# REFLECTING ROUTES RECEIVED FROM THE BORDER BACK AT THE BORDER CREATING A LOOP #}
+{# THIS IS REQUIRED WHEN SPINES ARE CONFIGURED WITH THESE TWO COMMANDS           #}
+{# bgp additional-paths select all                                               #}
+{# bgp additional-paths send receive                                             #}
+{% if client in DEFN_NODE_ROLES['BORDER'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} activate
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} inherit peer-policy OVERLAY-BORDER-EVPN-PEER-POLICY
+{% else %}
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} activate
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} inherit peer-policy OVERLAY-LEAF-EVPN-PEER-POLICY
+{% endif %}
+{% endfor %}
+{% endif %}
+{# BORDER NODES ARE SUBSET OF CLIENTS, BUT THEY HAVE ADDITIONAL LOGIC            #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['CLIENT'] %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] %}
+{# VXLAN MULTI-CLUSTER SUPPORT - REMOTE SITE eBGP PEERING VIA LOOPBACK0 #}
+   rewrite-evpn-rt-asn
+{# BUILD MULTI-CLUSTER NEIGHBORS - REMOTE SITE #}
+{% for remote in DEFN_NODE_ROLES['MCLUSTER'] %}
+   neighbor {{DEFN_LOOP_MCLUSTER[remote]['ip']}} activate
+   neighbor {{DEFN_LOOP_MCLUSTER[remote]['ip']}} inherit peer-policy OVERLAY-MCLUSTER-EVPN-PEER-POLICY
+{% endfor %}
+{% else %}
+   bgp additional-paths receive
+{% endif %}
+{% for rr in DEFN_NODE_ROLES['RR'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[rr]}} activate
+   neighbor {{DEFN_LOOP_UNDERLAY[rr]}} inherit peer-policy OVERLAY-SPINE-EVPN-PEER-POLICY
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[rr]}} next-hop-self
+{% endif %}
+{% endfor %}
+{% endif %}
+! @start-ignore-compliance
+   exit-address-family
+! @end-ignore-compliance
+!
+{# ============================= #}
+{# Address-Family: ipv4 mvpn   #}
+{# ============================= #}
+  address-family ipv4 mvpn
+   bgp nexthop trigger delay 0
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['RR'] %}
+{% for client in DEFN_NODE_ROLES['CLIENT'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} activate
+{% if client in DEFN_NODE_ROLES['BORDER'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} inherit peer-policy OVERLAY-BORDER-MVPN-PEER-POLICY
+{% else %}
+   neighbor {{DEFN_LOOP_UNDERLAY[client]}} inherit peer-policy OVERLAY-LEAF-MVPN-PEER-POLICY
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['CLIENT'] %}
+{% for rr in DEFN_NODE_ROLES['RR'] %}
+   neighbor {{DEFN_LOOP_UNDERLAY[rr]}} activate
+   neighbor {{DEFN_LOOP_UNDERLAY[rr]}} inherit peer-policy OVERLAY-SPINE-EVPN-PEER-POLICY
+{% endfor %}
+{% endif %}
+! @start-ignore-compliance
+   exit-address-family
+! @end-ignore-compliance
+!
+{# End of File #}

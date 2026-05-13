@@ -1,0 +1,22 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# FABRIC-CLIENT-PORTS.j2 - Client-Facing Access Port Configuration #}
+{# Generates switchport access VLAN configs on leaf switches for client-facing interfaces #}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-ROLES.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-CLIENT-PORTS.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/FUNC-CLIENT-PORTS.j2" %}
+
+{# === Dereference device context === #}
+{% set DEVICE_HOSTNAME = __device.hostname | default('', true) %}
+
+{# === Client-Facing Port Configuration (Leaves only) === #}
+{# Skip for Spine and Border nodes #}
+{% if DEVICE_HOSTNAME in DEFN_NODE_ROLES['BORDER'] or DEVICE_HOSTNAME in DEFN_NODE_ROLES['SPINE'] %}
+{# Skip: BORDER and SPINE do not have client-facing ports #}
+{% else %}
+  {# This is a LEAF or CLIENT node #}
+  {% if DEVICE_HOSTNAME in DEFN_CLIENT_PORTS %}
+    {% for port_entry in DEFN_CLIENT_PORTS[DEVICE_HOSTNAME] %}
+{{ switchport_config(port_entry) }}
+    {% endfor %}
+  {% endif %}
+{% endif %}

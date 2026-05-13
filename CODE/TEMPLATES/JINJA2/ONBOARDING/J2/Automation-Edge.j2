@@ -1,0 +1,137 @@
+{# <------Onboarding-Template for Routed Access-------> #}
+{# To be used for onboarding when using Day N Templates #}
+{# Define Variables provision with vlan and port channel #}
+!
+{# Service Configuration #}
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service sequence-numbers
+!
+{# Set MTU if required #}
+{% if SystemMTU != 1500 %}
+    system mtu {{ SystemMTU }}
+{% endif %}
+!
+{# Set hostname #}
+hostname {{ Hostname }}
+!
+{% set VtpDomain = Hostname %}
+!
+{# Set VTP and VLAN for onboarding #}
+vtp domain {{ VtpDomain }}
+vtp mode transparent
+!
+{# Set Archiving if required #}
+archive
+log config
+logging enable
+logging size 500
+hidekeys
+!
+{# Spanning Tree Configuration #}
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 1-4094 priority 0
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+no udld enable
+!
+{# Disable Vlan 1 (optional) #}
+interface Vlan 1
+ shutdown
+!
+{# Error Disable Recovery Configuration #}
+errdisable recovery cause all
+errdisable recovery interval 300
+!
+{% if RoutingProtocol %}
+    ip routing
+    ip multicast-routing
+    ip pim ssm default
+    ip pim rp-address {{ RPaddress }}
+{% endif %}
+!
+interface {{ MgmtInterface }}
+    ip address {{ SwitchIP }} {{ SubnetMask }}
+    {% if "OSPF" in RoutingProtocol %}
+        ip ospf network point-to-point
+        ip ospf {{ ProcessID }} area {{ OSPFArea }}
+    {% endif %}
+    ip pim sparse-mode
+!
+{% if "OSPF" in RoutingProtocol %}
+    router ospf {{ ProcessID }} 
+     router-id {{ SwitchIP }}
+     passive-interface {{ MgmtInterface }}
+     bfd all-interfaces
+{% endif %}
+!
+{# Set Source of Management Traffic #}
+ip domain lookup source-interface {{ MgmtInterface }}
+ip http client source-interface {{ MgmtInterface }}
+ip http client connection forceclose
+ip ftp source-interface {{ MgmtInterface }}
+ip tftp source-interface {{ MgmtInterface }}
+ip ssh source-interface {{ MgmtInterface }}
+ip radius source-interface {{ MgmtInterface }}
+logging source-interface {{ MgmtInterface }}
+snmp-server trap-source {{ MgmtInterface }}
+ntp source {{ MgmtInterface }}
+netconf-yang
+!
+{# Management Configuration #}
+no ip http server
+no ip http secure-server
+ip ssh version 2
+ip scp server enable
+!
+line vty 0 15
+ login local
+ transport input ssh
+ transport preferred none
+ exec-timeout 30 0
+ logging synchronous
+!
+event manager applet SETUPLINK
+event timer countdown time 15
+action 1.0 cli command "enable"
+action 1.1 cli command "config terminal"
+action 1.2 cli command "interface vlan 1"
+action 1.3 cli command "no ip address"
+action 1.4 cli command "shutdown"
+action 1.5 cli command "end"
+action 1.6 cli command "show cdp ne detail | i IP add|Interface"
+action 1.7 set _ip "0"
+action 2.0 foreach _iterator $_cli_result "\n"
+action 2.1 regexp "([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)" "$_iterator" _match _ip
+action 3.1 regexp "Interface: (.*/1/[0-9]+),  Port ID" "$_iterator" _match _interface
+action 3.2 if $_regexp_result eq "1"
+action 3.3 if $_ip ne "0"
+action 3.4 regexp "([0-9]+\.[0-9]+\.[0-9]+\.)([0-9]+)" "$_ip" _match _ip_p1 _ip_p2
+action 3.6 increment _ip_p2
+action 4.2 append _ip_p1 $_ip_p2
+action 5.1 cli command "config terminal"
+action 5.2 cli command "interface $_interface"
+action 5.3 cli command "no switchport"
+action 5.4 cli command "ip addr $_ip_p1 255.255.255.252"
+action 5.5 cli command "description UNDERLAY ROUTED UPLINK"
+action 5.6 cli command "ip ospf network point-to-point"
+action 5.7 cli command "bfd interval 300 min_rx 300 multiplier 3"
+action 5.8 cli command "no bfd echo"
+action 5.9 cli command "ip ospf 1 area $area" 
+action 6.0 cli command "ip pim sparse-mode"
+action 6.1 cli command "end"
+action 6.5 set _ip "0"
+action 6.6 end
+action 6.7 end
+action 6.8 end
+action 9.0 cli command "config terminal"
+action 9.1 cli command "no event manager applet SETUPLINK"
+action 9.2 cli command "ip http client source-interface Loopback0"
+action 9.4 cli command "ip http client connection forceclose"
+action 9.7 cli command "end"
+action 9.8 cli command "exit"
+action 9.9 syslog msg "SETUPLINK job DONE"
+!
+end

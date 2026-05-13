@@ -1,0 +1,31 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# FABRIC-LOOPBACKS.j2 - Standalone Loopback Interface Template #}
+{# Generates loopback interfaces for the current device #}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-VRF.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-ROLES.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-LOOPBACKS.j2" %}
+{% include "{{ TEMPLATE_PROJECT_NAME }}/DEFN-OVERLAY.j2" %}
+{# Dereference Catalyst Center magic variable #}
+{% set DEVICE_HOSTNAME = __device.hostname | default('', true) %}
+{# UNDERLAY LOOPBACKS #}
+interface {{DEFN_LOOP_NAME['UNDERLAY']}}
+ description UNDERLAY-NVE-INTERFACE
+ ip address {{DEFN_LOOP_UNDERLAY[DEVICE_HOSTNAME]}} 255.255.255.255
+ ip pim sparse-mode
+!
+{# Generate per-VRF overlay loopbacks for any node that has VRFs mapped #}
+{# Needed for external peering toward enterprise RP; without this source loopback, the PIM Register Tunnel remains down #}
+{% if DEFN_VRF_TO_NODE[DEVICE_HOSTNAME] is defined %}
+{% for vrf_id in DEFN_VRF_TO_NODE[DEVICE_HOSTNAME] %}
+{% for vrf_entry in DEFN_VRF %}
+{% if vrf_entry.id == vrf_id %}
+interface Loopback{{vrf_entry.id}}
+ description OVERLAY-VRF-{{vrf_entry.name}}
+ vrf forwarding {{vrf_entry.name}}
+ ip address {{DEFN_LOOP_OVERLAY[vrf_entry.name]}}{{DEFN_LOOP_UNDERLAY[DEVICE_HOSTNAME].split('\\.')[3]}} 255.255.255.255
+ ip pim sparse-mode
+!
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}

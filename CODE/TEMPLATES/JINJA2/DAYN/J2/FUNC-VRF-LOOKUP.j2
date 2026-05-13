@@ -1,0 +1,12 @@
+{## CATC: productFamily=Switches and Hubs, softwareType=IOS-XE, productSeries=Cisco Catalyst 9000 Series Virtual Switches ##}
+{# =================================== #}
+{# Resolve the VRF objects upfront     #}
+{# =================================== #}
+{% macro vrf_definition(DEFN_VRF, DEFN_VRF_TO_NODE, DEVICE_HOSTNAME) %}
+{% for input_vrf in DEFN_VRF_TO_NODE[DEVICE_HOSTNAME] %}
+  {% set _vrf = (DEFN_VRF | selectattr("id", "equalto", input_vrf) | list | first) %}
+  {% if _vrf %}
+    {% do vrf_objs.append(_vrf | first) %}
+  {% endif %}
+{% endfor %}
+{% endmacro %}
