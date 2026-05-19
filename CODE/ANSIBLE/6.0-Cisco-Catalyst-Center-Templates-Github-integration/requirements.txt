@@ -1,0 +1,6 @@
+# Python pip dependencies for Cisco-Catalyst-Center-Templates-Github-integration
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: pip install -r requirements.txt
+
+dnacentersdk>=2.11.0
+ansible>=2.15

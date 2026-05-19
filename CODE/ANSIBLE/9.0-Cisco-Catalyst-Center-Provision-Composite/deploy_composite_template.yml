@@ -1,0 +1,157 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Deploy Composite Templates to Managed Devices from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+  vars:
+    DEBUG: "{{ lookup('env', 'DEBUG') | default(false) | bool }}"
+
+  # NOTE: The deploy step uses ansible.builtin.uri (direct REST API call)
+  # instead of cisco.dnac.configuration_template_deploy_v2 because the module
+  # cannot send 'copyingConfig: true' — a field required for CatC to actually
+  # push config to devices.  The module_defaults below are retained for any
+  # future tasks that may use cisco.dnac modules (e.g., for querying).
+  module_defaults:
+    cisco.dnac.configuration_template_deploy_v2:
+      dnac_host: "{{ dnac_host }}"
+      dnac_username: "{{ dnac_username }}"
+      dnac_password: "{{ dnac_password }}"
+      dnac_verify: "{{ dnac_verify }}"
+      dnac_port: "{{ dnac_port }}"
+      dnac_version: "{{ dnac_version }}"
+      dnac_debug: "{{ dnac_debug }}"
+
+  tasks:
+
+    # ── Step 1: Load input data ───────────────────────────────────────────────
+    # Resolve path: absolute paths used as-is; relative paths resolved from
+    # the playbook directory so callers can pass paths relative to the repo root.
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: Load settings input JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: Validate that project key exists in input data
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "Input JSON must contain a non-empty 'project' list."
+        success_msg: "Input data loaded — {{ settings_data.project | length }} entries found."
+
+    # ── Step 2: Build composite template deploy entries ───────────────────────
+    #
+    # Iterate every site entry in settings.json.  DayNTemplateNames is now
+    # nested under entry.network_profile.  The site path is reconstructed
+    # from the split HierarchyParent/Area/Bldg/Floor fields.
+    #
+    # For each DayNTemplateNames element where DeployTemplate=true and
+    # TemplateName is non-null, create a deploy entry dict that the
+    # per-template included task file will consume.
+    #
+    # Sample _deploy_entries element:
+    #   {
+    #     "site":            "Global/PODS/POD 0/Building P0/Floor 1",
+    #     "template_name":   "BGP-EVPN-BUILD.j2",
+    #     "project_name":    "Building P0",
+    #     "template_target": ["198.19.1.1", "198.19.1.2"],
+    #     "template_tag":    "DEMO"
+    #   }
+    #
+    - name: Build DayN composite template deploy entries
+      set_fact:
+        _deploy_entries: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for entry in settings_data.project -%}
+            {%- set parent = entry.HierarchyParent | default('Global') -%}
+            {%- set area   = entry.HierarchyArea   | default('') -%}
+            {%- set bldg   = entry.HierarchyBldg   | default('') -%}
+            {%- set floor  = entry.HierarchyFloor  | default('') -%}
+            {%- if floor -%}
+              {%- set site_path = parent + '/' + area + '/' + bldg + '/' + floor -%}
+            {%- elif bldg -%}
+              {%- set site_path = parent + '/' + area + '/' + bldg -%}
+            {%- elif area -%}
+              {%- set site_path = parent + '/' + area -%}
+            {%- else -%}
+              {%- set site_path = parent -%}
+            {%- endif -%}
+            {%- set prof = entry.network_profile | default({}) -%}
+            {%- for tpl in (prof.DayNTemplateNames | default([])) -%}
+              {%- if tpl.DeployTemplate and tpl.TemplateName is not none -%}
+                {%- set deploy_entry = {
+                  'site':            site_path,
+                  'template_name':   tpl.TemplateName,
+                  'project_name':    tpl.Project,
+                  'template_target': tpl.TemplateTarget | default([]),
+                  'template_tag':    tpl.TemplateTag | default('')
+                } -%}
+                {%- set ns.result = ns.result + [deploy_entry] -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: Validate deploy entries exist
+      assert:
+        that: _deploy_entries | length > 0
+        fail_msg: "No DayNTemplateNames entries with DeployTemplate=true found in input JSON."
+        success_msg: "{{ _deploy_entries | length }} composite deployment(s) to process."
+
+    - name: --DEBUG-- Deploy entries
+      when: DEBUG
+      debug:
+        var: _deploy_entries
+
+    # ── Step 3: Authenticate to Catalyst Center ───────────────────────────────
+    #
+    # Obtain a short-lived JWT used for subsequent REST API calls in the
+    # included task file (template UUID lookup, device UUID resolution, and
+    # task status polling).  The token is stored as _catc_token.
+    #
+    - name: Authenticate to Catalyst Center
+      ansible.builtin.uri:
+        url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/system/api/v1/auth/token"
+        method: POST
+        user: "{{ dnac_username }}"
+        password: "{{ dnac_password }}"
+        force_basic_auth: true
+        validate_certs: "{{ dnac_verify }}"
+        status_code: 200
+      register: _auth_result
+      no_log: true
+
+    - name: Store auth token
+      set_fact:
+        _catc_token: "{{ _auth_result.json.Token }}"
+      no_log: true
+
+    # ── Step 4: Process each deploy entry ────────────────────────────────────
+    #
+    # For each (composite template, target devices) pair:
+    #   a. Resolve the composite template UUID and member template UUIDs via
+    #      the Template Programmer REST API.
+    #   b. Resolve device UUIDs for every target management IP.
+    #   c. Build the memberTemplateDeploymentInfo structure.
+    #   d. Deploy via cisco.dnac.configuration_template_deploy_v2.
+    #   e. Poll the async task until completion and report status.
+    #
+    - name: Process composite template deployment for each entry
+      include_tasks: tasks/deploy_entry.yml
+      loop: "{{ _deploy_entries }}"
+      loop_control:
+        loop_var: deploy_entry
+        label: "{{ deploy_entry.template_name }} → {{ deploy_entry.site }}"

@@ -1,0 +1,102 @@
+---
+- name: Initialize shared backup timestamp
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - vault.yml
+  tasks:
+    - name: Set shared backup timestamp
+      ansible.builtin.set_fact:
+        backup_timestamp: "{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
+
+- name: Backup running-config from IOS-XE devices
+  hosts: iosxe
+  gather_facts: false
+  vars_files:
+    - vault.yml
+  vars:
+    backup_output_dir: "{{ backup_root_dir }}/{{ hostvars['localhost']['backup_timestamp'] }}"
+
+  tasks:
+    - name: Ensure timestamped backup directory exists on controller
+      ansible.builtin.file:
+        path: "{{ backup_output_dir }}"
+        state: directory
+        mode: "0750"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Collect running configuration from IOS-XE
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: run_cfg
+      changed_when: false
+
+    - name: Save IOS-XE config to local backup file
+      ansible.builtin.copy:
+        content: |
+          ! Host: {{ inventory_hostname }}
+          ! Collected: {{ hostvars['localhost']['backup_timestamp'] }}
+          {{ run_cfg.stdout[0] }}
+        dest: "{{ backup_output_dir }}/{{ inventory_hostname }}.cfg"
+        mode: "0600"
+      delegate_to: localhost
+
+- name: Backup running-config from NX-OS devices
+  hosts: nxos
+  gather_facts: false
+  vars_files:
+    - vault.yml
+  vars:
+    backup_output_dir: "{{ backup_root_dir }}/{{ hostvars['localhost']['backup_timestamp'] }}"
+
+  tasks:
+    - name: Ensure timestamped backup directory exists on controller
+      ansible.builtin.file:
+        path: "{{ backup_output_dir }}"
+        state: directory
+        mode: "0750"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Collect running configuration from NX-OS
+      cisco.nxos.nxos_command:
+        commands:
+          - show running-config
+      register: run_cfg
+      changed_when: false
+
+    - name: Save NX-OS config to local backup file
+      ansible.builtin.copy:
+        content: |
+          ! Host: {{ inventory_hostname }}
+          ! Collected: {{ hostvars['localhost']['backup_timestamp'] }}
+          {{ run_cfg.stdout[0] }}
+        dest: "{{ backup_output_dir }}/{{ inventory_hostname }}.cfg"
+        mode: "0600"
+      delegate_to: localhost
+
+    - name: Find timestamped backup directories on controller
+      ansible.builtin.find:
+        paths: "{{ backup_root_dir }}"
+        file_type: directory
+        recurse: false
+      register: backup_dirs
+      delegate_to: localhost
+      run_once: true
+
+    - name: Build list of old backup directories to prune
+      ansible.builtin.set_fact:
+        backup_dirs_to_prune: "{{ (backup_dirs.files | sort(attribute='mtime', reverse=true))[backup_retention_count | int:] }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Remove pruned backup directories from controller
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ backup_dirs_to_prune }}"
+      when: backup_dirs_to_prune | length > 0
+      delegate_to: localhost
+      run_once: true

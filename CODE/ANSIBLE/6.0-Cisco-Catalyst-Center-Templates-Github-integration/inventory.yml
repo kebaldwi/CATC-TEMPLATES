@@ -1,0 +1,69 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+      
+      # Cisco Catalyst Center Connection Parameters
+      dnac_host: 198.18.129.100
+      dnac_username: admin
+      dnac_port: 443  # optional, defaults to 443
+      dnac_version: 2.3.7.9   # CatC appliance is 2.3.7.10; SDK max known is 2.3.7.9
+      dnac_verify: false
+      dnac_debug: true
+      dnac_log_level: INFO
+      dnac_log: true
+
+
+
+      # Git Repository Configuration
+      git_repo: "https://github.com/imanassypov/CatalystCenter-BGP-EVPN-VXLAN.git"
+      git_branch: "main"
+      #git_branch: "fix/dict-of-dict-refactor"  # optional, defaults to main
+      #git_token: "{{ vault_git_token }}"  # optional, for private repos or to raise API rate limits; when omitted, runs unauthenticated (suitable for public repositories)
+      # Subfolder within the repository that contains the templates to sync.
+      # Equivalent to the folder that git_local_dest previously pointed at.
+      # Leave unset (or set to "") to scan the entire repository root.
+      git_repo_subfolder: "BGP EVPN"
+      # git_api_base_url: "https://api.github.com"  # override for GitHub Enterprise
+      # git_token is optional - define in vault.yml for private repos or to raise API rate limits
+      # When omitted, the playbook runs unauthenticated (suitable for public repositories)
+
+      # Catalyst Center Project Name
+      # If specified here, it will override the default project name derived from the template file path
+      #projectName: "BGP EVPN Site1"
+      projectName: "Building P0"
+
+      template_extension: "j2"
+      
+      # Template Configuration
+      include_diff_header: false
+      default_software_type: "IOS"
+      default_software_variant: "XE"
+      default_template_version: "1.0"
+      
+      # Device Types: List of device series that can use these templates
+      # Each entry must be a complete object with both product_family and product_series
+      # This structure is required by the Catalyst Center API schema
+      # Repetition of product_family is intentional - allows mixed families (switches + routers)
+      default_device_types:
+        - product_family: "Switches and Hubs"
+          product_series: "Cisco Catalyst 9500 Series Switches"
+        - product_family: "Switches and Hubs"
+          product_series: "Cisco Catalyst 9000 Series Virtual Switches"
+        - product_family: "Switches and Hubs"
+          product_series: "Cisco Catalyst 9300 Series Switches"
+        - product_family: "Switches and Hubs"
+          product_series: "Cisco Catalyst 9400 Series Switches"
+      catc_template_summary_maxchar: 1024

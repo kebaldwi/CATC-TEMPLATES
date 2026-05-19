@@ -1,0 +1,61 @@
+---
+# =============================================================================
+# tasks/delete_site.yml
+#
+# Processes ONE entry from site_configs_list (reversed, deepest first).
+# Loop variable: site_config  (set by the include_tasks loop in
+#                              site_hierarchy.yml Phase C)
+#
+# Credentials are inherited from the play-level module_defaults block.
+# Sites absent from site_id_map (not found in Phase A) are silently skipped
+# via `when: _exists` — safe to call repeatedly without failures.
+#
+# API paths exercised:
+#   DELETE /dna/intent/api/v1/areas/{id}      (area)
+#   DELETE /dna/intent/api/v2/buildings/{id}  (building)
+#   DELETE /dna/intent/api/v2/floors/{id}     (floor)
+# =============================================================================
+
+# ── Step 1: Extract scalars from the site_config dict ────────────────────────
+- name: "Extract type / name / parent  | {{ site_config.site_type }}"
+  set_fact:
+    _type:   "{{ site_config.site_type }}"
+    _name:   "{{ site_config.site[site_config.site_type].name }}"
+    _parent: "{{ site_config.site[site_config.site_type].parent_name }}"
+
+# ── Step 2: Derive path, UUID, and existence flag ────────────────────────────
+- name: "Derive path / ID / exists  | {{ _parent }}/{{ _name }}"
+  set_fact:
+    _path:    "{{ _parent + '/' + _name }}"
+    _exists:  "{{ (_parent + '/' + _name) in site_id_map }}"
+    _site_id: "{{ site_id_map.get(_parent + '/' + _name, '') }}"
+
+# ── DELETE area ───────────────────────────────────────────────────────────────
+# DELETE /dna/intent/api/v1/areas/{id}
+- name: "Area     | DELETE | {{ _path }}"
+  cisco.catalystcenter.areas:
+    state: absent
+    id:    "{{ _site_id }}"
+  when:
+    - _type == 'area'
+    - _exists
+
+# ── DELETE building ───────────────────────────────────────────────────────────
+# DELETE /dna/intent/api/v2/buildings/{id}
+- name: "Building | DELETE | {{ _path }}"
+  cisco.catalystcenter.buildings:
+    state: absent
+    id:    "{{ _site_id }}"
+  when:
+    - _type == 'building'
+    - _exists
+
+# ── DELETE floor ──────────────────────────────────────────────────────────────
+# DELETE /dna/intent/api/v2/floors/{id}
+- name: "Floor    | DELETE | {{ _path }}"
+  cisco.catalystcenter.floors:
+    state: absent
+    id:    "{{ _site_id }}"
+  when:
+    - _type == 'floor'
+    - _exists

@@ -1,0 +1,44 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+# process-template.yml
+# Processes individual template files and builds workflow manager configuration
+
+- name: Extract template metadata for {{ template_file.name }}
+  set_fact:
+    template_name: "{{ template_file.name }}"
+    template_content_raw: "{{ template_file.content | replace('{{ TEMPLATE_PROJECT_NAME }}', projectName) }}"
+    commit_message: "{{ template_file.commit_message }}"
+    diff_content_raw: "{{ template_file.diff_content | regex_replace('([^\\n]+)', '{## \\1 ##}') + '\\n' if (include_diff_header and template_file.diff_content) else '' }}"
+
+- name: Assemble final template content for {{ template_name }}
+  set_fact:
+    template_content: "{{ diff_content_raw }}{{ template_content_raw }}"
+
+- name: Build template workflow configuration for {{ template_name }}
+  set_fact:
+    template_workflow_configs: "{{ template_workflow_configs | default([]) + [template_config] }}"
+  vars:
+    template_config:
+      configuration_templates:
+        template_name: "{{ template_name }}"
+        project_name: "{{ projectName }}"
+        language: "JINJA"
+        template_content: "{{ template_content }}"
+        #template_content_file_path: "{{ processed_template_path }}"
+        template_description: "Template synced from Git {{ git_repo }} repository, branch {{ git_branch }}"
+        device_types: "{{ default_device_types }}"
+        software_type: "{{ default_software_type }}"
+        software_variant: "{{ default_software_variant }}"
+        software_version: null
+        template_params: []
+        failure_policy: "ABORT_TARGET_ON_ERROR"
+        version: "{{ default_template_version }}"
+        tags: []

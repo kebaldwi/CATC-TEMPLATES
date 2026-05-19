@@ -1,0 +1,34 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Load settings.json<br/>lookup('file') -&gt; from_json"]
+    A --> B{project key<br/>exists &amp; non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| C
+
+    C["Step 2 - Build per-site assignment map<br/>Walk each entry in settings.json<br/>filter: device_list is non-null<br/>reconstruct site path from hierarchy fields<br/>split IPs, group by site path<br/>builds site_device_map: { site → [ip, ...] }"]
+    C --> D{any entries<br/>with device_list?}
+    D -->|No| FAIL_B([Fail: no device_list<br/>entries found])
+    D -->|Yes| E
+
+    E(["For each unique site in site_device_map"])
+    E --> F
+
+    F["Step 3 - Resolve site UUID<br/>site_info module<br/>query by reconstructed site path<br/>returns site ID"]
+    F --> G{site UUID<br/>resolved?}
+    G -->|No| FAIL_C([Fail: site not found<br/>in CatC — run 1.0 first])
+    G -->|Yes| H
+
+    H["Step 4 - Assign devices to site<br/>assign_device_to_site<br/>siteId = resolved UUID<br/>device list = [{ip: '...'}, ...]<br/>moves devices from Global to target site"]
+    H --> I{More<br/>sites?}
+    I -->|Yes| E
+    I -->|No| J
+
+    J["Step 5 - Summary<br/>sites processed<br/>IPs assigned per site"]
+    J --> DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_C fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

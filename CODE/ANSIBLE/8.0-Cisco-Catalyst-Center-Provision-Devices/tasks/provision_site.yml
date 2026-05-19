@@ -1,0 +1,446 @@
+# ============================================================================
+# tasks/provision_site.yml
+# ============================================================================
+# Processes one site provisioning entry from settings.json.
+#
+# Input variable (set by loop in provision_devices.yml):
+#   site_entry.key    — full site hierarchy path (e.g. Global/PODS/POD 0/…)
+#   site_entry.value  — list of management IPs to provision to this site
+#
+# Variables read from inventory / parent play scope:
+#   _catc_token         — short-lived JWT (set in parent play)
+#   dnac_host / dnac_port / dnac_verify
+#   force_reprovision   — bool; re-provision already-provisioned devices
+#   task_poll_retries / task_poll_delay
+# ============================================================================
+---
+
+# ── Step A: Resolve site UUID ─────────────────────────────────────────────
+#
+# GET /dna/intent/api/v1/site?name=<full_hierarchy_path>
+#
+# The `name` query parameter accepts the full slash-delimited hierarchy path
+# (e.g. "Global/PODS/POD 0/Building P0/Floor 1").  The response array's first
+# element carries `id` — the site UUID required by provisionDevices.
+#
+- name: "[{{ site_entry.key }}] Resolve site UUID"
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/site?name={{ site_entry.key | urlencode }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  register: _site_result
+
+- name: "[{{ site_entry.key }}] Assert site found"
+  assert:
+    that:
+      - _site_result.json.response is defined
+      - _site_result.json.response | length > 0
+    fail_msg: >-
+      Site '{{ site_entry.key }}' was not found in Catalyst Center.
+      Ensure the site hierarchy was created before running this playbook.
+
+- name: "[{{ site_entry.key }}] Extract site UUID"
+  set_fact:
+    _site_uuid: "{{ _site_result.json.response[0].id }}"
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Site UUID"
+  when: DEBUG
+  debug:
+    msg: "Site '{{ site_entry.key }}' → UUID: {{ _site_uuid }}"
+
+# ── Step B: Resolve device UUIDs ─────────────────────────────────────────
+#
+# GET /dna/intent/api/v1/network-device?managementIpAddress=<ip>
+#
+# Returns a `response` array; first element carries `id` (device UUID) and
+# `hostname`, both used in the provision payload and summary output.
+#
+- name: "[{{ site_entry.key }}] Resolve device UUIDs for all management IPs"
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/network-device?managementIpAddress={{ item }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  loop: "{{ site_entry.value }}"
+  register: _device_results
+
+- name: "[{{ site_entry.key }}] Build IP → { uuid, hostname } map"
+  set_fact:
+    _device_uuid_map: >-
+      {%- set ns = namespace(result={}) -%}
+      {%- for r in _device_results.results -%}
+        {%- set device = (r.json.response | default([]) | first | default(none)) -%}
+        {%- if device is not none and device.id is defined -%}
+          {%- set ns.result = ns.result | combine({
+              device.managementIpAddress: {
+                'uuid':     device.id,
+                'hostname': device.hostname | default(device.managementIpAddress)
+              }
+          }) -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.result }}
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Device UUID map"
+  when: DEBUG
+  debug:
+    var: _device_uuid_map
+
+- name: "[{{ site_entry.key }}] Assert all target IPs resolved to device UUIDs"
+  assert:
+    that: item in _device_uuid_map
+    fail_msg: >-
+      Device with management IP '{{ item }}' was not found in Catalyst Center.
+      Ensure the device is discovered and managed before provisioning.
+  loop: "{{ site_entry.value }}"
+
+# ── Step C: Check already-provisioned state ───────────────────────────────
+#
+# GET /dna/intent/api/v1/sda/provisionDevices?siteId=<uuid>&limit=500
+#
+# Fetches all currently provisioned devices for this site in one call.
+# Any device UUID already in the response is skipped during the provision
+# step unless force_reprovision=true is set in inventory.
+#
+- name: "[{{ site_entry.key }}] Fetch already-provisioned devices for this site"
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/sda/provisionDevices?siteId={{ _site_uuid }}&limit=500"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  register: _provisioned_result
+
+- name: "[{{ site_entry.key }}] Build set of already-provisioned device UUIDs"
+  set_fact:
+    _already_provisioned_ids: >-
+      {{ (_provisioned_result.json.response | default([]))
+         | map(attribute='networkDeviceId')
+         | list }}
+    _already_provisioned_record_map: >-
+      {%- set ns = namespace(result={}) -%}
+      {%- for item in (_provisioned_result.json.response | default([])) -%}
+        {%- set ns.result = ns.result | combine({item.networkDeviceId: item.id}) -%}
+      {%- endfor -%}
+      {{ ns.result }}
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Already-provisioned device UUIDs at site"
+  when: DEBUG
+  debug:
+    msg:
+      - "Already provisioned ({{ _already_provisioned_ids | length }} device(s)): {{ _already_provisioned_ids }}"
+      - "force_reprovision: {{ force_reprovision | default(false) | bool }}"
+
+# ── Step D: Build provision payloads ─────────────────────────────────────
+#
+# Idempotency rule:
+#   - New devices (not yet in provisioned state) → POST /sda/provisionDevices
+#   - Already-provisioned devices, force_reprovision=false → SKIPPED
+#   - Already-provisioned devices, force_reprovision=true  → PUT /sda/provisionDevices
+#
+# Two separate payloads are built so the correct HTTP method is used for each.
+#
+- name: "[{{ site_entry.key }}] Build provision and re-provision payloads"
+  set_fact:
+    _provision_payload: >-
+      {%- set ns = namespace(result=[]) -%}
+      {%- for ip in site_entry.value -%}
+        {%- if ip in _device_uuid_map -%}
+          {%- set d = _device_uuid_map[ip] -%}
+          {%- if d.uuid not in _already_provisioned_ids -%}
+            {%- set ns.result = ns.result + [{'networkDeviceId': d.uuid, 'siteId': _site_uuid}] -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.result }}
+    _reprovision_payload: >-
+      {%- set ns = namespace(result=[]) -%}
+      {%- for ip in site_entry.value -%}
+        {%- if ip in _device_uuid_map -%}
+          {%- set d = _device_uuid_map[ip] -%}
+          {%- if d.uuid in _already_provisioned_ids and (force_reprovision | default(false) | bool) -%}
+            {%- set ns.result = ns.result + [{'id': _already_provisioned_record_map[d.uuid], 'networkDeviceId': d.uuid, 'siteId': _site_uuid}] -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.result }}
+    _skipped_ips: >-
+      {%- set ns = namespace(result=[]) -%}
+      {%- for ip in site_entry.value -%}
+        {%- if ip in _device_uuid_map -%}
+          {%- set d = _device_uuid_map[ip] -%}
+          {%- if d.uuid in _already_provisioned_ids and not (force_reprovision | default(false) | bool) -%}
+            {%- set ns.result = ns.result + [ip] -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.result }}
+
+- name: "[{{ site_entry.key }}] Report skipped (already provisioned) devices"
+  when: _skipped_ips | length > 0
+  debug:
+    msg: >-
+      Skipping {{ _skipped_ips | length }} already-provisioned device(s)
+      (set force_reprovision=true to override): {{ _skipped_ips | join(', ') }}
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Provision payload"
+  when: DEBUG
+  debug:
+    var: _provision_payload
+
+# ── Step E: Submit provision requests ────────────────────────────────────
+#
+# New devices (not previously provisioned):
+#   POST /dna/intent/api/v1/sda/provisionDevices
+#
+# Already-provisioned devices (force_reprovision=true):
+#   PUT  /dna/intent/api/v1/sda/provisionDevices
+#   CatC returns NCHS20405 if POST is used on an already-provisioned device.
+#
+# Each call returns one async taskId.  Both task IDs are collected and polled
+# independently in Step F; their child task IDs are merged for Step H.
+#
+- name: "[{{ site_entry.key }}] Submit POST provision request (new devices)"
+  when: _provision_payload | length > 0
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/sda/provisionDevices"
+    method: POST
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+      Content-Type: "application/json"
+    validate_certs: "{{ dnac_verify }}"
+    body_format: json
+    body: "{{ _provision_payload }}"
+    status_code: [200, 202]
+  register: _provision_result
+  ignore_errors: true
+
+- name: "[{{ site_entry.key }}] Submit PUT re-provision request (already provisioned, force)"
+  when: _reprovision_payload | length > 0
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/sda/provisionDevices"
+    method: PUT
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+      Content-Type: "application/json"
+    validate_certs: "{{ dnac_verify }}"
+    body_format: json
+    body: "{{ _reprovision_payload }}"
+    status_code: [200, 202]
+  register: _reprovision_result
+  ignore_errors: true
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Raw provision API responses"
+  when: DEBUG and (_provision_payload | length > 0 or _reprovision_payload | length > 0)
+  debug:
+    msg:
+      - "POST result : {{ _provision_result | default({}) }}"
+      - "PUT  result : {{ _reprovision_result | default({}) }}"
+
+- name: "[{{ site_entry.key }}] Collect task IDs from both provision calls"
+  set_fact:
+    _provision_task_id: "{{ (_provision_result.json.response | default({})).taskId | default('') }}"
+    _reprovision_task_id: "{{ (_reprovision_result.json.response | default({})).taskId | default('') }}"
+    _any_submitted: "{{ (_provision_payload | length > 0) or (_reprovision_payload | length > 0) }}"
+
+- name: "[{{ site_entry.key }}] Assert task ID received from POST provision"
+  when: _provision_payload | length > 0
+  assert:
+    that: _provision_task_id | length > 0
+    fail_msg: >-
+      No taskId returned from provisionDevices POST.
+      HTTP status: {{ _provision_result.status | default('unknown') }}
+      Response: {{ _provision_result.json | default({}) | to_json }}
+
+- name: "[{{ site_entry.key }}] Assert task ID received from PUT re-provision"
+  when: _reprovision_payload | length > 0
+  assert:
+    that: _reprovision_task_id | length > 0
+    fail_msg: >-
+      No taskId returned from provisionDevices PUT.
+      HTTP status: {{ _reprovision_result.status | default('unknown') }}
+      Response: {{ _reprovision_result.json | default({}) | to_json }}
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Provision task IDs"
+  when: DEBUG and _any_submitted | bool
+  debug:
+    msg:
+      - "POST task ID : {{ _provision_task_id if _provision_task_id else 'N/A' }}"
+      - "PUT  task ID : {{ _reprovision_task_id if _reprovision_task_id else 'N/A' }}"
+
+# ── Step F: Poll async tasks until completion ─────────────────────────────
+#
+# Poll the POST task (new devices) and PUT task (re-provisions) independently.
+# Each task tracks its own batch of child operations.
+#
+- name: "[{{ site_entry.key }}] Poll POST provision task"
+  when: _provision_task_id | length > 0
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/task/{{ _provision_task_id }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  register: _task_poll_result
+  until: >-
+    (_task_poll_result.json.response | default({})).endTime is defined
+    or (_task_poll_result.json.response | default({})).isError | default(false) | bool
+  retries: "{{ task_poll_retries | int }}"
+  delay:   "{{ task_poll_delay   | int }}"
+  ignore_errors: true
+
+- name: "[{{ site_entry.key }}] Poll PUT re-provision task"
+  when: _reprovision_task_id | length > 0
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/task/{{ _reprovision_task_id }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  register: _reprovision_task_poll_result
+  until: >-
+    (_reprovision_task_poll_result.json.response | default({})).endTime is defined
+    or (_reprovision_task_poll_result.json.response | default({})).isError | default(false) | bool
+  retries: "{{ task_poll_retries | int }}"
+  delay:   "{{ task_poll_delay   | int }}"
+  ignore_errors: true
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Task poll final responses"
+  when: DEBUG and _any_submitted | bool
+  debug:
+    msg:
+      - "POST poll: {{ _task_poll_result | default({}) }}"
+      - "PUT  poll: {{ _reprovision_task_poll_result | default({}) }}"
+
+# ── Step G: Summary ───────────────────────────────────────────────────────
+- name: "[{{ site_entry.key }}] Provisioning result summary"
+  vars:
+    _task_resp:        "{{ (_task_poll_result.json.response | default({})) if _provision_task_id | length > 0 else {} }}"
+    _reprov_resp:      "{{ (_reprovision_task_poll_result.json.response | default({})) if _reprovision_task_id | length > 0 else {} }}"
+    _is_error:         "{{ (_task_resp.isError | default(false) | bool) or (_reprov_resp.isError | default(false) | bool) }}"
+    _failure_reason:   "{{ [_task_resp.failureReason | default(''), _reprov_resp.failureReason | default('')] | reject('equalto','') | join(' | ') }}"
+    _progress: >-
+      {%- set raw = [_task_resp.progress | default(''), _reprov_resp.progress | default('')] | reject('equalto','') | join(' | ') -%}
+      {%- set lines = raw.split('\n') -%}
+      {%- set ns = namespace(parts=[]) -%}
+      {%- for line in lines -%}
+        {%- set stripped = line.strip() -%}
+        {%- if stripped and not (stripped | regex_search('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}')) -%}
+          {%- set ns.parts = ns.parts + [stripped] -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.parts | join(' | ') }}
+    _status: >-
+      {%- if not _any_submitted | bool -%}
+        SKIPPED — all devices already provisioned at this site
+      {%- elif _is_error | bool -%}
+        FAILURE
+      {%- else -%}
+        SUCCESS
+      {%- endif -%}
+  debug:
+    msg:
+      - "┌─────────────────────────────────────────────────────────────────┐"
+      - "│ Site          : {{ site_entry.key }}"
+      - "│ Status        : {{ _status }}"
+      - "│ New (POST)    : {{ _provision_payload | length }} device(s)"
+      - "│ Reprov (PUT)  : {{ _reprovision_payload | length }} device(s)"
+      - "│ Skipped       : {{ _skipped_ips | length }} device(s) — already provisioned"
+      - "│ POST task ID  : {{ _provision_task_id if _provision_task_id else 'N/A' }}"
+      - "│ PUT task ID   : {{ _reprovision_task_id if _reprovision_task_id else 'N/A' }}"
+      - "│ Progress      : {{ _progress }}"
+      - "│ Error         : {{ _failure_reason if _is_error | bool else 'none' }}"
+      - "└─────────────────────────────────────────────────────────────────┘"
+
+- name: "[{{ site_entry.key }}] Fail play if any provisioning task reported an error"
+  when:
+    - _any_submitted | bool
+    - (_task_resp.isError | default(false) | bool) or (_reprov_resp.isError | default(false) | bool)
+  vars:
+    _task_resp:   "{{ (_task_poll_result.json.response | default({})) if _provision_task_id | length > 0 else {} }}"
+    _reprov_resp: "{{ (_reprovision_task_poll_result.json.response | default({})) if _reprovision_task_id | length > 0 else {} }}"
+  fail:
+    msg: >-
+      Provisioning failed for site '{{ site_entry.key }}'.
+      POST failureReason : {{ _task_resp.failureReason | default('') }}
+      PUT  failureReason : {{ _reprov_resp.failureReason | default('') }}
+
+# ── Step H: Query and display each child task result ─────────────────────
+#
+# The parent task progress field contains semicolon-separated child task IDs
+# in the format:
+#   "Provisioning Devices\nStatus: successful\nN child operation(s)\n<id1>;<id2>;..."
+#
+# Extract IDs from both the POST task and the PUT task, merge them, then
+# query GET /dna/intent/api/v1/task/<childId> for each and display results.
+#
+- name: "[{{ site_entry.key }}] Extract child task IDs from POST and PUT parent tasks"
+  when: _any_submitted | bool
+  set_fact:
+    _child_task_ids: >-
+      {%- set ns = namespace(ids=[]) -%}
+      {%- for progress in [
+            (_task_poll_result.json.response | default({})).progress | default(''),
+            (_reprovision_task_poll_result.json.response | default({})).progress | default('')
+          ] -%}
+        {%- if progress -%}
+          {%- for token in progress.split(';') -%}
+            {%- set t = token.strip() -%}
+            {%- if t | length == 36 and t[8:9] == '-' and t[13:14] == '-' -%}
+              {%- set ns.ids = ns.ids + [t] -%}
+            {%- elif t | length > 36 -%}
+              {%- set candidate = t[-36:] -%}
+              {%- if candidate[8:9] == '-' and candidate[13:14] == '-' -%}
+                {%- set ns.ids = ns.ids + [candidate] -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.ids }}
+
+- name: "[{{ site_entry.key }}] --DEBUG-- Child task IDs"
+  when: DEBUG and _any_submitted | bool
+  debug:
+    var: _child_task_ids
+
+- name: "[{{ site_entry.key }}] Fetch child task results"
+  when: _any_submitted | bool and _child_task_ids | length > 0
+  ansible.builtin.uri:
+    url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/intent/api/v1/task/{{ item }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ dnac_verify }}"
+    status_code: 200
+  loop: "{{ _child_task_ids }}"
+  register: _child_task_results
+
+- name: "[{{ site_entry.key }}] Per-device provisioning task results"
+  when: _any_submitted | bool and _child_task_ids | length > 0
+  debug:
+    msg: >-
+      {%- set ns = namespace(rows=[]) -%}
+      {%- for r in (_child_task_results.results | default([])) -%}
+        {%- set resp   = r.json.response | default({}) -%}
+        {%- set status = 'FAILURE' if resp.isError | default(false) | bool else 'SUCCESS' -%}
+        {%- set detail = resp.failureReason | default('') if resp.isError | default(false) | bool
+                         else (resp.progress | default('') | replace('\\n', ' | ')) -%}
+        {%- set ns.rows = ns.rows + [
+          '  [' + loop.index | string + '/' + (_child_task_ids | length) | string + ']'
+          + ' taskId: ' + resp.id | default(r.item)
+          + ' | status: ' + status
+          + ' | detail: ' + detail
+          + ' | url: https://' + dnac_host + '/dna/intent/api/v1/task/' + (resp.id | default(r.item))
+        ] -%}
+      {%- endfor -%}
+      {{ ['── Per-device provisioning task results ──'] + ns.rows }}
+

@@ -1,0 +1,6 @@
+# Python pip dependencies for Cisco-Catalyst-Center-Settings
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: pip install -r requirements.txt
+
+catalystcentersdk>=2.3.7.9,<3.0.0
+ansible>=2.15

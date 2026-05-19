@@ -1,0 +1,34 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+      # ── Catalyst Center Connection ─────────────────────────────────────────
+      # catc_* variables are passed through module_defaults to every
+      # cisco.dnac module call.
+      # catc_username and catc_password are loaded from vault.yml.
+      # cisco.dnac uses dnacentersdk >= 2.11.0 (installed: 2.11.2).
+      # Set catc_debug: true for verbose dnacentersdk HTTP tracing.
+      catc_host:    198.18.129.100
+      catc_port:    443
+      catc_version: "2.3.7.9"   # CatC appliance is 2.3.7.10; SDK max is 2.3.7.9
+      catc_verify:  false
+      catc_debug:   false
+
+      # ── Input file ────────────────────────────────────────────────────────
+      # Single source of truth for device_credentials and assign_credentials.
+      # Both BGP_EVPN and TRADITIONAL projects share the same field schema.
+      # Override at runtime: -e settings_json_path=path/to/settings.json
+      settings_json_path: "../../../../Projects/BGP_EVPN/Settings/settings.json"

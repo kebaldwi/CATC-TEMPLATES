@@ -1,0 +1,11 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Device-Discovery
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.dnac.discovery_workflow_manager — device discovery via IP range,
+#     SINGLE, RANGE, MULTI RANGE, CDP, LLDP, or CIDR
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"

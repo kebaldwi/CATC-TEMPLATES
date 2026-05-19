@@ -1,0 +1,80 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Stage 1 — Parse repo URL\nstrip https://github.com/ prefix\nstrip .git suffix → repo slug\nbuild GitHub API base URL\nbuild auth header (optional git_token)"]
+    A --> VA
+
+    VA["Pre-flight: Verify repo accessible\nGET /repos/{slug}\nExpect HTTP 200"]
+    VA --> VC{Repo\naccessible?}
+    VC -->|404 / error| FAIL_REPO([Fail: repo not found\nor auth error\nCheck git_repo + git_token])
+    VC -->|200 OK| VB
+
+    VB["Pre-flight: Verify branch exists\nGET /repos/{slug}/branches/{branch}\nExpect HTTP 200"]
+    VB --> VD{Branch\nexists?}
+    VD -->|404| FAIL_BRANCH([Fail: branch not found\nCheck git_branch in inventory])
+    VD -->|200 OK| B
+
+    B["Fetch repository file tree\nGET /repos/{slug}/git/trees/{branch}?recursive=1\nreturns flat list of all blob paths"]
+    B --> C{tree\nfetched?}
+    C -->|error| FAIL_A([Fail: tree fetch failed\nCheck git_token rate limits])
+    C -->|OK| D
+
+    D["Stage 2 — Filter file lists\ntemplate files: paths ending in .j2\ncomposite files: paths ending in .yml\nboth filtered by git_repo_subfolder prefix"]
+    D --> E{.j2 files\nfound?}
+    E -->|None found| FAIL_B([Fail: no template files\nfound — check git_repo_subfolder])
+    E -->|Found| F
+
+    F["Fetch each .j2 template content\nGET raw.githubusercontent.com/.../file.j2\nFetch last commit metadata\nGET /repos/{slug}/commits?path=file&per_page=1\nOptionally fetch diff patch\nGET /repos/{slug}/commits/{sha}"]
+    F --> G
+
+    G["Build enriched_template_files[]\nname, path, content,\ncommit_message = date + message + author\n(truncated to catc_template_summary_maxchar)\ndiff_content = git patch if include_diff_header=true"]
+    G --> H{.yml composite\nfiles found?}
+    H -->|Yes| I
+    H -->|No| J
+
+    I["Fetch each .yml composite definition\nGET raw.githubusercontent.com/.../file.yml\nbuild enriched_composite_files[]\nname, path, content"]
+    I --> J
+
+    J["Stage 3 — Dynamic template ordering\nParse each composite .yml content as YAML\nExtract template names under 'templates:'\n→ composite_referenced_templates[]"]
+    J --> K
+
+    K["Separate into two lists:\npriority_template_list[]\n  = templates IN composite_referenced_templates\n  (FABRIC-*.j2 — 9 templates)\nregular_template_list[]\n  = templates NOT in composite_referenced_templates\n  (DEFN-*.j2 + FUNC-*.j2 — 11 templates)\n\nsorted_template_files = regular + priority\n  → DEFN/FUNC processed BEFORE FABRIC\n  → FABRIC must exist before composite"]
+    K --> L
+
+    L(["Stage 4 — For each template\nin sorted_template_files[]\n(20 templates total)"])
+    L --> M
+
+    M["process-template.yml\nReplace TEMPLATE_PROJECT_NAME → projectName\nWrap diff in Jinja comments if include_diff_header\nBuild configuration_templates config entry:\n  template_name, project_name, language=JINJA\n  template_content, template_description=git commit info\n  device_types, software_type/variant\n  failure_policy=ABORT_TARGET_ON_ERROR"]
+    M --> N{More\ntemplates?}
+    N -->|Yes| L
+    N -->|No| O
+
+    O{composite files\nto process?}
+    O -->|Yes| P
+    O -->|No| Q
+
+    P(["Stage 4 — For each composite\nin enriched_composite_files[]\n(1 composite: BGP-EVPN-BUILD.yml)"])
+    P --> R
+
+    R["process-composite.yml\nParse .yml content as YAML\nResolve composite name (.yml → .j2)\nBuild containing_templates_list[]\n  9 members in order:\n  FABRIC-VRF → FABRIC-LOOPBACKS → FABRIC-L3OUT\n  → FABRIC-NVE → FABRIC-MCAST → FABRIC-EVPN\n  → FABRIC-OVERLAY → FABRIC-CLIENT-PORTS\n  → FABRIC-NAC\nBuild composite config entry (composite: true)\nReset containing_templates_list = []"]
+    R --> S{More\ncomposites?}
+    S -->|Yes| P
+    S -->|No| Q
+
+    Q["Stage 5 — Sync Call 1: Regular templates\ncisco.dnac.template_workflow_manager\n  state: merged\n  config: template_workflow_configs[]\n  → 20 templates (DEFN + FUNC + FABRIC)\nCreates new templates OR updates changed ones\nIdempotent: no-op if content unchanged"]
+    Q --> T{composite\nconfigs\nexist?}
+    T -->|Yes| U
+    T -->|No| V
+
+    U["Stage 5 — Sync Call 2: Composite template\ncisco.dnac.template_workflow_manager\n  state: merged\n  config: composite_workflow_configs[]\n  → 1 composite (BGP-EVPN-BUILD.j2)\nAll 9 member FABRIC-* templates guaranteed\nto exist in CatC from Sync Call 1"]
+    U --> V
+
+    V["Summary\nProject: Building P0\nRegular templates synced: 20\nComposite templates synced: 1\nGit commit metadata in CatC descriptions"]
+    V --> DONE([Done])
+
+    style FAIL_REPO fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_BRANCH fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

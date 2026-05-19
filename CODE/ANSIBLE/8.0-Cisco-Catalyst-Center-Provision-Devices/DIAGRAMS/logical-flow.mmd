@@ -1,0 +1,74 @@
+flowchart TD
+    START([Start]) --> S1
+
+    S1["Step 1 — Authenticate to Catalyst Center<br/>POST /dna/system/api/v1/auth/token<br/>Store short-lived JWT → _catc_token"]
+    S1 --> S1C{Auth<br/>successful?}
+    S1C -->|No| FAIL_AUTH([Fail: authentication failed<br/>Check dnac_username / dnac_password])
+    S1C -->|Yes| S2
+
+    S2["Step 2 — Load input data<br/>Resolve settings_json_path (relative → absolute)<br/>lookup('file') → from_json → settings_data"]
+    S2 --> S2C{project key<br/>exists &amp; non-empty?}
+    S2C -->|No| FAIL_JSON([Fail: invalid input JSON<br/>Missing or empty 'project' list])
+    S2C -->|Yes| S3
+
+    S3["Step 3 — Build per-site device map<br/>Walk every project entry with a non-empty device_list<br/>Reconstruct site path from HierarchyParent / Area / Bldg / Floor<br/>Group management IPs by site path<br/>Result: { site_path → [ip1, ip2, ...] }"]
+    S3 --> S3C{Site device map<br/>non-empty?}
+    S3C -->|No| FAIL_MAP([Fail: no entries with device_list<br/>found in input JSON])
+    S3C -->|Yes| S4
+
+    S4(["Step 4 — For each site in per-site device map<br/>include_tasks: tasks/provision_site.yml"])
+    S4 --> SA
+
+    SA["Step A — Resolve site UUID<br/>GET /dna/intent/api/v1/site?name=&lt;full_hierarchy_path&gt;<br/>Extract response[0].id → _site_uuid"]
+    SA --> SAC{Site found<br/>in CatC?}
+    SAC -->|No| FAIL_SITE([Fail: site not found<br/>Create site hierarchy first])
+    SAC -->|Yes| SB
+
+    SB["Step B — Resolve device UUIDs<br/>GET /dna/intent/api/v1/network-device<br/>    ?managementIpAddress=&lt;ip&gt;  (once per IP)<br/>Build IP → { uuid, hostname } map → _device_uuid_map"]
+    SB --> SBC{All IPs resolved<br/>to device UUIDs?}
+    SBC -->|No| FAIL_DEV([Fail: device IP not found<br/>Ensure device is discovered &amp; managed])
+    SBC -->|Yes| SC
+
+    SC["Step C — Check already-provisioned state<br/>GET /dna/intent/api/v1/sda/provisionDevices<br/>    ?siteId=&lt;_site_uuid&gt;&amp;limit=500<br/>Build _already_provisioned_ids list<br/>Build networkDeviceId → record.id map for PUT payload"]
+    SC --> SD
+
+    SD{"For each target device:<br/>already provisioned?"}
+    SD -->|Not provisioned| SD_POST["Add to _provision_payload<br/>{ networkDeviceId, siteId }"]
+    SD -->|Already provisioned<br/>+ force_reprovision=true| SD_PUT["Add to _reprovision_payload<br/>{ id, networkDeviceId, siteId }"]
+    SD -->|Already provisioned<br/>+ force_reprovision=false| SD_SKIP["Add to _skipped_ips<br/>Log skip message"]
+
+    SD_POST --> SE
+    SD_PUT --> SE
+    SD_SKIP --> SE
+
+    SE{"Any devices<br/>to submit?"}
+    SE -->|No — all skipped| SG
+
+    SE -->|POST payload non-empty| SE_POST["Submit POST provision request<br/>POST /dna/intent/api/v1/sda/provisionDevices<br/>Body: _provision_payload<br/>Returns async taskId → _provision_task_id"]
+    SE -->|PUT payload non-empty| SE_PUT["Submit PUT re-provision request<br/>PUT /dna/intent/api/v1/sda/provisionDevices<br/>Body: _reprovision_payload (includes id)<br/>Returns async taskId → _reprovision_task_id"]
+
+    SE_POST --> SF
+    SE_PUT --> SF
+
+    SF["Step F — Poll async task(s) to completion<br/>GET /dna/intent/api/v1/task/&lt;taskId&gt;<br/>Retry until endTime defined or isError=true<br/>(POST task + PUT task polled independently)"]
+    SF --> SFC{"Task(s)<br/>successful?"}
+    SFC -->|isError=true| FAIL_TASK([Fail: provisioning task error<br/>failureReason reported in play output])
+    SFC -->|endTime defined| SG
+
+    SG["Step G — Summary per site<br/>Status: SUCCESS / FAILURE / SKIPPED<br/>New (POST): N device(s)<br/>Reprov (PUT): N device(s)<br/>Skipped: N device(s) — already provisioned<br/>POST/PUT task IDs + progress logged"]
+    SG --> SH
+
+    SH["Step H — Query &amp; display child task results<br/>Extract child task UUIDs from parent task progress field<br/>GET /dna/intent/api/v1/task/&lt;childId&gt; for each<br/>Display per-device hostname + provisioning status"]
+    SH --> MORE{More sites<br/>to process?}
+    MORE -->|Yes| SA
+    MORE -->|No| DONE([Done])
+
+    style FAIL_AUTH fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_JSON fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_MAP  fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_SITE fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_DEV  fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_TASK fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE      fill:#27ae60,color:#fff,stroke:#1e8449
+    style START     fill:#2980b9,color:#fff,stroke:#1a5276
+    style S4        fill:#f39c12,color:#fff,stroke:#d68910

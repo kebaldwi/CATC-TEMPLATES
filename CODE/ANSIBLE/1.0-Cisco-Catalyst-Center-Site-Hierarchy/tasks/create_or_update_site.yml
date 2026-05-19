@@ -1,0 +1,283 @@
+---
+# =============================================================================
+# tasks/create_or_update_site.yml
+#
+# Processes ONE entry from site_configs_list.
+# Loop variable: site_config  (set by the include_tasks loop in
+#                              site_hierarchy.yml Phase B)
+#
+# Credentials are NOT declared here — they are inherited from the play-level
+# module_defaults block in site_hierarchy.yml:
+#   cisco.catalystcenter.{sites_info,areas,buildings,floors}
+#   all receive catalystcenter_* params automatically.
+#
+# site_id_map is a play-scope fact updated with set_fact after each CREATE so
+# the next include_tasks iteration can look up the UUID of a just-created parent
+# before creating a child.  This is why include_tasks is used instead of a
+# plain `loop:` — set_fact inside a loop only takes effect after the loop ends,
+# but set_fact inside include_tasks takes effect immediately, before the next
+# iteration runs.
+#
+# API paths exercised:
+#   Create area    → POST /dna/intent/api/v1/areas
+#   Update area    → PUT  /dna/intent/api/v1/areas/{id}
+#   Create building→ POST /dna/intent/api/v2/buildings
+#   Update building→ PUT  /dna/intent/api/v2/buildings/{id}
+#   Create floor   → POST /dna/intent/api/v2/floors    (cisco.catalystcenter.floors, no id: → POST)
+#   Update floor   → PUT  /dna/intent/api/v2/floors/{id}
+#   ID resolution  → GET  /dna/intent/api/v1/sites?nameHierarchy=<path>
+# =============================================================================
+
+# ── Step 1: Extract scalars from the site_config dict ────────────────────────
+# site_config.site_type      → "area" | "building" | "floor"
+# site_config.site.<type>    → the typed sub-dict with name, parent_name, ...
+- name: "Extract type / name / parent  | {{ site_config.site_type }}"
+  set_fact:
+    _type:   "{{ site_config.site_type }}"
+    _name:   "{{ site_config.site[site_config.site_type].name }}"
+    _parent: "{{ site_config.site[site_config.site_type].parent_name }}"
+
+- name: "DEBUG | Step 1 — type={{ _type }}  name={{ _name }}  parent={{ _parent }}"
+  debug:
+    msg:
+      type:   "{{ _type }}"
+      name:   "{{ _name }}"
+      parent: "{{ _parent }}"
+  when: catc_debug | default(false) | bool
+
+# ── Step 2: Derive full path, parent UUID, existence flag ────────────────────
+# These cannot be set in the same task as Step 1 because Ansible resolves all
+# set_fact values in a single template pass — _type/_name/_parent would be
+# undefined if referenced in the same task.
+- name: "Derive path / IDs / exists  | {{ _parent }}/{{ _name }}"
+  set_fact:
+    _path:      "{{ _parent + '/' + _name }}"
+    _parent_id: "{{ site_id_map.get(_parent, '') }}"
+    _exists:    "{{ (_parent + '/' + _name) in site_id_map }}"
+    _site_id:   "{{ site_id_map.get(_parent + '/' + _name, '') }}"
+
+- name: "DEBUG | Step 2 — path={{ _path }}  parent_id={{ _parent_id }}  exists={{ _exists }}  site_id={{ _site_id }}"
+  debug:
+    msg:
+      path:      "{{ _path }}"
+      parent_id: "{{ _parent_id }}"
+      exists:    "{{ _exists }}"
+      site_id:   "{{ _site_id }}"
+  when: catc_debug | default(false) | bool
+
+# =============================================================================
+# AREAS
+# =============================================================================
+
+# ── CREATE new area ───────────────────────────────────────────────────────────
+# POST /dna/intent/api/v1/areas
+# parentId  = UUID of the parent site (must already be in site_id_map).
+# No id: supplied → the action plugin's exists() returns False → POST fires.
+- name: "Area     | CREATE | {{ _path }}"
+  cisco.catalystcenter.areas:
+    state:    present
+    name:     "{{ _name }}"
+    parentId: "{{ _parent_id }}"
+  register: _area_create
+  when:
+    - _type == 'area'
+    - not _exists
+
+- name: "DEBUG | Area CREATE result"
+  debug:
+    var: _area_create
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'area'
+    - not _exists
+
+# ── UPDATE existing area ──────────────────────────────────────────────────────
+# PUT /dna/intent/api/v1/areas/{id}
+# Supplying id: makes the action plugin call get_object_by_id → issues PUT.
+# Result is "Object already present" when name/parentId haven't changed.
+- name: "Area     | UPDATE | {{ _path }}"
+  cisco.catalystcenter.areas:
+    state:    present
+    id:       "{{ _site_id }}"
+    name:     "{{ _name }}"
+    parentId: "{{ _parent_id }}"
+  register: _area_update
+  when:
+    - _type == 'area'
+    - _exists
+
+- name: "DEBUG | Area UPDATE result"
+  debug:
+    var: _area_update
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'area'
+    - _exists
+
+# =============================================================================
+# BUILDINGS
+# =============================================================================
+
+# ── CREATE new building ───────────────────────────────────────────────────────
+# POST /dna/intent/api/v2/buildings
+- name: "Building | CREATE | {{ _path }}"
+  cisco.catalystcenter.buildings:
+    state:     present
+    name:      "{{ _name }}"
+    parentId:  "{{ _parent_id }}"
+    address:   "{{ site_config.site.building.address }}"
+    country:   "{{ site_config.site.building.country }}"
+    latitude:  "{{ site_config.site.building.latitude }}"
+    longitude: "{{ site_config.site.building.longitude }}"
+  register: _building_create
+  when:
+    - _type == 'building'
+    - not _exists
+
+- name: "DEBUG | Building CREATE result"
+  debug:
+    var: _building_create
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'building'
+    - not _exists
+
+# ── UPDATE existing building ──────────────────────────────────────────────────
+# PUT /dna/intent/api/v2/buildings/{id}
+- name: "Building | UPDATE | {{ _path }}"
+  cisco.catalystcenter.buildings:
+    state:     present
+    id:        "{{ _site_id }}"
+    name:      "{{ _name }}"
+    parentId:  "{{ _parent_id }}"
+    address:   "{{ site_config.site.building.address }}"
+    country:   "{{ site_config.site.building.country }}"
+    latitude:  "{{ site_config.site.building.latitude }}"
+    longitude: "{{ site_config.site.building.longitude }}"
+  register: _building_update
+  when:
+    - _type == 'building'
+    - _exists
+
+- name: "DEBUG | Building UPDATE result"
+  debug:
+    var: _building_update
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'building'
+    - _exists
+
+# =============================================================================
+# FLOORS
+# =============================================================================
+
+# ── CREATE new floor ──────────────────────────────────────────────────────────
+# POST /dna/intent/api/v2/floors  (cisco.catalystcenter.floors, no id: → POST)
+# parentId (UUID of the parent building) is looked up from site_id_map.
+# Uses the same module as UPDATE for consistency; no id: causes the action
+# plugin to POST rather than PUT.
+# Note: numeric fields (floorNumber/width/length/height) are passed as
+# Jinja2 expressions so the module's own argspec coerces them to the
+# correct type — avoiding the MalformedRequest raised by cisco.dnac.site
+# when nested dict values are rendered as strings by Ansible's templating.
+- name: "Floor    | CREATE | {{ _path }}"
+  cisco.catalystcenter.floors:
+    state:          present
+    name:           "{{ _name }}"
+    parentId:       "{{ _parent_id }}"
+    rfModel:        "{{ site_config.site.floor.rf_model }}"
+    unitsOfMeasure: "{{ site_config.site.floor.units_of_measure }}"
+    floorNumber:    "{{ site_config.site.floor.floor_number | int }}"
+    width:          "{{ site_config.site.floor.width | float }}"
+    length:         "{{ site_config.site.floor.length | float }}"
+    height:         "{{ site_config.site.floor.height | float }}"
+  register: _floor_create
+  when:
+    - _type == 'floor'
+    - not _exists
+
+- name: "DEBUG | Floor CREATE result"
+  debug:
+    var: _floor_create
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'floor'
+    - not _exists
+
+# ── UPDATE existing floor ─────────────────────────────────────────────────────
+# PUT /dna/intent/api/v2/floors/{id}
+# Both id: (floor UUID) and parentId: (building UUID) are required for updates.
+- name: "Floor    | UPDATE | {{ _path }}"
+  cisco.catalystcenter.floors:
+    state:          present
+    id:             "{{ _site_id }}"
+    name:           "{{ _name }}"
+    parentId:       "{{ _parent_id }}"
+    rfModel:        "{{ site_config.site.floor.rf_model }}"
+    unitsOfMeasure: "{{ site_config.site.floor.units_of_measure }}"
+    floorNumber:    "{{ site_config.site.floor.floor_number }}"
+    width:          "{{ site_config.site.floor.width }}"
+    length:         "{{ site_config.site.floor.length }}"
+    height:         "{{ site_config.site.floor.height }}"
+  register: _floor_update
+  when:
+    - _type == 'floor'
+    - _exists
+
+- name: "DEBUG | Floor UPDATE result"
+  debug:
+    var: _floor_update
+  when:
+    - catc_debug | default(false) | bool
+    - _type == 'floor'
+    - _exists
+
+# =============================================================================
+# POST-CREATE: resolve the new site's UUID via sites_info
+# =============================================================================
+#
+# The CREATE modules return a taskId (async operation), NOT the new site UUID.
+# We must query sites_info to obtain the UUID before the next iteration runs —
+# a child site needs its parent's UUID as parentId.
+#
+# retries + until provides resilience: CatC may take a few seconds to commit
+# the newly created site before it becomes visible in GET /v1/sites.
+#
+- name: "Query ID for newly created {{ _type }}  | {{ _path }}"
+  # GET /dna/intent/api/v1/sites?nameHierarchy=<path>
+  cisco.catalystcenter.sites_info:
+    nameHierarchy: "{{ _path }}"
+  register: _new_site_info
+  until: >-
+    _new_site_info.catalyst_response is defined and
+    _new_site_info.catalyst_response.response is defined and
+    _new_site_info.catalyst_response.response | length > 0
+  retries: 10
+  delay: 3
+  when: not _exists
+
+- name: "DEBUG | New site query response"
+  debug:
+    var: _new_site_info
+  when:
+    - catc_debug | default(false) | bool
+    - not _exists
+
+# ── Add new UUID to site_id_map ───────────────────────────────────────────────
+# Because this is inside include_tasks (not a plain loop), this set_fact takes
+# effect immediately: the NEXT iteration of the include_tasks loop sees the
+# updated map, making the UUID available as parentId for any children.
+- name: "Add {{ _path }} to site_id_map"
+  set_fact:
+    site_id_map: >-
+      {{ site_id_map | combine(
+           { _path: _new_site_info.catalyst_response.response[0].id }
+         ) }}
+  when: not _exists
+
+- name: "DEBUG | site_id_map after update"
+  debug:
+    var: site_id_map
+  when:
+    - catc_debug | default(false) | bool
+    - not _exists

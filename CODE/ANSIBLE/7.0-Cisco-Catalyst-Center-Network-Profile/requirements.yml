@@ -1,0 +1,16 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Network-Profile
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Requires Cisco Catalyst Center >= 2.3.7.9 (network_profile_switching_workflow_manager)
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Python pip requirement (install separately):
+#   pip install dnacentersdk>=2.11.0
+#
+# Modules used:
+#   cisco.dnac.network_profile_switching_workflow_manager — creates/updates
+#     switching network profiles and assigns them to sites with optional
+#     Day-N and onboarding templates
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"

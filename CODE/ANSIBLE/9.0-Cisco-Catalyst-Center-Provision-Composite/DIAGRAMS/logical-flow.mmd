@@ -1,0 +1,65 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Load settings.json<br/>lookup('file') -&gt; from_json -&gt; assert<br/>DayNTemplateNames under network_profile"]
+    A --> B{Deploy entries<br/>found?}
+    B -->|No| FAIL_A([Fail: no deploy<br/>entries found])
+    B -->|Yes| C
+
+    C["Authenticate to CatC<br/>POST /auth/token -&gt; JWT"]
+    C --> D
+
+    D(["For each template entry"])
+    D --> E
+
+    E["Step A - Template list<br/>GET .../template<br/>?projectNames=project<br/>sort versionsInfo by versionTime DESC<br/>→ builds _template_version_map"]
+    E --> F{Template<br/>found in map?}
+    F -->|No| FAIL_B([Fail: template<br/>not found in project])
+    F -->|Yes| G
+
+    G["Step B - Template detail<br/>GET .../template/rootId<br/>extracts containingTemplates"]
+    G --> H{Member templates<br/>attached?}
+    H -->|No| FAIL_C([Fail: no member<br/>templates attached])
+    H -->|Yes| I
+
+    I["Step C - Device UUIDs<br/>GET .../network-device<br/>?managementIpAddress=ip<br/>builds _device_uuid_map"]
+    I --> J{All target IPs<br/>resolved?}
+    J -->|No| FAIL_D([Fail: device<br/>not found in CatC])
+    J -->|Yes| K
+
+    K["Step D - Build payload<br/>memberTemplateDeployInfo<br/>version UUIDs + params<br/>copyingConfig: true"]
+    K --> L
+
+    L(["Per-device loop"])
+    L --> M
+
+    M["Step E - Deploy<br/>config_template_deploy_v2<br/>POST .../deploy<br/>returns taskId per device"]
+    M --> N{More<br/>devices?}
+    N -->|Yes| L
+    N -->|No| O
+
+    O["Step F - Poll tasks<br/>GET /task/taskId<br/>until endTime OR isError"]
+    O --> P{Any task<br/>isError = true?}
+    P -->|Yes| FAIL_E([Fail: isError=true<br/>+ failureReason])
+    P -->|No| Q
+
+    Q["Step F2 - Extract result<br/>regex-parse deploymentId +<br/>failureReason from progress<br/>empty failureReason → SUCCESS"]
+    Q --> QF{Any device<br/>failureReason<br/>non-empty?}
+    QF -->|Yes| FAIL_F([Fail: push failure<br/>+ failureReason])
+    QF -->|No| R
+
+    R["Step G - Summary<br/>template, site, tasks,<br/>deploymentIds, results"]
+    R --> S{More template<br/>entries?}
+    S -->|Yes| D
+    S -->|No| DONE
+
+    DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_C fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_D fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_E fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_F fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

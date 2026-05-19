@@ -1,0 +1,12 @@
+# Python pip dependencies for 10.0-Backup-My-Configs
+# Install with: pip install -r requirements.txt
+#
+# NOTE: ansible-pylibssh requires libssh to be installed first (macOS: brew install libssh)
+# and must be built with the correct compiler flags pointing at the Homebrew headers:
+#   CFLAGS="-I/opt/homebrew/include" LDFLAGS="-L/opt/homebrew/lib" pip install ansible-pylibssh
+# ansible-pylibssh is the preferred SSH backend for ansible.netcommon network_cli connections.
+# Without it, paramiko is used as a fallback but fails with "transport shut down or saw EOF"
+# on Python 3.13 when opening interactive PTY shells to Cisco IOS-XE/NX-OS devices.
+
+paramiko>=2.11
+ansible-pylibssh>=1.4.0

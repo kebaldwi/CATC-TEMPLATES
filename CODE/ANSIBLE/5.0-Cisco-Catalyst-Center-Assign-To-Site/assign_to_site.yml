@@ -1,0 +1,140 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Assign Devices to Site in Catalyst Center from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+  vars:
+    DEBUG: "{{ lookup('env', 'DEBUG') | default(false) | bool }}"
+
+  module_defaults:
+    cisco.dnac.site_info:
+      dnac_host: "{{ dnac_host }}"
+      dnac_username: "{{ dnac_username }}"
+      dnac_password: "{{ dnac_password }}"
+      dnac_verify: "{{ dnac_verify }}"
+      dnac_port: "{{ dnac_port }}"
+      dnac_version: "{{ dnac_version }}"
+      dnac_debug: "{{ dnac_debug }}"
+    cisco.dnac.assign_device_to_site:
+      dnac_host: "{{ dnac_host }}"
+      dnac_username: "{{ dnac_username }}"
+      dnac_password: "{{ dnac_password }}"
+      dnac_verify: "{{ dnac_verify }}"
+      dnac_port: "{{ dnac_port }}"
+      dnac_version: "{{ dnac_version }}"
+      dnac_debug: "{{ dnac_debug }}"
+
+  tasks:
+
+    # ── Step 1: Load input data ───────────────────────────────────────────────
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: Load settings input JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: Validate that project key exists in input data
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "Input JSON must contain a non-empty 'project' list."
+        success_msg: "Input data loaded — {{ settings_data.project | length }} entries found."
+
+    # ── Step 2: Build per-site assignment map ─────────────────────────────────
+    #
+    # Group IPs by their target site path (reconstructed from split hierarchy
+    # fields) so we can look up the site UUID once per unique site and call
+    # assign_device_to_site once per site.
+    #
+    - name: Build per-site assignment map
+      set_fact:
+        site_device_map: >-
+          {%- set ns = namespace(result={}) -%}
+          {%- for entry in settings_data.project -%}
+            {%- if entry.device_list -%}
+              {%- set ips = entry.device_list.split(',') | map('trim') | list -%}
+              {%- set parent = entry.HierarchyParent | default('Global') -%}
+              {%- set area   = entry.HierarchyArea   | default('') -%}
+              {%- set bldg   = entry.HierarchyBldg   | default('') -%}
+              {%- set floor  = entry.HierarchyFloor  | default('') -%}
+              {%- if floor -%}
+                {%- set site = parent + '/' + area + '/' + bldg + '/' + floor -%}
+              {%- elif bldg -%}
+                {%- set site = parent + '/' + area + '/' + bldg -%}
+              {%- elif area -%}
+                {%- set site = parent + '/' + area -%}
+              {%- else -%}
+                {%- set site = parent -%}
+              {%- endif -%}
+              {%- if site in ns.result -%}
+                {%- set ns.result = ns.result | combine({site: ns.result[site] + ips}) -%}
+              {%- else -%}
+                {%- set ns.result = ns.result | combine({site: ips}) -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: --DEBUG-- Per-site assignment map
+      when: DEBUG
+      debug:
+        msg: "{{ site_device_map }}"
+
+    - name: Validate assignment map is non-empty
+      assert:
+        that: site_device_map | length > 0
+        fail_msg: "No entries with device_list found in input JSON."
+        success_msg: "{{ site_device_map | length }} site(s) to assign devices to."
+
+    # ── Step 3: Look up site UUID for each target site ────────────────────────
+    - name: "Look up site UUIDs"
+      cisco.dnac.site_info:
+        name: "{{ item.key }}"
+      loop: "{{ site_device_map | dict2items }}"
+      register: site_info_results
+
+    - name: --DEBUG-- Site info results
+      when: DEBUG
+      debug:
+        msg: "{{ site_info_results }}"
+
+    # ── Step 4: Assign devices to their site ─────────────────────────────────
+    - name: Assign devices to site
+      cisco.dnac.assign_device_to_site:
+        siteId: "{{ item.dnac_response.response[0].id }}"
+        device: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for ip in site_device_map[item.item.key] -%}
+            {%- set ns.result = ns.result + [{'ip': ip}] -%}
+          {%- endfor -%}
+          {{ ns.result }}
+      loop: "{{ site_info_results.results }}"
+      loop_control:
+        label: "{{ item.item.key }}"
+      register: assignment_results
+
+    - name: --DEBUG-- Assignment results
+      when: DEBUG
+      debug:
+        msg: "{{ assignment_results }}"
+
+    # ── Step 5: Summary ────────────────────────────────────────────────────────
+    - name: Site assignment complete
+      debug:
+        msg:
+          - "Device-to-site assignment submitted successfully"
+          - "Sites processed: {{ site_device_map.keys() | list | join(', ') }}"
+          - "Total devices assigned: {{ site_device_map.values() | map('length') | sum }}"

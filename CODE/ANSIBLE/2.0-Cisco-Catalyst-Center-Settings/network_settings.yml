@@ -1,0 +1,367 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Apply Network Settings from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+
+  module_defaults:
+    # cisco.catalystcenter modules accept catalystcenter_* connection params
+    # via module_defaults.  YAML anchor (&catc_auth) injected into every module.
+    cisco.catalystcenter.sites_info: &catc_auth
+      catalystcenter_host:     "{{ catc_host }}"
+      catalystcenter_username: "{{ catc_username }}"
+      catalystcenter_password: "{{ catc_password }}"
+      catalystcenter_verify:   "{{ catc_verify }}"
+      catalystcenter_port:     "{{ catc_port }}"
+      catalystcenter_version:  "{{ catc_version }}"
+      catalystcenter_debug:    "{{ catc_debug }}"
+
+  tasks:
+
+    # ── Step 1: Load input data ───────────────────────────────────────────────
+    # Resolve the settings_json_path to an absolute path.
+    # Absolute paths (starting with /) pass through unchanged;
+    # relative paths are resolved from the playbook directory.
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: "DEBUG | Resolved JSON path"
+      debug:
+        var: _resolved_json_path
+      when: catc_debug | default(false) | bool
+
+    - name: Load settings input JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: "DEBUG | settings_data (raw JSON)"
+      debug:
+        var: settings_data
+      when: catc_debug | default(false) | bool
+
+    - name: Validate that project key exists in input data
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "Input JSON must contain a non-empty 'project' list."
+        success_msg: "Input data loaded — {{ settings_data.project | length }} entries found."
+
+    # ── Step 2: Derive site names from hierarchy fields ───────────────────────
+    #
+    # Each settings.json entry uses four positional fields to identify the
+    # target site.  The deepest non-null level determines the site path:
+    #
+    #   HierarchyFloor set  → Parent/Area/Bldg/Floor
+    #   HierarchyBldg set   → Parent/Area/Bldg
+    #   HierarchyArea set   → Parent/Area
+    #   (none set)          → HierarchyParent  (e.g. "Global")
+    #
+    # Sample (BGP_EVPN/Settings/settings.json):
+    #
+    #   Entry 0: HierarchyParent=Global,       Area=null  → "Global"
+    #   Entry 1: HierarchyParent=Global,       Area=PODS  → "Global/PODS"
+    #   Entry 2: HierarchyParent=Global/PODS,  Area=POD 0,
+    #            Bldg=Building P0, Floor=Floor 1           → "Global/PODS/POD 0/Building P0/Floor 1"
+    #
+    - name: Build site name list from entries
+      set_fact:
+        site_names: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for entry in settings_data.project -%}
+            {%- if entry.HierarchyFloor -%}
+              {%- set s = entry.HierarchyParent + '/' + entry.HierarchyArea + '/' + entry.HierarchyBldg + '/' + entry.HierarchyFloor -%}
+            {%- elif entry.HierarchyBldg -%}
+              {%- set s = entry.HierarchyParent + '/' + entry.HierarchyArea + '/' + entry.HierarchyBldg -%}
+            {%- elif entry.HierarchyArea -%}
+              {%- set s = entry.HierarchyParent + '/' + entry.HierarchyArea -%}
+            {%- else -%}
+              {%- set s = entry.HierarchyParent -%}
+            {%- endif -%}
+            {%- set ns.result = ns.result + [s] -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: "DEBUG | Site names derived from settings.json"
+      debug:
+        var: site_names
+      when: catc_debug | default(false) | bool
+
+    # ── Step 3: Authenticate (required for raw URI PUT — see NCND01243 note) ──
+    #
+    # We intentionally retain the raw PUT to /dna/intent/api/v1/network/{siteId}
+    # because that composite-settings endpoint does NOT trigger the NCND01243
+    # cross-validation that fires when clientAndEndpoint_aaa is sent alone to the
+    # disaggregated PUT /dna/intent/api/v1/sites/{id}/aaaSettings endpoint.
+    # The token obtained here is used exclusively in tasks/apply_network_settings.yml.
+    # All cisco.catalystcenter module calls authenticate via module_defaults above.
+    #
+    - name: Authenticate with Catalyst Center
+      ansible.builtin.uri:
+        url: "https://{{ catc_host }}:{{ catc_port }}/dna/system/api/v1/auth/token"
+        method: POST
+        user: "{{ catc_username }}"
+        password: "{{ catc_password }}"
+        force_basic_auth: true
+        validate_certs: "{{ catc_verify }}"
+        status_code: 200
+      register: _auth_response
+      no_log: true
+
+    - name: Store auth token
+      set_fact:
+        _catc_token: "{{ _auth_response.json.Token }}"
+      no_log: true
+
+    # ── Step 3b: Resolve all site IDs via collection module ───────────────────
+    #
+    # cisco.catalystcenter.sites_info fetches all sites when called without a
+    # name filter — identical to the Phase A pattern used in playbook 1.0.
+    # Credentials are injected from module_defaults; no manual token handling.
+    # Response key: catalystcenter_response.response[] with siteNameHierarchy + id.
+    #
+    - name: "Phase A — Fetch all sites from Catalyst Center"
+      cisco.catalystcenter.sites_info:
+      register: _all_sites_info
+
+    - name: "DEBUG | _all_sites_info (raw)"
+      debug:
+        msg:
+          response_count: "{{ _all_sites_info.catalyst_response.response | default([]) | length }}"
+          response:        "{{ _all_sites_info.catalyst_response.response | default([]) }}"
+      when: catc_debug | default(false) | bool
+
+    - name: Build site name-to-ID map
+      # The cisco.catalystcenter.sites_info module returns data under
+      # catalyst_response (not catalystcenter_response), and the hierarchy
+      # attribute is nameHierarchy (not siteNameHierarchy).
+      # The Global root entry has no nameHierarchy key — selectattr filters it
+      # out so it never appears as an empty-string key in the map.
+      set_fact:
+        _site_id_map: >-
+          {%- set sites = _all_sites_info.catalyst_response.response | default([]) -%}
+          {%- set named = sites | selectattr('nameHierarchy', 'defined') | list -%}
+          {{ dict(
+               named | map(attribute='nameHierarchy')
+               | zip(named | map(attribute='id'))
+             ) }}
+
+    - name: "DEBUG | Site name-to-ID map"
+      debug:
+        var: _site_id_map
+      when: catc_debug | default(false) | bool
+
+    # ── Step 4: Build v1 network settings payload list ────────────────────────
+    #
+    # Maps settings.json snake_case fields to the camelCase field names required
+    # by PUT /dna/intent/api/v1/network/{siteId}.  Null/absent fields are omitted
+    # so Catalyst Center leaves those settings untouched at the target site.
+    # Because fields are built selectively, only clientAndEndpoint_aaa can be
+    # sent without network_aaa, avoiding the NCND01243 shared-secret conflict.
+    #
+    # Field mapping (settings.json → v1 API):
+    #   dhcp_server                         → dhcpServer (array)
+    #   dns_server.domain_name              → dnsServer.domainName
+    #   dns_server.primary_ip_address       → dnsServer.primaryIpAddress
+    #   dns_server.secondary_ip_address     → dnsServer.secondaryIpAddress
+    #   ntp_server                          → ntpServer (array)
+    #   timezone                            → timezone
+    #   message_of_the_day.banner_message   → messageOfTheday.bannerMessage
+    #   message_of_the_day.retain_…banner   → messageOfTheday.retainExistingBanner
+    #   snmp_server.configure_dnac_ip       → snmpServer.configureDnacIP
+    #   snmp_server.ip_addresses            → snmpServer.ipAddresses
+    #   syslog_server.configure_dnac_ip     → syslogServer.configureDnacIP
+    #   syslog_server.ip_addresses          → syslogServer.ipAddresses
+    #   netflow_server.configure_dnac_ip    → netflowcollector.configureDnacIP
+    #   netflow_server.ip_address           → netflowcollector.ipAddress
+    #   netflow_server.port                 → netflowcollector.port
+    #   network_aaa.server_type             → network_aaa.servers
+    #   network_aaa.primary_server_address  → network_aaa.ipAddress
+    #   network_aaa.pan_address             → network_aaa.network
+    #   network_aaa.protocol                → network_aaa.protocol
+    #   network_aaa.shared_secret           → network_aaa.sharedSecret
+    #   client_and_endpoint_aaa.server_type → clientAndEndpoint_aaa.servers
+    #   client_and_endpoint_aaa.primary_…   → clientAndEndpoint_aaa.ipAddress
+    #   client_and_endpoint_aaa.pan_address → clientAndEndpoint_aaa.network
+    #   client_and_endpoint_aaa.protocol    → clientAndEndpoint_aaa.protocol
+    #   client_and_endpoint_aaa.shared_…   → clientAndEndpoint_aaa.sharedSecret
+    #
+    - name: Build v1 network settings payload list
+      set_fact:
+        network_settings_list: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for i in range(settings_data.project | length) -%}
+            {%- set entry   = settings_data.project[i] -%}
+            {%- set sname   = site_names[i] -%}
+            {%- set raw     = entry.network_settings -%}
+            {%- set payload = {} -%}
+            {%- if raw.dhcp_server -%}
+              {%- set payload = payload | combine({'dhcpServer': raw.dhcp_server}) -%}
+            {%- endif -%}
+            {%- if raw.dns_server -%}
+              {%- set dns = {} -%}
+              {%- if raw.dns_server.domain_name -%}
+                {%- set dns = dns | combine({'domainName': raw.dns_server.domain_name}) -%}
+              {%- endif -%}
+              {%- if raw.dns_server.primary_ip_address -%}
+                {%- set dns = dns | combine({'primaryIpAddress': raw.dns_server.primary_ip_address}) -%}
+              {%- endif -%}
+              {%- if raw.dns_server.secondary_ip_address -%}
+                {%- set dns = dns | combine({'secondaryIpAddress': raw.dns_server.secondary_ip_address}) -%}
+              {%- endif -%}
+              {%- if dns | length > 0 -%}
+                {%- set payload = payload | combine({'dnsServer': dns}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.ntp_server -%}
+              {%- set payload = payload | combine({'ntpServer': raw.ntp_server}) -%}
+            {%- endif -%}
+            {%- if raw.timezone -%}
+              {%- set payload = payload | combine({'timezone': raw.timezone}) -%}
+            {%- endif -%}
+            {%- if raw.message_of_the_day -%}
+              {%- set motd = {} -%}
+              {%- if raw.message_of_the_day.banner_message -%}
+                {%- set motd = motd | combine({'bannerMessage': raw.message_of_the_day.banner_message}) -%}
+              {%- endif -%}
+              {%- if raw.message_of_the_day.retain_existing_banner is defined and raw.message_of_the_day.retain_existing_banner is not none -%}
+                {%- set motd = motd | combine({'retainExistingBanner': raw.message_of_the_day.retain_existing_banner | string | lower}) -%}
+              {%- endif -%}
+              {%- if motd | length > 0 -%}
+                {%- set payload = payload | combine({'messageOfTheday': motd}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.syslog_server -%}
+              {%- set syslog = {'ipAddresses': []} -%}
+              {%- if raw.syslog_server.ip_addresses is defined and raw.syslog_server.ip_addresses -%}
+                {%- set syslog = syslog | combine({'ipAddresses': raw.syslog_server.ip_addresses}) -%}
+              {%- endif -%}
+              {%- if raw.syslog_server.configure_dnac_ip is defined and raw.syslog_server.configure_dnac_ip is not none -%}
+                {%- set syslog = syslog | combine({'configureDnacIP': raw.syslog_server.configure_dnac_ip}) -%}
+              {%- endif -%}
+              {%- if syslog | length > 0 -%}
+                {%- set payload = payload | combine({'syslogServer': syslog}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.snmp_server -%}
+              {%- set snmp = {'ipAddresses': []} -%}
+              {%- if raw.snmp_server.ip_addresses is defined and raw.snmp_server.ip_addresses -%}
+                {%- set snmp = snmp | combine({'ipAddresses': raw.snmp_server.ip_addresses}) -%}
+              {%- endif -%}
+              {%- if raw.snmp_server.configure_dnac_ip is defined and raw.snmp_server.configure_dnac_ip is not none -%}
+                {%- set snmp = snmp | combine({'configureDnacIP': raw.snmp_server.configure_dnac_ip}) -%}
+              {%- endif -%}
+              {%- if snmp | length > 0 -%}
+                {%- set payload = payload | combine({'snmpServer': snmp}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.netflow_server -%}
+              {%- set netflow = {} -%}
+              {%- if raw.netflow_server.ip_address is defined and raw.netflow_server.ip_address -%}
+                {%- set netflow = netflow | combine({'ipAddress': raw.netflow_server.ip_address}) -%}
+              {%- endif -%}
+              {%- if raw.netflow_server.port is defined and raw.netflow_server.port is not none -%}
+                {%- set netflow = netflow | combine({'port': raw.netflow_server.port | int}) -%}
+              {%- endif -%}
+              {%- if raw.netflow_server.configure_dnac_ip is defined and raw.netflow_server.configure_dnac_ip is not none -%}
+                {%- set netflow = netflow | combine({'configureDnacIP': raw.netflow_server.configure_dnac_ip}) -%}
+              {%- endif -%}
+              {%- if netflow | length > 0 -%}
+                {%- set payload = payload | combine({'netflowcollector': netflow}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.network_aaa -%}
+              {%- set naaa = {} -%}
+              {%- if raw.network_aaa.server_type -%}
+                {%- set naaa = naaa | combine({'servers': raw.network_aaa.server_type}) -%}
+              {%- endif -%}
+              {%- if raw.network_aaa.primary_server_address -%}
+                {%- set naaa = naaa | combine({'ipAddress': raw.network_aaa.primary_server_address}) -%}
+              {%- endif -%}
+              {%- if raw.network_aaa.pan_address -%}
+                {%- set naaa = naaa | combine({'network': raw.network_aaa.pan_address}) -%}
+              {%- endif -%}
+              {%- if raw.network_aaa.protocol -%}
+                {%- set naaa = naaa | combine({'protocol': raw.network_aaa.protocol}) -%}
+              {%- endif -%}
+              {%- if raw.network_aaa.shared_secret -%}
+                {%- set naaa = naaa | combine({'sharedSecret': raw.network_aaa.shared_secret}) -%}
+              {%- endif -%}
+              {%- if naaa | length > 0 -%}
+                {%- set payload = payload | combine({'network_aaa': naaa}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if raw.client_and_endpoint_aaa -%}
+              {%- set caaa = {} -%}
+              {%- if raw.client_and_endpoint_aaa.server_type -%}
+                {%- set caaa = caaa | combine({'servers': raw.client_and_endpoint_aaa.server_type}) -%}
+              {%- endif -%}
+              {%- if raw.client_and_endpoint_aaa.primary_server_address -%}
+                {%- set caaa = caaa | combine({'ipAddress': raw.client_and_endpoint_aaa.primary_server_address}) -%}
+              {%- endif -%}
+              {%- if raw.client_and_endpoint_aaa.pan_address -%}
+                {%- set caaa = caaa | combine({'network': raw.client_and_endpoint_aaa.pan_address}) -%}
+              {%- endif -%}
+              {%- if raw.client_and_endpoint_aaa.protocol -%}
+                {%- set caaa = caaa | combine({'protocol': raw.client_and_endpoint_aaa.protocol}) -%}
+              {%- endif -%}
+              {%- if raw.client_and_endpoint_aaa.shared_secret -%}
+                {%- set caaa = caaa | combine({'sharedSecret': raw.client_and_endpoint_aaa.shared_secret}) -%}
+              {%- endif -%}
+              {%- if caaa | length > 0 -%}
+                {%- set payload = payload | combine({'clientAndEndpoint_aaa': caaa}) -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if payload | length > 0 -%}
+              {%- set sid = _site_id_map.get(sname, '') -%}
+              {%- set ns.result = ns.result + [{'site_name': sname, 'site_id': sid, 'settings': payload}] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: "DEBUG | v1 network settings payload list"
+      debug:
+        var: network_settings_list
+      when: catc_debug | default(false) | bool
+
+    - name: Validate network settings list is non-empty
+      assert:
+        that: network_settings_list | length > 0
+        fail_msg: "No network settings found in input JSON — check that fields are non-null."
+        success_msg: "{{ network_settings_list | length }} site(s) have settings to apply."
+
+    # ── Step 5: Apply network settings per site (via include_tasks) ───────────
+    #
+    # include_tasks is used instead of a plain loop so that any set_fact inside
+    # the task file takes effect before the next iteration runs — the same
+    # pattern used by playbook 1.0's tasks/create_or_update_site.yml.
+    #
+    # tasks/apply_network_settings.yml:
+    #   - Validates the site UUID is non-empty (guards against unknown site paths)
+    #   - Issues PUT /dna/intent/api/v1/network/{siteId} via ansible.builtin.uri
+    #     using _catc_token obtained in Step 3 (NCND01243 bypass — see README)
+    #
+    - name: Apply network settings per site
+      include_tasks: tasks/apply_network_settings.yml
+      loop: "{{ network_settings_list }}"
+      loop_control:
+        loop_var: site_config
+        label: "{{ site_config.site_name }}"
+
+    # ── Step 6: Summary ───────────────────────────────────────────────────────
+    - name: Network settings applied
+      debug:
+        msg:
+          - "Network settings applied successfully"
+          - "Sites configured: {{ network_settings_list | map(attribute='site_name') | list | join(', ') }}"

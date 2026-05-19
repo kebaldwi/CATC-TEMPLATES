@@ -1,0 +1,40 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Load settings.json<br/>lookup('file') -&gt; from_json"]
+    A --> B{project key<br/>exists &amp; non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| C
+
+    C["Step 2 - Build discovery config list<br/>Walk each entry in settings.json<br/>filter: device_list is non-null<br/>reconstruct site path from hierarchy fields<br/>split comma-separated IPs → ip_address_list"]
+    C --> D{any entries<br/>with device_list?}
+    D -->|No| FAIL_B([Fail: no device_list<br/>entries found])
+    D -->|Yes| E
+
+    E["Per entry discovery config:<br/>discovery_type: MULTI RANGE<br/>protocol_order: ssh<br/>retry: 5, timeout: 3<br/>preferred_mgmt_ip_method: UseLoopBack<br/>net_conf_port: 830"]
+    E --> F
+
+    F["Reference global credentials<br/>by description (from 3.0):<br/>CLI-net-admin, RO, RW,<br/>NETCONF-netadmin"]
+    F --> G
+
+    G(["For each discovery config entry"])
+    G --> H
+
+    H["Step 3 - Submit discovery job<br/>discovery_workflow_manager<br/>state: merged<br/>discovery_name = deepest hierarchy field"]
+    H --> I{CatC reachability<br/>check per IP}
+    I -->|Reachable via SSH| J["Device added to<br/>CatC inventory"]
+    I -->|Reachable via Telnet| J
+    I -->|Reachable via HTTPS| J
+    I -->|Unreachable| K["Device marked<br/>unreachable in CatC<br/>(not a playbook failure)"]
+    J --> L{More<br/>entries?}
+    K --> L
+    L -->|Yes| G
+    L -->|No| M
+
+    M["Step 4 - Summary<br/>discovery jobs submitted<br/>reachable / unreachable counts"]
+    M --> DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
