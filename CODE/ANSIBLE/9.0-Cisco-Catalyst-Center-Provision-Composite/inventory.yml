@@ -1,0 +1,57 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+      # ── Catalyst Center Connection ─────────────────────────────────────────
+      dnac_host: 198.18.129.100
+      dnac_port: 443
+      dnac_version: 2.3.7.9   # CatC appliance is 2.3.7.10; SDK max known is 2.3.7.9
+      dnac_verify: false
+      dnac_debug: false
+      dnac_log: true
+      dnac_log_level: INFO
+
+      # ── Input file ────────────────────────────────────────────────────────
+      # Path to the settings.json-formatted input file.  DayNTemplateNames
+      # entries with DeployTemplate: true are read from network_profile.
+      # Composite templates are identified by their presence in Catalyst Center
+      # as composite (isComposite=true).
+      # Can be overridden at runtime: -e settings_json_path=myfile.json
+      settings_json_path: "../../../../Projects/BGP_EVPN/Settings/settings.json"
+
+      # ── Composite Deploy Behaviour ────────────────────────────────────────
+      # Set true to push the template to devices even when they appear in-sync
+      # with the current template version and parameter values.
+      force_push_template: true
+
+      # ── Per-Member Template Parameters ───────────────────────────────────
+      # Optional dict keyed by member template name.  Each value is a flat
+      # dict of Jinja2 parameter name → value pairs passed in the
+      # memberTemplateDeploymentInfo[].targetInfo[].params field.
+      #
+      # If a member template requires no parameters (or uses device-scoped
+      # resource parameters instead), leave its entry as {} or omit it.
+      #
+      # Example override at runtime:
+      #   -e '{"member_template_params": {"FABRIC-VRF.j2": {"vrf_name": "PROD"}}}'
+      #
+      member_template_params: {}
+
+      # ── Async Task Polling ────────────────────────────────────────────────
+      # Maximum number of status polls after submitting a deploy task.
+      task_poll_retries: 36
+      # Seconds between each status poll.
+      task_poll_delay: 5

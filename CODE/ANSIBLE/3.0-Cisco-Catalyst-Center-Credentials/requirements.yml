@@ -1,0 +1,34 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Credentials
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used (cisco.dnac 6.7.0+):
+#
+#   cisco.dnac.device_credential_workflow_manager  (added in 6.7.0)
+#     — idempotent create/update/delete of CLI + SNMP v2c r/w credentials
+#       and site assignment in a single call.  Handles UUID lookup internally.
+#     — https://galaxy.ansible.com/ui/repo/published/cisco/dnac/content/module/device_credential_workflow_manager/
+#
+#   cisco.dnac.global_credential_info
+#     — query existing credentials by credentialSubType (NETCONF only)
+#
+#   cisco.dnac.netconf_credential
+#     — create / update NETCONF global credentials
+#       (not supported by device_credential_workflow_manager)
+#
+#   cisco.dnac.global_credential_delete
+#     — delete any credential by UUID (NETCONF deletion)
+#
+# Connection parameter names: dnac_host / dnac_port / dnac_username /
+#   dnac_password / dnac_verify / dnac_version / dnac_debug
+# Requires: dnacentersdk >= 2.11.0 (installed: 2.11.2)
+# Response key: dnac_response
+
+collections:
+  - name: cisco.dnac
+    version: ">=6.7.0"
+
+  # ansible.utils is required by the cisco.dnac action plugins
+  # for argument-spec validation (AnsibleArgSpecValidator).
+  - name: ansible.utils
+    version: ">=2.11.0"

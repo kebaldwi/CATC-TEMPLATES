@@ -1,0 +1,12 @@
+# Ansible Galaxy collection requirements for 10.0-Backup-My-Configs
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.ios.ios_command   — collect running-config from IOS-XE devices
+#   cisco.nxos.nxos_command — collect running-config from NX-OS devices
+
+collections:
+  - name: cisco.ios
+    version: ">=4.0.0"
+  - name: cisco.nxos
+    version: ">=5.0.0"

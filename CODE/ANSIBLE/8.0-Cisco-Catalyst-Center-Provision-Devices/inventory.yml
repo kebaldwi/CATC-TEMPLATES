@@ -1,0 +1,44 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+      # ── Catalyst Center Connection ─────────────────────────────────────────
+      dnac_host: 198.18.129.100
+      dnac_port: 443
+      dnac_version: 2.3.7.9   # CatC appliance is 2.3.7.10; SDK max known is 2.3.7.9
+      dnac_verify: false
+      dnac_debug: false
+      dnac_log: true
+      dnac_log_level: INFO
+
+      # ── Input file ────────────────────────────────────────────────────────
+      # Path to the settings.json-formatted input file.  Every project entry
+      # with a non-empty device_list will have those devices provisioned to
+      # the site path built from the HierarchyParent/Area/Bldg/Floor fields.
+      # Can be overridden at runtime: -e settings_json_path=myfile.json
+      settings_json_path: "../../../../Projects/BGP_EVPN/Settings/settings.json"
+
+      # ── Provision Behaviour ───────────────────────────────────────────────
+      # Set true to re-provision devices that are already provisioned at the
+      # target site.  When false (default), already-provisioned devices are
+      # skipped and reported in the summary without triggering an API call.
+      force_reprovision: false
+
+      # ── Async Task Polling ────────────────────────────────────────────────
+      # Maximum number of status polls after submitting a provision task.
+      task_poll_retries: 36
+      # Seconds between each status poll.
+      task_poll_delay: 5

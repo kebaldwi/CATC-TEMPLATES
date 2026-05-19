@@ -1,0 +1,49 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+      # ── Catalyst Center Connection ─────────────────────────────────────────
+      # catc_* variables are passed through module_defaults to every
+      # cisco.catalystcenter module call (sites_info / areas / buildings / floors).
+      # Note: cisco.catalystcenter has no log/log_level parameters;
+      #       set catc_debug: true for verbose catalystcentersdk tracing.
+      catc_host:    198.18.129.100
+      catc_port:    443
+      catc_version: "2.3.7.9"   # CatC appliance is 2.3.7.10; SDK max is 2.3.7.9
+      catc_verify:  false
+      catc_debug:   false
+
+      # ── Input file ────────────────────────────────────────────────────────
+      # Single source of truth for site hierarchy structure and building
+      # address.  HierarchyParent / HierarchyArea / HierarchyBldg /
+      # HierarchyFloor / HierarchyBldgAddress fields are synthesised into a
+      # normalised site_data structure at runtime.
+      # Override at runtime: -e settings_json_path=path/to/settings.json
+      settings_json_path: "../../../../Projects/BGP_EVPN/Settings/settings.json"
+
+      # ── Building defaults (used when address/lat/lon not in JSON) ─────────
+      default_building_address: "1 Cisco Way, San Jose, CA 95134"
+      default_building_country: "United States"
+      default_building_latitude: 37.3382
+      default_building_longitude: -121.8863
+
+      # ── Floor defaults (used when rf_model/dimensions not in JSON) ──────────
+      default_floor_rf_model: "Cubes And Walled Offices"
+      default_floor_units_of_measure: "feet"
+      default_floor_width: 100
+      default_floor_length: 100
+      default_floor_height: 10
+      default_floor_number: 1

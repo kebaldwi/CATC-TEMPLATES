@@ -1,0 +1,59 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 -- Load settings.json<br/>settings_json_path resolved to absolute<br/>lookup file -> from_json"]
+    A --> B{project key<br/>exists and non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| S
+
+    S["Step 1b -- Synthesize site_data.project<br/>Build area/building/floor records from<br/>HierarchyParent/Area/Bldg/Floor fields<br/>deduplicate paths first-seen wins"]
+    S --> C
+
+    C["Step 2 -- Build lookup maps<br/>site_type_map: path -> area/building/floor<br/>building_info_map: path -> address/lat/lon<br/>floor_info_map: path -> rf_model/units_of_measure/dims/number"]
+    C --> D
+
+    D["Step 3 -- Expand all unique paths<br/>Walk each HierarchyName<br/>emit all prefix sub-paths depth >= 2<br/>deduplicate -> sort shallow-first"]
+    D --> F
+
+    F["Step 4 -- Pre-compute site_configs_list<br/>one typed dict per path<br/>site_type + site: name, parent_name, metadata"]
+    F --> PA
+
+    PA["Phase A -- Fetch all existing sites<br/>GET /dna/intent/api/v1/sites<br/>Build site_id_map: nameHierarchy -> UUID<br/>plus explicit Global -> global-site UUID"]
+    PA --> STATE{state?}
+
+    STATE -->|merged| PB
+    STATE -->|deleted| PC_DEL
+
+    PB["Phase B -- include_tasks per site<br/>depth-sorted<br/>tasks/create_or_update_site.yml"]
+    PB --> PB_CHECK{path in<br/>site_id_map?}
+
+    PB_CHECK -->|No - new site| PB_CREATE["CREATE via typed module<br/>POST /v1/areas or<br/>POST /v2/buildings or<br/>POST /v2/floors (unitsOfMeasure required)<br/>parentId from site_id_map"]
+    PB_CHECK -->|Yes - exists| PB_UPDATE["UPDATE via typed module<br/>PUT /v1/areas/id or<br/>PUT /v2/buildings/id or<br/>PUT /v2/floors/id"]
+
+    PB_CREATE --> PB_QUERY["GET /v1/sites?nameHierarchy=path<br/>retry until site appears<br/>site_id_map[path] = new UUID"]
+    PB_QUERY --> PB_MORE
+    PB_UPDATE --> PB_MORE
+
+    PB_MORE{more sites?}
+    PB_MORE -->|Yes| PB
+    PB_MORE -->|No| DONE
+
+    PC_DEL["Phase C -- include_tasks per site<br/>reversed deepest first<br/>tasks/delete_site.yml"]
+    PC_DEL --> PD_CHECK{path in<br/>site_id_map?}
+
+    PD_CHECK -->|Yes| PD_DEL["DELETE via typed module<br/>DELETE /v1/areas/id or<br/>DELETE /v2/buildings/id or<br/>DELETE /v2/floors/id"]
+    PD_CHECK -->|No - skip| PD_MORE
+    PD_DEL --> PD_MORE
+
+    PD_MORE{more sites?}
+    PD_MORE -->|Yes| PC_DEL
+    PD_MORE -->|No| DONE
+
+    DONE([Summary -- N sites provisioned/deleted])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style PA fill:#8e44ad,color:#fff,stroke:#6c3483
+    style PB fill:#16a085,color:#fff,stroke:#0e6655
+    style PC_DEL fill:#e74c3c,color:#fff,stroke:#c0392b

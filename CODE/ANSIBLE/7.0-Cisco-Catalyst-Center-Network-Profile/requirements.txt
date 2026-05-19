@@ -1,0 +1,7 @@
+# Python pip dependencies for Cisco-Catalyst-Center-Network-Profile
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Requires Cisco Catalyst Center >= 2.3.7.9 (network_profile_switching_workflow_manager)
+# Install with: pip install -r requirements.txt
+
+dnacentersdk>=2.11.0
+ansible>=2.15

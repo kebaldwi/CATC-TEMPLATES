@@ -1,0 +1,18 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Site-Hierarchy
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.catalystcenter.sites_info  — query existing sites → site_id_map
+#   cisco.catalystcenter.areas       — create / update / delete area sites
+#   cisco.catalystcenter.buildings   — create / update / delete building sites
+#   cisco.catalystcenter.floors      — create / update / delete floor sites
+
+collections:
+  - name: cisco.catalystcenter
+    version: "2.1.3"
+
+  # ansible.utils is required by the cisco.catalystcenter action plugins
+  # for argument-spec validation (AnsibleArgSpecValidator).
+  - name: ansible.utils
+    version: ">=2.11.0"

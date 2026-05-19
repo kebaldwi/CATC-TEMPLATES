@@ -1,0 +1,51 @@
+---
+# =============================================================================
+# tasks/netconf_delete.yml
+#
+# Deletes ONE NETCONF global credential from Catalyst Center.
+# Loop variable: netconf_config  (set by the include_tasks loop in
+#                                 credentials.yml Phase D)
+#
+# Connection params are inherited from the play-level module_defaults block in
+# credentials.yml (cisco.dnac.global_credential_delete: *catc_auth).
+#
+# Credentials absent from netconf_id_map (not found in the Phase D query)
+# are silently skipped via `when: _nc_exists` — safe to run repeatedly.
+#
+# WARNING: Deleting a NETCONF credential that is still assigned to sites or
+# actively used by discovered devices will interrupt device management in
+# Catalyst Center.  Confirm all devices are decommissioned before running
+# with state=deleted.
+#
+# API path:
+#   DELETE /dna/intent/api/v1/global-credential/{globalCredentialId}
+# =============================================================================
+
+# ── Step 1: Derive existence flag and UUID ────────────────────────────────────
+- name: "Derive exists / id  | {{ netconf_config.description }}"
+  set_fact:
+    _nc_exists: "{{ netconf_config.description in netconf_id_map }}"
+    _nc_id:     "{{ netconf_id_map.get(netconf_config.description, '') }}"
+
+- name: "DEBUG | Step 1 — exists={{ _nc_exists }}  id={{ _nc_id }}"
+  debug:
+    msg:
+      description: "{{ netconf_config.description }}"
+      exists:      "{{ _nc_exists }}"
+      id:          "{{ _nc_id }}"
+  when: catc_debug | default(false) | bool
+
+# ── DELETE NETCONF credential ─────────────────────────────────────────────────
+# DELETE /dna/intent/api/v1/global-credential/{globalCredentialId}
+- name: "NETCONF | DELETE  | {{ netconf_config.description }}"
+  cisco.dnac.global_credential_delete:
+    globalCredentialId: "{{ _nc_id }}"
+  register: _nc_delete
+  when: _nc_exists
+
+- name: "DEBUG | DELETE result  | {{ netconf_config.description }}"
+  debug:
+    var: _nc_delete
+  when:
+    - catc_debug | default(false) | bool
+    - _nc_exists

@@ -1,0 +1,76 @@
+flowchart TD
+    %% ── Input Sources ──────────────────────────────────────────────────────
+    SJ[("settings.json\n(per-playbook)")]:::source
+    GH[("GitHub Repo\nimanassypov/CatalystCenter-BGP-EVPN-VXLAN\nbranch: main")]:::source
+
+    %% ── Playbook 1.0 ───────────────────────────────────────────────────────
+    P1["1.0 — Site Hierarchy\nsite_hierarchy.yml"]:::infra
+    R1(["CatC Site Hierarchy\nAreas / Buildings / Floors"]):::resource
+
+    %% ── Playbook 2.0 ───────────────────────────────────────────────────────
+    P2["2.0 — Network Settings\nnetwork_settings.yml"]:::infra
+    R2(["CatC Network Settings\nDNS · NTP · Syslog · SNMP · AAA"]):::resource
+
+    %% ── Playbook 3.0 ───────────────────────────────────────────────────────
+    P3["3.0 — Device Credentials\ncredentials.yml"]:::infra
+    R3(["CatC Global Credentials\nCLI · SNMP v2c RO/RW · NETCONF"]):::resource
+
+    %% ── Playbook 4.0 ───────────────────────────────────────────────────────
+    P4["4.0 — Device Discovery\ndevice_discovery.yml"]:::infra
+    R4(["CatC Device Inventory\n6 × managed devices"]):::resource
+
+    %% ── Playbook 5.0 ───────────────────────────────────────────────────────
+    P5["5.0 — Assign to Site\nassign_to_site.yml"]:::infra
+    R5(["Devices → Site\nGlobal/PODS/POD0/Building P0/Floor 1"]):::resource
+
+    %% ── Playbook 6.0 ───────────────────────────────────────────────────────
+    P6["6.0 — Template GitOps\nansible-git-catc.yml"]:::gitops
+    R6(["CatC Template Project\nBuilding P0\n19 member + 1 composite template"]):::resource
+
+    %% ── Playbook 7.0 ───────────────────────────────────────────────────────
+    P7["7.0 — Network Profile\nnetwork_profile.yml"]:::infra
+    R7(["CatC Network Profile\nBGP-EVPN-Switching\nBound to site · Day-N templates attached"]):::resource
+
+    %% ── Playbook 8.0 ───────────────────────────────────────────────────────
+    P_prov["8.0 — Provision Devices\nprovision_devices.yml"]:::deploy
+    R_prov(["CatC Provisioned State\nSite settings pushed · SDA record created\n6 fabric nodes provisioned"]):::resource
+
+    %% ── Playbook 9.0 ───────────────────────────────────────────────────────
+    P8["9.0 — Deploy Composite\ndeploy_composite_template.yml"]:::deploy
+    FINAL(["✓ Day-N Config Applied\nAll 6 fabric nodes\nBGP EVPN · VRF · Loopbacks\nL3OUT · NVE · NAC · Overlay"]):::done
+
+    %% ── Must-run-before annotations ────────────────────────────────────────
+    DEP45["Sites must exist\nbefore assigning devices"]:::constraint
+    DEP56["Devices must be in\ninventory before assigning"]:::constraint
+    DEP78["Profile must exist\nbefore provisioning"]:::constraint
+    DEP89["Devices must be\nprovisioned before deployment"]:::constraint
+    DEP68["Templates must be\nsynced before deployment"]:::constraint
+
+    %% ── Wiring ─────────────────────────────────────────────────────────────
+    SJ --> P1 --> R1
+    R1 --> P2
+    SJ --> P2 --> R2
+    R2 --> P3
+    SJ --> P3 --> R3
+    R3 --> P4
+    SJ --> P4 --> R4
+    R4 --> DEP56 --> P5
+    R1 --> DEP45 --> P5
+    SJ --> P5 --> R5
+    GH --> P6 --> R6
+    R5 --> P7
+    SJ --> P7 --> R7
+    R7 --> DEP78 --> P_prov
+    SJ --> P_prov --> R_prov
+    R_prov --> DEP89 --> P8
+    R6 --> DEP68 --> P8
+    SJ --> P8 --> FINAL
+
+    %% ── Styles ─────────────────────────────────────────────────────────────
+    classDef infra   fill:#2980b9,color:#fff,stroke:#1a5276
+    classDef gitops  fill:#8e44ad,color:#fff,stroke:#6c3483
+    classDef deploy  fill:#1abc9c,color:#fff,stroke:#148f77
+    classDef source  fill:#4a4a4a,color:#fff,stroke:#2c2c2c
+    classDef resource fill:#e67e22,color:#fff,stroke:#ba6012
+    classDef done    fill:#27ae60,color:#fff,stroke:#1e8449
+    classDef constraint fill:#f8f9fa,color:#555,stroke:#ccc,stroke-dasharray:4 4

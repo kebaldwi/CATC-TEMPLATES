@@ -1,0 +1,537 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Build Catalyst Center Site Hierarchy from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+
+  module_defaults:
+    # Credential defaults applied to every cisco.catalystcenter module call.
+    # YAML anchor (&catc_auth) on the first entry; alias (*catc_auth) reuses
+    # the identical dict for the remaining three modules — zero duplication.
+    # The catalystcenter_* names are recognised aliases for the module's short
+    # host / username / password / verify / api_port / version / debug params.
+    # Note: cisco.catalystcenter has no log/log_level params; use
+    #       catc_debug: true for verbose SDK tracing instead.
+    # The cisco.catalystcenter collection handles the actual auth — it sends 
+    # a POST /dna/system/api/v1/auth/token request using the username/password 
+    # to obtain a Bearer token, then injects that token into all subsequent API
+    # calls automatically. The playbook never manages the token lifecycle directly.
+    cisco.catalystcenter.sites_info: &catc_auth
+      catalystcenter_host:     "{{ catc_host }}"
+      catalystcenter_username: "{{ catc_username }}"
+      catalystcenter_password: "{{ catc_password }}"
+      catalystcenter_verify:   "{{ catc_verify }}"
+      catalystcenter_port:     "{{ catc_port }}"
+      catalystcenter_version:  "{{ catc_version }}"
+      catalystcenter_debug:    "{{ catc_debug }}"
+    cisco.catalystcenter.areas:     *catc_auth
+    cisco.catalystcenter.buildings: *catc_auth
+    cisco.catalystcenter.floors:    *catc_auth
+
+  tasks:
+
+    # ── Step 1: Load and synthesise settings.json → site_data ────────────────
+    # settings.json is the single source of truth for site hierarchy.
+    # Each entry's HierarchyParent / HierarchyArea / HierarchyBldg /
+    # HierarchyFloor / HierarchyBldgAddress fields are synthesised into a
+    # normalised site_data structure (same schema as devices.json) so that
+    # Steps 2 – 4 are completely agnostic to the upstream format.
+    #
+    # One settings.json entry synthesises up to three site_data entries:
+    #   HierarchyParent/HierarchyArea              → SiteType: area
+    #   HierarchyParent/HierarchyArea/HierarchyBldg → SiteType: building
+    #                                                  (address = HierarchyBldgAddress)
+    #   HierarchyParent/HierarchyArea/HierarchyBldg/HierarchyFloor
+    #                                               → SiteType: floor
+    #
+    # Duplicate paths across multiple entries are de-duplicated (first-seen wins)
+    # so Steps 2 / 3 never encounter the same HierarchyName twice.
+    # Intermediate parent areas (e.g. Global/PODS from HierarchyParent) are
+    # expanded automatically in Step 3 — no explicit entry required here.
+    #
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: "DEBUG | Resolved settings JSON path"
+      debug:
+        var: _resolved_json_path
+      when: catc_debug | default(false) | bool
+
+    - name: Load settings JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: "DEBUG | settings_data (raw JSON)"
+      debug:
+        var: settings_data
+      when: catc_debug | default(false) | bool
+
+    - name: Validate that project key exists in settings data
+      # Fail fast with a helpful message if the JSON has the wrong shape,
+      # rather than producing cryptic errors deeper in the playbook.
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "settings.json must contain a non-empty 'project' list."
+        success_msg: "Settings data loaded — {{ settings_data.project | length }} entries found."
+
+    - name: Synthesise site_data from settings.json hierarchy fields
+      # Iterates every settings.json entry and emits up to three normalised
+      # project entries (area / building / floor) keyed by full HierarchyName.
+      # Duplicate paths are skipped on a first-seen basis.
+      # The resulting site_data dict uses the same schema expected by Steps 2–4.
+      set_fact:
+        site_data: >-
+          {%- set ns = namespace(entries=[], seen=[]) -%}
+          {%- for entry in settings_data.project -%}
+            {%- set parent = entry.HierarchyParent | default('Global') -%}
+            {%- set area   = entry.HierarchyArea   | default('') -%}
+            {%- set bldg   = entry.HierarchyBldg   | default('') -%}
+            {%- set floor  = entry.HierarchyFloor  | default('') -%}
+            {%- set addr   = entry.HierarchyBldgAddress | default('') -%}
+
+            {%- if area -%}
+              {%- set area_path = parent + '/' + area -%}
+              {%- if area_path not in ns.seen -%}
+                {%- set ns.seen    = ns.seen    + [area_path] -%}
+                {%- set ns.entries = ns.entries + [{'HierarchyName': area_path, 'SiteType': 'area'}] -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if area and bldg -%}
+              {%- set bldg_path = parent + '/' + area + '/' + bldg -%}
+              {%- if bldg_path not in ns.seen -%}
+                {%- set ns.seen = ns.seen + [bldg_path] -%}
+                {%- if addr -%}
+                  {%- set ns.entries = ns.entries + [{'HierarchyName': bldg_path, 'SiteType': 'building', 'address': addr}] -%}
+                {%- else -%}
+                  {%- set ns.entries = ns.entries + [{'HierarchyName': bldg_path, 'SiteType': 'building'}] -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if area and bldg and floor -%}
+              {%- set floor_path = parent + '/' + area + '/' + bldg + '/' + floor -%}
+              {%- if floor_path not in ns.seen -%}
+                {%- set ns.seen    = ns.seen    + [floor_path] -%}
+                {%- set ns.entries = ns.entries + [{'HierarchyName': floor_path, 'SiteType': 'floor'}] -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ {'project': ns.entries} }}
+
+    - name: "DEBUG | site_data (synthesised from settings.json)"
+      debug:
+        var: site_data
+      when: catc_debug | default(false) | bool
+
+    # ── Step 2: Build lookup maps from the JSON entries ───────────────────────
+    #
+    # site_type_map    : { "Global/X/Y": "area" | "building" | "floor" }
+    # building_info_map: { "Global/X/Y": { address, country, latitude, longitude } }
+    # floor_info_map   : { "Global/X/Y": { rf_model, width, length, height, floor_number } }
+    #
+    # Sample (BGP_EVPN/Settings/settings.json synthesised):
+    #
+    # site_type_map:
+    #   {
+    #     "Global/PODS":                           "area",
+    #     "Global/PODS/POD 0":                     "area",
+    #     "Global/PODS/POD 0/Building P0":         "building",
+    #     "Global/PODS/POD 0/Building P0/Floor 1": "floor"
+    #   }
+    #
+    # building_info_map:
+    #   {
+    #     "Global/PODS/POD 0/Building P0": {
+    #       "address":   "300 E Tasman Dr, Bldg 10, San Jose, CA 95134",
+    #       "country":   "United States",
+    #       "latitude":  37.3382,
+    #       "longitude": -121.9694
+    #     }
+    #   }
+    #
+    # floor_info_map:
+    #   {
+    #     "Global/PODS/POD 0/Building P0/Floor 1": {
+    #       "rf_model":     "Cubes And Walled Offices",
+    #       "width":        100,
+    #       "length":       100,
+    #       "height":       10,
+    #       "floor_number": 1
+    #     }
+    #   }
+    #
+    - name: Build typed lookup maps from JSON entries
+      # Three dicts are built in one set_fact to avoid three separate task round-trips.
+      # Each iterates site_data.project and indexes only entries with a matching SiteType.
+      # Inventory vars supply defaults for any optional fields absent from the JSON entry.
+      # These maps are keyed by the full HierarchyName path for O(1) lookup in Step 4.
+      set_fact:
+        site_type_map: >-
+          {%- set m = {} -%}
+          {%- for entry in site_data.project -%}
+            {%- if entry.SiteType is defined and entry.SiteType -%}
+              {%- set _ = m.update({entry.HierarchyName: entry.SiteType | lower}) -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ m }}
+
+        # building_info_map — one entry per path where SiteType == "building".
+        # All four fields are always present; missing JSON fields fall back to inventory defaults.
+        # Used in Step 4 to populate the building sub-dict passed to the module.
+        #
+        # Sample (BGP_EVPN/Settings/devices.json):
+        #   {
+        #     "Global/PODS/POD 0/Building P0": {
+        #       "address":   "1 Cisco Way, San Jose, CA 95134",  ← entry.address (HierarchyBldgAddress) or default_building_address
+        #       "country":   "United States",                   ← entry.country or default_building_country
+        #       "latitude":  37.3382,                           ← entry.latitude or default_building_latitude
+        #       "longitude": -121.8863                          ← entry.longitude or default_building_longitude
+        #     }
+        #   }
+        building_info_map: >-
+          {%- set m = {} -%}
+          {%- for entry in site_data.project -%}
+            {%- if entry.SiteType is defined and entry.SiteType | lower == 'building' -%}
+              {%- set info = {
+                'address'  : entry.address   | default(default_building_address),
+                'country'  : entry.country   | default(default_building_country),
+                'latitude' : entry.latitude  | default(default_building_latitude)  | float,
+                'longitude': entry.longitude | default(default_building_longitude) | float
+              } -%}
+              {%- set _ = m.update({entry.HierarchyName: info}) -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ m }}
+
+        # floor_info_map — one entry per path where SiteType == "floor".
+        # All five fields are always present; missing JSON fields fall back to inventory defaults.
+        # Used in Step 4 to populate the floor sub-dict passed to the module.
+        #
+        # Sample (BGP_EVPN/Settings/devices.json):
+        #   {
+        #     "Global/PODS/POD 0/Building P0/Floor 1": {
+        #       "rf_model":     "Cubes And Walled Offices",  ← entry.rfModel / rf_model or default_floor_rf_model
+        #       "width":        100,                         ← entry.width or default_floor_width
+        #       "length":       100,                         ← entry.length or default_floor_length
+        #       "height":       10,                          ← entry.height or default_floor_height
+        #       "floor_number": 1                            ← entry.floor_number or default_floor_number
+        #     }
+        #   }
+        floor_info_map: >-
+          {%- set m = {} -%}
+          {%- for entry in site_data.project -%}
+            {%- if entry.SiteType is defined and entry.SiteType | lower == 'floor' -%}
+              {%- set info = {
+                'rf_model'       : entry.rfModel       | default(entry.rf_model | default(default_floor_rf_model)),
+                'units_of_measure': entry.units_of_measure | default(default_floor_units_of_measure),
+                'width'          : entry.width         | default(default_floor_width)        | int,
+                'length'         : entry.length        | default(default_floor_length)       | int,
+                'height'         : entry.height        | default(default_floor_height)       | int,
+                'floor_number'   : entry.floor_number  | default(default_floor_number)       | int
+              } -%}
+              {%- set _ = m.update({entry.HierarchyName: info}) -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ m }}
+
+    - name: "DEBUG | site_type_map / building_info_map / floor_info_map"
+      debug:
+        msg:
+          site_type_map:     "{{ site_type_map }}"
+          building_info_map: "{{ building_info_map }}"
+          floor_info_map:    "{{ floor_info_map }}"
+      when: catc_debug | default(false) | bool
+
+    # ── Step 3: Generate all unique paths (including intermediates) ───────────
+    #
+    # Walk every HierarchyName, emit all prefix subpaths (depth >= 2), dedupe,
+    # then sort by path depth so parent sites are always created before children.
+    # "Global" (depth 1) is skipped — it always pre-exists in CatC.
+    #
+    # Sample (BGP_EVPN/Settings/settings.json synthesised):
+    #
+    # all_site_paths:
+    #   [
+    #     "Global/PODS",                           # depth 2 — area
+    #     "Global/PODS/POD 0",                     # depth 3 — area
+    #     "Global/PODS/POD 0/Building P0",         # depth 4 — building
+    #     "Global/PODS/POD 0/Building P0/Floor 1"  # depth 5 — floor
+    #   ]
+    #
+    - name: Collect all unique hierarchy paths including intermediate nodes
+      # The JSON only needs to list leaf paths; this task fills in any missing
+      # parent levels automatically.  Example: a single entry
+      # "Global/PODS/POD 0/Building P0/Floor 1" expands to all four sub-paths.
+      #
+      # Two-pass approach:
+      #   Pass 1 (inner loop)  — slice each HierarchyName at every depth >= 2
+      #                          and accumulate unique paths in ns.paths.
+      #   Pass 2 (outer range) — bucket ns.paths by depth (2..19) into ns.result,
+      #                          producing a list sorted shallow-first so CatC
+      #                          never receives a child before its parent exists.
+      set_fact:
+        all_site_paths: >-
+          {%- set ns = namespace(paths=[], result=[]) -%}
+          {%- for entry in site_data.project -%}
+            {%- set parts = entry.HierarchyName.split('/') -%}
+            {%- for depth in range(2, parts | length + 1) -%}
+              {%- set path = parts[:depth] | join('/') -%}
+              {%- if path not in ns.paths -%}
+                {%- set ns.paths = ns.paths + [path] -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          {%- for d in range(2, 20) -%}
+            {%- for p in ns.paths -%}
+              {%- if p.split('/') | length == d -%}
+                {%- set ns.result = ns.result + [p] -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: "DEBUG | all_site_paths (ordered)"
+      debug:
+        var: all_site_paths
+      when: catc_debug | default(false) | bool
+
+    - name: Display site paths to be provisioned ({{ all_site_paths | length }} total)
+      # Informational — shows the ordered path list before any API calls are made.
+      # For state=merged the list is shallow-first (parents created first).
+      # For state=deleted it will be reversed below (children deleted first).
+      debug:
+        msg: "{{ all_site_paths }}"
+
+    # ── Step 4: Pre-compute site config payload list ───────────────────────────
+    #
+    # Build site_configs_list — the depth-sorted list of per-site config dicts
+    # consumed by Phases A–C.  Each entry carries the full metadata so the
+    # include_tasks files can call the correct typed module (areas / buildings /
+    # floors) without re-examining the raw path on each iteration.
+    #
+    # Each entry has the shape:
+    #   { site_type: "area"|"building"|"floor",
+    #     site: { <type>: { name, parent_name, ...type-specific fields } } }
+    #
+    # Sample (BGP_EVPN/Settings/settings.json synthesised, two entries shown):
+    #
+    # site_configs_list:
+    #   [
+    #     {
+    #       "site_type": "area",
+    #       "site": { "area": { "name": "PODS", "parent_name": "Global" } }
+    #     },
+    #     {
+    #       "site_type": "area",
+    #       "site": { "area": { "name": "POD 0", "parent_name": "Global/PODS" } }
+    #     },
+    #     {
+    #       "site_type": "building",
+    #       "site": { "building": { "name": "Building P0",
+    #                               "parent_name": "Global/PODS/POD 0",
+        #                               "address":   "300 E Tasman Dr, Bldg 10, San Jose, CA 95134",
+    #                               "country":   "United States",
+    #                               "latitude":  37.3382,
+    #                               "longitude": -121.8863 } }
+    #     },
+    #     {
+    #       "site_type": "floor",
+    #       "site": { "floor": { "name": "Floor 1",
+    #                            "parent_name": "Global/PODS/POD 0/Building P0",
+    #                            "rf_model":     "Cubes And Walled Offices",
+    #                            "width":        100,
+    #                            "length":       100,
+    #                            "height":       10,
+    #                            "floor_number": 1 } }
+    #     }
+    #   ]
+    #
+    - name: Pre-compute site config payload list
+      # Ansible evaluates all vars: entries in a task in a single pass, so
+      # variables cannot reference siblings defined earlier in the same vars:
+      # block.  To work around this, the entire config list is pre-built here
+      # in one Jinja2 expression before the Phase B loop runs — every variable
+      # (site_name, site_parent, site_type, metadata) is resolved sequentially
+      # inside the template rather than across task-level vars: keys.
+      set_fact:
+        site_configs_list: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for path in all_site_paths -%}
+            {%- set site_name   = path.split('/')[-1] -%}
+            {%- set site_parent = path.split('/')[:-1] | join('/') -%}
+            {%- set name_upper  = site_name | upper -%}
+
+            {%- if path in site_type_map -%}
+              {%- set site_type = site_type_map[path] | trim -%}
+            {%- elif name_upper | regex_search('^(FLOOR|FL[-_ ]|FL[0-9]|F[0-9])') -%}
+              {%- set site_type = 'floor' -%}
+            {%- elif name_upper | regex_search('^(BUILDING|BLDG)') -%}
+              {%- set site_type = 'building' -%}
+            {%- else -%}
+              {%- set site_type = 'area' -%}
+            {%- endif -%}
+
+            {%- if site_type == 'building' -%}
+              {%- if path in building_info_map -%}
+                {%- set bld = building_info_map[path] -%}
+              {%- else -%}
+                {%- set bld = {'address': default_building_address, 'country': default_building_country, 'latitude': default_building_latitude | float, 'longitude': default_building_longitude | float} -%}
+              {%- endif -%}
+              {%- set payload = {'site_type': 'building', 'site': {'building': {'name': site_name, 'parent_name': site_parent, 'address': bld.address, 'country': bld.country, 'latitude': bld.latitude, 'longitude': bld.longitude}}} -%}
+            {%- elif site_type == 'floor' -%}
+              {%- if path in floor_info_map -%}
+                {%- set flr = floor_info_map[path] -%}
+              {%- else -%}
+                {%- set flr = {'rf_model': default_floor_rf_model, 'units_of_measure': default_floor_units_of_measure, 'width': default_floor_width | int, 'length': default_floor_length | int, 'height': default_floor_height | int, 'floor_number': default_floor_number | int} -%}
+              {%- endif -%}
+              {%- set payload = {'site_type': 'floor', 'site': {'floor': {'name': site_name, 'parent_name': site_parent, 'rf_model': flr.rf_model, 'units_of_measure': flr.units_of_measure, 'width': flr.width, 'length': flr.length, 'height': flr.height, 'floor_number': flr.floor_number}}} -%}
+            {%- else -%}
+              {%- set payload = {'site_type': 'area', 'site': {'area': {'name': site_name, 'parent_name': site_parent}}} -%}
+            {%- endif -%}
+
+            {%- set ns.result = ns.result + [payload] -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: "DEBUG | site_configs_list (full payload)"
+      debug:
+        var: site_configs_list
+      when: catc_debug | default(false) | bool
+
+    - name: Display computed site payloads
+      # Informational — shows the fully-resolved config dicts before any API
+      # calls are made, making it easy to spot wrong types or missing fields.
+      debug:
+        msg: "{{ site_configs_list }}"
+
+    # ── Phase A: Resolve all existing sites → build site_id_map ──────────────
+    #
+    # A single GET /dna/intent/api/v1/sites call retrieves all sites currently
+    # in Catalyst Center.  The response is indexed by nameHierarchy for O(1)
+    # parent-ID lookup in Phase B.
+    #
+    # Why this phase is mandatory:
+    #   Unlike cisco.dnac.site_workflow_manager, the individual cisco.catalystcenter
+    #   modules (areas, buildings, floors) have NO built-in idempotency by name.
+    #   The action plugin's get_object_by_name() always returns None — the module
+    #   can only detect an existing site if you supply its UUID via id:.
+    #   Without this lookup, every run would attempt to re-create every site.
+    #
+    # site_id_map  { "Global/PODS/POD 0/Building P0": "abc123-...", ... }
+    #
+    - name: "Phase A — Fetch all existing sites from Catalyst Center"
+      # GET /dna/intent/api/v1/sites (no filter → all existing sites)
+      # Response key on the registered variable: catalyst_response.response
+      # Note: limit/offset are defined as type=float in the action plugin argspec
+      # but the SDK check_type expects int — omit limit to avoid the mismatch
+      # (the CatC API server default returns all sites, sufficient for lab scale).
+      cisco.catalystcenter.sites_info:
+      register: catc_all_sites
+
+    - name: "DEBUG | catc_all_sites raw response"
+      debug:
+        var: catc_all_sites.catalyst_response
+      when: catc_debug | default(false) | bool
+
+    - name: "Phase A — Build initial site_id_map (nameHierarchy → UUID)"
+      # Keys every returned site by its full nameHierarchy path.
+      # After Phase B creates new sites, tasks/create_or_update_site.yml updates
+      # this map entry-by-entry so each new site's UUID is available to its
+      # children in later iterations of the same include_tasks loop.
+      #
+      # Note: the root Global site has no nameHierarchy field — it is added
+      # explicitly under the key "Global" so parentId lookups work for
+      # top-level areas (e.g. PODS whose parent_name is "Global").
+      vars:
+        _all_sites:  "{{ catc_all_sites.catalyst_response.response | default([]) }}"
+        _named_map:  "{{ _all_sites | selectattr('nameHierarchy', 'defined') | list
+                         | items2dict(key_name='nameHierarchy', value_name='id') }}"
+        _global_id:  "{{ (_all_sites | selectattr('type', 'equalto', 'global')
+                          | map(attribute='id') | list | first) | default('') }}"
+      set_fact:
+        site_id_map: "{{ _named_map | combine({'Global': _global_id}) }}"
+
+    - name: "Phase A — site_id_map ({{ site_id_map | length }} existing sites)"
+      debug:
+        msg: "{{ site_id_map }}"
+
+    # ── Phase B: Create / update sites (state=merged, default) ────────────────
+    #
+    # Processes each site in shallow-first (parent-before-child) order.
+    #
+    # include_tasks is used instead of a plain loop so that set_fact inside
+    # tasks/create_or_update_site.yml updates site_id_map BETWEEN iterations:
+    # after site N is created, its UUID is added to site_id_map before site N+1
+    # runs.  This satisfies the parentId requirement for any children at deeper
+    # levels — including the nested-area case where two consecutive entries are
+    # both areas but the second is a child of the first.
+    #
+    # A plain `loop:` on a single task cannot do this because set_fact inside a
+    # loop only takes effect after the ENTIRE loop completes.
+    #
+    # Per-site API calls (tasks/create_or_update_site.yml):
+    #   Site is NEW (not in site_id_map):
+    #     POST /dna/intent/api/v1/areas             (area)
+    #     POST /dna/intent/api/v2/buildings         (building)
+    #     POST /dna/intent/api/v2/floors            (floor)
+    #     GET  /dna/intent/api/v1/sites?nameHierarchy=<path>   ← ID resolution
+    #   Site EXISTS (in site_id_map):
+    #     PUT  /dna/intent/api/v1/areas/{id}        (area)
+    #     PUT  /dna/intent/api/v2/buildings/{id}    (building)
+    #     PUT  /dna/intent/api/v2/floors/{id}       (floor)
+    #
+    - name: "Phase B — Create/update sites ({{ site_configs_list | length }} total)"
+      include_tasks: tasks/create_or_update_site.yml
+      loop: "{{ site_configs_list }}"
+      loop_control:
+        loop_var: site_config
+        label: >-
+          {{ site_config.site[site_config.site_type].parent_name
+             }}/{{ site_config.site[site_config.site_type].name }}
+      when: (state | default('merged')) == 'merged'
+
+    # ── Phase C: Delete sites (state=deleted) ─────────────────────────────────
+    #
+    # Processes sites in deep-first (child-before-parent) order.
+    # CatC rejects deletion of a site that still has children, so the reversed
+    # list (deepest paths first) prevents dependency errors.
+    #
+    # Sites absent from site_id_map (not in CatC) are silently skipped inside
+    # tasks/delete_site.yml via a `when: _exists` guard — safe to re-run.
+    #
+    # Per-site API calls (tasks/delete_site.yml):
+    #   DELETE /dna/intent/api/v1/areas/{id}      (area)
+    #   DELETE /dna/intent/api/v2/buildings/{id}  (building)
+    #   DELETE /dna/intent/api/v2/floors/{id}     (floor)
+    #
+    - name: "Phase C — Delete sites ({{ site_configs_list | length }} total, children first)"
+      include_tasks: tasks/delete_site.yml
+      loop: "{{ site_configs_list | reverse | list }}"
+      loop_control:
+        loop_var: site_config
+        label: >-
+          {{ site_config.site[site_config.site_type].parent_name
+             }}/{{ site_config.site[site_config.site_type].name }}
+      when: (state | default('merged')) == 'deleted'
+
+    # ── Summary ───────────────────────────────────────────────────────────────
+    - name: Site hierarchy provisioning complete
+      # Final confirmation message — no API call, purely informational.
+      debug:
+        msg: >-
+          {{ 'Deleted' if (state | default('merged')) == 'deleted' else 'Successfully provisioned' }}
+          {{ all_site_paths | length }} site(s).

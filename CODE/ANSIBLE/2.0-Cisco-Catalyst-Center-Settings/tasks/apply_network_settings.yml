@@ -1,0 +1,136 @@
+---
+# =============================================================================
+# tasks/apply_network_settings.yml
+#
+# Applies v1 network settings for ONE site to Catalyst Center.
+# Loop variable: site_config  (set by the include_tasks loop in
+#                              network_settings.yml Step 7)
+#
+# Why raw URI instead of a cisco.catalystcenter module?
+# -------------------------------------------------------
+# Catalyst Center enforces NCND01243: when clientAndEndpoint_aaa is sent alone
+# (with network_aaa absent) via the disaggregated endpoint
+#   PUT /dna/intent/api/v1/sites/{id}/aaaSettings
+# CatC cross-checks the incoming sharedSecret against the empty legacy
+# aaa.network.server.* placeholder at the Global site and rejects the call.
+#
+# The composite-settings endpoint
+#   PUT /dna/intent/api/v1/network/{siteId}
+# does NOT apply the same cross-check.  Sending only clientAndEndpoint_aaa
+# (with network_aaa absent from the payload) succeeds without error.
+#
+# Credentials are NOT declared here — they are inherited from the play-level
+# module_defaults block in network_settings.yml.  site_config is the loop
+# variable supplied by the include_tasks loop in Step 7.
+#
+# Variables read from parent scope:
+#   site_config.site_name — full CatC site path (for labelling)
+#   site_config.site_id   — site UUID resolved from _site_id_map (Step 3b)
+#   site_config.settings  — camelCase settings payload (built in Step 4)
+#   _catc_token           — short-lived JWT obtained in Step 3
+#   catc_host / catc_port / catc_verify / catc_debug
+# =============================================================================
+
+# ── Step 1: Validate site ID is resolved ──────────────────────────────────────
+#
+# Guards against unknown site paths: if the site did not appear in
+# catalystcenter_response.response from sites_info (Phase A), its ID will be
+# an empty string and we fail fast with a clear message instead of sending a
+# PUT to /dna/intent/api/v1/network/ (no trailing ID).
+#
+- name: "Validate site ID resolved  | {{ site_config.site_name }}"
+  assert:
+    that: site_config.site_id | length > 0
+    fail_msg: >-
+      Site '{{ site_config.site_name }}' was not found in the Catalyst Center
+      site hierarchy (site_id is empty).  Ensure the site exists — run
+      playbook 1.0 (Site Hierarchy) before this playbook.
+    success_msg: "Site ID resolved: {{ site_config.site_id }}"
+
+- name: "DEBUG | site_config  | {{ site_config.site_name }}"
+  debug:
+    msg:
+      site_name: "{{ site_config.site_name }}"
+      site_id:   "{{ site_config.site_id }}"
+      settings:  "{{ site_config.settings }}"
+  when: catc_debug | default(false) | bool
+
+# ── Step 2: Apply settings via composite-settings endpoint ────────────────────
+#
+# PUT /dna/intent/api/v1/network/{siteId}
+# Catalyst Center responds 202 Accepted for async processing; 200 is also
+# accepted for synchronous completion present in some CatC versions.
+# Only keys present in site_config.settings are transmitted — absent/null
+# fields from settings.json are never sent, which is what permits
+# clientAndEndpoint_aaa to be submitted without network_aaa (NCND01243 bypass).
+#
+- name: "Apply network settings  | {{ site_config.site_name }}"
+  ansible.builtin.uri:
+    url: "https://{{ catc_host }}:{{ catc_port }}/dna/intent/api/v1/network/{{ site_config.site_id }}"
+    method: PUT
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      settings: "{{ site_config.settings }}"
+    validate_certs: "{{ catc_verify }}"
+    status_code:
+      - 200
+      - 202
+  register: _settings_result
+
+- name: "DEBUG | Apply result  | {{ site_config.site_name }}"
+  debug:
+    var: _settings_result
+  when: catc_debug | default(false) | bool
+
+# ── Step 3: Poll async execution status ───────────────────────────────────────
+#
+# PUT /dna/intent/api/v1/network/{siteId} responds 202 Accepted and includes an
+# executionStatusUrl in the JSON body.  Without polling this URL the playbook
+# declares success as soon as the request is filed, but the background CatC task
+# may still fail silently — resulting in no visible change in the UI.
+#
+# Poll GET {executionStatusUrl} with retries until status is SUCCESS or FAILURE,
+# then assert SUCCESS so the play fails fast with a useful error instead of
+# silently reporting success while leaving settings unchanged.
+#
+- name: "Extract execution status URL  | {{ site_config.site_name }}"
+  set_fact:
+    _exec_status_url: "{{ _settings_result.json.executionStatusUrl | default('') }}"
+
+- name: "DEBUG | Execution status URL  | {{ site_config.site_name }}"
+  debug:
+    var: _exec_status_url
+  when: catc_debug | default(false) | bool
+
+- name: "Poll execution status  | {{ site_config.site_name }}"
+  ansible.builtin.uri:
+    url: "https://{{ catc_host }}:{{ catc_port }}{{ _exec_status_url }}"
+    method: GET
+    headers:
+      X-Auth-Token: "{{ _catc_token }}"
+    validate_certs: "{{ catc_verify }}"
+    status_code: 200
+  register: _exec_poll
+  until: _exec_poll.json.status in ['SUCCESS', 'FAILURE']
+  retries: 12
+  delay: 5
+  when: _exec_status_url | length > 0
+
+- name: "DEBUG | Execution poll result  | {{ site_config.site_name }}"
+  debug:
+    var: _exec_poll
+  when:
+    - catc_debug | default(false) | bool
+    - _exec_status_url | length > 0
+
+- name: "Assert execution succeeded  | {{ site_config.site_name }}"
+  assert:
+    that: _exec_poll.json.status == 'SUCCESS'
+    fail_msg: >-
+      Network settings task FAILED for '{{ site_config.site_name }}'.
+      CatC execution status: {{ _exec_poll.json | to_json }}
+    success_msg: "Network settings successfully applied for '{{ site_config.site_name }}'."
+  when: _exec_status_url | length > 0

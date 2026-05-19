@@ -1,0 +1,12 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Assign-To-Site
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.dnac.site_info              — queries site UUID by site name
+#   cisco.dnac.assign_device_to_site  — assigns discovered devices to their
+#     designated site in the Catalyst Center hierarchy
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"

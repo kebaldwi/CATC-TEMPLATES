@@ -1,0 +1,32 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+all:
+  hosts:
+    catalyst_center:
+      ansible_host: localhost
+      ansible_connection: local
+      ansible_python_interpreter: "{{ ansible_playbook_python }}"
+
+      # ── Catalyst Center Connection ─────────────────────────────────────────
+      # catc_* variables are passed through module_defaults to every
+      # cisco.catalystcenter module call (sites_info / device_credential_workflow_manager).
+      # Note: cisco.catalystcenter has no log/log_level parameters;
+      #       set catc_debug: true for verbose catalystcentersdk tracing.
+      catc_host:    198.18.129.100
+      catc_port:    443
+      catc_version: "2.3.7.9"   # CatC appliance is 2.3.7.10; SDK max is 2.3.7.9
+      catc_verify:  false
+      catc_debug:   false
+
+      # ── Input file ────────────────────────────────────────────────────────
+      # Path to the settings.json-formatted input file.
+      # Can be overridden at runtime: -e settings_json_path=myfile.json
+      settings_json_path: "../../../../Projects/BGP_EVPN/Settings/settings.json"

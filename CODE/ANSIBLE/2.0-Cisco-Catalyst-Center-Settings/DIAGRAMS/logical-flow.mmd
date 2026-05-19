@@ -1,0 +1,52 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Load settings.json<br/>Resolve path → absolute<br/>lookup('file') | from_json"]
+    A --> B{project key<br/>exists &amp; non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| C
+
+    C["Step 2 - Derive site names<br/>Walk each entry's Hierarchy* fields<br/>deepest non-null level → full site path<br/>HierarchyParent/Area/Bldg/Floor<br/>builds index-aligned site_names list"]
+    C --> D
+
+    D["Step 3a - Authenticate to CatC<br/>POST /dna/system/api/v1/auth/token<br/>store _catc_token (no_log: true)"]
+    D --> E
+
+    E["Step 3b - Fetch all sites<br/>cisco.catalystcenter.sites_info<br/>selectattr nameHierarchy defined<br/>build site_name → site_id map"]
+    E --> F
+
+    F["Step 4 - Build v1 network settings payloads<br/>Map snake_case JSON → camelCase API fields<br/>dhcpServer, dnsServer, ntpServer, timezone<br/>messageOfTheday, syslogServer (ipAddresses+configureDnacIP)<br/>snmpServer (ipAddresses+configureDnacIP)<br/>network_aaa, clientAndEndpoint_aaa<br/>null top-level keys omitted from payload"]
+    F --> G{payload list<br/>non-empty?}
+    G -->|No| FAIL_B([Fail: no non-null<br/>network settings found])
+    G -->|Yes| LOOP
+
+    LOOP(["For each site in network_settings_list<br/>(include_tasks loop)"])
+    LOOP --> H{site ID<br/>resolved?}
+    H -->|No| FAIL_C([Fail: site path not<br/>found in CatC hierarchy<br/>run playbook 1.0 first])
+    H -->|Yes| I
+
+    I["Step 5a - Apply network settings<br/>PUT /dna/intent/api/v1/network/{siteId}<br/>body: settings camelCase payload<br/>→ 202 Accepted + executionStatusUrl"]
+    I --> J
+
+    J["Step 5b - Extract executionStatusUrl<br/>from 202 response body"]
+    J --> K
+
+    K["Step 5c - Poll execution status<br/>GET /dna/intent/api/v1/dnacaap/management/<br/>execution-status/{executionId}<br/>retries: 12 × delay: 5s"]
+    K --> L{status?}
+    L -->|still running| K
+    L -->|FAILURE| FAIL_D([Fail: CatC background<br/>task failed — bapiError<br/>detail in assertion msg])
+    L -->|SUCCESS| M
+
+    M{More<br/>sites?}
+    M -->|Yes| LOOP
+    M -->|No| N
+
+    N["Step 6 - Summary<br/>Sites configured: list of site names"]
+    N --> DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_C fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_D fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

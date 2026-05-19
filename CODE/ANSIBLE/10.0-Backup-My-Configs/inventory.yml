@@ -1,0 +1,49 @@
+---
+# ============================================================================
+# Lab Topology Inventory
+# ============================================================================
+# IOS-XE: Border01/02, dhcp-server, dmz1, Leaf01/02, Spine01/02
+# NX-OS:  Core-01, Core-02
+# ============================================================================
+
+all:
+  vars:
+    ansible_connection: network_cli
+    ansible_user: "{{ vault_device_username }}"
+    ansible_password: "{{ vault_device_password }}"
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: "{{ vault_device_enable_password }}"
+    backup_root_dir: "config-backups"
+    backup_retention_count: 3
+
+  children:
+    iosxe:
+      vars:
+        ansible_network_os: cisco.ios.ios
+      hosts:
+        Spine01:
+          ansible_host: 198.18.128.101
+        Spine02:
+          ansible_host: 198.18.128.102
+        Leaf01:
+          ansible_host: 198.18.128.103
+        Leaf02:
+          ansible_host: 198.18.128.104
+        Border01:
+          ansible_host: 198.18.128.105
+        Border02:
+          ansible_host: 198.18.128.106
+        dmz1:
+          ansible_host: 198.18.128.107
+        dhcp-server:
+          ansible_host: 198.18.128.110
+
+    nxos:
+      vars:
+        ansible_network_os: cisco.nxos.nxos
+      hosts:
+        Core-01:
+          ansible_host: 198.18.128.108
+        Core-02:
+          ansible_host: 198.18.128.109

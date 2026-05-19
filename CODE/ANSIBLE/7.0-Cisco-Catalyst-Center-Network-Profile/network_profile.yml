@@ -1,0 +1,135 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Create and Assign Network Switching Profiles from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+  vars:
+    DEBUG: "{{ lookup('env', 'DEBUG') | default(false) | bool }}"
+
+  module_defaults:
+    cisco.dnac.network_profile_switching_workflow_manager:
+      dnac_host: "{{ dnac_host }}"
+      dnac_username: "{{ dnac_username }}"
+      dnac_password: "{{ dnac_password }}"
+      dnac_verify: "{{ dnac_verify }}"
+      dnac_port: "{{ dnac_port }}"
+      dnac_version: "{{ dnac_version }}"
+      dnac_debug: "{{ dnac_debug }}"
+      dnac_log_level: "{{ dnac_log_level }}"
+      dnac_log: "{{ dnac_log }}"
+
+  tasks:
+
+    # ── Step 1: Load input data ───────────────────────────────────────────────
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: Load settings input JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: Validate that project key exists in input data
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "Input JSON must contain a non-empty 'project' list."
+        success_msg: "Input data loaded — {{ settings_data.project | length }} entries found."
+
+    # ── Step 2: Build network profile config list ─────────────────────────────
+    #
+    # Each entry in settings.json that has a non-null network_profile block
+    # produces one profile config.
+    #
+    # site_names is derived from the split hierarchy fields (site_names was
+    # removed from network_profile; the playbook reconstructs the full path).
+    #
+    # DayNTemplateNames / Day0TemplateNames are the new PascalCase object arrays;
+    # the WFM module still expects plain string lists for day_n_templates /
+    # onboarding_templates, so TemplateName values are extracted (nulls dropped).
+    #
+    - name: Build network profile config list
+      set_fact:
+        profile_list: >-
+          {%- set ns = namespace(result=[]) -%}
+          {%- for entry in settings_data.project -%}
+            {%- if entry.network_profile is defined and entry.network_profile -%}
+              {%- set prof = entry.network_profile -%}
+              {%- set parent = entry.HierarchyParent | default('Global') -%}
+              {%- set area   = entry.HierarchyArea   | default('') -%}
+              {%- set bldg   = entry.HierarchyBldg   | default('') -%}
+              {%- set floor  = entry.HierarchyFloor  | default('') -%}
+              {%- if floor -%}
+                {%- set site_path = parent + '/' + area + '/' + bldg + '/' + floor -%}
+              {%- elif bldg -%}
+                {%- set site_path = parent + '/' + area + '/' + bldg -%}
+              {%- elif area -%}
+                {%- set site_path = parent + '/' + area -%}
+              {%- else -%}
+                {%- set site_path = parent -%}
+              {%- endif -%}
+              {%- set cfg = {'profile_name': prof.profile_name, 'site_names': [site_path]} -%}
+              {%- if prof.DayNTemplateNames is defined and prof.DayNTemplateNames -%}
+                {%- set tnames = prof.DayNTemplateNames
+                    | selectattr('TemplateName', 'defined')
+                    | selectattr('TemplateName', 'ne', none)
+                    | map(attribute='TemplateName') | list -%}
+                {%- if tnames | length > 0 -%}
+                  {%- set cfg = cfg | combine({'day_n_templates': tnames}) -%}
+                {%- endif -%}
+              {%- endif -%}
+              {%- if prof.Day0TemplateNames is defined and prof.Day0TemplateNames -%}
+                {%- set tnames0 = prof.Day0TemplateNames
+                    | selectattr('TemplateName', 'defined')
+                    | selectattr('TemplateName', 'ne', none)
+                    | map(attribute='TemplateName') | list -%}
+                {%- if tnames0 | length > 0 -%}
+                  {%- set cfg = cfg | combine({'onboarding_templates': tnames0}) -%}
+                {%- endif -%}
+              {%- endif -%}
+              {%- set ns.result = ns.result + [cfg] -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: --DEBUG-- Network profile config list
+      when: DEBUG
+      debug:
+        msg: "{{ profile_list }}"
+
+    - name: Validate profile list is non-empty
+      assert:
+        that: profile_list | length > 0
+        fail_msg: "No entries with network_profile found in input JSON."
+        success_msg: "{{ profile_list | length }} network profile(s) to create/update."
+
+    # ── Step 3: Create/update and assign switching network profiles ────────────
+    - name: Create/update switching network profile
+      cisco.dnac.network_profile_switching_workflow_manager:
+        state: merged
+        config: "{{ profile_list }}"
+      register: profile_results
+
+    - name: --DEBUG-- Profile results
+      when: DEBUG
+      debug:
+        msg: "{{ profile_results }}"
+
+    # ── Step 4: Summary ────────────────────────────────────────────────────────
+    - name: Network profile creation complete
+      debug:
+        msg:
+          - "Switching network profile(s) created/updated successfully"
+          - "Profiles processed: {{ profile_list | map(attribute='profile_name') | join(', ') }}"
+          - "Sites assigned: {{ profile_list | map(attribute='site_names') | flatten | unique | join(', ') }}"

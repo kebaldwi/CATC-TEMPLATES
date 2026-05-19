@@ -1,0 +1,12 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Provision-Devices
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Note: This playbook uses ansible.builtin.uri exclusively for all REST API
+# calls to the Catalyst Center SDA provisionDevices endpoint.  The cisco.dnac
+# collection is included here for consistency with the lab series and in case
+# future tasks extend the playbook with cisco.dnac modules.
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"

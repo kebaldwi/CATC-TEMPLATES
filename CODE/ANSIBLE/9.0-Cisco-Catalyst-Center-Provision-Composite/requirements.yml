@@ -1,0 +1,10 @@
+# Ansible Galaxy collection requirements for Cisco-Catalyst-Center-Provision-Composite
+# Compatible with Cisco Catalyst Center version 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.dnac.configuration_template_deploy_v2 — deploy composite template via v2 API
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"

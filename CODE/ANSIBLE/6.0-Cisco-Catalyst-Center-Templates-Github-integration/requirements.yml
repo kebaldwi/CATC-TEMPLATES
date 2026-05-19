@@ -1,0 +1,12 @@
+# Ansible Galaxy collection requirements for ansible-git-catc
+# Verified compatible with Cisco Catalyst Center 2.3.7.6, 2.3.7.9, and 2.3.7.10
+# Install with: ansible-galaxy collection install -r requirements.yml
+#
+# Modules used:
+#   cisco.dnac.template_workflow_manager — idempotent sync of individual and composite templates
+#   community.general                    — supplementary filters and utilities
+
+collections:
+  - name: cisco.dnac
+    version: "6.46.0"
+  - name: community.general

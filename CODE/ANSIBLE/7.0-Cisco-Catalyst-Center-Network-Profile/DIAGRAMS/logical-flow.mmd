@@ -1,0 +1,40 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Load settings.json<br/>lookup('file') -&gt; from_json"]
+    A --> B{project key<br/>exists &amp; non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| C
+
+    C["Step 2 - Build network profile config list<br/>Walk each entry in settings.json<br/>filter: network_profile block is defined and non-null<br/>extract: profile_name, site_names,<br/>day_n_templates, onboarding_templates"]
+    C --> D{any entries with<br/>network_profile block?}
+    D -->|No| FAIL_B([Fail: no network_profile<br/>entries found in settings.json])
+    D -->|Yes| E
+
+    E["Per profile config:<br/>profile_name → CatC profile name<br/>site_names → list of site paths to assign<br/>day_n_templates → Day-N template bindings<br/>onboarding_templates → PnP template bindings (optional)"]
+    E --> F
+
+    F["Step 3 - Submit all profiles in one call<br/>network_profile_switching_workflow_manager<br/>state: merged<br/>config = profile_list (all profiles batched)"]
+    F --> G{Profile already<br/>exists in CatC?}
+    G -->|No| H["Create new switching<br/>network profile<br/>POST internal API"]
+    G -->|Yes| I["Update existing profile<br/>idempotent — no change<br/>if already matches"]
+    H --> J
+    I --> J
+
+    J["Assign profile to site(s)<br/>site_names list applied<br/>profile scoped to each named site"]
+    J --> K{Day-N templates<br/>specified?}
+    K -->|Yes| L["Bind Day-N templates<br/>to the profile<br/>(used for deployed device config)"]
+    K -->|No| M
+    L --> M{Onboarding templates<br/>specified?}
+    M -->|Yes| N["Bind onboarding templates<br/>to the profile<br/>(used for PnP zero-touch)"]
+    M -->|No| O
+
+    N --> O
+
+    O["Step 4 - Summary<br/>profile names created/updated<br/>site names assigned<br/>template bindings applied"]
+    O --> DONE([Done])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style FAIL_B fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276

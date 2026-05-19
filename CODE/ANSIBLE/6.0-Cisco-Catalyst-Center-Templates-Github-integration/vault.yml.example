@@ -1,0 +1,56 @@
+---
+# vault.yml.example
+# Copy this file to vault.yml and encrypt with: ansible-vault encrypt ansible-git-catc/vault.yml
+# These credentials will be used to authenticate to Cisco Catalyst Center
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# FIRST-TIME SETUP
+# ─────────────────────────────────────────────────────────────────────────────
+#   1. Copy this file:
+#        cp ansible-git-catc/vault.yml.example ansible-git-catc/vault.yml
+#
+#   2. Edit vault.yml with your values (see variables below).
+#
+#   3. Encrypt it:
+#        ansible-vault encrypt ansible-git-catc/vault.yml
+#      You will be prompted to set a vault password.
+#      Store that password in .vault_pass for automated runs.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# EDITING AN ALREADY-ENCRYPTED VAULT
+# ─────────────────────────────────────────────────────────────────────────────
+# Option A — Edit in-place (recommended, vault stays encrypted on disk):
+#
+#   ansible-vault edit ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#
+#   This opens the decrypted content in $EDITOR (vi by default).
+#   Save and quit — ansible-vault re-encrypts automatically.
+#   To use a different editor:
+#     EDITOR=nano ansible-vault edit ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#
+# Option B — Decrypt → edit manually → re-encrypt:
+#
+#   ansible-vault decrypt ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#   # Edit vault.yml with any text editor
+#   ansible-vault encrypt ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#
+#   WARNING: vault.yml is stored in plaintext between decrypt and encrypt.
+#   Avoid committing it to Git in that state.
+#
+# Option C — View without editing:
+#
+#   ansible-vault view ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#
+# Option D — Change the vault password itself:
+#
+#   ansible-vault rekey ansible-git-catc/vault.yml --vault-password-file .vault_pass
+#   You will be prompted for the new password.
+# ─────────────────────────────────────────────────────────────────────────────
+
+dnac_username: "admin"
+dnac_password: "your_password_here"
+
+# GitHub Personal Access Token (requires repo read scope)
+# OPTIONAL: only needed for private repositories or to raise the GitHub API rate limit.
+# When omitted, all API calls are made unauthenticated (GitHub allows ~60 requests/hour).
+# git_token: "your_github_pat_here"

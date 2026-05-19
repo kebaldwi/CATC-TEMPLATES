@@ -1,0 +1,52 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+# process-composite.yml
+# Processes composite template definition files
+
+- name: Load composite definition from {{ composite_file.name }}
+  set_fact:
+    composite_def: "{{ composite_file.content | from_yaml }}"
+
+- name: Extract composite metadata
+  set_fact:
+    composite_name: "{{ composite_def.composite_name | default((composite_file.name | regex_replace('\\.yml$', '.j2'))) }}"
+    composite_template_names: "{{ composite_def.templates | map(attribute='name') | list }}"
+
+- name: Build containing templates list
+  set_fact:
+    containing_templates_list: "{{ containing_templates_list | default([]) + [{'name': item, 'composite': false, 'project_name': projectName, 'description': 'description','language': 'JINJA', 'device_types': default_device_types,'software_type': default_software_type, 'software_variant': default_software_variant, 'templateParams': [], 'tags': []}] }}"
+  with_items: "{{ composite_template_names }}"
+
+- name: Build composite workflow configuration for {{ composite_name }}
+  set_fact:
+    composite_workflow_configs: "{{ composite_workflow_configs | default([]) + [composite_config] }}"
+  vars:
+    composite_config:
+      configuration_templates:
+        template_name: "{{ composite_name }}"
+        project_name: "{{ projectName }}"
+        composite: true
+        language: "JINJA"
+        template_content: ""
+        template_description: "Composite template synced from Git repository"
+        device_types: "{{ default_device_types }}"
+        software_type: "{{ default_software_type }}"
+        software_variant: "{{ default_software_variant }}"
+        software_version: null
+        template_params: []
+        failure_policy: "ABORT_TARGET_ON_ERROR"
+        version: "{{ default_template_version }}"
+        containing_templates: "{{ containing_templates_list }}"
+        tags: []
+
+- name: Reset containing templates list
+  set_fact:
+    containing_templates_list: []

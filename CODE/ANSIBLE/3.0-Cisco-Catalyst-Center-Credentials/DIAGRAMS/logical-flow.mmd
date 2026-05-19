@@ -1,0 +1,75 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 -- Load settings.json<br/>settings_json_path resolved to absolute<br/>lookup file -> from_json"]
+    A --> B{project key<br/>exists and non-empty?}
+    B -->|No| FAIL_A([Fail: invalid<br/>input JSON shape])
+    B -->|Yes| C
+
+    C["Step 2 -- Build wfm_config<br/>Iterate project[] entries<br/>global_credential_details: CLI + SNMP v2c r/w<br/>assign_credentials_to_site: site + cred refs<br/>(assign block omitted when state=deleted)"]
+    C --> D
+
+    D["Step 3 -- Build netconf_list<br/>Iterate project[] entries<br/>De-duplicate NETCONF credentials by description<br/>netconf_list = [{description, netconf_port}, ...]"]
+    D --> STATE{state?}
+
+    STATE -->|merged| PA_MERGE
+    STATE -->|deleted| PA_DEL
+
+    PA_MERGE["Phase A (merged) -- device_credential_workflow_manager<br/>Idempotent: queries, creates, updates CLI + SNMP v2c r/w<br/>Assigns credentials to sites in one call<br/>POST/PUT /dna/intent/api/v2/global-credential<br/>PUT /dna/intent/api/v1/sites/{id}/deviceCredentials"]
+    PA_MERGE --> PA_MERGE_SKIP{wfm_config<br/>non-empty?}
+    PA_MERGE_SKIP -->|No - skip| PB_MERGE_QUERY
+    PA_MERGE_SKIP -->|Yes| PA_MERGE_RUN["cisco.dnac.device_credential_workflow_manager<br/>state: merged  config: wfm_config<br/>config_verify: true when catc_debug=true"]
+    PA_MERGE_RUN --> PB_MERGE_QUERY
+
+    PB_MERGE_QUERY["Phase B -- Query existing NETCONF credentials<br/>GET /dna/intent/api/v1/global-credential<br/>credentialSubType: NETCONF<br/>Build netconf_id_map: description -> UUID"]
+    PB_MERGE_QUERY --> PB_MERGE_LOOP{netconf_list<br/>length > 0?}
+    PB_MERGE_LOOP -->|No - skip| DONE
+    PB_MERGE_LOOP -->|Yes| PB_MERGE_INC["Phase B -- include_tasks per NETCONF item<br/>tasks/netconf_create_or_update.yml"]
+    PB_MERGE_INC --> NC_CHECK{description in<br/>netconf_id_map?}
+
+    NC_CHECK -->|No - new| NC_CREATE["NETCONF | CREATE<br/>POST /dna/intent/api/v1/global-credential/netconf<br/>payload: [{description, netconfPort}]<br/>ignore_errors: true  (empty-body 201 SDK quirk)"]
+    NC_CREATE --> NC_RESOLVE["Re-query credentialSubType: NETCONF<br/>Scan response by description -> find UUID<br/>netconf_id_map[description] = new UUID<br/>(visible to next include_tasks iteration)"]
+    NC_RESOLVE --> NC_MORE
+
+    NC_CHECK -->|Yes - exists| NC_UPDATE["NETCONF | UPDATE<br/>PUT /dna/intent/api/v1/global-credential/netconf<br/>id + description + netconfPort"]
+    NC_UPDATE --> NC_MORE
+
+    NC_MORE{more NETCONF items?}
+    NC_MORE -->|Yes| PB_MERGE_INC
+    NC_MORE -->|No| DONE
+
+    PA_DEL["Phase A (deleted) -- device_credential_workflow_manager<br/>Deletes CLI + SNMP v2c r/w credentials by description<br/>DELETE /dna/intent/api/v2/global-credential/{id}"]
+    PA_DEL --> PA_DEL_SKIP{wfm_config<br/>non-empty?}
+    PA_DEL_SKIP -->|No - skip| PC_QUERY
+    PA_DEL_SKIP -->|Yes| PA_DEL_RUN["cisco.dnac.device_credential_workflow_manager<br/>state: deleted  config: wfm_config"]
+    PA_DEL_RUN --> PC_QUERY
+
+    PC_QUERY["Phase C -- Query existing NETCONF credentials<br/>GET /dna/intent/api/v1/global-credential<br/>credentialSubType: NETCONF<br/>Build netconf_id_map: description -> UUID"]
+    PC_QUERY --> PC_LOOP{netconf_list<br/>length > 0?}
+    PC_LOOP -->|No - skip| DONE
+    PC_LOOP -->|Yes| PC_INC["Phase C -- include_tasks per NETCONF item<br/>tasks/netconf_delete.yml"]
+    PC_INC --> PC_CHECK{description in<br/>netconf_id_map?}
+
+    PC_CHECK -->|No - skip| PC_MORE
+    PC_CHECK -->|Yes| PC_DEL["NETCONF | DELETE<br/>DELETE /dna/intent/api/v1/global-credential/{id}<br/>global_credential_delete<br/>globalCredentialId: UUID"]
+    PC_DEL --> PC_MORE
+
+    PC_MORE{more NETCONF items?}
+    PC_MORE -->|Yes| PC_INC
+    PC_MORE -->|No| DONE
+
+    DONE([Summary -- N CLI/SNMP groups and<br/>M NETCONF credentials provisioned/deleted])
+
+    style FAIL_A fill:#c0392b,color:#fff,stroke:#922b21
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style PA_MERGE fill:#16a085,color:#fff,stroke:#0e6655
+    style PA_MERGE_RUN fill:#16a085,color:#fff,stroke:#0e6655
+    style PA_DEL fill:#e74c3c,color:#fff,stroke:#c0392b
+    style PA_DEL_RUN fill:#e74c3c,color:#fff,stroke:#c0392b
+    style PB_MERGE_QUERY fill:#8e44ad,color:#fff,stroke:#6c3483
+    style PC_QUERY fill:#8e44ad,color:#fff,stroke:#6c3483
+    style NC_CREATE fill:#16a085,color:#fff,stroke:#0e6655
+    style NC_UPDATE fill:#f39c12,color:#fff,stroke:#d68910
+    style PC_DEL fill:#e74c3c,color:#fff,stroke:#c0392b
+

@@ -1,0 +1,8 @@
+---
+# vault.yml.example — copy to vault.yml and encrypt:
+#   cp vault.yml.example vault.yml
+#   ansible-vault encrypt vault.yml --vault-password-file .vault_pass
+
+vault_device_username: "admin"
+vault_device_password: "your_login_password_here"
+vault_device_enable_password: "your_enable_password_here"

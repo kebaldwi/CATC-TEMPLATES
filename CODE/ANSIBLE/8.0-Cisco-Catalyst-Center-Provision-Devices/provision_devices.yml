@@ -1,0 +1,135 @@
+# ============================================================================
+# Authors
+# ============================================================================
+# | Name            | Role                              | Contact              |
+# |-----------------|-----------------------------------|----------------------|
+# | Igor Manassypov | Systems Engineer                  | imanassy@cisco.com   |
+# Copyright © 2024-2026 Cisco Systems, Inc. All rights reserved.
+# ============================================================================
+
+---
+- name: Provision Devices to Site in Catalyst Center from settings.json
+  hosts: catalyst_center
+  gather_facts: no
+  vars_files:
+    - vault.yml
+  vars:
+    DEBUG: "{{ lookup('env', 'DEBUG') | default(false) | bool }}"
+
+  # NOTE: Device provisioning uses ansible.builtin.uri (direct REST API calls)
+  # throughout.  The cisco.dnac.provision_wired_device module targets the
+  # legacy SDA-fabric "Provision Wired Device" endpoint, not the modern v1
+  # SDA /sda/provisionDevices endpoint used here.  Direct REST calls give us
+  # full control over the request body and idempotency checks.
+
+  tasks:
+
+    # ── Step 1: Authenticate to Catalyst Center ───────────────────────────────
+    #
+    # Obtain a short-lived JWT used for all subsequent REST API calls.
+    # This is the very first task — if authentication fails the play aborts
+    # immediately and no data loading or device operations are attempted.
+    # The token is stored as _catc_token.
+    #
+    - name: Authenticate to Catalyst Center
+      ansible.builtin.uri:
+        url: "https://{{ dnac_host }}:{{ dnac_port }}/dna/system/api/v1/auth/token"
+        method: POST
+        user: "{{ dnac_username }}"
+        password: "{{ dnac_password }}"
+        force_basic_auth: true
+        validate_certs: "{{ dnac_verify }}"
+        status_code: 200
+      register: _auth_result
+      no_log: true
+
+    - name: Store auth token
+      set_fact:
+        _catc_token: "{{ _auth_result.json.Token }}"
+      no_log: true
+
+    # ── Step 2: Load input data ───────────────────────────────────────────────
+    # Resolve path: absolute paths used as-is; relative paths resolved from
+    # the playbook directory so callers can pass paths relative to the repo root.
+    - name: Resolve settings_json_path to absolute
+      set_fact:
+        _resolved_json_path: >-
+          {{ settings_json_path if settings_json_path.startswith('/')
+             else (playbook_dir + '/' + settings_json_path) }}
+
+    - name: Load settings input JSON
+      set_fact:
+        settings_data: "{{ lookup('file', _resolved_json_path) | from_json }}"
+
+    - name: Validate that project key exists in input data
+      assert:
+        that: settings_data.project is defined and settings_data.project | length > 0
+        fail_msg: "Input JSON must contain a non-empty 'project' list."
+        success_msg: "Input data loaded — {{ settings_data.project | length }} entries found."
+
+    # ── Step 3: Build per-site device map ─────────────────────────────────────
+    #
+    # Iterate every project entry that has a non-empty device_list.
+    # The site hierarchy path is reconstructed from the split
+    # HierarchyParent/Area/Bldg/Floor fields, matching the pattern used
+    # across all other playbooks in this lab series.
+    #
+    # Result: { "<site_path>": ["ip1", "ip2", ...], ... }
+    #
+    - name: Build per-site device map
+      set_fact:
+        _site_device_map: >-
+          {%- set ns = namespace(result={}) -%}
+          {%- for entry in settings_data.project -%}
+            {%- if entry.device_list is defined and entry.device_list -%}
+              {%- set ips = entry.device_list.split(',') | map('trim') | reject('equalto', '') | list -%}
+              {%- set parent = entry.HierarchyParent | default('Global') -%}
+              {%- set area   = entry.HierarchyArea   | default('') -%}
+              {%- set bldg   = entry.HierarchyBldg   | default('') -%}
+              {%- set floor  = entry.HierarchyFloor  | default('') -%}
+              {%- if floor -%}
+                {%- set site_path = parent + '/' + area + '/' + bldg + '/' + floor -%}
+              {%- elif bldg -%}
+                {%- set site_path = parent + '/' + area + '/' + bldg -%}
+              {%- elif area -%}
+                {%- set site_path = parent + '/' + area -%}
+              {%- else -%}
+                {%- set site_path = parent -%}
+              {%- endif -%}
+              {%- if site_path in ns.result -%}
+                {%- set ns.result = ns.result | combine({site_path: ns.result[site_path] + ips}) -%}
+              {%- else -%}
+                {%- set ns.result = ns.result | combine({site_path: ips}) -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ ns.result }}
+
+    - name: --DEBUG-- Per-site device map
+      when: DEBUG
+      debug:
+        var: _site_device_map
+
+    - name: Validate site device map is non-empty
+      assert:
+        that: _site_device_map | length > 0
+        fail_msg: "No entries with device_list found in input JSON."
+        success_msg: >-
+          {{ _site_device_map | length }} site(s) /
+          {{ _site_device_map.values() | map('length') | sum }} device(s) to provision.
+
+    # ── Step 4: Process each site ─────────────────────────────────────────────
+    #
+    # For each site:
+    #   a. Resolve the site UUID via the Sites REST API.
+    #   b. Resolve device UUIDs for every target management IP.
+    #   c. Check which devices are already provisioned at the site.
+    #   d. Submit POST /dna/intent/api/v1/sda/provisionDevices for any that are not.
+    #   e. Poll the returned async task until completion and report status.
+    #
+    - name: Process device provisioning for each site
+      include_tasks: tasks/provision_site.yml
+      loop: "{{ _site_device_map | dict2items }}"
+      loop_control:
+        loop_var: site_entry
+        label: "{{ site_entry.key }}"
