@@ -1,0 +1,51 @@
+{
+	"items": [
+		{
+			"title": "Introduction to Catalyst Center Orchestration with Cisco Workflows",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Preparation - Getting Started Guide",
+			"content": "02-preparation.md"
+		},
+		{
+			"title": "Orientation",
+			"content": "03-orientation.md"
+		},
+		{
+			"title": "Lab Setup - Remote Target, Account Keys, Targets, and Workflows",
+			"content": "04-labsetup.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-0-orientation",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			}
+		],
+		"time": "15",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-0-orientation",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-0-orientation",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}

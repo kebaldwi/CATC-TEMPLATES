@@ -1,0 +1,46 @@
+{
+	"items": [
+		{
+			"title": "Settings and Credentials",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Run the Settings and Credentials Playbooks",
+			"content": "02-deploy.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-2-settings",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			},
+			{
+				"title": "Ansible"
+			}
+		],
+		"time": "20",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-2-settings",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-2-settings",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}

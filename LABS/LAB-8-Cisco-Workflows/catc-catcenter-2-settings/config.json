@@ -1,0 +1,43 @@
+{
+	"items": [
+		{
+			"title": "Assigning Settings and Credentials",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Examine and Run Build Settings Workflow",
+			"content": "02-deploy.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-2-settings",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			}
+		],
+		"time": "15",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-2-settings",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-2-settings",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}

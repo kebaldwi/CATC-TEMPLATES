@@ -1,0 +1,46 @@
+{
+	"items": [
+		{
+			"title": "Network Profile",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Run the Network Profile Playbook",
+			"content": "02-deploy.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-5-networkprofiles",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			},
+			{
+				"title": "Ansible"
+			}
+		],
+		"time": "15",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-5-networkprofiles",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-5-networkprofiles",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}

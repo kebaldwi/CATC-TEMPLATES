@@ -1,0 +1,54 @@
+{
+	"items": [
+		{
+			"title": "Introduction to Catalyst Center Orchestration with Ansible",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Preparation - DCLOUD and the Script Server",
+			"content": "02-preparation.md"
+		},
+		{
+			"title": "Orientation - Install Ansible and Bootstrap the Vault",
+			"content": "03-orientation.md"
+		},
+		{
+			"title": "Lab Setup - Inventory, Vault, and Running a Playbook",
+			"content": "04-labsetup.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-0-orientation",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			},
+			{
+				"title": "Ansible"
+			}
+		],
+		"time": "20",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-0-orientation",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-0-orientation",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}

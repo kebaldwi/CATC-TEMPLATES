@@ -1,0 +1,47 @@
+{
+   "items":[
+      {
+         "title":"Building Hierarchy",
+         "content":"01-intro.md"
+      },
+      {
+         "title":"Review ISE Integration",
+         "content":"02-integration.md"
+      },
+      {
+         "title":"Examine and Run Build Hierarchy Workflow",
+         "content":"03-deploy.md"
+      }
+   ],
+	"meta": {
+		"code_name": "catc-catcenter-1-hierarchy",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			}
+		],
+		"time": "15",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-1-hierarchy",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-1-hierarchy",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+ }
