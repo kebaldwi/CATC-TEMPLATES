@@ -163,24 +163,25 @@ This section built out in a lab format to guide you through the typical steps to
 
   ### Platform Orchestration
 
-  - Labs and resources aimed at Orchestration that may be used xArchitecturally.
+  - Labs and resources aimed at Orchestration that may be used Cross Architecturally.
 
     #### Catalyst Center
 
     * [Lab 4 Rest-API Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-4-Rest-API-Orchestration/) - Covers [Postman](https://www.postman.com) automation and orchestration of Catalyst Center **(allow 2.0 hrs)**
     * Lab 5 Python Orchestration - In Development - Covers Python automation and orchestration of Catalyst Center **(allow 3.0 hrs)**
-    * Lab 6 Ansible Orchestration - In Development - Covers Ansible automation and orchestration Catalyst Center **(allow 3.0 hrs)**
+    * [Lab 6 Ansible Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-6-Ansible) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)**
     * [Lab 7 CICD Orchestration](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-7-CICD-Orchestration/) - Covers [Python](https://www.python.org) with [JENKINS](https://www.jenkins.io) orchestration via REST-API **(allow 4.0 hrs)**
-    * [Lab 10 GitOps Orchestration](  https://github.com/kebaldwi/TECOPS-2599) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)** (TBD)
+    * [Lab 8 Cisco Workflows - Catalyst Center](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)**
+    * [Lab 10 GitOps Orchestration](  https://github.com/kebaldwi/TECOPS-2599) - Covers how to use GitOps to Orchestrate Catalyst Center **(allow 8.0 hrs)**
     
     #### Dashboard
 
     :mega: Upcoming stay tuned!
 
-    #### Cisco Workflows
+    #### Cisco Workflows 
 
-    * [Lab 8 Cisco Workflows](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/) - Covers orchestration via REST-API **(allow TBD hrs)**
-    
+    * [Lab 8 Cisco Workflows - Getting Started](https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-8-Cisco-Workflows/GettingStarted/) - Covers orchestration via REST-API **(allow 2.0 hrs)**
+
     #### ISE
 
     * [Lab 9 ISE Automation](  https://github.com/kebaldwi/DNAC-TEMPLATES/tree/master/LABS/LAB-9-ISE-Automation) - Covers how to automate ISE **(allow 4.0 hrs)**

@@ -1,0 +1,46 @@
+{
+	"items": [
+		{
+			"title": "Device Discovery and Site Assignment",
+			"content": "01-intro.md"
+		},
+		{
+			"title": "Run the Discovery and Assign-to-Site Playbooks",
+			"content": "02-deploy.md"
+		}
+	],
+	"meta": {
+		"code_name": "catc-catcenter-3-discovery",
+		"tags": [
+			{
+				"title": "Cisco Catalyst Center"
+			},
+			{
+				"title": "Ansible"
+			}
+		],
+		"time": "20",
+		"poweredBy": "",
+		"authors": [
+			{
+				"name": "Keith Baldwin",
+				"email": "kebaldwie@cisco.com"
+			},
+			{
+				"name": "Igor Manassypov",
+				"email": "imanassy@cisco.com"
+			}
+		],
+		"slug": "catc-catcenter-3-discovery",
+		"moduleOnly": false,
+		"hasResources": false,
+		"byod": true,
+		"access": "public"
+	},
+	"config": {
+		"id": "catc-catcenter-3-discovery",
+		"devEnv": {},
+		"sandbox": {},
+		"video": {}
+	}
+}
