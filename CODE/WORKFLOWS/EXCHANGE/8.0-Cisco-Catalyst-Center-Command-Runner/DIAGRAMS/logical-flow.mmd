@@ -1,0 +1,78 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 -- Inputs and workflow target<br/>workflow target: catalystcenter.endpoint<br/>input targetDevice: managed IP of device<br/>input showCommand: CSV string up to 5 commands<br/>local vars: DevicesList, FileURL, DeviceUUID,<br/>targetDevices, showCommands, DeviceInventory<br/>output vars: Results, Device UUID Output,<br/>DeviceInventoryOutput, Device List Output"]
+    A --> B
+
+    B["Step 2 -- Get Devices<br/>catalystcenter.invoke_api<br/>GET /api/v1/network-device<br/>Returns full Catalyst Center inventory<br/>continue_on_failure: true"]
+    B --> C
+
+    C["Step 3 -- Find Device<br/>corejava.jsonpathquery on Get Devices raw_body<br/>JSONPath: $.response..[?(@.managementIpAddress<br/>== targetDevice)]<br/>-> DeviceInformation"]
+    C --> D
+
+    D["Step 4 -- String to Array<br/>sub-workflow: String to Array<br/>input: showCommand CSV string<br/>Normalizes input into a valid JSON array<br/>(literals, comma-separated, newline-separated)<br/>-> showCommands array"]
+    D --> E
+
+    E["Step 5 -- Set Variables<br/>core.set_multiple_variables<br/>Store showCommands array<br/>into local variable_workflow showCommands"]
+    E --> COND
+
+    COND{"Conditional ShowCommand Block<br/>DeviceInformation != null?"}
+    COND -->|No - device not found| SKIP([Skip: device not present<br/>no show commands executed])
+    COND -->|Yes - device exists| PA
+
+    PA["Phase A -- Resolve device and submit poller<br/>Do Show Commands branch<br/>(logic.condition_block)"]
+    PA --> F
+
+    F["Step A -- Extract Device UUID<br/>corejava.jsonpathquery on DeviceInformation<br/>JSONPath: $..instanceUuid<br/>-> DeviceUUID"]
+    F --> G
+
+    G["Step B -- Set Variables<br/>core.set_multiple_variables<br/>local DeviceUUID = extracted UUID<br/>local DeviceInventory = Get Devices raw_body"]
+    G --> H
+
+    H["Step C -- Get Device Poller<br/>catalystcenter.invoke_api<br/>POST /dna/intent/api/v1/network-device-poller<br/>/cli/read-request<br/>body: commands[] from showCommand + deviceUuids[]<br/>Returns async taskId"]
+    H --> I
+
+    I["Step D -- Extract Task Id<br/>corejava.jsonpathquery on poller raw_body<br/>JSONPath: $..taskId<br/>-> TaskId"]
+    I --> PB
+
+    PB["Phase B -- Wait, fetch result file, extract"]
+    PB --> J
+
+    J["Step E -- Wait For Catalyst Center Task<br/>sub-workflow: Wait For Catalyst Center Task<br/>inputs: TaskId, retries=5, delay=5<br/>Polls until task completes or fails"]
+    J --> JC{task<br/>completed?}
+    JC -->|isError=true| FAIL_TASK([Fail: poller task error<br/>continue_on_failure=true; downstream may no-op])
+    JC -->|completed| K
+
+    K["Step F -- Get Task Id<br/>catalystcenter.invoke_api<br/>GET /dna/intent/api/v1/task/TaskId<br/>Returns task record with progress field"]
+    K --> L
+
+    L["Step G -- Extract Progress<br/>corejava.jsonpathquery on task raw_body<br/>JSONPath: $..progress<br/>-> Progress (contains result file UUID)"]
+    L --> M
+
+    M["Step H -- Trim for File ID<br/>core.matchregex on Progress<br/>regex: [0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-<br/>[0-9a-f]{4}-[0-9a-f]{12}<br/>-> matching_strings[0]"]
+    M --> N
+
+    N["Step I -- Set File URL<br/>core.set_multiple_variables<br/>local FileURL = matching_strings[0]"]
+    N --> O
+
+    O["Step J -- Get File URL Results<br/>catalystcenter.invoke_api<br/>GET /dna/intent/api/v1/file/FileURL<br/>Returns embedded commandResponses payload"]
+    O --> PC
+
+    PC["Phase C -- Parse responses and emit output"]
+    PC --> P
+
+    P["Step K -- Extract Responses<br/>python3.script (Extract Responses)<br/>argv1: file Get error.message body<br/>argv2: showCommands JSON array<br/>Parses body=[...] from error message<br/>Walks commandResponses.SUCCESS per command<br/>Cleans echo + trailing prompt<br/>Builds formatted report -> report_str"]
+    P --> Q
+
+    Q["Step L -- Output<br/>core.set_multiple_variables<br/>output Results = report_str"]
+    Q --> DONE
+
+    DONE([Done -- show command results returned])
+
+    style FAIL_TASK fill:#c0392b,color:#fff,stroke:#922b21
+    style SKIP  fill:#7f8c8d,color:#fff,stroke:#566573
+    style DONE  fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style PA fill:#8e44ad,color:#fff,stroke:#6c3483
+    style PB fill:#16a085,color:#fff,stroke:#0e6655
+    style PC fill:#e67e22,color:#fff,stroke:#ba6913

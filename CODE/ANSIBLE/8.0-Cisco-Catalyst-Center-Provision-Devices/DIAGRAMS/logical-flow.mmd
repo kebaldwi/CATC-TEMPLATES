@@ -54,7 +54,7 @@ flowchart TD
     H_PUT --> I
 
     I["Step F -- Poll async task(s) to completion<br/>GET /dna/intent/api/v1/task/taskId<br/>retry until endTime defined or isError=true<br/>POST task and PUT task polled independently"]
-    I --> IC{task(s)<br/>successful?}
+    I --> IC{"task(s)<br/>successful?"}
     IC -->|isError=true| FAIL_TASK([Fail: provisioning task error<br/>failureReason reported in play output])
     IC -->|endTime defined| PC
 
@@ -71,7 +71,7 @@ flowchart TD
     MORE -->|Yes| PA
     MORE -->|No| DONE
 
-    DONE([Summary -- N device(s) provisioned/reprovisioned/skipped])
+    DONE([Summary -- N devices provisioned / reprovisioned / skipped])
 
     style FAIL_AUTH fill:#c0392b,color:#fff,stroke:#922b21
     style FAIL_JSON fill:#c0392b,color:#fff,stroke:#922b21
