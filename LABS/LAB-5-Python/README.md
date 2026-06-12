@@ -29,10 +29,6 @@ The use cases we will cover are the following which you can access via the links
 3. [**Assign Settings and Credentials**](./python-2-settings/01-intro.md)
 4. [**Device Discovery**](./python-3-discovery/01-intro.md)
 5. [**Template Deployment**](./python-4-templates/01-intro.md)
-6. [**Configuration Archive**](./python-5-archive/01-intro.md)
-7. [**Retrieving Network Inventory**](./python-6-inventory/01-intro.md)
-8. [**Running Show Commands**](./python-7-cmd-run/01-intro.md)
-9. [**Python REST API Application**]()
 
 ## Preparation Notes
 
