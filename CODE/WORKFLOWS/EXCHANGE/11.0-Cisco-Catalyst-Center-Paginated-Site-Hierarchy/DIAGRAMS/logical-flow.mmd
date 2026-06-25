@@ -1,0 +1,64 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1.1 - Get Catalyst Center Site Count v2
+    GET /dna/intent/api/v2/site/count
+    Returns: SiteCount (total sites)"] --> B
+
+    B["Step 1.2 - Execute Python Script (Paging Counter)
+    PageCounter = math.ceil(SiteCount / Hierarchy Page Size)"] --> C
+
+    C["Step 1.3 - Set PageCounter for Pagination
+    Local - Limit  = Hierarchy Page Size
+    PageCounter    = ceil(count / page size)
+    Local - Offset = 1"] --> D
+
+    D{"While loop:
+    PageCounter > 0?"} -->|No - all pages fetched| P
+    D -->|Yes| E
+
+    subgraph LOOP["While PageCounter > 0 - Pagination Loop"]
+        direction TB
+        E["Step 1.4.1 - Execute Python Script (String Conversion)
+        stringLimit  = str(Local - Limit)
+        stringOffset = str(Local - Offset)"] --> F
+        F["Step 1.4.2 - Set Variables
+        stringLimit, stringOffset"] --> G
+        G["Step 1.4.3 - CATC-GetHierarchy-v2 (subworkflow)
+        GET /dna/intent/api/v1/site?offset={offset}&limit={limit}
+        Returns: SiteHierarchy (page)"] --> H
+        H["Step 1.4.4 - CATC-DeviceInventory-v2 (subworkflow)
+        GET /dna/intent/api/v1/network-device?offset={offset}&limit={limit}
+        Returns: DeviceInventory (page)"] --> I
+        I{"LoopCounter
+        == 1?"} -->|Yes - first page| J1
+        I -->|No - page 2+| J2
+        J1["Set Variables
+        Site-Hierarchy = first page (direct assign)"] --> K
+        J2["Execute Python Script (Json Merger)
+        merged.response = existing.response + new.response
+        Site-Hierarchy = merged JSON"] --> K
+        K["Step 1.4.6 - Update Pagination Variables
+        Local - Offset += Hierarchy Page Size
+        PageCounter -= 1
+        LoopCounter += 1"]
+    end
+
+    K --> D
+
+    P["Step 1.5 - JSONPath to Filter Query
+    $.response.length()              -> FullHierarchyLength
+    $.response[*].siteNameHierarchy  -> siteHierarchyNameList
+    $.response[*].id                 -> siteHierarchyUuidList"] --> Q
+
+    Q["Step 1.6 - Set Site Hierarchy Variables
+    Output-SiteHierarchy   = merged Site-Hierarchy
+    SiteCount              = total site count
+    siteHierarchyNameList  = name array
+    siteHierarchyUuidList  = uuid array"] --> R
+
+    R["Step 2 - Completed
+    Mark workflow completed - success"] --> DONE([Done])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
