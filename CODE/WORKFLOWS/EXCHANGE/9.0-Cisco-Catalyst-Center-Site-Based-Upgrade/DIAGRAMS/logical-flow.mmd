@@ -1,0 +1,142 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Select Site
+    CATC-DynamicSiteSelector (subworkflow)
+    Python: Find Children - match siteHierarchy prefix
+    Set HierarchyNames + HierarchyUuid (parent + child sites)"] --> B
+
+    B["Step 2 - Select Device Type (prompt)
+    Switches and Hubs | Routers | Wireless Controllers"] --> C
+
+    subgraph STEP3["Step 3 - Select and Filter Devices (Parallel)"]
+        direction LR
+        subgraph B1["Branch 1 - Site Assigned Devices"]
+            direction TB
+            C1(["For each site in HierarchyUuid"]) --> C1a
+            C1a["GET /dna/intent/api/v1/networkDevices/assignedToSite
+            ?siteId={id}&offset={o}&limit={l}"] --> C1b
+            C1b["Python: append deviceId to HierarchyDeviceList"] --> C1
+        end
+        subgraph B2["Branch 2 - Filtered Inventory"]
+            direction TB
+            C2["CATC-PaginatedDeviceInventory (subworkflow 10.0)"] --> C2a
+            C2a["JSONPath Filter
+            family == type && Reachable && Managed"] --> C2b
+            C2b["Python: normalize to array
+            Set DeviceTypeInventory"]
+        end
+    end
+
+    C --> STEP3
+    STEP3 --> D
+
+    subgraph STEP4["Step 4 - Build Target Device List + Precheck"]
+        direction TB
+        D["Read Table from JSON (DeviceTypeInventory)"] --> D1
+        D1(["For each filtered device"]) --> D2
+        D2{"instanceUuid in
+        HierarchyDeviceList?"} -->|No - skip| D1
+        D2 -->|Yes| D3
+        D3["Add row to Output-DeviceTable
+        Append DeviceTargetUuidList + DeviceTargetList"] --> D1
+        D1 -->|done| D4["Update global Device SWIM Inventory"]
+        D4 --> D5["CATC-MultipleShowCommands (precheck)
+        Populate precheck column"]
+    end
+
+    D --> STEP4
+    STEP4 --> E
+
+    subgraph STEP5["Step 5 - Select Device Family + SWIM Identifier"]
+        direction TB
+        E["Select unique device types from Output-DeviceTable"] --> E1
+        E1["Select Device Family (prompt)"] --> E2
+        E2["GET /dna/intent/api/v1/image/importation/device-family-identifiers"] --> E3
+        E3["JSONPath: resolve deviceFamilyIdentifier
+        Set SWIMFamilyIdentifier"]
+    end
+
+    E --> STEP5
+    STEP5 --> F
+
+    subgraph STEP6["Step 6 - Get + Select Golden Image"]
+        direction TB
+        F["POST /dna/intent/api/v1/images/ccoSync
+        Sync images from Cisco.com"] --> F1
+        F1["GET /dna/intent/api/v1/images?productNameOrdinal={id}"] --> F2
+        F2["Select Image (prompt)"] --> F3
+        F3["JSONPath: resolve image id
+        Set selectedImageName + selectedImageUuid"]
+    end
+
+    F --> STEP6
+    STEP6 --> G
+
+    subgraph STEP7["Step 7 - Image Sanitization (per site)"]
+        direction TB
+        G(["For each site in HierarchyUuid"]) --> G1
+        G1["GET /dna/intent/api/v1/images?siteId={id}
+        JSONPath: imported? goldenTagged?"] --> G2
+        G2{"Image status?"}
+        G2 -->|imported && not golden| G3
+        G2 -->|not imported| G4
+        G3["POST images/{uuid}/sites/{siteId}/tagGolden
+        Wait for task"] --> G
+        G4["POST images/{id}/download -> Wait
+        POST tagGolden -> Wait"] --> G
+    end
+
+    G --> H
+
+    H["Step 8 - Select Devices for Upgrade (multiselect prompt)
+    Cleanse DeviceTargetList"] --> I
+
+    I["Step 9 - Image Upgrade Method (prompt)"] --> J{Upgrade Method?}
+
+    J -->|Consolidated Upgrade| K1
+    J -->|Distribute then Activate| K2
+
+    subgraph CONS["Consolidated Upgrade"]
+        direction TB
+        K1["Proceed to Upgrade (confirm)"] --> K1a
+        K1a{Confirmed?} -->|Yes| K1b
+        K1a -->|No| HALT1([Halted - Not Upgraded])
+        K1b(["For each selected device"]) --> K1c
+        K1c["POST /dna/intent/api/v1/image/activation/device
+        distributeIfNeeded=true"] --> K1b
+    end
+
+    subgraph DIST["Distribute then Activate"]
+        direction TB
+        K2["Proceed to Distribute (confirm)"] --> K2a
+        K2a{Confirmed?} -->|No| HALT2([Halted - Not Distributed])
+        K2a -->|Yes| K2b
+        K2b(["For each selected device"]) --> K2c
+        K2c["POST /dna/intent/api/v1/image/distribution"] --> K2b
+        K2b -->|done| K2d["Proceed to Activate (confirm)"]
+        K2d --> K2e{Confirmed?}
+        K2e -->|No| HALT3([Halted - Not Activated])
+        K2e -->|Yes| K2f(["For each selected device"])
+        K2f --> K2g["POST /dna/intent/api/v1/image/activation/device"]
+        K2g --> K2f
+    end
+
+    K1c --> L
+    K2g --> L
+
+    subgraph STEP10["Step 10 - Postcheck + Complete"]
+        direction TB
+        L["CATC-MultipleShowCommands (postcheck)
+        Populate postcheck column"] --> L1
+        L1["Update Output-DeviceTable + global inventory"]
+    end
+
+    L --> STEP10
+    STEP10 --> DONE([Done])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style HALT1 fill:#c0392b,color:#fff,stroke:#922b21
+    style HALT2 fill:#c0392b,color:#fff,stroke:#922b21
+    style HALT3 fill:#c0392b,color:#fff,stroke:#922b21

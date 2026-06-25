@@ -1,0 +1,1489 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME",
+    "name": "CATC-PaginatedSiteHierarchy",
+    "title": "CATC-PaginatedSiteHierarchy",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Output-SiteHierarchy",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB6ERV6en2OO1c0DkBd9zMJzM2T5",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 0,
+          "scope": "output",
+          "name": "SiteCount",
+          "type": "datatype.integer",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKN3AG0WTD40uibhLgjqkPxpBxP91IRxw",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 5,
+          "scope": "input",
+          "name": "Hierarchy Page Size",
+          "type": "datatype.integer",
+          "description": "Pagination Size",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB5K2H3ypjxmVxo5hATZ6S4or5Am",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "[]",
+          "scope": "local",
+          "name": "Site-Hierarchy",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "json"
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 500,
+          "scope": "local",
+          "name": "Local - Limit",
+          "type": "datatype.integer",
+          "description": "Pagination limit",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB5EJL3sqCSHqK0Dmk0cCYqrsQ2Q",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 1,
+          "scope": "local",
+          "name": "Local - Offset",
+          "type": "datatype.integer",
+          "description": "Pagination offset",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB67QM6IjFoRafjIpYfSjOgQbJts",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [],
+          "scope": "output",
+          "name": "siteHierarchyNameList",
+          "type": "datatype.array",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKN13CL4ZDY7UkEBwI1UrVcblSe8yOCEB",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+        "properties": {
+          "value": [],
+          "scope": "output",
+          "name": "siteHierarchyUuidList",
+          "type": "datatype.array",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKN0VG7XT2O0ABDHLdY7423NeiksC7qpt",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "stringOffset",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB5YWM1UucTdyyzBF7LvisLyvRrd",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 1,
+          "scope": "local",
+          "name": "LoopCounter",
+          "type": "datatype.integer",
+          "description": "General Loop Iteration Counter",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB5U6Z0ZrfBV6rELCl5Sj3JRmuFy",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.integer",
+        "properties": {
+          "value": 0,
+          "scope": "local",
+          "name": "PageCounter",
+          "type": "datatype.integer",
+          "description": "Device PageCounter set during initialization and decremented for paging",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB5PIZ7XtPMHovXXJzzwJiMCrdlR",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "stringLimit",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02WKLZ6GB6MU16TPxIiyMsnhbwniqwdybNH",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Retrieves full site hierarchy from \nCatalyst Center using Pagination\nwith built in Filters.\n\nUses:\nCATC-GetHierarchy-v2",
+      "display_name": "CATC-PaginatedSiteHierarchy",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "catalystcenter.endpoint",
+        "specify_on_workflow_start": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02WKLZ6K10HMZ1d13yL0fsRfe1EAkBJ6SOz",
+        "name": "Group",
+        "title": "Retrieve Site Hierarchy",
+        "type": "logic.group",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Group",
+          "display_as_suggestion": false,
+          "display_name": "Retrieve Site Hierarchy",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02WKMN1LKHSS16icxGTiBmAgsGhp8TRC90V",
+            "name": "Get Catalyst Center site count v2",
+            "title": "Get Catalyst Center site count v2",
+            "type": "catalystcenter.invoke_api.getSiteCount",
+            "base_type": "activity",
+            "properties": {
+              "_endpoint": "/dna/intent/api/v2/site/count?id=${id}",
+              "_method": "GET",
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Get the site count of the specified site's sub-hierarchy (inclusive of the provided site)",
+              "display_name": "Get Catalyst Center site count v2",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKLZ6RCFEAR1Rlf0Ud6l1Wj322kaNaleW",
+            "name": "Execute Python Script",
+            "title": "Paging Counter Python Script",
+            "type": "python3.script",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "Paging Counter Python Script",
+              "display_name": "Paging Counter Python Script",
+              "script": "import sys\nimport math\nNumberofDevices = int(sys.argv[1])\nPaging = int(sys.argv[2])\n# Ceiling division trick using integer math\nPageCounter = math.ceil(NumberofDevices / Paging)\n",
+              "script_arguments": [
+                "$activity.definition_activity_02WKMN1LKHSS16icxGTiBmAgsGhp8TRC90V.output.body.response$",
+                "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.input.variable_workflow_02WKLZ6GB5K2H3ypjxmVxo5hATZ6S4or5Am$"
+              ],
+              "script_queries": [
+                {
+                  "script_query": "PageCounter",
+                  "script_query_name": "PageCounter",
+                  "script_query_type": "integer"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKLZ6U8ZSE62SlVZgHCsVok7EwzOYccNo",
+            "name": "Set Variables",
+            "title": "Set PageCounter for Pagination",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Set Counter for Device Pagination",
+              "display_name": "Set PageCounter for Pagination",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5EJL3sqCSHqK0Dmk0cCYqrsQ2Q$",
+                  "variable_value_new": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.input.variable_workflow_02WKLZ6GB5K2H3ypjxmVxo5hATZ6S4or5Am$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5PIZ7XtPMHovXXJzzwJiMCrdlR$",
+                  "variable_value_new": "$activity.definition_activity_02WKLZ6RCFEAR1Rlf0Ud6l1Wj322kaNaleW.output.script_queries.PageCounter$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB67QM6IjFoRafjIpYfSjOgQbJts$",
+                  "variable_value_new": 1
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKLZ6WQEENF130wezi6mAp0LqlsuOihLv",
+            "name": "While Loop",
+            "title": "While Loop",
+            "type": "logic.while",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "While Loop action",
+              "display_name": "While Loop",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02WKLZ6Z0N3RS6ylViDrHMSj4fSdp9sfxYO",
+                "name": "Condition Branch",
+                "title": "While PageCounter is > 0",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5PIZ7XtPMHovXXJzzwJiMCrdlR$",
+                    "operator": "gt",
+                    "right_operand": 0
+                  },
+                  "continue_on_failure": false,
+                  "description": "Pagination loop",
+                  "display_name": "While PageCounter is > 0",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02WKLZ71M98L168aReu3keuQD73NtL7azvf",
+                    "name": "Execute Python Script",
+                    "title": "String Conversion Python Script",
+                    "type": "python3.script",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "description": "String Conversion Python Script",
+                      "display_name": "String Conversion Python Script",
+                      "script": "import sys\nimport json\n\nnumericLimit = (sys.argv[1])\nstringLimit = str(numericLimit)\n\nnumericOffset = (sys.argv[2])\nstringOffset = str(numericOffset)",
+                      "script_arguments": [
+                        "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5EJL3sqCSHqK0Dmk0cCYqrsQ2Q$",
+                        "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB67QM6IjFoRafjIpYfSjOgQbJts$"
+                      ],
+                      "script_queries": [
+                        {
+                          "script_query": "stringOffset",
+                          "script_query_name": "stringOffset",
+                          "script_query_type": "string"
+                        },
+                        {
+                          "script_query": "stringLimit",
+                          "script_query_name": "stringLimit",
+                          "script_query_type": "string"
+                        }
+                      ],
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02WKLZ744RQEL7FnNk7xuw7qJ3mgakmpVAo",
+                    "name": "Set Variables",
+                    "title": "Set Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set Variables",
+                      "display_name": "Set Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB6MU16TPxIiyMsnhbwniqwdybNH$",
+                          "variable_value_new": "$activity.definition_activity_02WKLZ71M98L168aReu3keuQD73NtL7azvf.output.script_queries.stringLimit$"
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5YWM1UucTdyyzBF7LvisLyvRrd$",
+                          "variable_value_new": "$activity.definition_activity_02WKLZ71M98L168aReu3keuQD73NtL7azvf.output.script_queries.stringOffset$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02WKMLYD8N9UN4gOsLhAcVWcNNk0wIr0ARs",
+                    "name": "CATC-GetHierarchy-v2",
+                    "title": "CATC-GetHierarchy-v2",
+                    "type": "workflow.sub_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "atomic": {},
+                      "continue_on_failure": false,
+                      "description": "Written to Get the Hierarchy in \nCatalyst Center with pagination\n\nAdding Pagination",
+                      "display_name": "CATC-GetHierarchy-v2",
+                      "input": {
+                        "variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB6MU16TPxIiyMsnhbwniqwdybNH$",
+                        "variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5YWM1UucTdyyzBF7LvisLyvRrd$"
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "target_type": "catalystcenter.endpoint",
+                        "use_workflow_target": true
+                      },
+                      "workflow_id": "definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi",
+                      "workflow_name": "CATC-GetHierarchy-v2"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02WKLZ77HP9X30ywzXYcB6glre0hj9Kw80X",
+                    "name": "CATC-DeviceInventory-v2",
+                    "title": "CATC-DeviceInventory-v2",
+                    "type": "workflow.sub_workflow",
+                    "base_type": "subworkflow",
+                    "properties": {
+                      "atomic": {},
+                      "continue_on_failure": false,
+                      "description": "This is designed to pull the device inventory.\n\nAdding Pagination",
+                      "display_name": "CATC-DeviceInventory-v2",
+                      "input": {
+                        "variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB6MU16TPxIiyMsnhbwniqwdybNH$",
+                        "variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5YWM1UucTdyyzBF7LvisLyvRrd$"
+                      },
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "target_type": "catalystcenter.endpoint",
+                        "use_workflow_target": true
+                      },
+                      "workflow_id": "definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ",
+                      "workflow_name": "CATC-DeviceInventory-v2"
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_02WKLZ7A8BWDJ1Inj8xi3IZKsK0Lt34hrY1",
+                    "name": "Condition Block",
+                    "title": "Iteration Condition Block",
+                    "type": "logic.if_else",
+                    "base_type": "activity",
+                    "properties": {
+                      "conditions": [],
+                      "continue_on_failure": false,
+                      "description": "If-Else condition block for merging",
+                      "display_name": "Iteration Condition Block",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity",
+                    "blocks": [
+                      {
+                        "unique_name": "definition_activity_02WKLZ7CF3S4K08oB0cPpkLR0IuAVQd9Qmq",
+                        "name": "Condition Branch",
+                        "title": "=1 Merging Condition Branch",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5U6Z0ZrfBV6rELCl5Sj3JRmuFy$",
+                            "operator": "eq",
+                            "right_operand": 1
+                          },
+                          "continue_on_failure": false,
+                          "display_name": "=1 Merging Condition Branch",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02WKLZ7F7F5TH2lrNtyiqNzzoWDC6FRdCZU",
+                            "name": "Set Variables",
+                            "title": "Set Merged Variables",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "Set Variables",
+                              "display_name": "Set Merged Variables",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5$",
+                                  "variable_value_new": "$activity.definition_activity_02WKMLYD8N9UN4gOsLhAcVWcNNk0wIr0ARs.output.variable_workflow_02WKM7U833O8X7V0xsNuK2o06frYuCvkpZp$"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      },
+                      {
+                        "unique_name": "definition_activity_02WKLZ7HTGJIX2zASrmiiNHr4sihRw8zzel",
+                        "name": "Condition Branch",
+                        "title": ">1 Merging Condition Branch",
+                        "type": "logic.condition_block",
+                        "base_type": "activity",
+                        "properties": {
+                          "condition": {
+                            "left_operand": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5U6Z0ZrfBV6rELCl5Sj3JRmuFy$",
+                            "operator": "gt",
+                            "right_operand": 1
+                          },
+                          "continue_on_failure": false,
+                          "display_name": ">1 Merging Condition Branch",
+                          "skip_execution": false
+                        },
+                        "object_type": "definition_activity",
+                        "actions": [
+                          {
+                            "unique_name": "definition_activity_02WKLZ7KE3TM27jjFG265s8IWuJO40V0Qdy",
+                            "name": "Execute Python Script",
+                            "title": "Json Merger Python Script",
+                            "type": "python3.script",
+                            "base_type": "activity",
+                            "properties": {
+                              "action_timeout": 180,
+                              "continue_on_failure": false,
+                              "description": "Json Merger Python Script",
+                              "display_name": "Json Merger Python Script",
+                              "script": "import sys\nimport string\nimport json\nexisting_json = json.loads(sys.argv[1])\nnew_json = json.loads(sys.argv[2])\nmerged = {\n    \"response\": existing_json[\"response\"] + new_json[\"response\"],\n    \"version\": existing_json.get(\"version\", \"1.0\"),\n}\noutput_param = json.dumps(merged)",
+                              "script_arguments": [
+                                "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5$",
+                                "$activity.definition_activity_02WKMLYD8N9UN4gOsLhAcVWcNNk0wIr0ARs.output.variable_workflow_02WKM7U833O8X7V0xsNuK2o06frYuCvkpZp$"
+                              ],
+                              "script_queries": [
+                                {
+                                  "script_query": "output_param",
+                                  "script_query_name": "OutputJSON",
+                                  "script_query_type": "string"
+                                }
+                              ],
+                              "skip_execution": false
+                            },
+                            "object_type": "definition_activity"
+                          },
+                          {
+                            "unique_name": "definition_activity_02WKLZ7N1PDZK0PYqcAGPQTrfgwLnQmPghi",
+                            "name": "Set Variables",
+                            "title": "Set Merged Variables",
+                            "type": "core.set_multiple_variables",
+                            "base_type": "activity",
+                            "properties": {
+                              "continue_on_failure": false,
+                              "description": "Set Variables",
+                              "display_name": "Set Merged Variables",
+                              "skip_execution": false,
+                              "variables_to_update": [
+                                {
+                                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5$",
+                                  "variable_value_new": "$activity.definition_activity_02WKLZ7KE3TM27jjFG265s8IWuJO40V0Qdy.output.script_queries.OutputJSON$"
+                                }
+                              ]
+                            },
+                            "object_type": "definition_activity"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "unique_name": "definition_activity_02WKLZ7Q9625Y5gAktPFi29kl8fwQYWZbjU",
+                    "name": "Update Pagination Variables",
+                    "title": "Update Pagination Variables",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "continue_on_failure": false,
+                      "display_name": "Update Pagination Variables",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB67QM6IjFoRafjIpYfSjOgQbJts$",
+                          "variable_value_new": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB67QM6IjFoRafjIpYfSjOgQbJts$ +   $workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.input.variable_workflow_02WKLZ6GB5K2H3ypjxmVxo5hATZ6S4or5Am$"
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5PIZ7XtPMHovXXJzzwJiMCrdlR$",
+                          "variable_value_new": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5PIZ7XtPMHovXXJzzwJiMCrdlR$ -    1"
+                        },
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5U6Z0ZrfBV6rELCl5Sj3JRmuFy$",
+                          "variable_value_new": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB5U6Z0ZrfBV6rELCl5Sj3JRmuFy$ + 1"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02WKLZ83978IN04YEHbUtlXb2AHunIOtlRj",
+            "name": "JSONPath Query",
+            "title": "JSONPath to Filter Query",
+            "type": "corejava.jsonpathquery",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": false,
+              "description": "JSONPath Query to get value in JSON",
+              "display_name": "JSONPath to Filter Query",
+              "input_json": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5$",
+              "jsonpath_queries": [
+                {
+                  "default_value": 0,
+                  "jsonpath_query": "$.response.length()",
+                  "jsonpath_query_name": "FullHierarchyLength",
+                  "jsonpath_query_type": "integer",
+                  "set_default_value": false,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                },
+                {
+                  "default_value": "",
+                  "jsonpath_query": "$.response[*].siteNameHierarchy",
+                  "jsonpath_query_name": "siteHierarchyNameList",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": true,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                },
+                {
+                  "jsonpath_query": "$.response[*].id",
+                  "jsonpath_query_name": "siteHierarchyUuidList",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": true,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKLZ7XOJCEQ0P40pvCMrN5oPs9J3IR70P",
+            "name": "Set Variables",
+            "title": "Set Site Hierarchy Variables",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "description": "Set Site Hierarchy Variables",
+              "display_name": "Set Site Hierarchy Variables",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.output.variable_workflow_02WKLZ6GB6ERV6en2OO1c0DkBd9zMJzM2T5$",
+                  "variable_value_new": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.local.variable_workflow_02WKLZ6GB63DB4q1CD7p3T2UoSH9mFuMzS5$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.output.variable_workflow_02WKN3AG0WTD40uibhLgjqkPxpBxP91IRxw$",
+                  "variable_value_new": "$activity.definition_activity_02WKMN1LKHSS16icxGTiBmAgsGhp8TRC90V.output.body.response$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.output.variable_workflow_02WKN13CL4ZDY7UkEBwI1UrVcblSe8yOCEB$",
+                  "variable_value_new": "$activity.definition_activity_02WKLZ83978IN04YEHbUtlXb2AHunIOtlRj.output.jsonpath_queries.siteHierarchyNameList$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKLZ6FPXHEW4I5RWTIBxafVhRddwQqRME.output.variable_workflow_02WKN0VG7XT2O0ABDHLdY7423NeiksC7qpt$",
+                  "variable_value_new": "$activity.definition_activity_02WKLZ83978IN04YEHbUtlXb2AHunIOtlRj.output.jsonpath_queries.siteHierarchyUuidList$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02WKMOWPID19D30Ztq6Onf4IjxEHGtWSgfl",
+        "name": "Completed",
+        "title": "Completed",
+        "type": "logic.completed",
+        "base_type": "activity",
+        "properties": {
+          "completion_type": "succeeded",
+          "continue_on_failure": false,
+          "description": "Completed action",
+          "display_name": "Completed",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+    ]
+  },
+  "categories": {
+    "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6": {
+      "unique_name": "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6",
+      "name": "Catalyst Center",
+      "title": "Catalyst Center",
+      "type": "basic.category",
+      "base_type": "category",
+      "description": "Catalyst Center",
+      "category_type": "system",
+      "object_type": "category"
+    }
+  },
+  "subworkflows": [
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi",
+        "name": "CATC-GetHierarchy-v2",
+        "title": "CATC-GetHierarchy-v2",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "1",
+              "scope": "input",
+              "name": "Offset",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "SiteNameList",
+              "type": "datatype.string",
+              "description": "SiteNameList",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02WKM7U834NET0ax4vOAa7LNAJFK1fejHPj",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "SiteHierarchyJSON",
+              "type": "datatype.string",
+              "description": "Working Version SiteHierarchy",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02WKM7U832APS7IonL0XWIxrDFuRE8EvB4Q",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "SiteHierarchy",
+              "type": "datatype.string",
+              "description": "Complete Catalyst Center Inventory",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02WKM7U833O8X7V0xsNuK2o06frYuCvkpZp",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+            "properties": {
+              "value": [],
+              "scope": "local",
+              "name": "SiteHierarchyUuidList",
+              "type": "datatype.array",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02WKMEAH8UPRE4alpQQBR3IvTQlsvdrPumK",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "variable_type_array_01JhSTW61I3ZU2IfL7dwQox83eFDzE1qUiA",
+            "properties": {
+              "value": [],
+              "scope": "local",
+              "name": "SiteHierarchyNameList",
+              "type": "datatype.array",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02WKMERQCAOMX3IML528zlozZAQlLZJUNfv",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "Get-Site-API",
+              "type": "datatype.string",
+              "description": "Create API with or without pagination",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02WKM7U8322NO45LboQDzKV7aXlCufjCvxV",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "500",
+              "scope": "input",
+              "name": "Limit",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "SiteListJSON",
+              "type": "datatype.string",
+              "description": "Working Version Site List",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02WKM7U834H992j4hp0DSv4NuM9Nxc1fVve",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "SiteUuidList",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": ""
+            },
+            "unique_name": "variable_workflow_02WKMIR7VMY2D4fsz2p7vfNwJ8C2TpLu5ui",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "Written to Get the Hierarchy in \nCatalyst Center with pagination\n\nAdding Pagination",
+          "display_name": "CATC-GetHierarchy-v2",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02WKM7UAGIHS95fCpIfq0PFKR30Bjp8s9gF",
+            "name": "Condition Block",
+            "title": "Condition Block for API URI",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "conditions": [],
+              "continue_on_failure": false,
+              "description": "Allow for Pagination",
+              "display_name": "Condition Block for API URI",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02WKM7UCLJDQJ4I3dOAXJUEAaKkM9QF9QPn",
+                "name": "Condition Branch",
+                "title": "without Pagination Branch",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": {
+                        "left_operand": {
+                          "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6$",
+                          "operator": "eq",
+                          "right_operand": "0"
+                        },
+                        "operator": "or",
+                        "right_operand": {
+                          "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv$",
+                          "operator": "eq",
+                          "right_operand": "0"
+                        }
+                      },
+                      "operator": "or",
+                      "right_operand": {
+                        "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv$",
+                        "operator": "eq",
+                        "right_operand": ""
+                      }
+                    },
+                    "operator": "or",
+                    "right_operand": {
+                      "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6$",
+                      "operator": "eq",
+                      "right_operand": ""
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "description": "Create API URI without Pagination",
+                  "display_name": "without Pagination Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02WKM7UF0XSQ00lxtJq6QlCFRLGK8jafw7g",
+                    "name": "Set Variables",
+                    "title": "Set API URI",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set API URI for Pagination",
+                      "display_name": "Set API URI",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.local.variable_workflow_02WKM7U8322NO45LboQDzKV7aXlCufjCvxV$",
+                          "variable_value_new": "/dna/intent/api/v1/site"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02WKM7UH7FD5B2lqwhIMPsae4IBn4dp1GRG",
+                "name": "Condition Branch",
+                "title": "with Pagination Branch",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6$",
+                      "operator": "ne",
+                      "right_operand": ""
+                    },
+                    "operator": "and",
+                    "right_operand": {
+                      "left_operand": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv$",
+                      "operator": "ne",
+                      "right_operand": ""
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "description": "Create API URI with Pagination",
+                  "display_name": "with Pagination Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02WKM7UJVSAZ43KC4EGq6bJOQ7T3L4cL3Ru",
+                    "name": "Set Variables",
+                    "title": "Set API URI",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set API URI for Pagination\n\n/dna/intent/api/v1/network-device?offset=<offset>&limit=<limit>",
+                      "display_name": "Set API URI",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.local.variable_workflow_02WKM7U8322NO45LboQDzKV7aXlCufjCvxV$",
+                          "variable_value_new": "/dna/intent/api/v1/site?offset=$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U834B8P25SP8JpyYwhjuxmuNJOWK6$&limit=$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.input.variable_workflow_02WKM7U831FJ54D6lk1vzlUObTcsPO5E3Iv$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02WKM7UM2DXJL2bWFT9mB0PTBL3iuRwLwSX",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Get Site Hierarchy",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_endpoint": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.local.variable_workflow_02WKM7U8322NO45LboQDzKV7aXlCufjCvxV$",
+              "_headers": [
+                {
+                  "name": "Accept",
+                  "value": "application/json"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "_method": "GET",
+              "action_timeout": 180,
+              "continue_on_failure": true,
+              "description": "Get the Catalyst Center Site Hierarchy",
+              "display_name": "Get Site Hierarchy",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKM7UO9BYM64RIiZdwZEVOyCjvMWtzE0q",
+            "name": "JSONPath Query",
+            "title": "Extract Device List",
+            "type": "corejava.jsonpathquery",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": true,
+              "description": "Extract Devices from Catalyst Center Inventory",
+              "display_name": "Extract Device List",
+              "input_json": "$activity.definition_activity_02WKM7UM2DXJL2bWFT9mB0PTBL3iuRwLwSX.output.raw_body$",
+              "jsonpath_queries": [
+                {
+                  "jsonpath_query": "$.response",
+                  "jsonpath_query_name": "Hierarchy",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": false,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                },
+                {
+                  "default_value": "",
+                  "jsonpath_query": "$.response[*].id",
+                  "jsonpath_query_name": "HierarchyUuids",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": false,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                },
+                {
+                  "default_value": "",
+                  "jsonpath_query": "$.response[*].siteNameHierarchy",
+                  "jsonpath_query_name": "HierarchyNames",
+                  "jsonpath_query_type": "string",
+                  "set_default_value": false,
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02WKM7UQU1XFH0nbtnuBeceKtyIgoRrqKM4",
+            "name": "Set Variables",
+            "title": "Output",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": true,
+              "description": "Render Variables for output",
+              "display_name": "Output",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.output.variable_workflow_02WKM7U833O8X7V0xsNuK2o06frYuCvkpZp$",
+                  "variable_value_new": "$activity.definition_activity_02WKM7UM2DXJL2bWFT9mB0PTBL3iuRwLwSX.output.raw_body$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi.output.variable_workflow_02WKM7U834NET0ax4vOAa7LNAJFK1fejHPj$",
+                  "variable_value_new": ""
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+        ]
+      }
+    },
+    {
+      "workflow": {
+        "unique_name": "definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ",
+        "name": "CATC-DeviceInventory-v2",
+        "title": "CATC-DeviceInventory-v2",
+        "type": "generic.workflow",
+        "base_type": "workflow",
+        "variables": [
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "Get-Device-API",
+              "type": "datatype.string",
+              "description": "Create API with or without pagination",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02VQP6AJ18SXI0RaWNXMZijqR9gGvckR6yu",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "DeviceInventoryJSON",
+              "type": "datatype.string",
+              "description": "Working Version Device Inventory",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02VQOWDA9DN7M3FGTr4BLwPnAUepwixhOEG",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "500",
+              "scope": "input",
+              "name": "Limit",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "local",
+              "name": "DeviceListJSON",
+              "type": "datatype.string",
+              "description": "Working Version Device List",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02VQOWDA9DU9T7KODPVg9tpBSqw2yVUlnWQ",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "1",
+              "scope": "input",
+              "name": "Offset",
+              "type": "datatype.string",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "text"
+            },
+            "unique_name": "variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "DeviceList",
+              "type": "datatype.string",
+              "description": "Device List",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02VQOWDA9DFWU3dlB6n9TxzoLpfbvzEF6YI",
+            "object_type": "variable_workflow"
+          },
+          {
+            "schema_id": "datatype.string",
+            "properties": {
+              "value": "",
+              "scope": "output",
+              "name": "DeviceInventory",
+              "type": "datatype.string",
+              "description": "Complete Catalyst Center Inventory",
+              "is_required": false,
+              "display_on_wizard": false,
+              "is_invisible": false,
+              "variable_string_format": "json"
+            },
+            "unique_name": "variable_workflow_02VQOWDA9D7TQ2JRXHG4UKVpJuynhMnH04a",
+            "object_type": "variable_workflow"
+          }
+        ],
+        "properties": {
+          "atomic": {
+            "is_atomic": false
+          },
+          "delete_workflow_instance": false,
+          "description": "This is designed to pull the device inventory.\n\nAdding Pagination",
+          "display_name": "CATC-DeviceInventory-v2",
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "catalystcenter.endpoint",
+            "specify_on_workflow_start": true
+          }
+        },
+        "object_type": "definition_workflow",
+        "actions": [
+          {
+            "unique_name": "definition_activity_02VQP3WG8R77A5I7MHc6GmhoF8OuSqpXFFH",
+            "name": "Condition Block",
+            "title": "Condition Block for API URI",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "conditions": [],
+              "continue_on_failure": false,
+              "description": "Allow for Pagination",
+              "display_name": "Condition Block for API URI",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_02VQP3WIS0L5C3AIwnpsYQNDE8EURficaEO",
+                "name": "Condition Branch",
+                "title": "without Pagination Branch",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": {
+                        "left_operand": {
+                          "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF$",
+                          "operator": "eq",
+                          "right_operand": "0"
+                        },
+                        "operator": "or",
+                        "right_operand": {
+                          "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk$",
+                          "operator": "eq",
+                          "right_operand": "0"
+                        }
+                      },
+                      "operator": "or",
+                      "right_operand": {
+                        "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk$",
+                        "operator": "eq",
+                        "right_operand": ""
+                      }
+                    },
+                    "operator": "or",
+                    "right_operand": {
+                      "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF$",
+                      "operator": "eq",
+                      "right_operand": ""
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "description": "Create API URI without Pagination",
+                  "display_name": "without Pagination Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02VQP3AA5CLQD6sk1H1Eqd4fOM6eWlBdoeU",
+                    "name": "Set Variables",
+                    "title": "Set API URI",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set API URI for Pagination",
+                      "display_name": "Set API URI",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.local.variable_workflow_02VQP6AJ18SXI0RaWNXMZijqR9gGvckR6yu$",
+                          "variable_value_new": "/dna/intent/api/v1/network-device"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_02VQP3WL8IAWL0yeYjOf5WCs4Ymruv6AMQh",
+                "name": "Condition Branch",
+                "title": "with Pagination Branch",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": {
+                      "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF$",
+                      "operator": "ne",
+                      "right_operand": ""
+                    },
+                    "operator": "and",
+                    "right_operand": {
+                      "left_operand": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk$",
+                      "operator": "ne",
+                      "right_operand": ""
+                    }
+                  },
+                  "continue_on_failure": false,
+                  "description": "Create API URI with Pagination",
+                  "display_name": "with Pagination Branch",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_02VQP4EFL55KG1A1qqfcY6u565ehvjmFUxv",
+                    "name": "Set Variables",
+                    "title": "Set API URI",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "description": "Set API URI for Pagination\n\n/dna/intent/api/v1/network-device?offset=<offset>&limit=<limit>",
+                      "display_name": "Set API URI",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.local.variable_workflow_02VQP6AJ18SXI0RaWNXMZijqR9gGvckR6yu$",
+                          "variable_value_new": "/dna/intent/api/v1/network-device?offset=$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2VEM58UM2mskyRr792WdfboGoXfaDF$&limit=$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.input.variable_workflow_02VQP2JCURLZP3aOTvAsqsv59ZFS1bRWcvk$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_02VQOWDCZ4VYE7EwjAjcjWROMviMPFcpa7f",
+            "name": "Generic Catalyst Center API Request",
+            "title": "Get Inventory",
+            "type": "catalystcenter.invoke_api",
+            "base_type": "activity",
+            "properties": {
+              "_endpoint": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.local.variable_workflow_02VQP6AJ18SXI0RaWNXMZijqR9gGvckR6yu$",
+              "_headers": [
+                {
+                  "name": "Accept",
+                  "value": "application/json"
+                },
+                {
+                  "name": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "_method": "GET",
+              "action_timeout": 180,
+              "continue_on_failure": true,
+              "description": "Get the Catalyst Center Inventory",
+              "display_name": "Get Inventory",
+              "runtime_user": {
+                "target_default": true
+              },
+              "skip_execution": false,
+              "target": {
+                "use_workflow_target": true
+              }
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02VQOWDHN5E694dFKA42DMJHJPj8kCjyb0D",
+            "name": "JSONPath Query",
+            "title": "Extract Device List",
+            "type": "corejava.jsonpathquery",
+            "base_type": "activity",
+            "properties": {
+              "action_timeout": 180,
+              "continue_on_failure": true,
+              "description": "Extract Devices from Catalyst Center Inventory",
+              "display_name": "Extract Device List",
+              "input_json": "$activity.definition_activity_02VQOWDCZ4VYE7EwjAjcjWROMviMPFcpa7f.output.raw_body$",
+              "jsonpath_queries": [
+                {
+                  "jsonpath_query": "$.response",
+                  "jsonpath_query_name": "Inventory",
+                  "jsonpath_query_type": "string",
+                  "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+                }
+              ],
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02VQOWDKOSBCQ3hpYXWpYga8VNvIPihWED0",
+            "name": "Set Variables",
+            "title": "Output",
+            "type": "core.set_multiple_variables",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": true,
+              "description": "Render Variables for output",
+              "display_name": "Output",
+              "skip_execution": false,
+              "variables_to_update": [
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.output.variable_workflow_02VQOWDA9D7TQ2JRXHG4UKVpJuynhMnH04a$",
+                  "variable_value_new": "$activity.definition_activity_02VQOWDCZ4VYE7EwjAjcjWROMviMPFcpa7f.output.raw_body$"
+                },
+                {
+                  "variable_to_update": "$workflow.definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ.output.variable_workflow_02VQOWDA9DFWU3dlB6n9TxzoLpfbvzEF6YI$",
+                  "variable_value_new": "$activity.definition_activity_02VQOWDHN5E694dFKA42DMJHJPj8kCjyb0D.output.jsonpath_queries.Inventory$"
+                }
+              ]
+            },
+            "object_type": "definition_activity"
+          }
+        ],
+        "categories": [
+          "category_02MUX7XANKJ0021xFUT7Z2Sjn1EYQyKSTQ6"
+        ]
+      }
+    }
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02WKM7U7L5MSA17VoILE7UznXdWswApTiQi",
+    "definition_workflow_02VQOWD9MAZXE4vBobr3p9fZptS7dNgQbTQ"
+  ]
+}

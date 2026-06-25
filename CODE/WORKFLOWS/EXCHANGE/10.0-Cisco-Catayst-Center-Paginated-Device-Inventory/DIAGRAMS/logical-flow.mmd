@@ -1,0 +1,64 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Get The Number Of Network Devices
+    GET /dna/intent/api/v1/networkDevices/count
+    Returns: NumberofDevices (total inventory count)"] --> B
+
+    B["Step 2 - Execute Python Script (Paging Counter)
+    PageCounter = math.ceil(NumberofDevices / Inventory Page Size)"] --> C
+
+    C["Step 3 - Set PageCounter for Pagination
+    Local - Limit  = Inventory Page Size
+    PageCounter    = ceil(count / page size)
+    Local - Offset = 1"] --> D
+
+    D{"While loop:
+    PageCounter > 0?"} -->|No - all pages fetched| P
+    D -->|Yes| E
+
+    subgraph LOOP["While PageCounter > 0 - Pagination Loop"]
+        direction TB
+        E["Step 4.1 - Execute Python Script (String Conversion)
+        stringLimit  = str(Local - Limit)
+        stringOffset = str(Local - Offset)"] --> F
+        F["Step 4.2 - Set Variables
+        stringLimit, stringOffset"] --> G
+        G["Step 4.3 - CATC-DeviceInventory-v2 (subworkflow)
+        GET /dna/intent/api/v1/network-device?offset={offset}&limit={limit}
+        Returns: DeviceInventory (page), DeviceList"] --> H
+        H{"LoopCounter
+        == 1?"} -->|Yes - first page| I1
+        H -->|No - page 2+| I2
+        I1["Set Variables
+        Device-Inventory = first page (direct assign)"] --> J
+        I2["Execute Python Script (Json Merger)
+        merged.response = existing.response + new.response
+        Device-Inventory = merged JSON"] --> J
+        J["Step 4.5 - Update Pagination Variables
+        Local - Offset += Inventory Page Size
+        PageCounter -= 1
+        LoopCounter += 1"]
+    end
+
+    J --> D
+
+    P{"Devices to Filter
+    selection?"} -->|ALL| Q1
+    P -->|Switches and Hubs / Routers / Wireless Controllers| Q2
+
+    Q1["Set Variables
+    Output-DeviceInventory = Device-Inventory
+    (complete unfiltered inventory)"] --> DONE
+
+    Q2["JSONPath Filter Query
+    $.response[?(@.family == selected)]
+    + reachabilityStatus == Reachable
+    + managementState == Managed
+    Output-DeviceInventory = filtered JSON"] --> R
+
+    R["Step 6 - Complete Device Inventory
+    Final completion marker"] --> DONE([Done])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
