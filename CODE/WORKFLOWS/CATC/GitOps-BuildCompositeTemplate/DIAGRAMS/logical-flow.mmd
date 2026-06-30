@@ -1,0 +1,34 @@
+flowchart TD
+    START(["Start
+    GITHUB-OWNER/REPO/PATH (composite YAML)
+    TemplateHubProjectName, FORCE Update"]) --> A
+
+    A["Step 1 - Get-GitHub-Directory
+    list composite YAML files"] --> B
+
+    B["Step 2 - JSONPath Queries
+    NumberFiles + GithubFileList"] --> C
+
+    C["Step 3 - Execute Python Script
+    derive CATC-ProjectName"] --> D
+
+    D{Step 4 -<br/>operator-supplied<br/>project name?}
+    D -->|Yes| Dop["Use TemplateHubProjectName"]
+    D -->|No| Dauto["Use derived CATC-ProjectName"]
+    Dop --> E
+    Dauto --> E
+
+    E(["Step 5 - For Each GitHub File"])
+    E --> F["Get-GitHub-File-v2
+    fetch composite YAML"] --> G
+    G["CATC-GetTemplates
+    resolve each members[].name -> templateId"] --> H
+    H["Build containingTemplates[] body"] --> I
+    I["CATC-CommitTemplate
+    create or update composite parent
+    POST /templates/{id}/versions/commit"] --> J
+    J["Sleep"] --> E
+
+    E -.all composites processed.-> K["Step 6 - Completed
+    publish OUTPUT + composite IDs"]
+    K --> END([End])

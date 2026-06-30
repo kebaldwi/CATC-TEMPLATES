@@ -1,0 +1,48 @@
+flowchart TD
+    START([Start
+    GITHUB-OWNER/REPO/PATH
+    TemplateHubProjectName, FORCE Update]) --> A
+
+    A["Step 1 - Get-GitHub-Directory (sub-workflow)
+    GET /repos/{owner}/{repo}/contents/{path}
+    -> file list"] --> B
+
+    B["Step 2 - JSONPath Queries
+    $.length() -> NumberFiles
+    $..name    -> GithubFileList"] --> C
+
+    C["Step 3 - Execute Python Script
+    derive CATC-ProjectName
+    apply truncation rules"] --> D
+
+    D{Step 4 -<br/>operator-supplied<br/>project name?}
+    D -->|Yes| Dop["Use TemplateHubProjectName"]
+    D -->|No| Dauto["Use derived CATC-ProjectName"]
+
+    Dop --> E
+    Dauto --> E
+
+    E(["Step 5 - For Each GitHub File"])
+    E --> F["CATC-CommitTemplate (sub-workflow)
+    -> CATC-CreateTemplate-v2 per file
+    create or update member template"]
+    F --> G["Sleep
+    avoid Template Hub contention"]
+    G --> E
+
+    E -.all files processed.-> H["Step 6 - CATC-GetProjectTemplatesIDs (sub-workflow)
+    GET /dna/intent/api/v2/template-programmer/template?projectId=..."]
+
+    H --> I["Step 7 - JSONPath Query Template ID
+    extract template UUID list"] --> J
+
+    J["Step 8 - Set TemplateID List
+    TemplateListIDs = uuid array"] --> K
+
+    K(["Step 9 - For Each Template"])
+    K --> L["POST /dna/intent/api/v1/templates/{templateId}/versions/commit
+    commit new version"]
+    L --> K
+
+    K -.all committed.-> M["Step 10 - Completed
+    publish OUTPUT + TemplateListIDs"] --> END([End])

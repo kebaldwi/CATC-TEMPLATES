@@ -4,9 +4,9 @@
 > Authors: Keith Baldwin - Solutions Engineer - Automation HyperSpecialist (kebaldwi@cisco.com)
 > Copyright (c) 2024-2026 Cisco Systems, Inc. All rights reserved.
 
-This document describes the complete Cisco Catalyst Center GitOps workflow suite under this folder. The suite consists of eleven ordered workflows that automate site foundation, settings and credentials, discovery and assignment, template synchronization, composite template construction, profile binding, composite deployment, ad-hoc device CLI diagnostics, site-scoped software upgrades, and the paginated inventory/hierarchy utilities that the upgrade pipeline depends on.
+This document describes the complete Cisco Catalyst Center GitOps workflow suite under this folder. The suite consists of twelve ordered workflows that automate site foundation, settings and credentials, discovery and assignment, template synchronization, composite template construction, profile binding, composite deployment, ad-hoc device CLI diagnostics, site-scoped software upgrades, the paginated inventory/hierarchy utilities that the upgrade pipeline depends on, and the bulk show-command runner that captures pre/post-change diagnostics across many devices.
 
-Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 8.0 provides ad-hoc CLI read access for verification. Workflow 9.0 orchestrates site-scoped SWIM upgrades, and it consumes the reusable pagination utilities in Workflows 10.0 and 11.0.
+Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 8.0 provides ad-hoc CLI read access for verification. Workflow 9.0 orchestrates site-scoped SWIM upgrades, and it consumes the reusable pagination utilities in Workflows 10.0 and 11.0 as well as the bulk command runner in Workflow 12.0.
 
 ---
 
@@ -27,6 +27,7 @@ Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 
    - [9.0 - Site Based Upgrade](#90---site-based-upgrade)
    - [10.0 - Paginated Device Inventory](#100---paginated-device-inventory)
    - [11.0 - Paginated Site Hierarchy](#110---paginated-site-hierarchy)
+   - [12.0 - Bulk Command Runner](#120---bulk-command-runner)
 5. [Input Data Sources](#input-data-sources)
 6. [Installation Options](#installation-options)
 7. [Meraki Free Account Setup (Optional Lab On-Ramp)](#meraki-free-account-setup-optional-lab-on-ramp)
@@ -50,6 +51,7 @@ Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 
 | 9.0 | [Site Based Upgrade](9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/) | `Catalyst Center Site Based Upgrade.json` | Site-scoped SWIM upgrade: golden image preparation, distribution and/or activation across selected devices with pre/post-check diagnostics |
 | 10.0 | [Paginated Device Inventory](10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/) | `CATC-PaginatedDeviceInventory.json` | Reusable utility — paginates the full device inventory and returns a merged, optionally filtered device list |
 | 11.0 | [Paginated Site Hierarchy](11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/) | `CATC-PaginatedSiteHierarchy.json` | Reusable utility — paginates the complete site hierarchy and returns merged JSON plus name and UUID lists |
+| 12.0 | [Bulk Command Runner](12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/) | `CATC-MultipleShowCommands.json` | Reusable utility — iterates the shared Device SWIM Inventory table, batches show commands in groups of five, runs them per device via the CLI Poller API, and writes results to the `precheck` or `postcheck` column |
 
 ---
 
@@ -81,7 +83,7 @@ This workflow suite is designed to support enterprise and public-sector operatio
 
 ## Provisioning Workflow
 
-The diagram below shows the complete end-to-end build-and-deploy flow across workflows 1.0 through 7.0, the resources each stage produces, and the hard dependencies that gate the final deployment stage. Workflows 8.0 through 11.0 are utility and operations workflows that consume the same Catalyst Center state once it has been built.
+The diagram below shows the complete end-to-end build-and-deploy flow across workflows 1.0 through 7.0, the resources each stage produces, and the hard dependencies that gate the final deployment stage. Workflows 8.0 through 12.0 are utility and operations workflows that consume the same Catalyst Center state once it has been built.
 
 ![Provisioning Workflow](DIAGRAMS/provisioning-workflow.png)
 
@@ -249,6 +251,22 @@ Primary outcome:
 Utilization statement:
 - Use this workflow as a reusable building block whenever a workflow needs the full site hierarchy by name or UUID without page-size truncation.
 
+### 12.0 - Bulk Command Runner
+
+Workflow folder: [12.0-Cisco-Catalyst-Center-Bulk-Command-Runner](12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/)
+
+Function:
+- Seeds a local `PreflightChecklist` working table from the shared global **Device SWIM Inventory** table and iterates row by row over every target device.
+- Normalises a loose-format `showCommands` input (quoted CSV, JSON/Python list literal, or newline-separated) into an array and chunks it into batches of five to honour the Catalyst Center per-call command limit.
+- Drives a `While Loop` that submits each batch to `CATC-CommandRunner` (POST `/network-device-poller/cli/read-request`), polls the resulting task, retrieves the result file, and concatenates the cleaned per-batch output per device.
+- Writes the consolidated per-device output into either the `precheck` or `postcheck` column of the shared table, selected by the `TableColumnSelection` input.
+
+Primary outcome:
+- The shared **Device SWIM Inventory** table is updated in place so each device row carries its original inventory attributes alongside structured pre-change and/or post-change CLI evidence, ready for side-by-side comparison.
+
+Utilization statement:
+- Use this workflow as the reusable diagnostic engine for any change workflow that needs bulk pre/post-check capture across many devices. It is consumed by Workflow 9.0 for SWIM upgrade pre/post-checks and can be called from any parent workflow that populates the shared **Device SWIM Inventory** table.
+
 ---
 
 ## Input Data Sources
@@ -263,7 +281,10 @@ The workflow suite uses shared GitOps input artifacts:
 - Referenced by workflows 4.0 and 5.0 for member and composite template synchronization.
 
 3. Catalyst Center runtime state
-- Workflows 8.0, 9.0, 10.0, and 11.0 read live Catalyst Center inventory, hierarchy, and SWIM state directly through the Intent API rather than from Git artifacts.
+- Workflows 8.0, 9.0, 10.0, 11.0, and 12.0 read live Catalyst Center inventory, hierarchy, and SWIM state directly through the Intent API rather than from Git artifacts.
+
+4. Shared global tables
+- Workflow 12.0 reads from and writes to the global **Device SWIM Inventory** table populated by the parent workflow (for example, Workflow 9.0). The same table carries device attributes and the `precheck`/`postcheck` columns updated per run.
 
 ---
 
@@ -289,6 +310,7 @@ Use this path when you want explicit version control of the exact workflow artif
 - [9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/](9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/) — `Catalyst Center Site Based Upgrade.json` (requires 10.0 imported)
 - [10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/](10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/) — `CATC-PaginatedDeviceInventory.json`
 - [11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/](11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/) — `CATC-PaginatedSiteHierarchy.json`
+- [12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/](12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/) — `CATC-MultipleShowCommands.json` (consumed by 9.0)
 4. Verify each workflow appears with expected name and version.
 5. Run in the documented order in this README.
 
@@ -313,7 +335,7 @@ Recommended when:
 
 Post-install validation for either option:
 
-1. Confirm all eleven workflows are visible and enabled.
+1. Confirm all twelve workflows are visible and enabled.
 2. Confirm runtime target, credentials, and required permissions are set.
 3. Execute a non-production test run using a limited target scope.
 4. Confirm task polling and terminal status behavior before production rollout.
@@ -326,7 +348,7 @@ If you are new to Cisco workflow automation, a free Meraki Dashboard environment
 
 Important:
 - Meraki Dashboard workflows are not to be confused with Catalyst Center workflows. They are not the same and do not interact.
-- This step is optional in the event you already have a Meraki account and is required to run workflows 1.0 through 11.0 in this folder.
+- This step is optional in the event you already have a Meraki account and is required to run workflows 1.0 through 12.0 in this folder.
 
 ### Create a free Meraki Dashboard account
 
@@ -358,7 +380,7 @@ This optional prep helps teams build API discipline and change-control habits th
 
 ## Ordering and Dependencies
 
-Workflows 1.0 through 7.0 are designed to run in strict order to build and deploy site state. Workflows 8.0 through 11.0 are utility and operations workflows that run on demand once that state exists.
+Workflows 1.0 through 7.0 are designed to run in strict order to build and deploy site state. Workflows 8.0 through 12.0 are utility and operations workflows that run on demand once that state exists.
 
 ```text
 1.0 Site Hierarchy
@@ -391,17 +413,20 @@ Workflows 1.0 through 7.0 are designed to run in strict order to build and deplo
 11.0 Paginated Site Hierarchy (utility / subworkflow)
   -> requires a populated site hierarchy (1.0) for meaningful output
 
+12.0 Bulk Command Runner (utility / subworkflow)
+  -> requires the parent workflow to populate the global Device SWIM Inventory table; consumed by 9.0 for pre/post-check capture
+
 9.0 Site Based Upgrade (on-demand)
-  -> requires site hierarchy (1.0), discovered managed devices (3.0), and Workflow 10.0 imported as a subworkflow dependency
+  -> requires site hierarchy (1.0), discovered managed devices (3.0), and Workflows 10.0 and 12.0 imported as subworkflow dependencies
 ```
 
-Recommended rollback/deletion order for workflows 1.0 through 7.0 is reverse execution order to preserve dependency integrity. Workflows 8.0 through 11.0 are read/operations workflows and do not require rollback.
+Recommended rollback/deletion order for workflows 1.0 through 7.0 is reverse execution order to preserve dependency integrity. Workflows 8.0 through 12.0 are read/operations workflows and do not require rollback.
 
 ---
 
 ## Appendix — Workflow and API Reference
 
-This appendix provides a complete technical reference for all workflows, embedded subworkflows, and Catalyst Center and GitHub API endpoints used across the eleven workflow definition files in this suite (the seven `-v3.json` GitOps workflows in folders 1.0–7.0 plus the four operational and utility workflows in folders 8.0–11.0).
+This appendix provides a complete technical reference for all workflows, embedded subworkflows, and Catalyst Center and GitHub API endpoints used across the twelve workflow definition files in this suite (the seven `-v3.json` GitOps workflows in folders 1.0–7.0 plus the five operational and utility workflows in folders 8.0–12.0).
 
 ---
 
@@ -420,6 +445,7 @@ This appendix provides a complete technical reference for all workflows, embedde
 | 9 | `Catalyst Center Site Based Upgrade` | `Catalyst Center Site Based Upgrade.json` | Orchestrates a site-scoped SWIM upgrade: target device construction, golden image preparation, distribution/activation, and pre/post-check capture |
 | 10 | `CATC-PaginatedDeviceInventory` | `CATC-PaginatedDeviceInventory.json` | Counts devices, paginates the Network Device API, and returns the full (optionally filtered) inventory |
 | 11 | `CATC-PaginatedSiteHierarchy` | `CATC-PaginatedSiteHierarchy.json` | Counts sites, paginates the Site API alongside the Network Device API, and returns the full hierarchy plus name and UUID lists |
+| 12 | `CATC-MultipleShowCommands-v3` | `CATC-MultipleShowCommands.json` | Iterates the shared Device SWIM Inventory table, batches show commands in groups of five, runs each batch per device through `CATC-CommandRunner`, and writes consolidated output to the `precheck` or `postcheck` column |
 
 ---
 
@@ -455,7 +481,7 @@ Shared across all seven workflows.
 | `CATC-PaginatedDeviceInventory` | Counts devices and paginates the Network Device API to return the full, optionally filtered inventory | 9.0 Site Based Upgrade (subworkflow call) |
 | `CATC-GetHierarchy-v2` | Retrieves a single page of the site hierarchy using `offset`/`limit` | 11.0 PaginatedSiteHierarchy |
 | `CATC-DynamicSiteSelector` | Presents the Catalyst Center site hierarchy and returns the selected site plus the full hierarchy JSON | 9.0 Site Based Upgrade |
-| `CATC-MultipleShowCommands` | Captures diagnostic show command output for each target device into a shared SWIM inventory table | 9.0 Site Based Upgrade |
+| `CATC-MultipleShowCommands` | Captures diagnostic show command output for each target device into a shared SWIM inventory table (now packaged as standalone Workflow 12.0) | 9.0 Site Based Upgrade (subworkflow call to 12.0) |
 
 #### Utility Subworkflows (SecureX/XDR Catalog)
 

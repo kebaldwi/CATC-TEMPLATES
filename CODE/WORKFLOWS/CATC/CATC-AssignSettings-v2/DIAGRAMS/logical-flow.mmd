@@ -1,0 +1,38 @@
+flowchart TD
+    START([Start
+    Hierarchy + Network/AAA/Credential inputs]) --> S1
+
+    subgraph S1G["Step 1 - AssignSettings (sub-workflow group)"]
+        direction TB
+        R1["Resolve site UUID
+        GET /dna/intent/api/v1/site
+        groupNameHierarchy = Parent/Area/Building/Floor"] --> R2
+        R2["Assemble network-settings body
+        DNS, DHCP, NTP, SNMP, syslog,
+        Netflow, banner (skipped if protected)"] --> R3
+        R3["POST /dna/intent/api/v2/network/{siteId}
+        apply network settings"] --> R4
+        R4["POST /dna/intent/api/v1/sites/{siteId}/aaaSettings
+        apply AAA settings"]
+    end
+
+    S1 --> S2
+
+    subgraph S2G["Step 2 - AssignCredentials (sub-workflow group)"]
+        direction TB
+        C1["GET /dna/intent/api/v2/global-credential
+        list existing credential objects"] --> C2
+        C2{For each of:
+        CLI, SNMPv2 Read, SNMPv2 Write}
+        C2 -->|exists| C3
+        C2 -->|missing| C2new["POST /dna/intent/api/v2/global-credential
+        create credential object"]
+        C2new --> C3
+        C3["POST /dna/intent/api/v1/credential-to-site/{siteId}
+        bind credential UUIDs to target site"]
+    end
+
+    S2 --> S3
+    S3["Step 3 - Write Output
+    publish Site UUID, Site Name,
+    Hierarchy, Network Settings"] --> END([End])

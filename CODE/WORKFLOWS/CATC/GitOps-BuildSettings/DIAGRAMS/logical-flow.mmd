@@ -1,0 +1,36 @@
+flowchart TD
+    START([Start
+    GITHUB-OWNER/REPO/PATH
+    GITHUB-FILE = settings.json]) --> A
+
+    A["Step 1 - Get-GitHub-Directory
+    GET /repos/{owner}/{repo}/contents/{path}"] --> B
+
+    B["Step 2 - JSONPath Queries
+    $.length() -> NumberFiles
+    $..name    -> GithubFileList"] --> C
+
+    C["Step 3 - Set Variables
+    derive CATC-ProjectName"] --> D
+
+    D(["Step 4 - For Each GitHub File"])
+    D --> E{file == GITHUB-FILE?}
+    E -->|No - skip| D
+    E -->|Yes| F
+
+    F["Get-GitHub-File-v2
+    fetch and decode raw JSON"] --> G
+
+    G["Read Table from JSON
+    $.project[*] -> HierarchyList"] --> H
+
+    H(["For each row in HierarchyList"])
+    H --> I["CATC-AssignSettings-v2 (sub-workflow)
+    apply network settings + AAA
+    create + bind CLI/SNMP credentials"]
+    I --> J["Sleep"] --> H
+
+    H -.all rows done.-> D
+    D -.all files done.-> K["Step 5 - Completed
+    publish OUTPUT"]
+    K --> END([End])

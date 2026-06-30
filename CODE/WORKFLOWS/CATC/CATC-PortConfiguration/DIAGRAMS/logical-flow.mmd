@@ -1,0 +1,37 @@
+flowchart TD
+    START([Start
+    Locator: macAddress OR deviceIp+port
+    Change set: description, adminStatus, VLANs]) --> A
+
+    A{Step 1 -<br/>Locator path?}
+    A -->|macAddress| Amac["Use client tracking
+    -> resolve mgmtIp + clientPort
+    -> accessSwitch UUID"]
+    A -->|deviceIp + port| Aip["Direct addressing
+    -> resolve switchUuid + port"]
+
+    Amac --> B
+    Aip --> B
+
+    B["Step 2 - Get Interface Detail
+    GET /dna/intent/api/v1/interface/network-device/{deviceUuid}"] --> C
+
+    C["Step 3 - Extract Port UUID
+    JSONPath: filter by portName
+    -> interfaceUuid"] --> D
+
+    D["Step 4 - Set Variables
+    apply change set into apiBody payloads"] --> E
+
+    E{Step 5 - Condition Operation Block}
+    E -->|description supplied| Edesc["POST /dna/intent/api/v1/interface/{interfaceUuid}
+    description payload"]
+    E -->|adminStatus supplied| Eadmin["POST /dna/intent/api/v1/interface/{interfaceUuid}
+    admin Up/Down/Reset payload"]
+    E -->|dataVlan/voiceVlan supplied| Evlan["POST /dna/intent/api/v1/interface/{interfaceUuid}
+    VLAN reassignment payload"]
+
+    Edesc --> END
+    Eadmin --> END
+    Evlan --> END
+    E -->|no change selected| END([End])

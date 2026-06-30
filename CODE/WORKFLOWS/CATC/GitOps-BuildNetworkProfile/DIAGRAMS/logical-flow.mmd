@@ -1,0 +1,37 @@
+flowchart TD
+    START(["Start
+    GITHUB-OWNER/REPO/PATH (profile manifest)"]) --> A
+
+    A["Step 1 - Get-GitHub-File-v2
+    fetch profile manifest"] --> B
+
+    B["Step 2 - JSONPath Queries
+    profileName, profileType,
+    Day0Templates[], DayNTemplates[], Sites[]"] --> C
+
+    subgraph PAR["Step 3 - Parallel Block (resolve template IDs)"]
+        direction LR
+        P1["Day0 branch
+        for each name in Day0Templates
+        CATC-GetTemplates -> templateId"]
+        P2["DayN branch
+        for each name in DayNTemplates
+        CATC-GetTemplates -> templateId"]
+    end
+
+    C --> PAR --> D
+
+    D["Step 4 - CATC-CreateSiteProfile-v3 (sub-workflow)
+    GET api/v1/siteprofile?name=...
+    POST api/v1/siteprofile (create)
+    or PUT api/v1/siteprofile/{id} (update)
+    body: profileType=switching, Day0 + DayN IDs"] --> E
+
+    E(["For each site in Sites[]"])
+    E --> F["POST /dna/intent/api/v1/networkProfilesForSites/{profileId}/siteAssignments
+    bind profile to site"]
+    F --> E
+
+    E -.all sites bound.-> G["Step 5 - Sleep + Completed
+    publish profile ID and result"]
+    G --> END([End])

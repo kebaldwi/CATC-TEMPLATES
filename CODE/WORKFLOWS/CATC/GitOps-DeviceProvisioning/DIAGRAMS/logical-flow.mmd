@@ -1,0 +1,66 @@
+flowchart TD
+    START([Start
+    GITHUB manifest + Project + Hierarchy]) --> G1
+
+    subgraph G1["Group 1 - Get Information"]
+        direction TB
+        G1a["Get-GitHub-File-v2
+        fetch deployment manifest"] --> G1b
+        G1b["JSONPath: extract
+        composite name, members, params,
+        target IPs"] --> G1c
+
+        subgraph PAR["Parallel Block"]
+            direction LR
+            S1["Site Design Get Sites
+            -> siteId"]
+            S2["Configuration Templates
+            Get Project(s) Details
+            -> projectId"]
+            S3["Devices Get Device List
+            For Each IP -> JSONPath filter
+            -> deviceIdArray"]
+        end
+
+        G1c --> PAR
+    end
+
+    G1 --> G2
+
+    subgraph G2["Group 2 - Get Composite as Built"]
+        direction TB
+        G2a["Configuration Templates
+        Get Template(s) Details (composite)"] --> G2b
+        G2b["JSONPath -> containingTemplateArray
+        ordered list of member IDs + metadata"]
+    end
+
+    G2 --> G3
+
+    G3(["For Each Member Template"])
+    G3 --> G3a["Get Template(s) Details (member)"]
+    G3a --> G3b["Read Table from JSON
+    -> member parameter table"] --> G3c
+    G3c["Python: assemble per-member
+    params block"] --> G3
+
+    G3 -.all members processed.-> G4
+
+    subgraph G4["Group 4 - Build Versioned Composite Body"]
+        direction TB
+        G4a["Assemble deployment body
+        templateId (composite)
+        targetInfo[] for deviceIdArray
+        containingTemplates[] with params"]
+    end
+
+    G4 --> G5
+
+    subgraph G5["Group 5 - Deploy"]
+        direction TB
+        G5a["POST /dna/intent/api/v2/template-programmer/template/deploy"] --> G5b
+        G5b["Poll deployment task
+        until terminal"]
+    end
+
+    G5 --> END([End: deployment status published])

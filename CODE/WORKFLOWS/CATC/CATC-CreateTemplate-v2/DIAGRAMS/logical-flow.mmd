@@ -1,0 +1,37 @@
+flowchart TD
+    START([Start
+    Project + Template metadata + content]) --> A
+
+    A["Step 1 - CATC-GetTemplates (sub-workflow)
+    resolve Project Id
+    enumerate existing template IDs"] --> B
+
+    B{Step 2 -<br/>Proceed with Template<br/>Creation ?}
+    B -->|already exists, skip| END([End: Template Id returned])
+    B -->|create or update| C
+
+    C{Step 3 -<br/>Template Language}
+    C -->|JINJA| Cj["Assemble request body
+    language = JINJA"]
+    C -->|VELOCITY| Cv["Assemble request body
+    language = VELOCITY"]
+    C -->|JSON| Cn["Assemble request body
+    language = JSON"]
+
+    Cj --> D
+    Cv --> D
+    Cn --> D
+
+    D["Step 4 - Create Template
+    POST /dna/intent/api/v1/template-programmer/project/{projectId}/template
+    or
+    PUT /dna/intent/api/v1/template-programmer/template/"] --> E
+
+    E["Step 5 - Get Task ID
+    extract taskId from response"] --> F
+
+    F["Step 6 - Wait For Catalyst Center Task
+    poll /task/{taskId} until terminal"] --> G
+
+    G["Step 7 - Set Output
+    Project Id, Template Id"] --> END

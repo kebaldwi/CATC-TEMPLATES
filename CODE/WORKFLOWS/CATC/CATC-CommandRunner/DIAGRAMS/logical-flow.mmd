@@ -1,0 +1,38 @@
+flowchart TD
+    START([Start
+    targetDevice IP and showCommand CSV]) --> A
+
+    A["Step 1 - Get Devices
+    GET /api/v1/network-device
+    -> DeviceInventory"] --> B
+
+    B["Step 2 - Find Device
+    JSONPath:
+    $.response[?(@.managementIpAddress==targetDevice)].instanceUuid
+    -> DeviceUUID"] --> C
+
+    C["Step 3 - String to Array (atomic)
+    showCommand string -> showCommands array"] --> D
+
+    D["Step 4 - Set Variables
+    targetDevices = [DeviceUUID]"] --> E
+
+    E{Step 5 -<br/>0 < commands <= 5?}
+    E -->|No| FAIL([Fail: invalid command count])
+    E -->|Yes| F
+
+    subgraph CMDRUN["Command Runner inner sequence"]
+        direction TB
+        F["POST /dna/intent/api/v1/network-device-poller/cli/read-request
+        body: deviceUuids + commands"] --> G
+        G["Wait For Catalyst Center Task (atomic)
+        polls /task/{taskId}"] --> H
+        H["Extract fileId from task.progress"] --> I
+        I["GET /dna/intent/api/v1/file/{fileId}
+        -> Results (string)"]
+    end
+
+    I --> J
+    J["Publish outputs
+    Results, Device UUID Output,
+    DeviceInventoryOutput, Device List Output"] --> END([End])
