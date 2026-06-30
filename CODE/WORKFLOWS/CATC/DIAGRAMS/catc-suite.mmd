@@ -1,0 +1,85 @@
+flowchart LR
+    %% ===== GitHub source =====
+    GH["GitHub Repository
+    settings.json
+    YAML composite defs
+    Jinja2 templates"]:::source
+
+    %% ===== GitOps v1 chain (top row) =====
+    subgraph GITOPS["GitOps v1 Build Chain"]
+        direction LR
+        G1["GitOps-BuildHierarchy"] --> G2["GitOps-BuildSettings"] --> G3["GitOps-DeviceDiscovery"]
+        G4["GitOps-ImportTemplates"] --> G5["GitOps-BuildCompositeTemplate"] --> G6["GitOps-BuildNetworkProfile"] --> G7["GitOps-DeviceProvisioning"]
+    end
+
+    %% ===== CATC building blocks (middle row) =====
+    subgraph CATC["CATC Building Blocks"]
+        direction LR
+        C1["CATC-BuildHierarchy-v2"]
+        C2["CATC-AssignSettings-v2"]
+        C3["CATC-DeviceDiscovery"]
+        C4["CATC-CreateTemplate-v2"]
+        C5["CATC-GitHubIntegration-v2"]
+    end
+
+    %% ===== Brown-field composites =====
+    subgraph BFO["Brown-Field Onboarding"]
+        direction TB
+        B2["CATC-BrownFieldOnboarding-v2
+        discover → normalise → provision"]
+        B3["CATC-BrownFieldOnboarding-v3
+        discover → normalise (tuned)"]
+    end
+
+    %% ===== Utility / read-only =====
+    subgraph UTIL["Utilities"]
+        direction TB
+        U1["CATC-GetHierarchy"]
+        U2["CATC-DeviceInventory"]
+        U3["CATC-CommandRunner"]
+        U4["CATC-PortConfiguration"]
+    end
+
+    %% ===== Target =====
+    CATCDC["Cisco Catalyst Center
+    Intent API"]:::target
+
+    %% Flow from GitHub
+    GH --> GITOPS
+
+    %% GitOps -> CATC building blocks
+    G1 -.calls.-> C1
+    G2 -.calls.-> C2
+    G3 -.calls.-> C3
+    G4 -.calls.-> C4
+    G5 -.uses.-> C4
+    G7 -.uses.-> C3
+
+    %% Brown-field reuses the same blocks
+    B2 -.uses.-> C1
+    B2 -.uses.-> C2
+    B2 -.uses.-> C3
+    B2 -.uses.-> C4
+    B3 -.uses.-> C1
+    B3 -.uses.-> C2
+    B3 -.uses.-> C3
+    B3 -.uses.-> C4
+
+    %% Utilities feed and inspect CatC
+    U1 --> CATCDC
+    U2 --> CATCDC
+    U3 --> CATCDC
+    U4 --> CATCDC
+
+    %% All paths converge on CatC
+    C1 --> CATCDC
+    C2 --> CATCDC
+    C3 --> CATCDC
+    C4 --> CATCDC
+    C5 --> CATCDC
+    G5 --> CATCDC
+    G6 --> CATCDC
+    G7 --> CATCDC
+
+    classDef source fill:#e7f4ff,stroke:#1f6feb,color:#0b3b66
+    classDef target fill:#e8f7ec,stroke:#2da44e,color:#0f3d18

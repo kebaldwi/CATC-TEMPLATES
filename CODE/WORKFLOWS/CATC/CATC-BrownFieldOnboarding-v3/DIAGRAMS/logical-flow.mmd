@@ -1,0 +1,37 @@
+flowchart TD
+    START([Start
+    Hierarchy + deviceList + credentials]) --> G1
+
+    subgraph G1["Group 1 - Discovery and Preparation (parallel)"]
+        direction LR
+        P1["CATC-BuildHierarchy-v2
+        ensure Parent/Area/Building/Floor
+        -> siteUUID"]
+        P2["CATC-AssignSettings-v2
+        DNS/DHCP/NTP/SNMP/syslog/AAA
+        create CLI + SNMP credentials"]
+        P3["CATC-DeviceDiscovery
+        run discovery + assign to site
+        -> DeviceUuidArray"]
+    end
+
+    G1 --> G2
+
+    subgraph G2["Group 2 - Normalization (parallel)"]
+        direction TB
+        N1["Resolve normalization template UUID
+        by name"]
+        N2["Build deployment payload
+        templateId + targetInfo[] per device"]
+        N3["Deploy normalization template
+        POST /template-programmer/template/deploy
+        poll task per device"]
+        N1 --> N2 --> N3
+    end
+
+    G2 --> G3["Group 3 - Completed
+    devices normalised and ready
+    for downstream provisioning"]
+    G3 --> END([End
+    Day-N composite deploy is performed
+    by a separate provisioning workflow])

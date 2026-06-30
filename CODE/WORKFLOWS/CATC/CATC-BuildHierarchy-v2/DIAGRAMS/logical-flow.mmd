@@ -1,0 +1,47 @@
+flowchart TD
+    START([Start
+    Parent + Area/Building/Floor inputs]) --> A
+
+    A["Step 1 - Get Site Hierarchy
+    GET /dna/intent/api/v1/site
+    -> SiteResponse"] --> B
+
+    B["Step 2 - Find Parent
+    core.find_string"] --> P{Parent<br/>found?}
+    P -->|No| Pcreate["POST /dna/intent/api/v1/site
+    type=area  name=Parent"]
+    Pcreate --> C
+    P -->|Yes| C
+
+    C["Step 3 - Find Area
+    core.find_string"] --> Q{Area<br/>found?}
+    Q -->|No, Area supplied| Acreate["POST /dna/intent/api/v1/site
+    type=area
+    parentName=Parent"]
+    Acreate --> D
+    Q -->|Yes or empty| D
+
+    D["Step 4 - Find Building
+    core.find_string"] --> R{Building<br/>found?}
+    R -->|No, Building supplied| Bcreate["POST /dna/intent/api/v1/site
+    type=building
+    parentName=Parent/Area
+    address + lat/lon"]
+    Bcreate --> E
+    R -->|Yes or empty| E
+
+    E["Step 5 - Find Floor
+    core.find_string"] --> S{Floor<br/>found?}
+    S -->|No, Floor supplied| Fcreate["POST /dna/intent/api/v1/site
+    type=floor
+    parentName=Parent/Area/Building
+    rfModel + dimensions"]
+    Fcreate --> F
+    S -->|Yes or empty| F
+
+    F["Step 6 - Get Resultant Site Hierarchy
+    GET /dna/intent/api/v2/site
+    -> ResultHierarchy"] --> G
+
+    G["Step 7 - Output
+    publish Hierarchy + ResultHierarchy"] --> END([End])

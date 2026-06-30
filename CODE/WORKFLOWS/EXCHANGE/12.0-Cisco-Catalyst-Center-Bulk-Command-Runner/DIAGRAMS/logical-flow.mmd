@@ -1,0 +1,98 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Inputs
+    showCommands (string, comma-delimited)
+    TableColumnSelection (precheck | postcheck)
+    Target: Catalyst Center endpoint"] --> B
+
+    B["Step 1 - Seed PreflightChecklist
+    PreflightChecklist = global Device SWIM Inventory"] --> C
+
+    C(["For Each row in PreflightChecklist
+    (each target device)"]) --> SETUP
+
+    subgraph SETUP["Step 2 - Build Command Batches"]
+        direction TB
+        D1["Show Commands to Array (subworkflow)
+        String to Array -> showCommandsArray"] --> D2
+        D2["Python: Command Parser
+        Batch into batches of 5
+        (Catalyst Center per-call limit)"] --> D3
+        D3["JSONPath: Length Array
+        Count of batches"] --> D4
+        D4["Set LoopCounter = batch count
+        Set counter = 0"]
+    end
+
+    SETUP --> LOOP
+
+    subgraph LOOP["Step 3 - Run Commands per Batch (While Loop)"]
+        direction TB
+        E1{"counter &lt;
+        LoopCounter?"} -->|Yes| E2
+        E2["Set counter = counter + 1"] --> E3
+        E3["JSONPath: get batch_{counter}
+        commands array"] --> E4
+        E4["Python: Join array as
+        delimited encapsulated list"] --> E5
+        E5["CATC-CommandRunner (subworkflow)
+        Run batch on row.managementIpAddress"] --> E6
+        E6["Append response to
+        ResultShowCommands (concat)"] --> E1
+        E1 -->|No| E7([Batches complete])
+    end
+
+    LOOP --> COL
+
+    subgraph COL["Step 4 - Column Selection (If / Else)"]
+        direction TB
+        F1{"TableColumnSelection
+        optionValue?"} -->|precheck| F2
+        F1 -->|postcheck| F3
+        F2["Update Row in PreflightChecklist
+        SET precheck = ResultShowCommands
+        WHERE instanceUuid == row.instanceUuid"] --> F4
+        F3["Update Row in PreflightChecklist
+        SET postcheck = ResultShowCommands
+        WHERE instanceUuid == row.instanceUuid"] --> F4
+        F4["Reset ResultShowCommands = empty"]
+    end
+
+    COL --> C
+    C -->|done| G
+
+    G["Complete Device Inventory
+    Output DevicePreflightCheck = PreflightChecklist"] --> DONE([Done])
+
+    subgraph CR["CATC-CommandRunner (called per batch, per device)"]
+        direction TB
+        CR1["GET /api/v1/network-device
+        Full device inventory"] --> CR2
+        CR2["JSONPath: find device by
+        managementIpAddress"] --> CR3
+        CR3{"Device found?"} -->|No| CR_END([Skip - no output])
+        CR3 -->|Yes| CR4
+        CR4["JSONPath: Extract Device UUID
+        Set DeviceUUID"] --> CR5
+        CR5["POST /dna/intent/api/v1/network-device-poller/cli/read-request
+        body: {commands, deviceUuids}"] --> CR6
+        CR6["JSONPath: Extract Task ID"] --> CR7
+        CR7["Wait For Catalyst Center Task (atomic)"] --> CR8
+        CR8["GET /dna/intent/api/v1/task/{taskId}
+        Extract Progress + Match Regex -> fileId"] --> CR9
+        CR9["GET /dna/intent/api/v1/file/{fileId}
+        Retrieve raw command output"] --> CR10
+        CR10["Python: Extract Responses
+        Parse SUCCESS block, clean prompts,
+        build report_str"] --> CR11
+        CR11([Return Results string])
+    end
+
+    E5 -.calls.-> CR1
+
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style E7 fill:#7f8c8d,color:#fff,stroke:#566573
+    style CR_END fill:#c0392b,color:#fff,stroke:#922b21
+    style CR11 fill:#27ae60,color:#fff,stroke:#1e8449

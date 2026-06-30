@@ -1,0 +1,50 @@
+flowchart TD
+    START([Start
+    GITHUB-OWNER/REPO/PATH
+    TemplateHubProjectName, FORCE Update]) --> A
+
+    A["Step 1 - Get-GitHub-Directory
+    GET /repos/{owner}/{repo}/contents/{path}"] --> B
+
+    B["Step 2 - JSONPath Queries
+    $.length() -> NumberFiles
+    $..name    -> GithubFileList"] --> C
+
+    C["Step 3 - Execute Python Script
+    derive CATC-ProjectName"] --> D
+
+    D{Step 4 -<br/>operator-supplied<br/>project name?}
+    D -->|Yes| Dop["Use TemplateHubProjectName"]
+    D -->|No| Dauto["Use derived CATC-ProjectName"]
+    Dop --> E
+    Dauto --> E
+
+    E["Step 5 - CATC-DependencyMapping-v1 (sub-workflow)
+    parse include directives in each file
+    topologically order GithubFileList"] --> F
+
+    F["Step 6 - Set Variables
+    store ordered file list"] --> G
+
+    G(["Step 7 - For Each GitHub File (ordered)"])
+    G --> H["CATC-CommitTemplate (sub-workflow)
+    -> CATC-CreateTemplate-v2
+    create or update member template"]
+    H --> I["Sleep"] --> G
+
+    G -.all files processed.-> J["Step 8 - CATC-GetProjectTemplatesIDs
+    list all template UUIDs in the project"]
+
+    J --> K["Step 9 - JSONPath Query Template ID
+    extract template UUID list"] --> L
+
+    L["Step 10 - Set TemplateID List
+    TemplateListIDs = uuid array"] --> M
+
+    M(["Step 11 - For Each Template"])
+    M --> N["POST /dna/intent/api/v1/templates/{templateId}/versions/commit
+    commit new version"]
+    N --> M
+
+    M -.all committed.-> O["Step 12 - Completed
+    publish OUTPUT + TemplateListIDs"] --> END([End])

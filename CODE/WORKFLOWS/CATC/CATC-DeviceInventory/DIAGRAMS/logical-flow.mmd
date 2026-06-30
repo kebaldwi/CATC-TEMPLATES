@@ -1,0 +1,14 @@
+flowchart TD
+    START([Start]) --> A
+    A["Step 1 - Get Inventory
+    GET /dna/intent/api/v1/network-device
+    Accept: application/json"] --> B
+    B{Response 2xx<br/>and body present?}
+    B -->|No| FAIL([Fail: Intent API error])
+    B -->|Yes| C
+    C["Step 2 - Extract Device List
+    JSONPath: $.response[*]
+    -> DeviceListJSON (array)"] --> D
+    D["Step 3 - Output
+    DeviceInventory = raw response
+    DeviceList = extracted array"] --> END([End: inventory returned])

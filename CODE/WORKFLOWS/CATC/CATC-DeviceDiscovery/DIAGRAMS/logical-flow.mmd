@@ -1,0 +1,55 @@
+flowchart TD
+    START([Start
+    deviceList, hierarchy*, credential descriptions]) --> A
+
+    A["Step 1 - Get Credentials
+    GET /dna/intent/api/v2/global-credential"] --> B
+
+    B["Step 2 - Extract UUID
+    JSONPath: filter by description
+    -> CLI, SNMPv2 R/W, NETCONF UUIDs"] --> C
+
+    C["Step 3 - Data Transformation (Python)
+    normalise UUIDs + build deviceRange"] --> D
+
+    D["Step 4 - Discovery Variables
+    discoveryName, type, range, protocol order"] --> E
+
+    E["Step 5 - Get Discoveries
+    GET /api/v1/discovery/1/100"] --> F
+
+    F["Find Discovery
+    JSONPath match on discoveryName"] --> G
+
+    G{Step 6 -<br/>discovery exists?}
+    G -->|No| Gnew["POST /dna/intent/api/v1/discovery
+    submit new job"]
+    G -->|Yes| Greuse["Reuse existing discoveryId"]
+
+    Gnew --> H
+    Greuse --> J
+
+    H["Step 7 - Wait For Catalyst Center Task
+    poll /task/{taskId}"] --> I
+
+    I["Step 8 - Get Discovery Id
+    JSONPath -> discoveryId"] --> J
+
+    J["Step 9 - Sleep
+    allow inventory collection"] --> K
+
+    K["Step 10 - Get Discovered Devices
+    GET /dna/intent/api/v1/discovery/{id}/network-device"] --> L
+
+    L["Step 11 - Data Transformation (Python)
+    -> discoveredDeviceUuids array"] --> M
+
+    M["Step 12 - Get Site Id
+    GET /dna/intent/api/v2/site?groupNameHierarchy=...
+    Extract Site Id"] --> N
+
+    N["Step 13 - Set Variables
+    build assignment payload"] --> O
+
+    O["Step 14 - Assign Devices
+    POST /dna/intent/api/v1/networkDevices/assignToSite/apply"] --> END([End: discoveredDevices + siteNameHierarchy returned])

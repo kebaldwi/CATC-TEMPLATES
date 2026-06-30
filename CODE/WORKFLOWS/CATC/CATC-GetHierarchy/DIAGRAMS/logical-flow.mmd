@@ -1,0 +1,11 @@
+flowchart TD
+    START([Start]) --> A
+    A["Step 1 - Get Site
+    GET /dna/intent/api/v1/site
+    Accept: application/json"] --> B
+    B{Response 2xx<br/>and body present?}
+    B -->|No| FAIL([Fail: Intent API error])
+    B -->|Yes| C
+    C["Step 2 - Output
+    Set Multiple Variables
+    SiteHierarchy = API response body"] --> END([End: SiteHierarchy returned as JSON string])
