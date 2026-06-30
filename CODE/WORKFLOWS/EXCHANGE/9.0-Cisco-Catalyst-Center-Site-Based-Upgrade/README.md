@@ -2,7 +2,7 @@
 
 > **Workflow:** `Catalyst Center Site Based Upgrade.json`
 > **Type:** Cisco Catalyst Center Generic Workflow (Intent API)
-> **Subworkflows:** `CATC-DynamicSiteSelector`, `CATC-PaginatedDeviceInventory`, `CATC-MultipleShowCommands`, `Get Task ID`, `Wait For Catalyst Center Task`, `String to Array`
+> **Subworkflows:** `CATC-DynamicSiteSelector`, `CATC-PaginatedDeviceInventory`, `CATC-MultipleShowCommands-v3`, `Get Task ID`, `Wait For Catalyst Center Task`, `String to Array`, `Create Image Uuid Array`
 > **API Endpoints:**
 > &nbsp;&nbsp;`GET  /dna/intent/api/v1/networkDevices/assignedToSite` — devices assigned to a site (paginated)
 > &nbsp;&nbsp;`GET  /dna/intent/api/v1/image/importation/device-family-identifiers` — resolve device family identifier
@@ -31,15 +31,13 @@
 5. [Internal Working Variables](#internal-working-variables)
 6. [How It Works](#how-it-works)
    - [Step 1 — Select Site](#step-1--select-site)
-   - [Step 2 — Select Device Type](#step-2--select-device-type)
-   - [Step 3 — Select and Filter Devices (Parallel)](#step-3--select-and-filter-devices-parallel)
-   - [Step 4 — Build Target Device List and Pre-check](#step-4--build-target-device-list-and-pre-check)
-   - [Step 5 — Select Device Family and SWIM Identifier](#step-5--select-device-family-and-swim-identifier)
-   - [Step 6 — Retrieve and Select Golden Image](#step-6--retrieve-and-select-golden-image)
-   - [Step 7 — Image Sanitization (per site)](#step-7--image-sanitization-per-site)
-   - [Step 8 — Select Devices for Upgrade](#step-8--select-devices-for-upgrade)
-   - [Step 9 — Select and Execute Upgrade Method](#step-9--select-and-execute-upgrade-method)
-   - [Step 10 — Post-check and Completion](#step-10--post-check-and-completion)
+   - [Step 2 — Device Selection](#step-2--device-selection)
+   - [Step 3 — Target Devices (Pre-check)](#step-3--target-devices-pre-check)
+   - [Step 4 — Get SWIM Images](#step-4--get-swim-images)
+   - [Step 5 — Image Sanitization (per site)](#step-5--image-sanitization-per-site)
+   - [Step 6 — Image Deployment](#step-6--image-deployment)
+   - [Step 7 — Update Show Commands (Post-check)](#step-7--update-show-commands-post-check)
+   - [Complete Device Inventory](#complete-device-inventory)
 7. [SWIM API Payload Reference](#swim-api-payload-reference)
 8. [Subworkflows](#subworkflows)
 9. [Running the Workflow](#running-the-workflow)
@@ -52,9 +50,9 @@
 
 ## Overview
 
-This Cisco Catalyst Center workflow performs a **site-based software image upgrade (SWIM)** across the devices within a selected site hierarchy. It guides an operator through site selection, device-type filtering, target device identification, golden image preparation, and a choice of upgrade methodology — with diagnostic show-command capture before and after the upgrade for verification.
+This Cisco Catalyst Center workflow performs a **site-based software image upgrade (SWIM)** across the devices within a selected site hierarchy. It guides an operator through site selection, device-type filtering, device family and target device selection, golden image preparation, and a choice of upgrade methodology — with diagnostic show-command capture before and after the upgrade for verification.
 
-The workflow scopes the upgrade to a parent site and all of its child sites, intersects the site-assigned devices with a filtered, reachable, managed inventory of the selected device type, and builds a target device table. It resolves the SWIM device family identifier, syncs and selects a golden image, ensures the image is downloaded and golden-tagged at each site, then distributes and/or activates the image on the operator-selected devices. Pre-check and post-check show commands are captured into a shared global SWIM inventory table for before/after comparison.
+The workflow scopes the upgrade to a parent site and all of its child sites, intersects the site-assigned devices with a filtered, reachable, managed inventory of the selected device type, and lets the operator pick a specific device family (e.g., `Cisco Catalyst 9300 Switch`) and the final list of devices to upgrade. It then runs pre-check show commands against the cleansed target list, resolves the SWIM device family identifier, syncs and selects a golden image, ensures the image is downloaded and golden-tagged at each site, and distributes and/or activates the image on the selected devices. A confirmation prompt gates the post-check, after which the post-check show commands populate the shared global SWIM inventory table for before/after comparison.
 
 ### What it does
 
@@ -64,14 +62,18 @@ The workflow scopes the upgrade to a parent site and all of its child sites, int
 | Choose device type | `task.prompt_request` — Switches and Hubs / Routers / Wireless Controllers |
 | Collect site-assigned devices | `For Each` site → `GET /dna/intent/api/v1/networkDevices/assignedToSite` → `HierarchyDeviceList` |
 | Retrieve filtered inventory | `CATC-PaginatedDeviceInventory` (Workflow 10.0) + JSONPath filter (`family` + Reachable + Managed) |
-| Build target device table | Intersect inventory with site-assigned UUIDs → `Output-DeviceTable`, `DeviceTargetUuidList`, `DeviceTargetList` |
-| Capture pre-check | `CATC-MultipleShowCommands` → `precheck` column |
+| Build initial target table | Intersect inventory with site-assigned UUIDs → `Output-DeviceTable` |
+| Choose device family | `task.prompt_request` — unique types from `Output-DeviceTable` (e.g., `Cisco Catalyst 9300 Switch`) |
+| Select devices for upgrade | `task.prompt_request` (multiselect) → cleansed `DeviceTargetList` |
 | Resolve SWIM family id | `GET /dna/intent/api/v1/image/importation/device-family-identifiers` → `SWIMFamilyIdentifier` |
+| Build cleansed target table | Second `For Each` over filtered devices → `Output-DeviceTable` + `DeviceTargetUuidList` |
+| Capture pre-check | `CATC-MultipleShowCommands-v3` → `precheck` column |
 | Sync + select image | `POST /dna/intent/api/v1/images/ccoSync` + `GET /dna/intent/api/v1/images?productNameOrdinal=…` + prompt |
 | Golden-tag per site | `GET images?siteId=…` → conditional `download` + `tagGolden` with task waits |
-| Select devices | `task.prompt_request` (multiselect) → cleansed `DeviceTargetList` |
+| Image upgrade method | `task.prompt_request` — Consolidated Upgrade / Distribute then Activate |
 | Distribute / Activate | `POST image/distribution` and/or `POST image/activation/device` per device, with confirmations |
-| Capture post-check | `CATC-MultipleShowCommands` → `postcheck` column |
+| Capture post-check | Confirmation prompt → `CATC-MultipleShowCommands-v3` → `postcheck` column |
+| Complete inventory | `Complete Device Inventory` finalizes global `Device SWIM Inventory` table |
 
 ### What makes this workflow different
 
@@ -79,15 +81,16 @@ Unlike a manual, device-by-device upgrade through the Catalyst Center UI, this w
 
 1. **Scopes upgrades by site hierarchy** — selecting a parent site automatically includes all child sites (matched by `siteHierarchy` prefix), so an entire campus or building can be upgraded in one run.
 2. **Intersects two device views** — it cross-references the site-assigned device list with a filtered, reachable, managed inventory, ensuring only devices that are both in the selected hierarchy **and** the chosen device type **and** online/managed are targeted.
-3. **Automates golden image preparation per site** — for each site it checks whether the selected image is imported and golden-tagged, and conditionally downloads from Cisco.com and tags as golden, waiting on each Catalyst Center task to complete.
-4. **Offers two upgrade methodologies** — operators choose **Consolidated Upgrade** (distribute-if-needed + activate in one call) or **Distribute then Activate** (separate, individually confirmed distribution and activation phases).
-5. **Built-in safety gates** — each destructive phase (upgrade/distribute/activate) requires an explicit confirmation prompt; declining halts the workflow cleanly with a descriptive status.
-6. **Before/after verification** — pre-check and post-check diagnostic show commands are captured into a shared global SWIM inventory table, enabling state comparison across the upgrade.
-7. **Reuses pagination utilities** — device inventory is gathered through Workflow 10.0 (`CATC-PaginatedDeviceInventory`), keeping inventory retrieval scalable and consistent.
+3. **Pre-check runs against the cleansed list** — device family selection and the multi-select "Select Devices for Upgrade" prompt happen **before** the pre-check, so `CATC-MultipleShowCommands-v3` only runs against the devices the operator actually intends to upgrade.
+4. **Automates golden image preparation per site** — for each site it checks whether the selected image is imported and golden-tagged, and conditionally downloads from Cisco.com and tags as golden, waiting on each Catalyst Center task to complete.
+5. **Offers two upgrade methodologies** — operators choose **Consolidated Upgrade** (distribute-if-needed + activate in one call) or **Distribute then Activate** (separate, individually confirmed distribution and activation phases).
+6. **Built-in safety gates** — every destructive phase and the post-check require explicit confirmation prompts (`Proceed to Upgrade Image`, `Proceed to Distribute Image`, `Proceed to Activate Image`, `Proceed to Post Upgrade Checks`); declining halts the workflow cleanly with a descriptive status.
+7. **Before/after verification** — pre-check and post-check diagnostic show commands are captured into a shared global SWIM inventory table, enabling state comparison across the upgrade.
+8. **Reuses pagination utilities** — device inventory is gathered through Workflow 10.0 (`CATC-PaginatedDeviceInventory`), keeping inventory retrieval scalable and consistent.
 
 ### Logical Flow
 
-The diagram below shows the full orchestration from site selection through parallel device collection, target list construction with pre-check, image preparation per site, the upgrade-method branch (with confirmation gates and halt paths), and post-check completion:
+The diagram below shows the full orchestration from site selection through parallel device collection, device family and target selection, pre-check against the cleansed list, image sync and per-site sanitization, the upgrade-method branch (with confirmation gates and halt paths), the gated post-check, and the final inventory update:
 
 ![Logical Flow](DIAGRAMS/logical-flow.png)
 
@@ -106,8 +109,9 @@ The diagram below shows the full orchestration from site selection through paral
 | Workflow 1.0 — Site Hierarchy | Site hierarchy must exist in Catalyst Center |
 | Workflow 10.0 — Paginated Device Inventory | `CATC-PaginatedDeviceInventory` and `CATC-DeviceInventory-v2` must be imported (called as a subworkflow) |
 | `CATC-DynamicSiteSelector` subworkflow | Must be imported (provides the site selection UI and hierarchy JSON) |
-| `CATC-MultipleShowCommands` subworkflow | Must be imported (pre/post-check diagnostics via Command Runner) |
+| `CATC-MultipleShowCommands-v3` subworkflow | Must be imported (pre/post-check diagnostics via Command Runner) |
 | `Get Task ID` / `Wait For Catalyst Center Task` | Atomic workflows used to poll SWIM tasks (download/tag golden) |
+| `Create Image Uuid Array` / `String to Array` | Atomic helpers used by image deployment and array normalization |
 | Devices assigned to sites | Target devices must be discovered, reachable, managed, and assigned to sites in the selected hierarchy |
 | Cisco.com connectivity (for image sync/download) | Catalyst Center must be able to reach Cisco.com to sync and download images |
 | Sufficient privileges in CatC | User/service account must have permission to download images, tag golden, distribute, and activate |
@@ -135,11 +139,12 @@ This workflow is **interactive** — most inputs are collected through prompts d
 |--------|------|------------------|-------------|
 | Select Site | site selector | Catalyst Center hierarchy (via `CATC-DynamicSiteSelector`) | Parent site to upgrade; all child sites are included automatically |
 | Select Device Type | single select | Switches and Hubs / Routers / Wireless Controllers | Device family to target |
-| Select Device Family | single select | Unique device types from target table (e.g., `Cisco Catalyst 9300 Switch`) | SWIM device family for image selection |
+| Select Device Family | single select | Unique device types from initial target table (e.g., `Cisco Catalyst 9300 Switch`) | SWIM device family for image selection |
+| Select Devices for Upgrade | multiselect | Filtered `Local-DeviceTable` | Final set of devices to upgrade — drives both the pre-check and the upgrade |
 | Select Image | single select | Images returned for the family | Golden image to deploy |
-| Select Devices for Upgrade | multiselect | `DeviceTargetList` | Final set of devices to upgrade |
 | Image Upgrade Method | single select | Consolidated Upgrade Method / Distribute then Activate | Upgrade methodology |
-| Proceed confirmations | checkbox | — | Per-phase confirmation gates (upgrade / distribute / activate) |
+| Proceed to Upgrade / Distribute / Activate Image | checkbox | — | Per-phase confirmation gates for the destructive image operations |
+| Proceed to Post Upgrade Checks | checkbox | — | Confirmation gate before the post-check show commands are captured |
 
 > **Note:** All prompts expire after 72 hours if unanswered.
 
@@ -155,15 +160,19 @@ These variables are managed automatically by the workflow.
 | `HierarchyUuid` | array | Parent and child site UUIDs (iterated for device collection and image tagging) |
 | `HierarchyDeviceList` | array | Device IDs assigned to the selected sites |
 | `DeviceTypeInventory` | string (JSON) | Filtered, reachable, managed inventory of the selected device type |
-| `Output-DeviceTable` | table | Target device table with `precheck`/`postcheck` columns |
+| `Output-DeviceTable` | table (output) | Target device table with `precheck`/`postcheck` columns |
+| `Local-DeviceTable` | table | Per-family device table used to drive the multi-select prompt |
 | `DeviceTargetUuidList` | array | UUIDs of devices selected for upgrade |
 | `DeviceTargetList` | array | Hostnames of devices selected for upgrade |
+| `DeviceType` | array | Selected device type tokens used by the inventory filter |
+| `SWIMDeviceTypes` | array | Unique device types extracted from the initial target table |
 | `SWIMFamilyIdentifier` | string | Device family identifier used for image queries |
-| `SWIMDeviceTypes` | array | Unique device types extracted from the target table |
 | `selectedImageName` | string | Name of the chosen golden image |
 | `selectedImageUuid` | string | UUID of the chosen golden image |
+| `imageNameArray` | array | Image names presented in the Select Image prompt |
 | `UpgradeMethod` | array | Upgrade methodology options |
 | `showCommands` / `showCommandsArray` | string / array | Diagnostic show commands for pre/post-check |
+| `DeviceUpdates` | table (output) | Working table written by `CATC-MultipleShowCommands-v3` |
 | `Inventory Page Size` | integer | Pagination size passed to `CATC-PaginatedDeviceInventory` |
 | `Device SWIM Inventory` (global) | table | Shared pre/post-check results table across subworkflows |
 
@@ -183,29 +192,27 @@ The resulting site names and IDs are stored in `HierarchyNames` and `HierarchyUu
 
 ---
 
-### Step 2 — Select Device Type
+### Step 2 — Device Selection
 
-A prompt asks the operator to select a single device type: **Switches and Hubs**, **Routers**, or **Wireless Controllers**. This drives the inventory filter in Step 3.
+Step 2 is a single grouped phase that gathers, filters, and cleanses the device list, and resolves the SWIM family identifier — all **before** the pre-check runs. It is composed of five sub-stages.
 
----
+**2a — Select Device Type**
 
-### Step 3 — Select and Filter Devices (Parallel)
+A prompt asks the operator to select a single device type: **Switches and Hubs**, **Routers**, or **Wireless Controllers**. The selection is stored in `DeviceType` and drives the inventory filter.
 
-A `logic.parallel` block runs two branches concurrently:
+**2b — Filter Devices (Parallel)**
 
-**Branch 1 — Site-assigned devices**
+A `logic.parallel` block runs two branches concurrently.
 
-A `For Each` loop over `HierarchyUuid` calls:
+Branch 1 — Site-assigned devices: a `For Each` loop over `HierarchyUuid` calls
 
 ```
 GET /dna/intent/api/v1/networkDevices/assignedToSite?siteId={siteId}&offset={offset}&limit={limit}
 ```
 
-A Python script appends each returned `deviceId` to `HierarchyDeviceList`.
+and a Python script appends each returned `deviceId` to `HierarchyDeviceList`.
 
-**Branch 2 — Filtered inventory**
-
-`CATC-PaginatedDeviceInventory` (Workflow 10.0) retrieves the full inventory, which is then filtered with JSONPath:
+Branch 2 — Filtered inventory: `CATC-PaginatedDeviceInventory` (Workflow 10.0) retrieves the full inventory, which is then filtered with JSONPath:
 
 ```
 $.response[?(@.family == '<selected_type>'
@@ -215,46 +222,56 @@ $.response[?(@.family == '<selected_type>'
 
 A Python script normalizes the result to an array and stores it in `DeviceTypeInventory`.
 
----
-
-### Step 4 — Build Target Device List and Pre-check
+**2c — Build Initial Target Table**
 
 The filtered inventory is converted to a table (`Read Table from JSON`). A `For Each` loop over the filtered devices checks whether each device's `instanceUuid` is present in `HierarchyDeviceList`:
 
 | Branch | Condition | Action |
 |--------|-----------|--------|
-| Match | `instanceUuid ∈ HierarchyDeviceList` | Add row to `Output-DeviceTable`; append to `DeviceTargetUuidList` and `DeviceTargetList` |
+| Match | `instanceUuid ∈ HierarchyDeviceList` | Add row to `Output-DeviceTable` (initial target table) |
 | No match | otherwise | Skip the device |
 
-The `Output-DeviceTable` is copied into the global **Device SWIM Inventory** table, then `CATC-MultipleShowCommands` runs the diagnostic show commands against the target devices and populates the **precheck** column.
+**2d — Select Device Family and Devices**
 
----
+Unique device types are extracted from `Output-DeviceTable` into `SWIMDeviceTypes`, and the operator picks a specific **Device Family** (e.g., `Cisco Catalyst 9300 Switch`). A `Local-DeviceTable` is built for that family (JSONPath + `String to Array`), and a multiselect **Select Devices for Upgrade** prompt lets the operator choose the final target devices. The selection cleanses `DeviceTargetList`.
 
-### Step 5 — Select Device Family and SWIM Identifier
+> **Why this order matters:** by collecting both the device family and the upgrade target list here, the pre-check in Step 3 runs **only** against the devices the operator intends to upgrade.
 
-Unique device types are extracted from `Output-DeviceTable`, and the operator selects a **Device Family** (e.g., `Cisco Catalyst 9300 Switch`). The workflow then resolves the SWIM family identifier:
+**2e — Resolve SWIM Family and Cleansed Targets**
+
+The workflow resolves the SWIM device family identifier:
 
 ```
 GET /dna/intent/api/v1/image/importation/device-family-identifiers
 JSONPath: $..[?(@.deviceFamily == '<selected_family>')].deviceFamilyIdentifier
 ```
 
-The result is stored in `SWIMFamilyIdentifier`.
+and stores it in `SWIMFamilyIdentifier`. A second `For Each` loop then rebuilds `Output-DeviceTable` containing only the operator-selected devices and populates `DeviceTargetUuidList` (instance UUIDs of the cleansed targets).
 
 ---
 
-### Step 6 — Retrieve and Select Golden Image
+### Step 3 — Target Devices (Pre-check)
+
+With the cleansed `Output-DeviceTable` in hand, the workflow:
+
+1. Copies `Output-DeviceTable` into the global **Device SWIM Inventory** table.
+2. Calls `CATC-MultipleShowCommands-v3` to run the diagnostic show commands against the target devices, writing the results into the `precheck` column.
+3. Updates the working `DeviceUpdates` table and syncs the result back to the global **Device SWIM Inventory** table.
+
+---
+
+### Step 4 — Get SWIM Images
 
 ```
 POST /dna/intent/api/v1/images/ccoSync                                  # sync from Cisco.com (continue on failure)
 GET  /dna/intent/api/v1/images?productNameOrdinal={SWIMFamilyIdentifier}  # list candidate images
 ```
 
-Image names are extracted and presented in a **Select Image** prompt. The selected image's `id` is resolved via JSONPath and stored as `selectedImageName` and `selectedImageUuid`.
+Image names are extracted (JSONPath + `String to Array`) into `imageNameArray` and presented in a **Select Image** prompt. The selected image's `id` is resolved via JSONPath and stored as `selectedImageName` and `selectedImageUuid`.
 
 ---
 
-### Step 7 — Image Sanitization (per site)
+### Step 5 — Image Sanitization (per site)
 
 A `For Each` loop over `HierarchyUuid` ensures the image is ready at each site:
 
@@ -265,47 +282,47 @@ JSONPath: imported?  isGoldenTagged?
 
 | Branch | Condition | Action |
 |--------|-----------|--------|
-| Imported, not golden | `imported == true && goldenTagged == false` | `POST images/{uuid}/sites/{siteId}/tagGolden` → wait for task (5 s × 5) |
-| Not imported | `imported == false` | `POST images/{id}/download` → wait (5 s × 120) → `tagGolden` → wait (5 s × 5) |
+| Imported, not golden | `imported == true && goldenTagged == false` | `POST images/{uuid}/sites/{siteId}/tagGolden` → `Get Task ID` → `Wait For Catalyst Center Task` |
+| Not imported | `imported == false` | `POST images/{id}/download` → `Wait For Catalyst Center Task` → `tagGolden` → `Get Task ID` → `Wait For Catalyst Center Task` |
 
 The `Get Task ID` and `Wait For Catalyst Center Task` atomic workflows handle task polling.
 
 ---
 
-### Step 8 — Select Devices for Upgrade
+### Step 6 — Image Deployment
 
-A multiselect prompt lets the operator choose which devices from `DeviceTargetList` to upgrade. The selection updates (cleanses) `DeviceTargetList`.
+The `Create Image Uuid Array` atomic workflow builds the `imageUuidList` payload from `selectedImageUuid`. An **Image Upgrade Method** prompt then offers two paths:
 
----
+**Consolidated Upgrade**
 
-### Step 9 — Select and Execute Upgrade Method
-
-An **Image Upgrade Method** prompt offers two paths:
-
-**Consolidated Upgrade Method**
-
-1. Confirmation prompt to proceed.
+1. **Proceed to Upgrade Image** confirmation prompt.
 2. If confirmed — `For Each` selected device:
    ```
    POST /dna/intent/api/v1/image/activation/device
    { deviceUpgradeMode: "currentlyExists", deviceUuid, distributeIfNeeded: "true", imageUuidList }
    ```
-3. If declined — workflow halts: **"Image Not Upgraded - Process Halted"**.
+3. If declined — workflow halts: **"Image Not Activated - Process Halted"**.
 
 **Distribute then Activate**
 
-1. Confirmation prompt to distribute.
+1. **Proceed to Distribute Image** confirmation prompt.
    - If confirmed — `For Each` selected device: `POST /dna/intent/api/v1/image/distribution` `{ deviceUuid, imageUuid }`.
    - If declined — halt: **"Image Not Distributed - Process Halted"**.
-2. Confirmation prompt to activate.
+2. **Proceed to Activate Image** confirmation prompt.
    - If confirmed — `For Each` selected device: `POST /dna/intent/api/v1/image/activation/device`.
    - If declined — halt: **"Image Not Activated - Process Halted"**.
 
 ---
 
-### Step 10 — Post-check and Completion
+### Step 7 — Update Show Commands (Post-check)
 
-`CATC-MultipleShowCommands` runs the same diagnostic commands against the device list and populates the **postcheck** column. The `Output-DeviceTable` and the global **Device SWIM Inventory** are updated, providing a before/after view of device state.
+A **Proceed to Post Upgrade Checks** confirmation prompt gates the post-check phase. When confirmed, `CATC-MultipleShowCommands-v3` runs the same diagnostic commands against the upgraded devices and writes the results into the `postcheck` column. The `DeviceUpdates` table and the global **Device SWIM Inventory** are updated, providing a before/after view of device state.
+
+---
+
+### Complete Device Inventory
+
+A final `Set Multiple Variables` block (`Complete Device Inventory`) finalizes the global **Device SWIM Inventory** table so it is available to downstream workflows and as the workflow output.
 
 ---
 
@@ -353,7 +370,7 @@ An **Image Upgrade Method** prompt offers two paths:
 |-------|-------|
 | `distributeIfNeeded` | `"true"` allows the consolidated method to distribute the image if it is not already present before activating. |
 | `deviceUpgradeMode` | `"currentlyExists"` activates the image already staged on the device. |
-| `productNameOrdinal` | The SWIM device family identifier resolved in Step 5. |
+| `productNameOrdinal` | The SWIM device family identifier resolved in Step 2e. |
 | `deviceRoles` | Roles for which the image is tagged golden at the site. |
 
 ---
@@ -364,10 +381,11 @@ An **Image Upgrade Method** prompt offers two paths:
 |-------------|---------|
 | `CATC-DynamicSiteSelector` | Presents the site hierarchy and returns the selected site plus the full hierarchy JSON. |
 | `CATC-PaginatedDeviceInventory` | Workflow 10.0 — retrieves the full device inventory via pagination, with an optional device-type filter. |
-| `CATC-MultipleShowCommands` | Runs multiple show commands via Command Runner for pre-check and post-check diagnostics. |
+| `CATC-MultipleShowCommands-v3` | Runs multiple show commands via Command Runner for pre-check and post-check diagnostics. |
 | `Get Task ID` | Atomic workflow — extracts the Catalyst Center service task ID from an Intent API response. |
 | `Wait For Catalyst Center Task` | Atomic workflow — polls task status until completion or failure (configurable interval and retries). |
 | `String to Array` | Atomic workflow — normalizes a string into a JSON array (handles list literals, CSV, newline-separated values). |
+| `Create Image Uuid Array` | Atomic workflow — builds the `imageUuidList` payload from `selectedImageUuid` for the activation call. |
 
 ---
 
@@ -388,8 +406,8 @@ An **Image Upgrade Method** prompt offers two paths:
    - **Select Site** → parent site (child sites included automatically)
    - **Select Device Type** → Switches and Hubs / Routers / Wireless Controllers
    - **Select Device Family** → e.g., `Cisco Catalyst 9300 Switch`
+   - **Select Devices for Upgrade** → multiselect from the cleansed target list
    - **Select Image** → golden image to deploy
-   - **Select Devices for Upgrade** → multiselect from the target list
    - **Image Upgrade Method** → Consolidated or Distribute then Activate
    - **Confirmation prompts** → confirm each destructive phase
 4. Monitor progress in **Workflow Executions** → **Execution Details**.
@@ -403,27 +421,31 @@ A successful run produces the following sequence in the workflow execution log:
 ```
 Step 1       Site selected: Global/Campus/Building-1
              Hierarchy resolved: 1 parent + 3 child sites
-Step 2       Device Type selected: Switches and Hubs
-Step 3       (parallel)
+Step 2a      Device Type selected: Switches and Hubs
+Step 2b      (parallel)
              Branch 1: site-assigned devices collected → HierarchyDeviceList (24 devices)
              Branch 2: CATC-PaginatedDeviceInventory → filtered (Reachable+Managed) → 31 devices
-Step 4       Target table built: 18 devices in hierarchy + type + online
+Step 2c      Initial Output-DeviceTable built: 18 devices (in hierarchy + type + online)
+Step 2d      Device Family selected: Cisco Catalyst 9300 Switch
+             Devices selected for upgrade: 12 (cleansed DeviceTargetList)
+Step 2e      SWIMFamilyIdentifier resolved
+             Cleansed Output-DeviceTable rebuilt → DeviceTargetUuidList (12 entries)
+Step 3       Global Device SWIM Inventory updated
              Pre-check show commands captured → precheck column populated
-Step 5       Device Family selected: Cisco Catalyst 9300 Switch
-             SWIMFamilyIdentifier resolved
-Step 6       images/ccoSync triggered
-             Candidate images listed → Select Image: cat9k_iosxe.17.09.04a.SPA.bin
+Step 4       images/ccoSync triggered
+             Candidate images listed → Select Image: cat9k_iosxe.17.15.05.SPA.bin
              selectedImageUuid resolved
-Step 7       Per-site image sanitization:
+Step 5       Per-site image sanitization:
                Site Building-1/Floor-1: image imported, tagging golden → task complete
                Site Building-1/Floor-2: image not imported → download → golden → task complete
-Step 8       Devices selected for upgrade: 18
-Step 9       Upgrade Method: Distribute then Activate
-             Distribution confirmed → 18 devices distributed ✓
-             Activation confirmed → 18 devices activated ✓
-Step 10      Post-check show commands captured → postcheck column populated
-             Output-DeviceTable + global Device SWIM Inventory updated
-Completed    Site based upgrade completed successfully
+Step 6       Create Image Uuid Array → imageUuidList built
+             Upgrade Method: Distribute then Activate
+             Distribution confirmed → 12 devices distributed ✓
+             Activation confirmed → 12 devices activated ✓
+Step 7       Proceed to Post Upgrade Checks confirmed
+             Post-check show commands captured → postcheck column populated
+             DeviceUpdates + global Device SWIM Inventory updated
+Completed    Complete Device Inventory finalized — site based upgrade completed successfully
 ```
 
 ---
@@ -452,7 +474,7 @@ This workflow orchestrates a complete site-based upgrade and depends on several 
 | `Tag golden task fails` | Image not fully imported, or insufficient privileges | Ensure the image import completed before tagging; verify the account can tag golden images. |
 | `Distribution or activation fails for a device` | Device unreachable, low storage, or unsupported image | Check device reachability and flash space; confirm the image is compatible with the device platform. |
 | `Workflow halts after a confirmation prompt` | Operator declined a confirm gate | This is expected (safety gate). Re-run and confirm the phase to proceed. |
-| `Pre/post-check columns empty` | `CATC-MultipleShowCommands` failed or Command Runner unavailable | Verify the subworkflow is imported and Command Runner is functional; check device reachability. |
+| `Pre/post-check columns empty` | `CATC-MultipleShowCommands-v3` failed or Command Runner unavailable | Verify the subworkflow is imported and Command Runner is functional; check device reachability. |
 
 ---
 
@@ -460,8 +482,9 @@ This workflow orchestrates a complete site-based upgrade and depends on several 
 
 - **Hierarchy scoping:** Selecting a parent site includes all descendant sites (matched by `siteHierarchy` prefix). To upgrade a single floor only, select that floor directly.
 - **Intersection logic:** A device is targeted only if it is simultaneously (1) assigned to a site in the hierarchy, (2) of the selected device type, (3) `Reachable`, and (4) `Managed`.
+- **Selection drives the pre-check:** Device family and the multi-select upgrade list are collected in Step 2 **before** the pre-check, so `CATC-MultipleShowCommands-v3` runs only against the cleansed `DeviceTargetUuidList`.
 - **Two upgrade methods:** Use **Consolidated** for a single distribute-if-needed + activate operation; use **Distribute then Activate** to stage images first and activate during a later maintenance window, with independent confirmation gates.
-- **Safety gates:** Every destructive phase requires explicit confirmation; declining halts the workflow with a clear status rather than proceeding.
+- **Safety gates:** Every destructive phase — plus the post-check (`Proceed to Post Upgrade Checks`) — requires explicit confirmation; declining halts the workflow with a clear status rather than proceeding.
 - **Before/after verification:** Pre-check and post-check show commands are stored in the shared global **Device SWIM Inventory** table for state comparison across the upgrade.
 - **Image preparation is idempotent:** Already-imported and already-golden images are left as-is; only missing images are downloaded and tagged.
 - **Reuses Workflow 10.0:** Device inventory retrieval is delegated to `CATC-PaginatedDeviceInventory`, so keep Workflow 10.0 imported for this workflow to function.
