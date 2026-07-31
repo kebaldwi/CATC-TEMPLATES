@@ -1,6 +1,6 @@
 # NET-AUTOMATE [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/kebaldwi/DNAC-TEMPLATES)
 
-> **[!NOTE]**
+> [!NOTE]
 > :mega: Thank you for continuing your **support** of the **NET-AUTOMATE** Repository formerly known as ***CATC-TEMPLATES*** by your continued visits to the site. The site originally was intended to share template automation and orchestration information for Catalyst Center. While we will continue to have that as a focus, we have recently been adding support for the Dashboard environment and for Cisco Workflows. We are augmenting the labs and tutorials for Dashboard and Cisco Workflows as well.
 >
 > :mega: As with all things there is change. The name has changed again to stay relevant with Cisco Enterprise Networking Automation. To that end the first of the changes will be there will be additional automation content being added to the repo for: 
