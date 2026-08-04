@@ -41,6 +41,7 @@ Use cases solved by the EXCHANGE suite:
 | 7.0 | [Provision Composite](EXCHANGE/7.0-Cisco-Catalyst-Center-Provision-Composite/) | Provision (or re-provision) managed devices and deploy the composite template at a site. |
 | 8.0 | [Command Runner](EXCHANGE/8.0-Cisco-Catalyst-Center-Command-Runner/) | Run up to five read-only show commands on a managed device via the CLI Poller API for ad-hoc verification. |
 | 9.0 | [Site Based Upgrade](EXCHANGE/9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/) | Orchestrate site-scoped SWIM upgrades — golden image preparation, distribution, activation, and pre/post-check diagnostics. |
+| 9.1 | [Site Based Upgrade with AI](EXCHANGE/9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI/) | AI-enhanced variant of 9.0 — the same site-scoped SWIM upgrade plus a GenAI (Anthropic `claude-opus-4-7`) post-upgrade validation report with per-device PASS/WARN/FAIL verdicts. |
 | 10.0 | [Paginated Device Inventory](EXCHANGE/10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/) | Reusable utility — paginate the full device inventory and return a merged, optionally filtered device list. |
 | 11.0 | [Paginated Site Hierarchy](EXCHANGE/11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/) | Reusable utility — paginate the complete site hierarchy and return merged JSON plus name and UUID lists. |
 | 12.0 | [Bulk Command Runner](EXCHANGE/12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/) | Reusable utility — iterate a shared device table, batch show commands in groups of five, and record pre/post-change diagnostics. |

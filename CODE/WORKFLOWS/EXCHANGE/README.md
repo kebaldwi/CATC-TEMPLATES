@@ -25,6 +25,7 @@ Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 
    - [7.0 - Provision Composite](#70---provision-composite)
    - [8.0 - Command Runner](#80---command-runner)
    - [9.0 - Site Based Upgrade](#90---site-based-upgrade)
+   - [9.1 - Site Based Upgrade with AI](#91---site-based-upgrade-with-ai)
    - [10.0 - Paginated Device Inventory](#100---paginated-device-inventory)
    - [11.0 - Paginated Site Hierarchy](#110---paginated-site-hierarchy)
    - [12.0 - Bulk Command Runner](#120---bulk-command-runner)
@@ -49,6 +50,7 @@ Workflows 1.0 through 7.0 form the core GitOps build-and-deploy chain. Workflow 
 | 7.0 | [Provision Composite](7.0-Cisco-Catalyst-Center-Provision-Composite/) | `GitOps-Provisioning-v3.json` | Devices provisioned (or re-provisioned) and composite template deployed |
 | 8.0 | [Command Runner](8.0-Cisco-Catalyst-Center-Command-Runner/) | `CATC-CommandRunner.json` | Runs up to five read-only show commands on a managed device via the CLI Poller API and returns a cleaned per-command report |
 | 9.0 | [Site Based Upgrade](9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/) | `Catalyst Center Site Based Upgrade.json` | Site-scoped SWIM upgrade: golden image preparation, distribution and/or activation across selected devices with pre/post-check diagnostics |
+| 9.1 | [Site Based Upgrade with AI](9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI/) | `Catalyst Center Site Based Upgrade with AI.json` | AI-enhanced variant of 9.0 — the same site-scoped SWIM upgrade plus a GenAI (Anthropic `claude-opus-4-7`) post-upgrade validation report with per-device PASS/WARN/FAIL verdicts |
 | 10.0 | [Paginated Device Inventory](10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/) | `CATC-PaginatedDeviceInventory.json` | Reusable utility — paginates the full device inventory and returns a merged, optionally filtered device list |
 | 11.0 | [Paginated Site Hierarchy](11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/) | `CATC-PaginatedSiteHierarchy.json` | Reusable utility — paginates the complete site hierarchy and returns merged JSON plus name and UUID lists |
 | 12.0 | [Bulk Command Runner](12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/) | `CATC-MultipleShowCommands.json` | Reusable utility — iterates the shared Device SWIM Inventory table, batches show commands in groups of five, runs them per device via the CLI Poller API, and writes results to the `precheck` or `postcheck` column |
@@ -222,6 +224,21 @@ Primary outcome:
 Utilization statement:
 - Use this workflow to perform controlled, site-scoped software upgrades with deterministic device targeting, explicit confirmation gates, and built-in pre/post-check verification.
 
+### 9.1 - Site Based Upgrade with AI
+
+Workflow folder: [9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI](9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI/)
+
+Function:
+- Runs the same site-scoped SWIM upgrade as Workflow 9.0 — hierarchy scoping, device intersection (via Workflow 10.0), golden image preparation, and operator-confirmed distribution and/or activation.
+- After activation, refreshes the device inventory to record the booted software version and captures post-check diagnostics into the shared SWIM inventory table.
+- Submits the combined pre/post-check table to a GenAI model (Anthropic `claude-opus-4-7`) primed with a Senior Network Engineer persona, which returns an audit-ready validation report.
+
+Primary outcome:
+- Selected devices run the operator-selected golden image, and the operator receives an evidence-based, per-device validation report (PASS / PASS WITH WARNINGS / FAIL / INCONCLUSIVE) suitable for attaching to a change ticket.
+
+Utilization statement:
+- Use this workflow when you want the controlled, site-scoped upgrade of Workflow 9.0 plus automated post-change validation. It additionally requires the `Anthropic-AI` GenAI endpoint target and the `ANTHROPIC-KEY` runtime credential.
+
 ### 10.0 - Paginated Device Inventory
 
 Workflow folder: [10.0-Cisco-Catayst-Center-Paginated-Device-Inventory](10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/)
@@ -308,6 +325,7 @@ Use this path when you want explicit version control of the exact workflow artif
 - [7.0-Cisco-Catalyst-Center-Provision-Composite/](7.0-Cisco-Catalyst-Center-Provision-Composite/) — `GitOps-Provisioning-v3.json`
 - [8.0-Cisco-Catalyst-Center-Command-Runner/](8.0-Cisco-Catalyst-Center-Command-Runner/) — `CATC-CommandRunner.json`
 - [9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/](9.0-Cisco-Catalyst-Center-Site-Based-Upgrade/) — `Catalyst Center Site Based Upgrade.json` (requires 10.0 imported)
+- [9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI/](9.1-Cisco-Catalyst-Center-Site-Based-Upgrade-with-AI/) — `Catalyst Center Site Based Upgrade with AI.json` (requires 10.0 imported and an Anthropic GenAI endpoint configured)
 - [10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/](10.0-Cisco-Catayst-Center-Paginated-Device-Inventory/) — `CATC-PaginatedDeviceInventory.json`
 - [11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/](11.0-Cisco-Catalyst-Center-Paginated-Site-Hierarchy/) — `CATC-PaginatedSiteHierarchy.json`
 - [12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/](12.0-Cisco-Catalyst-Center-Bulk-Command-Runner/) — `CATC-MultipleShowCommands.json` (consumed by 9.0)
@@ -418,6 +436,9 @@ Workflows 1.0 through 7.0 are designed to run in strict order to build and deplo
 
 9.0 Site Based Upgrade (on-demand)
   -> requires site hierarchy (1.0), discovered managed devices (3.0), and Workflows 10.0 and 12.0 imported as subworkflow dependencies
+
+9.1 Site Based Upgrade with AI (on-demand)
+  -> same dependencies as 9.0 plus the Anthropic-AI GenAI endpoint and ANTHROPIC-KEY credential for post-upgrade validation
 ```
 
 Recommended rollback/deletion order for workflows 1.0 through 7.0 is reverse execution order to preserve dependency integrity. Workflows 8.0 through 12.0 are read/operations workflows and do not require rollback.
@@ -443,6 +464,7 @@ This appendix provides a complete technical reference for all workflows, embedde
 | 7 | `GitOps-Provisioning-v3` | `GitOps-Provisioning-v3.json` | Provisions devices using the SDA fabric workflow and deploys the composite template |
 | 8 | `CATC-CommandRunner` | `CATC-CommandRunner.json` | Submits up to five read-only show commands to a managed device via the CLI Poller API and returns a cleaned per-command report |
 | 9 | `Catalyst Center Site Based Upgrade` | `Catalyst Center Site Based Upgrade.json` | Orchestrates a site-scoped SWIM upgrade: target device construction, golden image preparation, distribution/activation, and pre/post-check capture |
+| 9.1 | `Catalyst Center Site Based Upgrade with AI` | `Catalyst Center Site Based Upgrade with AI.json` | AI-enhanced variant of Workflow 9 — the same SWIM upgrade orchestration plus a GenAI (`claude-opus-4-7`) post-upgrade validation report |
 | 10 | `CATC-PaginatedDeviceInventory` | `CATC-PaginatedDeviceInventory.json` | Counts devices, paginates the Network Device API, and returns the full (optionally filtered) inventory |
 | 11 | `CATC-PaginatedSiteHierarchy` | `CATC-PaginatedSiteHierarchy.json` | Counts sites, paginates the Site API alongside the Network Device API, and returns the full hierarchy plus name and UUID lists |
 | 12 | `CATC-MultipleShowCommands-v3` | `CATC-MultipleShowCommands.json` | Iterates the shared Device SWIM Inventory table, batches show commands in groups of five, runs each batch per device through `CATC-CommandRunner`, and writes consolidated output to the `precheck` or `postcheck` column |
@@ -604,3 +626,9 @@ Referenced by name from the Cisco workflow platform catalog.
 | `POST` | `/dna/intent/api/v1/images/{uuid}/sites/{siteId}/tagGolden` | Tag an image as golden for a site and device family |
 | `POST` | `/dna/intent/api/v1/image/distribution` | Distribute an image to a target device |
 | `POST` | `/dna/intent/api/v1/image/activation/device` | Activate (boot) an image on a target device |
+
+#### Anthropic — GenAI Validation (9.1)
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `POST` | `https://api.anthropic.com/v1/messages` | Submit the pre/post-check device table to the `claude-opus-4-7` model and return the audit-ready validation report |
