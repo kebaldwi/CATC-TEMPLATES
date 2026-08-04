@@ -1,0 +1,186 @@
+flowchart TD
+    START([Start]) --> A
+
+    A["Step 1 - Select Site
+    CATC-DynamicSiteSelector (subworkflow)
+    Python: Find Children - match siteHierarchy prefix
+    Set HierarchyNames + HierarchyUuid (parent + child sites)"] --> B
+
+    B["Step 2a - Select Device Type (prompt)
+    Switches and Hubs | Routers | Wireless Controllers"] --> STEP2A
+
+    subgraph STEP2A["Step 2b - Filter Devices (Parallel)"]
+        direction LR
+        subgraph B1["Branch 1 - Site Assigned Devices"]
+            direction TB
+            C1(["For each site in HierarchyUuid"]) --> C1a
+            C1a["GET /dna/intent/api/v1/networkDevices/assignedToSite
+            ?siteId={id}&offset={o}&limit={l}"] --> C1b
+            C1b["Python: append deviceId to HierarchyDeviceList"] --> C1
+        end
+        subgraph B2["Branch 2 - Filtered Inventory"]
+            direction TB
+            C2["CATC-PaginatedDeviceInventory (subworkflow 10.0)"] --> C2a
+            C2a["JSONPath Filter
+            family == type && Reachable && Managed"] --> C2b
+            C2b["Python: normalize to array
+            Set DeviceTypeInventory"]
+        end
+    end
+
+    STEP2A --> STEP2B
+
+    subgraph STEP2B["Step 2c - Build Initial Target Table"]
+        direction TB
+        D["Read Table from JSON (DeviceTypeInventory)"] --> D1
+        D1(["For each filtered device"]) --> D2
+        D2{"instanceUuid in
+        HierarchyDeviceList?"} -->|No - skip| D1
+        D2 -->|Yes| D3
+        D3["Add row to Output-DeviceTable
+        (initial target table)"] --> D1
+    end
+
+    STEP2B --> STEP2C
+
+    subgraph STEP2C["Step 2d - Select Device Family + Devices"]
+        direction TB
+        E["Select unique device types from Output-DeviceTable
+        Set SWIMDeviceTypes"] --> E1
+        E1["Select Device Family (prompt)
+        e.g. Cisco Catalyst 9300 Switch"] --> F1
+        F1["Build Local-DeviceTable for selected family
+        (JSONPath + String to Array)"] --> F2
+        F2["Select Devices for Upgrade (multiselect prompt)
+        Cleansed DeviceTargetList"]
+    end
+
+    STEP2C --> STEP2D
+
+    subgraph STEP2D["Step 2e - Resolve SWIM Family + Cleansed Targets"]
+        direction TB
+        G1["GET /dna/intent/api/v1/image/importation/device-family-identifiers"] --> G2
+        G2["JSONPath: resolve deviceFamilyIdentifier
+        Set SWIMFamilyIdentifier"] --> H1
+        H1(["For each filtered device"]) --> H2
+        H2{"Hostname in cleansed
+        DeviceTargetList?"} -->|No - skip| H1
+        H2 -->|Yes| H3
+        H3["Add row to Output-DeviceTable
+        Python: append instanceUuid to DeviceTargetUuidList"] --> H1
+    end
+
+    STEP2D --> STEP3
+
+    subgraph STEP3["Step 3 - Target Devices (Pre-check)"]
+        direction TB
+        I["Update global Device SWIM Inventory
+        from Output-DeviceTable"] --> I1
+        I1["CATC-MultipleShowCommands-v3 (precheck)
+        Populate precheck column"] --> I2
+        I2["Update DeviceUpdates table
+        Sync to global Device SWIM Inventory"]
+    end
+
+    STEP3 --> STEP4
+
+    subgraph STEP4["Step 4 - Get SWIM Images"]
+        direction TB
+        J["POST /dna/intent/api/v1/images/ccoSync
+        Sync images from Cisco.com"] --> J1
+        J1["GET /dna/intent/api/v1/images?productNameOrdinal={id}"] --> J2
+        J2["JSONPath + String to Array
+        Build imageNameArray"] --> J3
+        J3["Select Image (prompt)"] --> J4
+        J4["JSONPath: resolve image id
+        Set selectedImageName + selectedImageUuid"]
+    end
+
+    STEP4 --> STEP5
+
+    subgraph STEP5["Step 5 - Image Sanitization (per site)"]
+        direction TB
+        K(["For each site in HierarchyUuid"]) --> K1
+        K1["GET /dna/intent/api/v1/images?siteId={id}
+        JSONPath: imported? goldenTagged?"] --> K2
+        K2{"Image status?"}
+        K2 -->|imported && not golden| K3
+        K2 -->|not imported| K4
+        K3["POST images/{uuid}/sites/{siteId}/tagGolden
+        Get Task ID -> Wait For Task"] --> K
+        K4["POST images/{id}/download -> Wait
+        POST tagGolden -> Get Task ID -> Wait"] --> K
+    end
+
+    STEP5 --> L
+
+    L["Step 6a - Create Image Uuid Array (atomic)"] --> L1
+    L1["Step 6b - Image Upgrade Method (prompt)"] --> L2{Upgrade Method?}
+
+    L2 -->|Consolidated Upgrade| CONS
+    L2 -->|Distribute then Activate| DIST
+
+    subgraph CONS["Consolidated Upgrade"]
+        direction TB
+        M1["Proceed to Upgrade Image (confirm)"] --> M1a{Confirmed?}
+        M1a -->|No| HALT1([Halted - Not Activated])
+        M1a -->|Yes| M1b(["For each selected device"])
+        M1b --> M1c["POST /dna/intent/api/v1/image/activation/device
+        distributeIfNeeded=true"]
+        M1c --> M1b
+    end
+
+    subgraph DIST["Distribute then Activate"]
+        direction TB
+        M2["Proceed to Distribute Image (confirm)"] --> M2a{Confirmed?}
+        M2a -->|No| HALT2([Halted - Not Distributed])
+        M2a -->|Yes| M2b(["For each selected device"])
+        M2b --> M2c["POST /dna/intent/api/v1/image/distribution"]
+        M2c --> M2b
+        M2b -->|done| M2d["Proceed to Activate Image (confirm)"]
+        M2d --> M2e{Confirmed?}
+        M2e -->|No| HALT3([Halted - Not Activated])
+        M2e -->|Yes| M2f(["For each selected device"])
+        M2f --> M2g["POST /dna/intent/api/v1/image/activation/device"]
+        M2g --> M2f
+    end
+
+    M1c --> N
+    M2g --> N
+
+    subgraph STEP7["Step 7 - Update Table (Post-check + Inventory Refresh)"]
+        direction TB
+        N["Proceed to Post Upgrade Checks (confirm)"] --> N1
+        N1["CATC-PaginatedDeviceInventory (subworkflow 10.0)
+        Refresh inventory after activation"] --> N2
+        N2(["For each device in global table"]) --> N3
+        N3["JSONPath: newSoftwareVersion by instanceUuid
+        Update Row in Table (softwareVersion)"] --> N2
+        N2 -->|done| N4["CATC-MultipleShowCommands-v3 (postcheck)
+        Populate postcheck column"] --> N5
+        N5["Update DeviceUpdates table
+        Sync to global Device SWIM Inventory"]
+    end
+
+    STEP7 --> STEP8
+
+    subgraph STEP8["Step 8 - AI Comparison and Results"]
+        direction TB
+        O["Select from Table
+        (global Device SWIM Inventory - all rows)"] --> P
+        P["AI Prompt (lc_agent.llm_step)
+        Model: claude-opus-4-7 (Anthropic-AI)
+        System: AI-Tone persona
+        Data: pre/post table + selectedImageName"] --> Q
+        Q["Generate audit-ready validation report
+        Per-device verdict: PASS / WARN / FAIL / INCONCLUSIVE"]
+    end
+
+    STEP8 --> DONE([Done - AI Report])
+
+    style DONE fill:#27ae60,color:#fff,stroke:#1e8449
+    style START fill:#2980b9,color:#fff,stroke:#1a5276
+    style HALT1 fill:#c0392b,color:#fff,stroke:#922b21
+    style HALT2 fill:#c0392b,color:#fff,stroke:#922b21
+    style HALT3 fill:#c0392b,color:#fff,stroke:#922b21
+    style P fill:#8e44ad,color:#fff,stroke:#6c3483
